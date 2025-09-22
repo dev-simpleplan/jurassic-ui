@@ -3,6 +3,8 @@
     {{ shop.name | link_to: routes.root_url }}
   </h2>
 
+  <p>Hello</p>
+
   <div class="header__menu">
     {% for link in section.settings.menu.links %}
       {{ link.title | link_to: link.url }}
