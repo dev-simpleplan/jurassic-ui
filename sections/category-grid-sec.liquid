@@ -1,0 +1,56 @@
+<section class="all-category">
+    <div class="container">
+        <div class="sec-with-space">
+            <div class="heading center">
+                <h2>{{ section.settings.heading }}</h2>
+            </div>
+            <div class="category-grid">
+                <div class="c-item">
+                    {% for block in section.blocks %}
+                    {% assign collection = block.settings.collection %}
+                    {% if collection %}
+                        <a href="{{ collection.url }}">
+                            <div class="citem-in">
+                                <div class="citem-image">
+                                    <img class="icon" src="{{ collection.image | img_url: 'master' }}" alt="{{ collection.title }}">
+                                </div>
+                                <div class="citem-text">
+                                    <h3>{{ collection.title }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+
+  {
+    "name": "Category Grid Sec",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default": "All Categories"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_block",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Select Categories"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

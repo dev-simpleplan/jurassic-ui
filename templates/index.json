@@ -9,12 +9,42 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
-    }
+    "banner": {
+      "type": "home-banner",
+      "settings": {
+        "img-left": "shopify://shop_images/6b23ce2d1e4c45624dd234c0b68b8c7724b6fc89_1.png",
+        "head": "Your Most Delicious Adventure on Earth",
+        "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed."
+      },
+      "blocks": {
+        "item1": {
+          "type": "reviews",
+          "settings": {
+            "review-top": "cat-1",
+            "review-bottom": "Cleaning Your Jewellery"
+          }
+        }
+      },
+      "block_order": [
+        "item1"
+      ],
+    },
+    "spacer": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "all-categories": {
+      "type": "category-grid-sec",
+      "settings": {
+
+      }
+    },
   },
   "order": [
-    "main"
+    "banner",
+    "spacer",
+    "all-categories"
   ]
 }

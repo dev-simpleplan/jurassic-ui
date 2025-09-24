@@ -1,4 +1,4 @@
-<header>
+<!-- <header>
   <h2 class="header__title">
     {{ shop.name | link_to: routes.root_url }}
   </h2>
@@ -24,45 +24,199 @@
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
   </div>
-</header>
+</header> -->
 
-{% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
+<header>
+  <div class="container">
+    <div class="desktop-header">
+      <div class="header-in">
+        <div class="h-left">
+          <div class="brand-logo mob-none flex">
+            <a href="{{ shop.url }}">
+              {% if section.settings.select_logo %}
+                <img
+                  src="{{ section.settings.select_logo | image_url }}"
+                  alt="{{ shop.name | escape }}"
+                  class="icon">
+              {% else %}
+                {{ shop.name }}
+              {% endif %}
+            </a>
+          </div>
+        </div>
+
+        <div class="h-nav">
+
+          <div class="hnav-menu">
+            <ul>
+              <li class="nav-item no-mega-menu">
+                <a href="" class="nav-link">New Arrivals</a>
+              </li>
+              <li class="nav-item has-mega-menu">
+                <div class="arrow">
+                  <a href="" class="nav-link">Shop All</a>
+                  <span class="nav_arrow_down">{% render 'icon-arrow_down' %}</span>
+                </div>
+                <div class="mega-menu">
+                  <div class="container">
+                    <div class="mega-menu-split">
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item has-mega-menu">
+                <div class="arrow">
+                  <a href="" class="nav-link">Boxes</a>
+                  <span class="nav_arrow_down">{% render 'icon-arrow_down' %}</span>
+                </div>
+                <div class="mega-menu">
+                  <div class="container">
+                    <div class="mega-menu-split">
+                      
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item no-mega-menu">
+                <a href="" class="nav-link">Buy Again</a>
+              </li>
+              <li class="nav-item has-mega-menu">
+                <div class="arrow">
+                  <a href="" class="nav-link">Learn More</a>
+                  <span class="nav_arrow_down">{% render 'icon-arrow_down' %}</span>
+                </div>
+                <div class="mega-menu">
+                  <div class="container">
+                    <div class="mega-menu-split">
+                      
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="h-right">
+          <div class="header-icons-wrap flex">
+            <a href="#" class="search">{% render 'icon-search' %}</a>
+            {% if customer %}
+              <a href="{{ routes.account_url }}" class="cust-login">{% render 'icon-profile' %}</a>
+            {% else %}
+              <a href="{{ routes.account_login_url }}" class="profile">{% render 'icon-profile' %}</a>
+            {% endif %}
+            <div class="cart">
+              <a href="javascript:void(0)" class="cart-open">
+                {% render 'icon-cart' %}
+              </a>
+              {% if cart.item_count > 0 %}
+                <span data-ajax-cart-bind="item_count" class="header__cart-quantity">{{ cart.item_count }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "Header",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "image_picker",
+      "id": "select_logo",
+      "label": "Change Logo"
     }
+  ],
+  "blocks": [
+    {
+      "type": "nav_menu_left",
+      "name": "Nav Menu Left",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "nav_items_left",
+          "label": "Nav Items"
+        },
+        {
+          "type": "image_picker",
+          "id": "mega_menu_img_left",
+          "label": "Mega Menu Image Left"
+        }
+      ]
+    },
+    {
+      "type": "nav_menu_right",
+      "name": "Nav Menu Right",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "nav_items_right",
+          "label": "Nav Items"
+        },
+        {
+          "type": "image_picker",
+          "id": "mega_menu_img_right",
+          "label": "Mega Menu Image Right"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Header" }
   ]
 }
 {% endschema %}
+
+{%- comment -%} Dependencies (optional if already loaded globally) {%- endcomment -%}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"></script>
+
+<script>
+  $(function() {
+    // mobile drawer toggles (if you use them)
+    $('.close').hide();
+    $('.open').on('click', function() {
+      $('.nav_menu').addClass('active');
+      $('.close').show();
+      $('.open').hide();
+    });
+    $('.close').on('click', function() {
+      $('.nav_menu').removeClass('active');
+      $('.close').hide();
+      $('.open').show();
+    });
+
+    // nested mobile subnav
+    $('.mob-link_inner').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.mob-link').find('.sublinks_wrapper').addClass('visible');
+    });
+    $('.mob-sublink_inner').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.mob-sublink').find('.childlink_wrapper').addClass('visible');
+    });
+    $('.nav_back_link').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.sublinks_wrapper').removeClass('visible');
+    });
+    $('.nav_back_sublink').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.childlink_wrapper').removeClass('visible');
+    });
+
+    // backdrop hover for desktop mega menu
+    $('.nav-item.has-mega-menu').on('mouseenter', function() {
+      $('main').addClass('backdrop_bg');
+    }).on('mouseleave', function() {
+      $('main').removeClass('backdrop_bg');
+    });
+  });
+</script>

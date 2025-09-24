@@ -1,11 +1,40 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
+    <head>
+    
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}" />
+    {% endif %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    {{ content_for_header }}
+
+    <style>
+      @font-face {
+          font-family: 'scale-variable, sans-serif;';
+          src: url('{{ 'Scale-VF-Regular.woff2' | asset_url }}') format('woff2'),
+              url('{{ 'Scale-VF-Regular.woff' | asset_url }}') format('woff');
+          font-weight: 400;
+          font-style: normal;
+          /* font-stretch: 100%; */
+          font-display: swap;
+      }
+    </style>
+
+    <lincustom.csseconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
     {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -14,18 +43,79 @@
       <meta name="description" content="{{ page_description | escape }}" />
     {% endif %}
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    {{ content_for_header }}
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" defer></script> {% endcomment %}
+
   </head>
 
   <body>
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    <div class="main">
+      {{ content_for_layout }}
+    </div>
 
     {% sections 'footer-group' %}
+
+    {% comment %} Script Tags {% endcomment %}
+    <script src="https://unpkg.com/lenis@1.3.1/dist/lenis.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+      setTimeout(() => {
+          const lenis = new Lenis({
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+
+          function raf(time) {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+          }
+          requestAnimationFrame(raf);
+
+          // Header Scroll Backdrop
+          let removeTimer;
+          let allowHover = true;
+          const header = document.querySelector('header');
+
+          lenis.on('scroll', ({ scroll, limit }) => {
+              const scrollPercentage = (scroll / limit) * 100;
+              allowHover = scrollPercentage <= 5;
+
+              // header backdrop logic
+              if (scrollPercentage > 5) {
+                  header.classList.add('backdrop');
+
+                  // forceâ€close menu if you scrolled past 5%
+
+                  clearTimeout(removeTimer);
+              } else {
+                  header.classList.remove('backdrop');
+              }
+          });
+
+      }, 0);
+    });
+    </script>
+
+
   </body>
 </html>

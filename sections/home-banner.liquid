@@ -1,0 +1,86 @@
+<section class="home-banner">
+  <div class="banner-bg">
+    <img src="{{ section.settings['banner-bg'] | img_url: 'master' }}" alt="Banner Image" class="img">
+  </div>
+
+  <div class="banner-in">
+    <div class="container">
+      <div class="banner-content">
+        <div class="bc-top">
+          <div class="bct-heading">
+            <h1>{{ section.settings.head }}</h1>
+            <p>{{ section.settings.para }}</p>
+            <div class="bcth-button">
+              <a href="#" class="custom-btn filled">View Products</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bc-bottom">
+          <div class="bcb-reviews-wrap">
+            {% for block in section.blocks %}
+              <div class="bcbr-item" {{ block.shopify_attributes }}>
+                <div class="bcbri-top">{{ block.settings['review-top'] }}</div>
+                <div class="bcbri-bottom">
+                  {% render 'rating-stars-fa', rating: block.settings.review_star %}
+                  <div class="rating-text" aria-hidden="true">{{ block.settings.review_star }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Banner",
+  "class": "homepage-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner-bg",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "head",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "para",
+      "label": "Paragraph"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Reviews",
+      "type": "reviews",
+      "settings": [
+        {
+          "type": "text",
+          "id": "review-top",
+          "label": "Platform Name",
+          "default": "Google Reviews"
+        },
+        {
+          "type": "range",
+          "id": "review_star",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "label": "Star Ratings",
+          "default": 4.7
+        }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Home Banner" }
+  ]
+}
+{% endschema %}
