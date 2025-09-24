@@ -1,0 +1,328 @@
+{
+  "article": [],
+  "blog": [],
+  "collection": [
+    {
+      "key": "short_description",
+      "namespace": "custom",
+      "name": "Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "company": [],
+  "company_location": [],
+  "location": [],
+  "market": [],
+  "order": [
+    {
+      "key": "mdi_data",
+      "namespace": "custom",
+      "name": "MDI Data",
+      "description": "MDI data. Used by the M&D Integrações APP.",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    }
+  ],
+  "page": [],
+  "product": [
+    {
+      "key": "alternative_name",
+      "namespace": "custom",
+      "name": "Alternative name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "eating_information",
+      "namespace": "custom",
+      "name": "Eating information",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "testimony",
+      "namespace": "custom",
+      "name": "Testimony",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "youtube_id",
+      "namespace": "custom",
+      "name": "Youtube ID",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "_location_name",
+      "namespace": "custom",
+      "name": "__location_name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "country_season",
+      "namespace": "custom",
+      "name": "Country Season",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "allergen-information",
+      "namespace": "shopify",
+      "name": "Allergen information",
+      "description": "Indicates potential allergens present in food or beverages, such as wheat or peanuts",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "dietary-preferences",
+      "namespace": "shopify",
+      "name": "Dietary preferences",
+      "description": "Helps identify products suitable for specific diets, e.g. vegan, nut free",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nut-processing-method",
+      "namespace": "shopify",
+      "name": "Nut processing method",
+      "description": "Defines how nuts or seeds are prepared, e.g. candied, raw",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nut-seed-type",
+      "namespace": "shopify",
+      "name": "Nut/Seed type",
+      "description": "Identifies the specific type of nut or seed in a product, such as almonds or chia seeds",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "short_description1",
+      "namespace": "custom",
+      "name": "Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "description",
+      "namespace": "custom",
+      "name": "Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "certificate",
+      "namespace": "custom",
+      "name": "Certificate",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "shipped_by",
+      "namespace": "custom",
+      "name": "Shipped by",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "quality_label",
+      "namespace": "custom",
+      "name": "Quality label",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "weight_per_piece",
+      "namespace": "custom",
+      "name": "Weight per piece",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "country_of_origin",
+      "namespace": "custom",
+      "name": "Country Of Origin",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "food-product-form",
+      "namespace": "shopify",
+      "name": "Food product form",
+      "description": "Specifies the form in which the food product is presented, such as dried or frozen",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "fresh_product",
+      "namespace": "custom",
+      "name": "Fresh Product",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    }
+  ],
+  "variant": [
+    {
+      "key": "quality_label",
+      "namespace": "custom",
+      "name": "Variant Quality label",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "shipped_by",
+      "namespace": "custom",
+      "name": "Variant Shipped by",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "weight_per_piece",
+      "namespace": "custom",
+      "name": "Variant Weight per piece",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "short_description1",
+      "namespace": "custom",
+      "name": "Variant Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "description",
+      "namespace": "custom",
+      "name": "Variant Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "salable_after",
+      "namespace": "custom",
+      "name": "Variant Next available date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "_location_name",
+      "namespace": "custom",
+      "name": "__location_name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "country_season",
+      "namespace": "custom",
+      "name": "Variant Country Season",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "certificate",
+      "namespace": "custom",
+      "name": "Variant Certificate",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "country_of_origin",
+      "namespace": "custom",
+      "name": "Variant Country Of Origin",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
+  "shop": []
+}
