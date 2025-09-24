@@ -5,23 +5,23 @@
                 <h2>{{ section.settings.heading }}</h2>
             </div>
             <div class="category-grid">
+                {% for block in section.blocks %}
+                {% assign collection = block.settings.collection %}
+                {% if collection %}
                 <div class="c-item">
-                    {% for block in section.blocks %}
-                    {% assign collection = block.settings.collection %}
-                    {% if collection %}
-                        <a href="{{ collection.url }}">
-                            <div class="citem-in">
-                                <div class="citem-image">
-                                    <img class="icon" src="{{ collection.image | img_url: 'master' }}" alt="{{ collection.title }}">
-                                </div>
-                                <div class="citem-text">
-                                    <h3>{{ collection.title }}</h3>
-                                </div>
+                    <a href="{{ collection.url }}">
+                        <div class="citem-in">
+                            <div class="citem-image">
+                                <img class="icon" src="{{ collection.image | img_url: 'master' }}" alt="{{ collection.title }}">
                             </div>
-                        </a>
-                    {% endif %}
-                    {% endfor %}
+                            <div class="citem-text">
+                                <h3>{{ collection.title }}</h3>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>

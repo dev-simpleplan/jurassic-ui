@@ -380,4 +380,6 @@ li.nav-item a.nav-link {
     text-transform: uppercase;
     letter-spacing: 0.96px;
     color: var(--grey-black);
+    word-break: break-all;
+    text-align: center;
 }  

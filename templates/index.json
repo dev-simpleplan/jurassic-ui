@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "banner": {
       "type": "home-banner",
@@ -62,25 +62,49 @@
     "all-categories": {
       "type": "category-grid-sec",
       "blocks": {
-        "collection_block_zUdiig": {
+        "collection_1": {
           "type": "collection_block",
           "settings": {
             "collection": "fruit-sets-gifts"
           }
         },
-        "collection_block_V6pM6N": {
+        "collection_2": {
           "type": "collection_block",
           "settings": {
             "collection": "dried-fruit"
           }
         },
-        "collection_block_FChcME": {
+        "collection_3": {
           "type": "collection_block",
           "settings": {
             "collection": "fine-food"
           }
         },
-        "collection_block_VxrhJF": {
+        "collection_4": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fruit"
+          }
+        },
+        "collection_5": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fruit-sets-gifts"
+          }
+        },
+        "collection_6": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "dried-fruit"
+          }
+        },
+        "collection_7": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fine-food"
+          }
+        },
+        "collection_8": {
           "type": "collection_block",
           "settings": {
             "collection": "fruit"
@@ -88,10 +112,14 @@
         }
       },
       "block_order": [
-        "collection_block_zUdiig",
-        "collection_block_V6pM6N",
-        "collection_block_FChcME",
-        "collection_block_VxrhJF"
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6",
+        "collection_7",
+        "collection_8"
       ],
       "settings": {
         "heading": "All Categories"
