@@ -12,6 +12,7 @@
 .fruits_cards_wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .fruits_card {
@@ -295,4 +296,35 @@
 
 .fc_add_to_cart_outer {
     padding-right: 15px;
+}
+
+.fruits_card_section_in .head {
+    margin-bottom: 60px;
+    display: flex;
+}
+
+.fruits_card_section_in .head .left {
+    width: 70%;
+}
+
+.fruits_card_section_in .head .right {
+    width: 30%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.fruits_card_section_in .head .right a {
+    text-decoration: underline;
+    color: #1A1A1A;
+    letter-spacing: -0.01em;
+    line-height: 120%;
+    font-size: 14px;
+    font-weight: 500;
+    text-underline-offset: 2px;
+    transition: .4s ease all;
+}
+
+.fruits_card_section_in .head .right a:hover {
+    color: #747474;
 }
