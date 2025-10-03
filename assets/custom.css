@@ -336,3 +336,60 @@
     color: #747474;
 }
 
+.custom-prev,
+.custom-next {
+    background: #1A1A1A;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    padding: 10px;
+}
+
+.fruits_cards_slider .owl-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.for_responsive {
+    display: none;
+}
+
+@media screen and (max-width: 1300px) {
+    .for_responsive {
+        display: block;
+    }
+
+    .for_desktop {
+        display: none;
+    }
+
+    .fruits_card_section .slider_container {
+        padding: 0px;
+        padding-left: 40px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .fruits_card_section .slider_container {
+        padding-left: 16px;
+    }
+    .fruits_card_section_in .head {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .fruits_card_section_in .head .left,
+    .fruits_card_section_in .head .right {
+        width: 100%;
+    }
+     .fruits_card_section_in .head .right {
+        justify-content: start;
+     }
+    .fruits_card_section_in .head p {
+        font-size: 14px;
+    }
+}
