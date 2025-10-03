@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "banner": {
       "type": "home-banner",
@@ -181,7 +181,9 @@
     "video": {
       "type": "video-section",
       "settings": {
-        "video_link": ""
+        "heading": "TV Came to Taste the Untamed",
+        "para": "We were featured on Germany’s biggest science show, Galileo — and they went wild for it.",
+        "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
       }
     },
     "spacer3": {
@@ -193,7 +195,10 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        
+        "left-image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+        "right-image": "shopify://shop_images/64efb817b0eda88b82156381eddafbc724f00fdf.jpg",
+        "heading": "Join the expedition",
+        "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
       }
     },
     "spacer4": {
@@ -202,14 +207,50 @@
         "spacer_height": 140
       }
     },
+    "counter": {
+      "type": "counter-sec",
+      "blocks": {
+        "cards_GtULhz": {
+          "type": "cards",
+          "settings": {
+            "number": 3600,
+            "expression": "+",
+            "content": "Smallholder families supported since day one"
+          }
+        },
+        "cards_7LY4Am": {
+          "type": "cards",
+          "settings": {
+            "number": 50,
+            "expression": "+",
+            "content": "Tons of fruit saved from waste through low-impact sourcing"
+          }
+        },
+        "cards_W4qKGH": {
+          "type": "cards",
+          "settings": {
+            "number": 8000,
+            "expression": "+",
+            "content": "Days of local work created through our operations"
+          }
+        }
+      },
+      "block_order": [
+        "cards_GtULhz",
+        "cards_7LY4Am",
+        "cards_W4qKGH"
+      ],
+      "settings": {
+        "bg-image": "shopify://shop_images/counter-bg.jpg",
+        "heading": "The Impact Behind Every Bite",
+        "para": "Behind every bite is a network of growers, caretakers, and conscious choices that protect people and the planet."
+      }
+    },
     "spacer5": {
       "type": "spacer",
       "settings": {
         "spacer_height": 140
       }
-    },
-    "counter": {
-      "type": "counter-sec"
     }
   },
   "order": [
