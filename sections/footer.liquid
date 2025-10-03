@@ -1,57 +1,111 @@
 <footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
-
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
-  </div>
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-top-in">
+                <div class="fti-logo">
+                    <img src="{{ section.settings['footer-logo'] | img_url: 'master' }}" alt="Banner Image">
+                </div>
+                <div class="fti-center">
+                    <div class="fti-nav-wrap">
+                        {% for block in section.blocks %}
+                            {% assign menu = linklists[block.settings.menu_handle] %}
+                            {% if menu.links.size > 0 %}
+                                <div class="blocks">
+                                {% for link in menu.links %}
+                                    <p class="footer_title">{{ link.title }}</p>
+                                    {% if link.links.size > 0 %}
+                                    <div class="footer_link_wrap">
+                                        {% for sublink in link.links %}
+                                        <div class="footer_links">
+                                            <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom-in">
+                <div class="footer__copyright">
+                    <p class="copyright-text">
+                        &copy;
+                        {{ shop.name | link_to: routes.root_url }}
+                        {{ 'now' | date: '%Y' }}
+                    </p>
+                    <p class="reserved"><span> | </span>All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    {% for link in section.settings.menu.links %}
+                        {{ link.title | link_to: link.url }}
+                    {% endfor %}
+                </div>
+                <div class="footer-payment">
+                    {% if section.settings.show_payment_icons %}
+                    <p>Guaranteed Safe Checkout with Payment Options</p>
+                    <div class="fpay-icons">
+                        {% for type in shop.enabled_payment_types %}
+                            {{ type | payment_type_svg_tag }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
-
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.footer",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+        "type": "image_picker",
+        "id": "footer-logo",
+        "label": "Footer Logo"
     },
     {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
+        "type": "link_list",
+        "id": "menu",
+        "label": "t:labels.menu"
+    },
+    {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "t:labels.show_payment_icons",
+        "default": true
     }
-  ]
+  ],
+  "blocks": [
+      {
+        "type": "menu_blocks",
+        "name": "Footer Menu Blocks",
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "menu_handle",
+            "label": "Footer Menu"
+          }
+        ]
+      }, 
+      {
+        "name": "Trusted Partner",
+        "type": "trust-logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "t-icon",
+            "label": "Trusted partner Icon"
+          }
+        ]
+      }
+    ]
 }
 {% endschema %}
