@@ -322,6 +322,16 @@
         "name": "metaobject_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "pieces",
+      "namespace": "custom",
+      "name": "Pieces",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "shop": []

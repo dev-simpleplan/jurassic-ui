@@ -1,0 +1,86 @@
+<section class="vid-img pos-rel">
+    <div class="container">
+        <div class="vid-img-wrap">
+            <div class="sec-with-space">
+                <div class="heading center">
+                    <h2>{{ section.settings.heading }}</h2>
+                    <p class="small">{{ section.settings.para }}</p>
+                </div>
+                <div class="vidimage-in">
+                    {% if section.settings.video_link != blank %}
+                        {{ section.settings.video_link | video_tag:
+                            autoplay: false,
+                            loop: true,
+                            muted: false,
+                            controls: false,
+                            playsinline: true,
+                            class: 'img ab'
+                        }}
+                        <button class="video-control" aria-label="Video Play Button">
+                            <span class="video-control-play">
+                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
+                            </span>
+                            <span class="video-control-pause">
+                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
+                            </span>
+                        </button>
+                    {% endif %}
+                    {% if section.settings.video_img != blank %}
+                        <img src="{{ section.settings.video_img |  img_url: 'master' }}" alt="{{ section.settings.video_img.title }}" class="img ab">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const videoElement = document.querySelector("video");
+    const playPauseButton = document.querySelector("button.video-control");
+
+    if (videoElement && playPauseButton) {
+    playPauseButton.addEventListener("click", () => {
+        playPauseButton.classList.toggle("playing");
+
+        if (playPauseButton.classList.contains("playing")) {
+        videoElement.play();
+        } else {
+        videoElement.pause();
+        }
+    });
+
+    videoElement.addEventListener("ended", () => {
+        playPauseButton.classList.remove("playing");
+    });
+    }
+    });
+</script>
+
+{% schema %}
+{
+    "name": "Video-Section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "para",
+            "label": "Paragraph"
+        },
+        {
+            "type": "image_picker",
+            "id": "video_img",
+            "label": "Upload Image"
+        },
+        {
+            "type": "video",
+            "id": "video_link",
+            "label": "Upload Video"
+        }
+    ]
+}
+{% endschema %}
