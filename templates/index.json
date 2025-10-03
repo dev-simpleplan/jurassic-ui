@@ -124,11 +124,95 @@
       "settings": {
         "heading": "All Categories"
       }
+    },
+    "spacer1": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "fresh": {
+      "type": "fresh-every-week",
+      "blocks": {
+        "item1": {
+          "type": "cards",
+          "settings": {
+            "image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+            "day": "Thursday",
+            "head": "Order by Thursday, 8:00 PM",
+            "paragraph": "While you decide, your fruits are still ripening on the tree — untouched, sun-kissed, and growing flavor by the day."
+          }
+        },
+        "item2": {
+          "type": "cards",
+          "settings": {
+            "image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+            "day": "Thursday - Friday",
+            "head": "Harvested Just for You",
+            "paragraph": "We pick your fruits at peak physiological maturity — often the day before shipping — for full nutrition and taste."
+          }
+        },
+        "item3": {
+          "type": "cards",
+          "settings": {
+            "image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+            "day": "Tuesday - Thursday",
+            "head": "Fresh at Your Door",
+            "paragraph": "Your fruits arrive around 5 days after harvest, ready to ripen naturally at home for perfect flavor when you bite in."
+          }
+        }
+      },
+      "block_order": [
+        "item1",
+        "item2",
+        "item3"
+      ],
+      "settings": {
+        "heading": "Delivered fresh every week",
+        "para": "Subtitle that supports the title. orem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et. Subtitle that supports the title."
+      }
+    },
+    "spacer2": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "video": {
+      "type": "video-section",
+      "settings": {
+        "video_link": ""
+      }
+    },
+    "spacer3": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        
+      }
+    },
+    "spacer4": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
     "banner",
     "spacer",
-    "all-categories"
+    "all-categories",
+    "spacer1",
+    "fresh",
+    "spacer2",
+    "video",
+    "spacer3",
+    "newsletter",
+    "spacer4"
   ]
 }
