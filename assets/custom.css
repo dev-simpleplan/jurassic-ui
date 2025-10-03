@@ -243,6 +243,12 @@
     color: #2C2C2C;
     align-items: center;
     padding: 12px 20px;
+    transition: .4s ease all;
+    cursor: pointer;
+}
+
+.fc_add_to_cart:hover {
+    background: linear-gradient(180deg, #F7A816 0%, #FFC761 138.78%);
 }
 
 .fc_add_to_cart button {
@@ -258,6 +264,7 @@
     font-weight: 500;
     font-family: 'Inter';
     width: 70%;
+    cursor: pointer;
 }
 
 .fc_add_to_cart span {
@@ -328,3 +335,4 @@
 .fruits_card_section_in .head .right a:hover {
     color: #747474;
 }
+
