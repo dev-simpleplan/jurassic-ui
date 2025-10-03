@@ -201,6 +201,15 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "spacer5": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "counter": {
+      "type": "counter-sec"
     }
   },
   "order": [
@@ -213,6 +222,8 @@
     "video",
     "spacer3",
     "newsletter",
-    "spacer4"
+    "spacer4",
+    "counter",
+    "spacer5"
   ]
 }
