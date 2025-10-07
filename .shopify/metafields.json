@@ -27,6 +27,26 @@
         "name": "json",
         "category": "JSON"
       }
+    },
+    {
+      "key": "shipped_products_certificate",
+      "namespace": "custom",
+      "name": "Shipped Products Certificate",
+      "description": "",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "addresshero_address_suggestion",
+      "namespace": "addresshero_address_suggestion",
+      "name": "Address suggestion",
+      "description": "Address suggestion for incorrect address",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "page": [],

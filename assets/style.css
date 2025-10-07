@@ -757,6 +757,50 @@ footer::before {
     flex-direction: column;
     gap: 18px;
 }
+.fti-center-right {
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+    align-items: flex-end;
+}
+.fti-center-right .fti-cr-social {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.email-link a {
+    color: var(--light-white);
+    font-weight: 400;
+    font-size: 12px;
+    position: relative;
+    transition: .3s ease all;
+}
+.email-link a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--mud-color);
+    transition: .3s ease all;
+    transform: scale(0);
+}
+.email-link a:hover {
+    color: var(--mud-color);
+}
+.email-link a:hover::before {
+    transform: scale(1);
+}
+.social-icons ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.social-icons ul li svg path {
+    fill: var(--light-white);
+}
 .footer_link_wrap .footer_links a {
     font-size: 12px;
     color: #F9F5F0;
@@ -777,6 +821,11 @@ footer::before {
 }
 .footer_links a:hover::before {
     transform: scale(1);
+}
+.fti-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .footer-bottom {
@@ -815,12 +864,12 @@ footer::before {
 .footer__copyright .copyright-text,
 .footer__copyright .reserved {
     font-size: 12px;
-    color: #F9F5F0;
+    color: var(--light-white);
     letter-spacing: 0;
 }
 .copyright-text a {
     text-transform: uppercase;
-    color: #F9F5F0;
+    color: var(--light-white);
     transition: .3s ease all;
     position: relative;
 }
@@ -837,5 +886,31 @@ footer::before {
 }
 .copyright-text a:hover::before {
     transform: scale(1);
+}
+.footer-bottom-in .footer-links .blocks {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+.footer-made-with p {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--light-white);
+    font-weight: 400;
+    transition: .3s ease all;
+    position: relative;
+}
+.footer-made-with p svg {
+    margin: 0 4px;
+}
+.footer-made-with p a {
+    font-size: 12px;
+    color: var(--light-white);
+    transition: .3s ease all;
+}
+.footer-made-with p a:hover {
+    color: var(--mud-color);
 }
 /* Footer CSS */
