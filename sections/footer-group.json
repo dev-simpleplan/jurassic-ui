@@ -14,22 +14,10 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "menu_blocks_JLfEhi": {
-          "type": "menu_blocks",
-          "settings": {
-            "menu_handle": "footer"
-          }
-        },
-        "menu_blocks_8wTzUE": {
-          "type": "menu_blocks",
-          "settings": {
-            "menu_handle": "footer-learn-menu"
-          }
-        }
+        
       },
       "block_order": [
-        "menu_blocks_JLfEhi",
-        "menu_blocks_8wTzUE"
+        
       ],
       "settings": {
         "footer-logo": "shopify://shop_images/jurassic-footer-logo.svg",
