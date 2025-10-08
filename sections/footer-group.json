@@ -14,15 +14,55 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        
+        "trust_logo_zWtbWg": {
+          "type": "trust-logo",
+          "settings": {
+            "t-icon": "shopify://shop_images/image_308.png"
+          }
+        },
+        "trust_logo_BzgBTG": {
+          "type": "trust-logo",
+          "settings": {
+            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
+          }
+        },
+        "menu_group_6Ryarp": {
+          "type": "menu_group",
+          "settings": {
+            "menu_handle": "footer"
+          }
+        },
+        "menu_group_9xcnye": {
+          "type": "menu_group",
+          "settings": {
+            "menu_handle": "footer-learn-menu"
+          }
+        }
       },
       "block_order": [
-        
+        "trust_logo_zWtbWg",
+        "trust_logo_BzgBTG",
+        "menu_group_6Ryarp",
+        "menu_group_9xcnye"
       ],
       "settings": {
         "footer-logo": "shopify://shop_images/jurassic-footer-logo.svg",
-        "menu": "",
-        "show_payment_icons": true
+        "jf-mark": "shopify://shop_images/Group_427321593.svg",
+        "bottom_menu": "footer-nav-menu",
+        "show_payment_icons": true,
+        "email_link": "hello@jurassicfruit",
+        "show_facebook": true,
+        "facebook_url": "https://www.google.com/",
+        "show_instagram": true,
+        "instagram_url": "https://www.google.com/",
+        "show_x": true,
+        "x_url": "https://www.google.com/",
+        "show_linkedin": true,
+        "linkedin_url": "https://www.google.com/",
+        "show_youtube": true,
+        "youtube_url": "https://www.google.com/",
+        "show_whatsapp": false,
+        "whatsapp_url": ""
       }
     }
   },
