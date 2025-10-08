@@ -14,18 +14,6 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "trust_logo_BzgBTG": {
-          "type": "trust-logo",
-          "settings": {
-            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
-          }
-        },
-        "trust_logo_zWtbWg": {
-          "type": "trust-logo",
-          "settings": {
-            "t-icon": "shopify://shop_images/image_308.png"
-          }
-        },
         "menu_group_6Ryarp": {
           "type": "menu_group",
           "settings": {
@@ -37,13 +25,49 @@
           "settings": {
             "menu_handle": "footer-learn-menu"
           }
+        },
+        "partner_logo_fmjpgJ": {
+          "type": "partner-logo",
+          "settings": {
+            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
+          }
+        },
+        "partner_logo_XzkVyW": {
+          "type": "partner-logo",
+          "settings": {
+            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
+          }
+        },
+        "trust_logos_FKDq8p": {
+          "type": "trust-logos",
+          "settings": {
+            "trust_text": "Quality\nOrganic code: DE OKO-005",
+            "trust-image": "shopify://shop_images/image_307.png"
+          }
+        },
+        "trust_logos_3C6PBf": {
+          "type": "trust-logos",
+          "settings": {
+            "trust_text": "(4.7/5) excellent",
+            "trust-image": "shopify://shop_images/image_306.png"
+          }
+        },
+        "trust_logos_qXwHtt": {
+          "type": "trust-logos",
+          "settings": {
+            "trust_text": "(4.7) Trustpilot",
+            "trust-image": "shopify://shop_images/Frame_427323090.png"
+          }
         }
       },
       "block_order": [
-        "trust_logo_BzgBTG",
-        "trust_logo_zWtbWg",
         "menu_group_6Ryarp",
-        "menu_group_9xcnye"
+        "menu_group_9xcnye",
+        "partner_logo_fmjpgJ",
+        "partner_logo_XzkVyW",
+        "trust_logos_FKDq8p",
+        "trust_logos_3C6PBf",
+        "trust_logos_qXwHtt"
       ],
       "settings": {
         "footer-logo": "shopify://shop_images/jurassic-footer-logo.svg",

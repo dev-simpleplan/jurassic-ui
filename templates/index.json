@@ -55,6 +55,7 @@
     },
     "bestseller": {
       "type": "bestseller",
+      "settings": {}
     },
     "spacer": {
       "type": "spacer",
