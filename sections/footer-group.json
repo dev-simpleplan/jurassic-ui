@@ -14,16 +14,16 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "trust_logo_zWtbWg": {
-          "type": "trust-logo",
-          "settings": {
-            "t-icon": "shopify://shop_images/image_308.png"
-          }
-        },
         "trust_logo_BzgBTG": {
           "type": "trust-logo",
           "settings": {
             "t-icon": "shopify://shop_images/dhl_logo_svg.png"
+          }
+        },
+        "trust_logo_zWtbWg": {
+          "type": "trust-logo",
+          "settings": {
+            "t-icon": "shopify://shop_images/image_308.png"
           }
         },
         "menu_group_6Ryarp": {
@@ -40,8 +40,8 @@
         }
       },
       "block_order": [
-        "trust_logo_zWtbWg",
         "trust_logo_BzgBTG",
+        "trust_logo_zWtbWg",
         "menu_group_6Ryarp",
         "menu_group_9xcnye"
       ],
