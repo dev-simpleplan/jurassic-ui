@@ -53,6 +53,9 @@
         "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed."
       }
     },
+    "bestseller": {
+      "type": "bestseller",
+    },
     "spacer": {
       "type": "spacer",
       "settings": {
@@ -255,6 +258,7 @@
   },
   "order": [
     "banner",
+    "bestseller",
     "spacer",
     "all-categories",
     "spacer1",

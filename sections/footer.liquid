@@ -98,14 +98,28 @@
                 </div>
                 <div class="fti-bottom">
                     <div class="ftib-left">
-
+                        <div class="trust-icons"> 
+                            <ul class="trust-list"> 
+                                {% assign trust = section.blocks | where: 'type', 'trust-logos' %} 
+                                {% for block in trust %} 
+                                <li>
+                                    <div class="trust-image">
+                                        <img src="{{ block.settings.trust-image | img_url: 'master' }}" alt="" class="trust image">
+                                    </div> 
+                                    <div class="trust-text">
+                                      {{ block.settings.trust_text }}
+                                    </div>
+                                </li>
+                                {% endfor %} 
+                            </ul>
+                        </div>
                     </div>
                     <div class="ftib-right">
                         <div class="footer-shipping">
                             <div class="partner-wrap">
                                 <p class="footer_title">Shipping</p>
                                 <ul class="partner-list trust">
-                                  {% assign partner = section.blocks | where: 'type', 'trust-logo' %}
+                                  {% assign partner = section.blocks | where: 'type', 'partner-logo' %}
                                   {% for block in partner %}
                                     <li>
                                       <img
@@ -233,7 +247,7 @@
     }, 
     {
         "name": "Trusted Partner",
-        "type": "trust-logo",
+        "type": "partner-logo",
         "settings": [
           {
             "type": "image_picker",
@@ -243,18 +257,18 @@
         ]
     },
     {
-        "name": "Social Logos",
-        "type": "social-logos",
+        "name": "Trust Logos",
+        "type": "trust-logos",
         "settings": [
           {
-            "type": "text",
-            "id": "social-link",
-            "label": "Social Link"
+            "type": "textarea",
+            "id": "trust_text",
+            "label": "Trust text"
           },
           {
             "type": "image_picker",
-            "id": "social-icon",
-            "label": "Social Icon"
+            "id": "trust-image",
+            "label": "Trust icon logo"
           }
         ]
     }
