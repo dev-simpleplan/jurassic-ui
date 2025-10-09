@@ -119,7 +119,8 @@ p:empty {
     width: 100%;
 }
 .container-fluid {
-    max-width: 1600px;
+    max-width: 1800px;
+    width: 100%;
     padding: 0 40px;
     margin-left: auto;
     margin-right: auto;
@@ -764,7 +765,7 @@ li.nav-item a.nav-link:hover::before {
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     gap: 80px;
     align-items: center;
     padding: 40px 0;
@@ -1051,7 +1052,7 @@ section.scroll-sec {
     max-width: 44ch;
 }
 .sw-first-right {
-    width: 80%;
+    width: 100%;
     margin-left: auto;
     display: flex;
 }
@@ -1061,13 +1062,26 @@ section.scroll-sec {
     align-items: flex-start;
     justify-content: flex-end;
     gap: 36px;
+    padding-left: 50px;
 }
 .swfr-in .swright-top {
     position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+    align-items: flex-start;
+}
+.sidetop-text {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #FCF9F5;
 }
 .swright-top .swrt-image {
     aspect-ratio: 3/4;
-    width: 70%;
+    width: 100%;
+    max-width: 20vw;
     position: relative;
 }
 .swrt-image img {
@@ -1121,14 +1135,14 @@ section.scroll-sec {
     height: 100%;
 }
 .sw-second-left {
-    padding-bottom: 10%;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 .sw-second-left .sws-image {
-    height: 100%;
-    width: 90%;
+    height: 80vh;
+    width: 100%;
+    max-width: 30vw;
     margin-left: auto;
     aspect-ratio: 5/7;
 }
@@ -1213,13 +1227,14 @@ section.scroll-sec {
     right: 0;
     top: 0;
     height: 100%;
-    width: 30%;
+    width: 24vw;
     background-color: #FCF9F5;
 }
 .slide3-wrap {
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 20px;
+    padding-bottom: 10%;
 }
 .stl-in {
     display: flex;
@@ -1258,10 +1273,37 @@ section.scroll-sec {
     object-fit: cover;
 }
 .sw-three-left {
-    width: 80%;
+    width: 100%;
+    display: flex;
 }
 .slide3-wrap .swrt-image {
-    width: 60%;
+    width: 100%;
+}
+.slide3-wrap .swrt-image .swrt-scroll {
+    bottom: -5%;
+    right: -23%;
+    top: auto;
+}
+.scrollsec-slide.slide_4 {
+    position: relative;
+}
+.scrollsec-slide.slide_4::before {
+    content: '';
+    position: absolute;
+    width: 60vw;
+    height: 100%;
+    background-color: #DBD7C8;
+    top: 0;
+    right: 0;
+}
+.slide4-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 100%;
+}
+.sw-four-right {
+    
 }
 
 
@@ -1541,12 +1583,6 @@ footer::before {
     justify-content: center;
 }
 @media(max-width:1500px){
-    .sw-first-right {
-        margin-left: 0;
-    }
-    .swright-top .swrt-image {
-        width: 55%;
-    }
     .swrt-image .swrt-scroll {
         top: -57px;
         right: -40px;
