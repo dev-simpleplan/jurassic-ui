@@ -1,0 +1,120 @@
+<section class="video-carousel">
+  <div class="vc-heading">
+    <div class="container">
+      <div class="vcheading-in">
+        <h2>
+          <span>{{ section.settings.heading_top }}</span>
+          <span>{{ section.settings.heading_bottom }}</span>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="vc-carousel">
+    <div class="owl-carousel owl-theme">
+      {% for block in section.blocks %}
+        <div class="item">
+          <div class="vci-item">
+            <div class="vcitem-video">
+              {% if block.settings.video_link != blank %}
+                {{ block.settings.video_link | video_tag: autoplay: false, loop: true, muted: false, controls: false, playsinline: true, class: 'img ab'
+                }}
+                <button class="video-control" aria-label="Video Play Button">
+                  <span class="video-control-play">
+                    <span class="video-control-symbol" aria-hidden="true"><img
+                        width="100%"
+                        height="auto"
+                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174"
+                        alt=""></span>
+                  </span>
+                  <span class="video-control-pause">
+                    <span class="video-control-symbol" aria-hidden="true"><img
+                        width="100%"
+                        height="auto"
+                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174"
+                        alt=""></span>
+                  </span>
+                </button>
+              {% endif %}
+              {% if section.settings.video_img != blank %}
+                <img
+                  width="100%"
+                  src="{{ block.settings.video_img |  img_url: 'master' }}"
+                  alt="{{ block.settings.video_img.title }}"
+                  class="img ab">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const videoElement = document.querySelector("video");
+    const playPauseButton = document.querySelector("button.video-control");
+
+    if (videoElement && playPauseButton) {
+    playPauseButton.addEventListener("click", () => {
+        playPauseButton.classList.toggle("playing");
+
+        if (playPauseButton.classList.contains("playing")) {
+        videoElement.play();
+        } else {
+        videoElement.pause();
+        }
+    });
+
+    videoElement.addEventListener("ended", () => {
+        playPauseButton.classList.remove("playing");
+    });
+    }
+    });
+
+    $('.vc-carousel .owl-carousel').owlCarousel({
+        center: true,
+        items:2,
+        loop:true,
+        margin:10,
+        responsive:{
+            600:{
+                items:2
+            }
+        }
+    });
+</script>
+
+{% schema %}
+  {
+    "name": "Video-Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading_top",
+        "label": "Top Heading"
+      }, {
+        "type": "text",
+        "id": "heading_bottom",
+        "label": "Bottom Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "UGC Videos",
+        "type": "ugc-videos",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "video_img",
+            "label": "Upload Image"
+          }, {
+            "type": "video",
+            "id": "video_link",
+            "label": "Upload Video"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
