@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-    <head>
-    
+  <head>
+
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}" />
     {% endif %}
@@ -14,29 +14,32 @@
 
     <style>
       @font-face {
-          font-family: 'scale-variable, sans-serif;';
-          src: url('{{ 'Scale-VF-Regular.woff2' | asset_url }}') format('woff2'),
-              url('{{ 'Scale-VF-Regular.woff' | asset_url }}') format('woff');
-          font-weight: 400;
-          font-style: normal;
-          /* font-stretch: 100%; */
-          font-display: swap;
+        font-family: 'scale-variable, sans-serif;';
+        src: url('{{ 'Scale-VF-Regular.woff2' | asset_url }}') format('woff2')
+        , url('{{ 'Scale-VF-Regular.woff' | asset_url }}') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        /* font-stretch: 100%; */
+        font-display: swap;
       }
     </style>
 
-    <lincustom.csseconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% comment %} <lincustom.csseconnect" href="https://fonts.googleapis.com"> {% endcomment %}
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 
     {% # Inlined CSS Variables %}
-    {% render 'css-variables' %}
+  {% render 'css-variables' %}
 
     {% # Load and preload the critical CSS %}
     {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
-    {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -51,9 +54,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"></script>
 
-    
-      
-      
 
   </head>
 
@@ -139,16 +139,15 @@
           ScrollTrigger.getAll().forEach(st => st.kill());
         };
         ScrollTrigger.refresh();
-    });
-    
+          });
     </script>
 
     <script>
       AOS.init();
     </script>
 
-<script>
-  $('.bxslider').bxSlider({
+    <script>
+        $('.bxslider').bxSlider({
       minSlides: 4,
       maxSlides: 4,
       slideWidth: 400,
@@ -157,9 +156,9 @@
       infiniteLoop: true,
       tickerHover: true,
       speed: 18000
-  });
+        });
 
-  $('.vc-carousel .owl-carousel').owlCarousel({
+        $('.vc-carousel .owl-carousel').owlCarousel({
         center: true,
         autoplay: true,
         autoplayTimeout: 15000,
@@ -171,31 +170,25 @@
                 items:4
             }
         }
-    });
-</script>
+          });
+    </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".sws-fruits").forEach((container) => {
-    const items = Array.from(container.querySelectorAll(".swsfruits-item"));
-    const shouldReset = container.dataset.reset === "true";
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".sws-fruits").forEach((container) => {
+          const items = Array.from(container.querySelectorAll(".swsfruits-item"));
+          const shouldReset = container.dataset.reset === "true";
 
-    container.addEventListener("click", () => {
-      // Find the first item that isn't visible yet
-      const nextIndex = items.findIndex(el => !el.classList.contains("visible"));
-
-      if (nextIndex !== -1) {
-        items[nextIndex].classList.add("visible");
-      } else if (shouldReset) {
-        // All visible; reset if cycling is enabled
-        items.forEach(el => el.classList.remove("visible"));
-      }
-    });
-  });
-});
-</script>
-
-
+          container.addEventListener("mouseenter", () => {
+            items.forEach((el, index) => {
+              setTimeout(() => {
+                el.classList.add("visible");
+              }, index * 200); // 200ms delay per item (adjust as needed)
+            });
+          });
+        });
+      });
+    </script>
 
 
   </body>
