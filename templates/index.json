@@ -93,8 +93,42 @@
     },
     "video-carousel": {
       "type": "video-carousel",
+      "blocks": {
+        "ugc_videos_UXLNi4": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_img": "shopify://shop_images/5LAB10.jpg",
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_kBLy7n": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_3TBr6y": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_inDUwA": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "ugc_videos_UXLNi4",
+        "ugc_videos_kBLy7n",
+        "ugc_videos_3TBr6y",
+        "ugc_videos_inDUwA"
+      ],
       "settings": {
-        
+        "heading_top": "Bite into the",
+        "heading_bottom": "wild with us"
       }
     },
     "spacer8": {
@@ -371,6 +405,33 @@
         "spacer_height": 140
       }
     },
+    "1759995182be9fddf6": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_Ye9raR": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_Ye9raR"
+      ],
+      "settings": {}
+    },
     "video": {
       "type": "video-section",
       "settings": {
@@ -399,33 +460,6 @@
       "settings": {
         "spacer_height": 140
       }
-    },
-    "1759995182be9fddf6": {
-      "type": "apps",
-      "blocks": {
-        "instafeed_app_block_Ye9raR": {
-          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
-          "settings": {
-            "title": "",
-            "title_color": "",
-            "title_size_v2": 0,
-            "alignment": "center",
-            "instafeed_margin_top": 0,
-            "instafeed_margin_bottom": 0,
-            "instafeed_margin_sides": 0,
-            "show_instagram_link": false,
-            "link_alignment": "left",
-            "link_color": "#000000",
-            "background_color": "",
-            "feed_id": "",
-            "html_area": ""
-          }
-        }
-      },
-      "block_order": [
-        "instafeed_app_block_Ye9raR"
-      ],
-      "settings": {}
     }
   },
   "order": [
