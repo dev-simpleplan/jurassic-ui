@@ -82,6 +82,10 @@ h1 {
 }
 h2 {
     font-size: clamp(28px, 2.543px + 4.623vw, 52px);
+    line-height: 97%;
+}
+h2.small {
+    font-size: clamp(28px, 2.543px + 4.623vw, 46px);
 }
 
 p.big {
@@ -702,6 +706,85 @@ li.nav-item a.nav-link {
     text-align: center;
     max-width: 23ch;
 }
+
+/* Discovery Box CSS */
+.dis-box {
+    position: relative;
+}
+.dis-box .db-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.db-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.db-in {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 40px 0;
+}
+.db-in .bdi-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 100%;
+    padding: 60px 0;
+}
+.bdil-top .heading {
+
+}
+.bdil-bottom .bd-testimonial-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.bd-testimonial-wrap .db-tw-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.db-tw-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.db-tw-review {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.db-tw-review .rating-text {
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--body-bg);
+}
+.db-tw-user p {
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #FCF9F5;
+}
+.db-tw-content p {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120%;
+    color: #FCF9F5;
+    max-width: 26ch;
+}
+/* Discovery Box CSS */
+
 /* Footer CSS */
 footer {
     background-color: var(--grey-black);
@@ -828,6 +911,32 @@ footer::before {
     align-items: flex-end;
     margin-top: 50px;
 }
+.fti-bottom .ftib-left {}
+.trust-icons .trust-list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.trust-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.trust-list li .trust-image img {
+    max-width: 50px;
+    max-height: 42px;
+    object-fit: contain;
+}
+.trust-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.trust-text p {
+    font-size: 12px;
+    color: #DBD7C8;
+    line-height: 14px;
+}
 .fti-bottom .ftib-right {
     display: flex;
     align-items: flex-start;
@@ -855,7 +964,6 @@ footer::before {
     width: auto;
     height: auto;
 }
-
 .footer-bottom {
     margin-top: 36px;
     padding: 20px 0;
