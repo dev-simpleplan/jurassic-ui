@@ -61,7 +61,11 @@
     },
     "bestseller": {
       "type": "bestseller",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "heading": "What’s Best This Week",
+        "subheading": "Discover fruits that are fresh, flavorful, and entirely worth the adventure. Every week, our team tastes and curates the four most delicious, in-season picks, so you get only what’s ripe, rare, and remarkable."
+      }
     },
     "spacer": {
       "type": "spacer",
@@ -71,7 +75,15 @@
     },
     "discovery-box": {
       "type": "discovery-box",
-      "settings": {}
+      "settings": {
+        "bg-image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+        "heading": "Embark on a Flavor Adventure with Discovery Box",
+        "para": "New to Jurassic? This Discovery Box is your perfect start.",
+        "user_image": "shopify://shop_images/5LAB10.jpg",
+        "review_star": 4.5,
+        "user_name": "carren loved jurassic fruits",
+        "user_comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!"
+      }
     },
     "spacer7": {
       "type": "spacer",
@@ -198,42 +210,105 @@
         "spacer_height": 140
       }
     },
-    "reviews":{
+    "reviews": {
       "type": "reviews",
+      "blocks": {
+        "review_item_QhgrqC": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB10.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_qJcBmX": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB10.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_8zJDHk": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB10.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_THCCkn": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB04.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_6nVY7V": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB04.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_FMWLx3": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB04.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_JfYYbz": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB04.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Mother of 3"
+          }
+        },
+        "review_item_X6kWgB": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/5LAB10.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Danny Silver",
+            "user_desig": "Mother of 2"
+          }
+        }
+      },
+      "block_order": [
+        "review_item_QhgrqC",
+        "review_item_qJcBmX",
+        "review_item_8zJDHk",
+        "review_item_THCCkn",
+        "review_item_6nVY7V",
+        "review_item_FMWLx3",
+        "review_item_JfYYbz",
+        "review_item_X6kWgB"
+      ],
       "settings": {
-
+        "heading": "What Explorers Are Saying"
       }
     },
     "spacer6": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
-    "video": {
-      "type": "video-section",
-      "settings": {
-        "heading": "TV Came to Taste the Untamed",
-        "para": "We were featured on Germany’s biggest science show, Galileo — and they went wild for it.",
-        "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
-      }
-    },
-    "spacer3": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "left-image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
-        "right-image": "shopify://shop_images/64efb817b0eda88b82156381eddafbc724f00fdf.jpg",
-        "heading": "Join the expedition",
-        "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
-      }
-    },
-    "spacer4": {
       "type": "spacer",
       "settings": {
         "spacer_height": 140
@@ -278,6 +353,35 @@
         "para": "Behind every bite is a network of growers, caretakers, and conscious choices that protect people and the planet."
       }
     },
+    "spacer3": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "video": {
+      "type": "video-section",
+      "settings": {
+        "heading": "TV Came to Taste the Untamed",
+        "para": "We were featured on Germany’s biggest science show, Galileo — and they went wild for it.",
+        "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+      }
+    },
+    "spacer4": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "left-image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+        "right-image": "shopify://shop_images/64efb817b0eda88b82156381eddafbc724f00fdf.jpg",
+        "heading": "Join the expedition",
+        "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
+      }
+    },
     "spacer5": {
       "type": "spacer",
       "settings": {
@@ -298,11 +402,11 @@
     "spacer2",
     "reviews",
     "spacer6",
-    "video",
-    "spacer3",
-    "newsletter",
-    "spacer4",
     "counter",
+    "spacer3",
+    "video",
+    "spacer4",
+    "newsletter",
     "spacer5"
   ]
 }

@@ -26,7 +26,6 @@
             "menu_handle": "footer-learn-menu"
           }
         },
-        
         "partner_logo_XzkVyW": {
           "type": "partner-logo",
           "settings": {
@@ -58,7 +57,6 @@
       "block_order": [
         "menu_group_6Ryarp",
         "menu_group_9xcnye",
-        "partner_logo_fmjpgJ",
         "partner_logo_XzkVyW",
         "trust_logos_FKDq8p",
         "trust_logos_3C6PBf",
