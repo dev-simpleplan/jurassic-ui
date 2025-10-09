@@ -30,7 +30,7 @@
                     <span class="video-control-symbol" aria-hidden="true"><img
                         width="100%"
                         height="auto"
-                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174"
+                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102"
                         alt=""></span>
                   </span>
                 </button>
@@ -51,39 +51,71 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const videoElement = document.querySelector("video");
-    const playPauseButton = document.querySelector("button.video-control");
+document.addEventListener("DOMContentLoaded", () => {
+  const wraps = document.querySelectorAll(".vcitem-video");
 
-    if (videoElement && playPauseButton) {
-    playPauseButton.addEventListener("click", () => {
-        playPauseButton.classList.toggle("playing");
+  wraps.forEach((wrap) => {
+    const video = wrap.querySelector("video");
+    const btn = wrap.querySelector("button.video-control");
+    if (!video || !btn) return;
 
-        if (playPauseButton.classList.contains("playing")) {
-        videoElement.play();
-        } else {
-        videoElement.pause();
+    let hideTimer = null;
+
+    const showBtn = () => {
+      wrap.classList.remove("controls-hidden");
+      if (hideTimer) clearTimeout(hideTimer);
+    };
+
+    const scheduleHide = () => {
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        if (!video.paused && !video.ended) {
+          wrap.classList.add("controls-hidden");
         }
+      }, 10); // hide after 1s of playing
+    };
+
+    const setState = (playing) => {
+      btn.classList.toggle("playing", playing);
+      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+      if (playing) scheduleHide(); else showBtn();
+    };
+
+    // Click to play/pause
+    btn.addEventListener("click", () => {
+      if (video.paused || video.ended) {
+        // optional: pause others
+        document.querySelectorAll(".vcitem-video video").forEach((v) => {
+          if (v !== video && !v.paused) v.pause();
+        });
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
     });
 
-    videoElement.addEventListener("ended", () => {
-        playPauseButton.classList.remove("playing");
-    });
-    }
+    // Sync state with native controls/autoplay
+    video.addEventListener("play",   () => setState(true));
+    video.addEventListener("pause",  () => setState(false));
+    video.addEventListener("ended",  () => setState(false));
+
+    // Show on hover/move; re-hide after mouse leaves if still playing
+    wrap.addEventListener("mouseenter", showBtn);
+    wrap.addEventListener("mousemove", showBtn);
+    wrap.addEventListener("mouseleave", () => {
+      if (!video.paused && !video.ended) scheduleHide();
     });
 
-    $('.vc-carousel .owl-carousel').owlCarousel({
-        center: true,
-        items:2,
-        loop:true,
-        margin:10,
-        responsive:{
-            600:{
-                items:2
-            }
-        }
+    // Keep visible while keyboard focusing the button
+    btn.addEventListener("focusin", showBtn);
+    btn.addEventListener("focusout", () => {
+      if (!video.paused && !video.ended) scheduleHide();
     });
+  });
+});
 </script>
+
+
 
 {% schema %}
   {

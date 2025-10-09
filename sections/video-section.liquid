@@ -21,7 +21,7 @@
                                 <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
                             </span>
                             <span class="video-control-pause">
-                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
+                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt=""></span>
                             </span>
                         </button>
                     {% endif %}
@@ -35,27 +35,40 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const videoElement = document.querySelector("video");
-    const playPauseButton = document.querySelector("button.video-control");
+document.addEventListener("DOMContentLoaded", () => {
+  const wraps = document.querySelectorAll(".vidimage-in");
 
-    if (videoElement && playPauseButton) {
-    playPauseButton.addEventListener("click", () => {
-        playPauseButton.classList.toggle("playing");
+  wraps.forEach((wrap) => {
+    const video = wrap.querySelector("video");
+    const btn = wrap.querySelector("button.video-control");
+    if (!video || !btn) return;
 
-        if (playPauseButton.classList.contains("playing")) {
-        videoElement.play();
-        } else {
-        videoElement.pause();
-        }
+    const setState = (playing) => {
+      btn.classList.toggle("playing", playing);
+      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+    };
+
+    // Click to play/pause
+    btn.addEventListener("click", () => {
+      if (video.paused || video.ended) {
+        // Pause all other videos (optional)
+        document.querySelectorAll(".vidimage-in video").forEach((v) => {
+          if (v !== video && !v.paused) v.pause();
+        });
+        video.play().catch(() => {}); // avoid unhandled promise errors
+      } else {
+        video.pause();
+      }
     });
 
-    videoElement.addEventListener("ended", () => {
-        playPauseButton.classList.remove("playing");
-    });
-    }
-    });
+    // Keep button state in sync with native controls/autoplay/etc
+    video.addEventListener("play", () => setState(true));
+    video.addEventListener("pause", () => setState(false));
+    video.addEventListener("ended", () => setState(false));
+  });
+});
 </script>
+
 
 {% schema %}
 {

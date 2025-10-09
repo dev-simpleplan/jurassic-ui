@@ -272,7 +272,7 @@
 }
 
 .fruits_card_section_in .head .left {
-    width: 70%;
+    max-width: 90ch;
 }
 
 .fruits_card_section_in .head .right {
