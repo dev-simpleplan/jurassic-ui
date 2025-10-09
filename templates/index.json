@@ -249,6 +249,12 @@
         "para": "Behind every bite is a network of growers, caretakers, and conscious choices that protect people and the planet."
       }
     },
+    "spacer3": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "reviews": {
       "type": "reviews",
       "blocks": {
@@ -353,12 +359,6 @@
         "spacer_height": 140
       }
     },
-    "spacer3": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
     "video": {
       "type": "video-section",
       "settings": {
@@ -387,6 +387,33 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "1759995182be9fddf6": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_Ye9raR": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_Ye9raR"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -404,6 +431,7 @@
     "spacer3",
     "reviews",
     "spacer6",
+    "1759995182be9fddf6",
     "video",
     "spacer4",
     "newsletter",
