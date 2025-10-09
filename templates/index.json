@@ -417,6 +417,18 @@
         "spacer_height": 140
       }
     },
+    "headingsec": {
+      "type": "headingsec",
+      "settings": {
+
+      }
+    },
+    "spacer10": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "1759995182be9fddf6": {
       "type": "apps",
       "blocks": {
@@ -493,7 +505,9 @@
     "spacer3",
     "reviews",
     "spacer6",
+    "headingsec",
     "1759995182be9fddf6",
+    "spacer10",
     "video",
     "spacer4",
     "newsletter",

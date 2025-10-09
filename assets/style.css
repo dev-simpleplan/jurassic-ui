@@ -227,6 +227,22 @@ li.nav-item a.nav-link {
     text-transform: uppercase;
     color: var(--black);
     text-decoration: none;
+    position: relative;
+
+}
+li.nav-item a.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transition: .3s ease all;
+    transform: scale(0);
+}
+li.nav-item a.nav-link:hover::before {
+    transform: scale(1);
 }
 
 .mega-menu {
@@ -984,7 +1000,7 @@ section.scroll-sec {
 }
 .scrollsec-wrapper {
     display: flex;
-    width: 500vw;
+    width: 400vw;
     height: 100%;
     align-items: center;
 }
@@ -992,8 +1008,8 @@ section.scroll-sec {
     flex: 0 0 100vw;
     height: 100%;
     display: flex;
-    align-items: center;
-    padding: 20px 0;
+    align-items: stretch;
+    padding: 60px 0;
 }
 .scrollsec-slide.slide_1 .scrollsecslide-in {
     
@@ -1006,11 +1022,16 @@ section.scroll-sec {
 }
 .scrollsecslide-in {
     width: 100%;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    z-index: 1;
 }
 .slide1-wrap {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
     gap: 20px;  
+    height: 100%;
 }
 .sw-first-left {
     display: flex;
@@ -1023,30 +1044,224 @@ section.scroll-sec {
     text-transform: capitalize;
     letter-spacing: -0.32px;
     line-height: 97%;
+    max-width: 8ch;
+}
+.sw-first-left p {
+    color: #FCF9F5;
+    max-width: 44ch;
 }
 .sw-first-right {
+    width: 80%;
+    margin-left: auto;
+    display: flex;
+}
+.swfr-in {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: flex-end;
+    gap: 36px;
 }
-.sw-first-right .swright-top {
+.swfr-in .swright-top {
     position: relative;
 }
 .swright-top .swrt-image {
     aspect-ratio: 3/4;
-    overflow: hidden;
-    width: 50%;
+    width: 70%;
+    position: relative;
 }
 .swrt-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.swrt-scroll {
+.swrt-image .swrt-scroll {
     position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 150px;
+}
+.swrt-scroll img {
+    width: 100%;
+}
+.swright-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.swright-bottom h3 {
+    color: #FCF9F5;
+    font-size: 32px;
+    letter-spacing: -0.32px;
+    text-transform: capitalize;
+}
+.swright-bottom p {
+    color: #FCF9F5;
+    font-size: 16px;
+    line-height: 150%;
+    max-width: 47ch;
+}
+.scrollsec-slide.slide_2 {
+    position: relative;
+}
+.scrollsec-slide.slide_2::before {
+    content: '';
+    position: absolute;
+    width: 20%;
+    height: 100%;
     top: 0;
     left: 0;
+    background-color: #1A1A1A;
+    z-index: 0;
+}
+.slide2-wrap {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 30px;
+    height: 100%;
+}
+.sw-second-left {
+    padding-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.sw-second-left .sws-image {
+    height: 100%;
+    width: 90%;
+    margin-left: auto;
+    aspect-ratio: 5/7;
+}
+.sws-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sws-content p {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    text-align: right;
+}
+.sw-second-right {
+    position: relative;
+}
+.sw-second-right .sws-heading {
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.sws-heading h3 {
+    font-size: 32px;
+    line-height: 120%;
+    letter-spacing: -0.32px;
+    text-transform: capitalize;
+    color: #1A1A1A;
+    max-width: 12ch;
+}
+.sws-heading p {
+    max-width: 33ch;
+}
+.sws-fruits {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+.swsfruits-item {
+    position: absolute;
+    transition: .3s ease all;
+    opacity: 0;
+    /* visibility: hidden; */
+    z-index: 3;
+}
+.swsfruits-item.visible {
+    opacity: 1;
+    /* visibility: visible; */
+}
+.swsfruits-item.fruit1 {
+    right: 30%;
+    top: 10%;
+}
+.swsfruits-item.fruit2 {
+    right: 5%;
+    top: 15%;
+}
+.swsfruits-item.fruit3 {
+    right: 30%;
+    bottom: 30%;
+}
+.swsfruits-item.fruit4 {
+    right: 60%;
+    bottom: 10%;
+}
+.swsfruits-item img {
+    width: auto;
+    height: auto;
+    max-width: 120px;
+    max-height: 320px;
+}
+.scrollsec-slide.slide_3 {
+    position: relative;
+}
+.scrollsec-slide.slide_3::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 30%;
+    background-color: #FCF9F5;
+}
+.slide3-wrap {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px;
+}
+.stl-in {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+.stl-in .stli-top {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.stli-top .sidetop-text {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #FCF9F5;
+}
+.stli-top .stil-image {
+    width: 40%;
+    aspect-ratio: 3/4;
+    position: relative;
+}
+.stil-image {
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 150px;
+}
+.stil-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sw-three-left {
+    width: 80%;
+}
+.slide3-wrap .swrt-image {
+    width: 60%;
 }
 
 
@@ -1315,3 +1530,33 @@ footer::before {
     color: var(--mud-color);
 }
 /* Footer CSS */
+
+
+
+.fc_add_to_cart span.remove_product,
+.fc_add_to_cart span.add_product {
+    display: none!important;
+}
+.fc_add_to_cart {
+    justify-content: center;
+}
+@media(max-width:1500px){
+    .sw-first-right {
+        margin-left: 0;
+    }
+    .swright-top .swrt-image {
+        width: 55%;
+    }
+    .swrt-image .swrt-scroll {
+        top: -57px;
+        right: -40px;
+        width: 90px;
+    }
+    .sws-heading p {
+        font-size: 14px;
+    }
+    .sw-second-left .sws-image {
+        width: 70%;
+        height: 90%;
+    }
+}
