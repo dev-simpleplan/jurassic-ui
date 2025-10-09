@@ -210,6 +210,45 @@
         "spacer_height": 140
       }
     },
+    "counter": {
+      "type": "counter-sec",
+      "blocks": {
+        "cards_GtULhz": {
+          "type": "cards",
+          "settings": {
+            "number": 3600,
+            "expression": "+",
+            "content": "Smallholder families supported since day one"
+          }
+        },
+        "cards_7LY4Am": {
+          "type": "cards",
+          "settings": {
+            "number": 50,
+            "expression": "+",
+            "content": "Tons of fruit saved from waste through low-impact sourcing"
+          }
+        },
+        "cards_W4qKGH": {
+          "type": "cards",
+          "settings": {
+            "number": 8000,
+            "expression": "+",
+            "content": "Days of local work created through our operations"
+          }
+        }
+      },
+      "block_order": [
+        "cards_GtULhz",
+        "cards_7LY4Am",
+        "cards_W4qKGH"
+      ],
+      "settings": {
+        "bg-image": "shopify://shop_images/counter-bg.jpg",
+        "heading": "The Impact Behind Every Bite",
+        "para": "Behind every bite is a network of growers, caretakers, and conscious choices that protect people and the planet."
+      }
+    },
     "reviews": {
       "type": "reviews",
       "blocks": {
@@ -314,45 +353,6 @@
         "spacer_height": 140
       }
     },
-    "counter": {
-      "type": "counter-sec",
-      "blocks": {
-        "cards_GtULhz": {
-          "type": "cards",
-          "settings": {
-            "number": 3600,
-            "expression": "+",
-            "content": "Smallholder families supported since day one"
-          }
-        },
-        "cards_7LY4Am": {
-          "type": "cards",
-          "settings": {
-            "number": 50,
-            "expression": "+",
-            "content": "Tons of fruit saved from waste through low-impact sourcing"
-          }
-        },
-        "cards_W4qKGH": {
-          "type": "cards",
-          "settings": {
-            "number": 8000,
-            "expression": "+",
-            "content": "Days of local work created through our operations"
-          }
-        }
-      },
-      "block_order": [
-        "cards_GtULhz",
-        "cards_7LY4Am",
-        "cards_W4qKGH"
-      ],
-      "settings": {
-        "bg-image": "shopify://shop_images/counter-bg.jpg",
-        "heading": "The Impact Behind Every Bite",
-        "para": "Behind every bite is a network of growers, caretakers, and conscious choices that protect people and the planet."
-      }
-    },
     "spacer3": {
       "type": "spacer",
       "settings": {
@@ -400,10 +400,10 @@
     "spacer1",
     "fresh",
     "spacer2",
-    "reviews",
-    "spacer6",
     "counter",
     "spacer3",
+    "reviews",
+    "spacer6",
     "video",
     "spacer4",
     "newsletter",
