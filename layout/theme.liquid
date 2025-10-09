@@ -135,6 +135,44 @@
             }
           })
         }
+
+        const imageText = document.querySelector('.image-text-scroll')
+        if(imageText){
+          gsap.set(["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"], {opacity: 0});
+
+          let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: imageText,
+              start: "top top",
+              end: "+=300%",   // enough scroll space for 3 steps
+              pin: true,
+              scrub: 1,
+              snap: {
+                snapTo: "labels", // snap to timeline labels
+                duration: {min: 0.2, max: 0.5}, // smooth snapping
+                delay: 0.5,
+                ease: "none"
+              }
+            }
+          });
+
+          // Add labels and animations for each step
+          tl.addLabel("step1")
+            .to("#image1", {opacity: 1, duration: 0.8})
+            .addLabel("step2")
+            .to(".dt-in.one", {opacity: 1, duration: 0.8})
+            .addLabel("step3")
+            .to("#image3", {opacity: 1, duration: 0.8})
+            .addLabel("step4")
+            .to(".dt-in.three", {opacity: 1, duration: 0.8})
+            .addLabel("step5")
+            .to("#image2", {opacity: 1, duration: 0.8})
+            .addLabel("step6")
+            .to(".dt-in.two", {opacity: 1, duration: 0.8})
+            .addLabel("step7")
+            .to(".dt-in.four", {opacity: 1, duration: 0.8});
+        }
+
         return() => {
           ScrollTrigger.getAll().forEach(st => st.kill());
         };

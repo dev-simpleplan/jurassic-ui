@@ -160,6 +160,15 @@ a, a:hover {
     background-color: transparent;
     color: #1A1A1A;
 }
+.custom-btn.white {
+    background-color: #FCF9F5;
+    color: #1A1A1A;
+    border: 1px solid #FCF9F5;
+}
+.custom-btn.white:hover {
+    background-color: transparent;
+    color: #FCF9F5;
+}
 
 .sec-with-space {
     display: flex;
