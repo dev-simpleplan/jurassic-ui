@@ -209,6 +209,18 @@
         "spacer_height": 140
       }
     },
+    "scroll-section": {
+      "type": "scroll-section",
+      "settings": {
+        
+      }
+    },
+    "spacer9": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "fresh": {
       "type": "fresh-every-week",
       "blocks": {
@@ -473,6 +485,8 @@
     "spacer8",
     "all-categories",
     "spacer1",
+    "scroll-section",
+    "spacer9",
     "fresh",
     "spacer2",
     "counter",

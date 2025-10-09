@@ -116,6 +116,7 @@ p:empty {
     padding: 0 40px;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
 }
 .container-fluid {
     max-width: 1600px;
@@ -592,6 +593,26 @@ li.nav-item a.nav-link {
     height: 100%;
     object-fit: contain;
 }
+
+
+.vcitem-video { position: relative; }
+.video-control {
+  position: absolute;
+  left: 1rem; bottom: 1rem;
+  opacity: 1;
+  transition: opacity .2s ease;
+}
+.vcitem-video.controls-hidden .video-control {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Reveal on hover or keyboard focus */
+.vcitem-video:hover .video-control,
+.video-control:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .newsletter {
     position: relative;
 }
@@ -891,7 +912,143 @@ li.nav-item a.nav-link {
 /* Video Carousel */
 .video-carousel {
     background-color: #DBD7C8;
+    padding: 80px 0;
+    position: relative;
 }
+.video-carousel .vc-heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 80px 0;
+}
+.vc-heading .vcheading-in {
+    height: 100%;
+}
+.vcheading-in h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    font-size: 120px;
+}
+.vcheading-in h2 span:last-child {
+    text-align: right;
+}
+.vc-carousel {
+    margin: 90px 0;
+}
+.vc-carousel .vci-item {
+    transition: .3s ease all;
+    transform: scale(0.7);
+}
+.owl-item.active.center .vci-item  {
+    transform: scale(1);
+}
+.vci-item .vcitem-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 126%;
+}
+.vcitem-video > video, .vcitem-video > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    object-position: center;
+}
+.vcitem-video .video-control {
+    width: 70px;
+    height: 70px;
+}
+.vcitem-video .video-control-symbol {
+    width: 22px;
+    height: 22px;
+}
+
+/* Scrolling Section */
+section.scroll-sec {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+.scrollsec-wrapper {
+    display: flex;
+    width: 500vw;
+    height: 100%;
+    align-items: center;
+}
+.scrollsec-slide {
+    flex: 0 0 100vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+.scrollsec-slide.slide_1 .scrollsecslide-in {
+    
+}
+.scrollsec-slide.slide_1, .scrollsec-slide.slide_3 {
+    background-color: #1A1A1A;
+}
+.scrollsec-slide.slide_2 {
+    background-color: #FCF9F5;
+}
+.scrollsecslide-in {
+    width: 100%;
+}
+.slide1-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;  
+}
+.sw-first-left {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.sw-first-left h2 {
+    font-size: clamp(28px, 2.543px + 4.623vw, 120px);
+    color: #FCF9F5;
+    text-transform: capitalize;
+    letter-spacing: -0.32px;
+    line-height: 97%;
+}
+.sw-first-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.sw-first-right .swright-top {
+    position: relative;
+}
+.swright-top .swrt-image {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    width: 50%;
+}
+.swrt-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.swrt-scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 
 /* Footer CSS */
 footer {
