@@ -888,6 +888,11 @@ li.nav-item a.nav-link {
     color: #151515;
 }
 
+/* Video Carousel */
+.video-carousel {
+    background-color: #DBD7C8;
+}
+
 /* Footer CSS */
 footer {
     background-color: var(--grey-black);

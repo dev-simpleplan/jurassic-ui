@@ -91,6 +91,18 @@
         "spacer_height": 140
       }
     },
+    "video-carousel": {
+      "type": "video-carousel",
+      "settings": {
+        
+      }
+    },
+    "spacer8": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "all-categories": {
       "type": "category-grid-sec",
       "blocks": {
@@ -396,6 +408,8 @@
     "spacer",
     "discovery-box",
     "spacer7",
+    "video-carousel",
+    "spacer8",
     "all-categories",
     "spacer1",
     "fresh",
