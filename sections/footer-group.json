@@ -26,12 +26,7 @@
             "menu_handle": "footer-learn-menu"
           }
         },
-        "partner_logo_fmjpgJ": {
-          "type": "partner-logo",
-          "settings": {
-            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
-          }
-        },
+        
         "partner_logo_XzkVyW": {
           "type": "partner-logo",
           "settings": {
@@ -41,21 +36,21 @@
         "trust_logos_FKDq8p": {
           "type": "trust-logos",
           "settings": {
-            "trust_text": "Quality\nOrganic code: DE OKO-005",
+            "trust_text": "<p>Quality<br>Organic code: DE OKO-005</p>",
             "trust-image": "shopify://shop_images/image_307.png"
           }
         },
         "trust_logos_3C6PBf": {
           "type": "trust-logos",
           "settings": {
-            "trust_text": "(4.7/5) excellent",
+            "trust_text": "<p>(4.7/5) excellent</p>",
             "trust-image": "shopify://shop_images/image_306.png"
           }
         },
         "trust_logos_qXwHtt": {
           "type": "trust-logos",
           "settings": {
-            "trust_text": "(4.7) Trustpilot",
+            "trust_text": "<p>(4.7) Trustpilot</p>",
             "trust-image": "shopify://shop_images/Frame_427323090.png"
           }
         }
