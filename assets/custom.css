@@ -319,7 +319,14 @@
 .for_responsive {
     display: none;
 }
-
+.fruits_cards_wrapper > a{
+    width: 100%;
+    display: block;
+}
+.fruits_card{
+    width: 100%;
+    min-width: 300px;
+}
 @media screen and (max-width: 1300px) {
     .for_responsive {
         display: block;
