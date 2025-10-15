@@ -88,141 +88,160 @@
     </div>
   </a>
 {% endcomment %}
-<a href="{{ product.url }}">
-  <div class="fruits_card">
-    <div class="fc_top">
-      {% comment %} Fixed: Use product parameter passed from render {% endcomment %}
-      {% if product.featured_image %}
-        <div class="fc_image">
-          <img
-            src="{{ product.featured_image | img_url: 'master' }}"
-            alt="{{ product.featured_image.alt | escape }}"
-            class="img_sizing"
-          >
-        </div>
-      {% else %}
-        <div class="fc_image">
-          <img
-            src="{{ 'placeholder-image.jpg' | asset_url }}"
-            alt="No Image Available"
-            class="img_sizing"
-          >
-        </div>
-      {% endif %}
-
-      {% if product.tags contains 'untreated' or product.tags contains 'organic' %}
-        <div class="fc_category_tags">
-          {% if product.tags contains 'untreated' -%}
-            <span>Untreated</span>
-          {%- endif %}
-          {% if product.tags contains 'seasonal' -%}
-            <span>Season</span>
-          {%- endif %}
-        </div>
-      {% endif %}
-
-      {% if product.tags contains 'bestseller' %}
-        <div class="fc_bestsell_tags">
-          <span>Best Seller</span>
-        </div>
-      {% endif %}
-
-      <div class="fc_organic_auth" style="{% unless product.tags contains 'organic' %}display: none;{% endunless %}">
-        <img src="{{ 'organic_auth.png' | asset_url }}" alt="Organic Certified" class="img_sizing">
-      </div>
-    </div>
-
-    <div class="fc_bottom">
-      <!-- Rest of your card content remains the same -->
-      <div class="star_review">
-        <div class="star_rating">
-          <img src="{{ 'star-rating.png' | asset_url }}" alt="Star Rating">
-        </div>
-        <div class="rating_info">
-          <p>
-            {{ product.metafields.custom.rating | default: '4.9' }} (
-            {{- product.metafields.custom.reviews_count | default: '200' -}}
-            )
-          </p>
-          <span class="dot_seperator"></span>
-          <p>{{ product.vendor | default: 'North America' }}</p>
-        </div>
-      </div>
-
-      <p class="fc_product_title">{{ product.title | truncate: 50 }}</p>
-
-      <div class="fc_variant_wrap">
-        {% for variant in product.variants limit: 3 %}
-          <div class="fc_variant_item {% if forloop.first %}active best_seller{% elsif forloop.index == 2 %}best_seller{% endif %}">
-            <p>
-              {{ variant.title }}
-              {% if variant.compare_at_price > variant.price %}
-                <span>
-                  {{-
-                    variant.compare_at_price
-                    | minus: variant.price
-                    | times: 100
-                    | divided_by: variant.compare_at_price
-                  -}}
-                  % Off</span
-                >
-              {% endif %}
-            </p>
-            <p class="quantity">{{ variant.option1 | default: '1 Piece' }}</p>
-          </div>
-        {% else %}
-          <div class="fc_variant_item active">
-            <p>Default Variant</p>
-            <p class="quantity">1 Piece</p>
-          </div>
-        {% endfor %}
-      </div>
-
-      <div class="fc_price_weight">
-        {% assign current_variant = product.selected_or_first_available_variant %}
-        {% if current_variant.compare_at_price > current_variant.price %}
-          <p>
-            <strike>{{ current_variant.compare_at_price | money }}</strike>
-            <span class="selling_price">{{ current_variant.price | money }}</span>
-          </p>
-        {% else %}
-          <p>
-            <span class="selling_price">{{ current_variant.price | money }}</span>
-          </p>
-        {% endif %}
-        <p class="fc_weight">{{ product.metafields.custom.unit_price | default: '$700/Kg' }}</p>
-      </div>
-
-      <div class="fc_add_to_cart_outer">
-        <form action="/cart/add" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
-          <input type="hidden" name="quantity" value="1">
-          <div class="fc_add_to_cart">
-            <span class="remove_product">
-              <!-- SVG content -->
-            </span>
-            <button
-              type="submit"
-              {% unless product.available %}
-                disabled
-              {% endunless %}
+<div class="product-card-primary">
+  <a href="{{ product.url }}">
+    <div class="fruits_card">
+      <div class="fc_top">
+        {% if product.featured_image %}
+          <div class="fc_image">
+            <img
+              src="{{ product.featured_image | img_url: 'master' }}"
+              alt="{{ product.featured_image.alt | escape }}"
+              class="img_sizing"
             >
-              {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
-            </button>
-            <span class="add_product">
-              <!-- SVG content -->
-            </span>
           </div>
-        </form>
+        {% else %}
+          <div class="fc_image">
+            <img
+              src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' | asset_url }}"
+              alt="No Image Available"
+              class="img_sizing"
+            >
+          </div>
+        {% endif %}
+
+        {% assign product_tags = product.tags | downcase %}
+
+        {% if product.tags.size > 0 %}
+          <div class="fc_category_tags">
+            {% for tag in product.tags %}
+              <span>{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if collection.handle == 'best-seller-1' %}
+          <div class="fc_bestsell_tags">
+            <span>{{ collection.title }}</span>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.certificate %}
+          {% assign certificate = product.metafields.custom.certificate.value %}
+          <div class="fc_organic_auth">
+            <img
+              src="{{ certificate.badge_image | img_url:'master' }}"
+              alt="{{ certificate.display_name }}"
+              class="img_sizing"
+            >
+          </div>
+        {% endif %}
       </div>
 
-      <div class="fc_trust_text">
-        <p>{{ current_variant.inventory_quantity | default: 3 }} Left</p>
-        <span class="dot_seperator"></span>
-        <p>Ships in 24 hrs</p>
-        <span class="dot_seperator"></span>
-        <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
+      <div class="fc_bottom_outer">
+        <div class="fc_bottom">
+          <div class="star_review">
+            <div class="star_rating">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002"
+                alt="Star Rating"
+              >
+            </div>
+            <div class="rating_info">
+              <p>4.9 (200)</p>
+              {% if product.metafields.custom.country_of_origin %}
+                <span class="dot_seperator"></span>
+                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+              {% endif %}
+            </div>
+          </div>
+          <p class="fc_product_title">{{ product.title | truncate: 50 }}</p>
+
+          <div class="fc_variant_outer">
+            <div class="fc_variant_wrap">
+              {% for variant in product.variants %}
+                <div class="fc_variant_item {% if forloop.first %}active best_seller{% elsif forloop.index == 2 %}best_seller{% endif %}">
+                  <p>
+                    {{ variant.title }}
+                    {% if variant.compare_at_price > variant.price %}
+                      <span>
+                        {{
+                          variant.compare_at_price
+                          | minus: variant.price
+                          | times: 100
+                          | divided_by: variant.compare_at_price
+                        }}% Off</span
+                      >
+                    {% endif %}
+                  </p>
+                  <p class="quantity">
+                    {% if variant.metafields.custom.pieces %}
+                      {{ variant.metafields.custom.pieces }} Piece
+                    {% else %}
+                      by weight
+                    {% endif %}
+                  </p>
+                </div>
+              {% else %}
+                <div class="fc_variant_item active">
+                  <p>Default Variant</p>
+                  <p class="quantity">1 Piece</p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="fc_price_weight">
+            {% assign current_variant = product.selected_or_first_available_variant %}
+            {% if current_variant.compare_at_price > current_variant.price %}
+              <p>
+                <strike>{{ current_variant.compare_at_price | money }}</strike>
+                <span class="selling_price">{{ current_variant.price | money }}</span>
+              </p>
+            {% else %}
+              <p>
+                <span class="selling_price">{{ current_variant.price | money }}</span>
+              </p>
+            {% endif %}
+            {% assign current_variant = product.selected_or_first_available_variant %}
+            <p class="fc_weight">{{ product.metafields.custom.per_kg_price | times: 100 | money_with_currency | remove: '.00' }}/Kg</p>
+          </div>
+
+          <div class="fc_add_to_cart_outer">
+            <form action="/cart/add" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id" value="{{ current_variant.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <div class="fc_add_to_cart">
+                <span class="remove_product">
+                  <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <button
+                  type="submit"
+                  {% unless product.available %}
+                    disabled
+                  {% endunless %}
+                >
+                  {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                </button>
+                <span class="add_product">
+                  <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </form>
+          </div>
+
+          <div class="fc_trust_text">
+            <p>Only {{ current_variant.inventory_quantity | default: 3 }} Left</p>
+            <span class="dot_seperator"></span>
+            <p>Ships in 24 hrs</p>
+            <span class="dot_seperator"></span>
+            <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</a>
+  </a>
+</div>

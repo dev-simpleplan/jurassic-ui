@@ -19,7 +19,7 @@
       <div class="fruits_cards_wrapper for_desktop">
         {% assign collection = section.settings.collection %}
         {% for product in collection.products limit: 4 %}
-         {% render 'product-card-primary', product: product %}
+         {% render 'product-card-primary', product: product, collection: collection %}
         {% else %}
           <p>There are no products inside of this collection.</p>
         {% endfor %}
