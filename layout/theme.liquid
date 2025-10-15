@@ -39,7 +39,8 @@
 
     {% # Load and preload the critical CSS %}
     {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
-  {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'responsive.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}

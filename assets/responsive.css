@@ -1,0 +1,26 @@
+@media(max-width:1500px){
+    
+}
+
+@media(max-width:1300px){
+    .home-banner {
+        min-height: 750px;
+    }
+    .db-tw-content p {
+        font-size: 22px;
+    }
+}
+
+@media(max-width:1200px){
+    p {
+        font-size: 16px;
+    }
+}
+
+@media(max-width:991px){
+    
+}
+
+@media(max-width:767px){
+    
+}

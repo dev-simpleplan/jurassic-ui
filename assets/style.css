@@ -207,7 +207,7 @@ a, a:hover {
 /* Header CSS */
 header {
     background-color: var(--body-bg);
-    padding: 24px 0;
+    /* padding: 24px 0; */
 }
 .brand-logo img {
     width: 180px;
@@ -224,6 +224,7 @@ header {
 }
 li.nav-item {
     display: flex;
+    padding: 28px 0;
 }
 li.nav-item .arrow {
     display: flex;
@@ -261,11 +262,93 @@ li.nav-item a.nav-link:hover::before {
     position: fixed;
     width: 100%;
     z-index: 999999;
-    background-color: var(--body-color);
+    background-color: var(--body-bg);
     clip-path: inset(0 0 100% 0);
     transition: .2s ease all;
+    /* min-height: 440px; */
 }
-
+.header-in ul>li:hover .mega-menu {
+    clip-path: inset(0 0 0 0);
+    transition: 1s ease all;
+    transition-delay: .2s;
+}
+.mega-menu-split {
+    padding: 20px 0 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+.mega-menu-split .mms-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+}
+.mms-left .child-block,
+.mms-left .child-block-straight {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+.mms-left .child-block p,
+.mms-left .child-block-straight p {
+    border-bottom: 1px solid #E1D8CC;
+    padding-bottom: 10px;
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+}
+.child-block > ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.child-block-straight > ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.child-block > ul li .link-flex,
+.child-block-straight > ul li .link-flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.link-flex .lf-image {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.link-flex .lf-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s ease all;
+}
+.link-flex .lf-text {
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    transition: .3s ease all;
+}
+.child-block-onlylink ul li a {
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    transition: .3s ease all;
+}
 .header-icons-wrap {
     display: flex;
     align-items: center;
@@ -1311,8 +1394,12 @@ section.scroll-sec {
     gap: 20px;
     height: 100%;
 }
-.sw-four-right {
-    
+.sw-four-right .sidetop-text {
+    color: #1A1A1A;
+}
+.sw-four-right .swright-bottom h3,
+.sw-four-right .swright-bottom p {
+    color: #1A1A1A;
 }
 
 
