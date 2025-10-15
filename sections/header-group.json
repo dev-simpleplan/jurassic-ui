@@ -13,6 +13,45 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "nav_menu_right_cRfWq3": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "new-arrival"
+          }
+        },
+        "nav_menu_right_g6gmcL": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "shop-all"
+          }
+        },
+        "nav_menu_right_krGBVm": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "boxes"
+          }
+        },
+        "nav_menu_right_EMiXFk": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "buy-again"
+          }
+        },
+        "nav_menu_right_tATRCL": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "learn-more"
+          }
+        }
+      },
+      "block_order": [
+        "nav_menu_right_cRfWq3",
+        "nav_menu_right_g6gmcL",
+        "nav_menu_right_krGBVm",
+        "nav_menu_right_EMiXFk",
+        "nav_menu_right_tATRCL"
+      ],
       "settings": {
         "select_logo": "shopify://shop_images/Jurassic_Fruit.svg"
       }
