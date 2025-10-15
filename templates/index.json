@@ -1,4 +1,12 @@
-
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -40,7 +48,7 @@
         "reviews_FXWz8j"
       ],
       "settings": {
-        "banner-bg": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+        "banner-bg": "shopify://shop_images/Generated_Image_October_15_2025_-_9_57PM.png",
         "head": "Your Most Delicious Adventure on Earth",
         "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed."
       }
@@ -203,9 +211,7 @@
     },
     "scroll-section": {
       "type": "scroll-section",
-      "settings": {
-        
-      }
+      "settings": {}
     },
     "spacer9": {
       "type": "spacer",
@@ -260,12 +266,22 @@
         "spacer_height": 140
       }
     },
-    "durianShape":{
+    "durianShape": {
       "type": "image-text-scroll",
       "settings": {
-        "img1":"shopify://shop_images/raw_1.jpg",
-        "img2":"shopify://shop_images/real_1.jpg",
-        "img3":"shopify://shop_images/roar_1.jpg"
+        "heading": "Our story started with a durian",
+        "para": "And 3 simple principles",
+        "img1": "shopify://shop_images/raw_1.jpg",
+        "head1": "Raw.",
+        "para1": "As untouched as it gets — grown naturally, picked ripe. Nothing added, nothing rushed — just nature in its purest form.",
+        "img2": "shopify://shop_images/real_1.jpg",
+        "head2": "Real.",
+        "para2": "Flavors you can feel — straight from the source. Grown with care, never compromised, and always full of soul.",
+        "img3": "shopify://shop_images/roar_1.jpg",
+        "head3": "Roar!",
+        "para3": "The joy is wild — and made to be shared. Every bite connects you to something honest, rare, and alive.",
+        "cta_link": "",
+        "cta_txt": "discover our story"
       }
     },
     "counter": {
@@ -419,9 +435,7 @@
     },
     "headingsec": {
       "type": "headingsec",
-      "settings": {
-
-      }
+      "settings": {}
     },
     "spacer10": {
       "type": "spacer",
