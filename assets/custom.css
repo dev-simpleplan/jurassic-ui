@@ -395,6 +395,14 @@
     color: inherit;
 }
 
+.fruits_card p.weight {
+    text-transform: uppercase;
+}
+
+.fruits_card p.weight span {
+    text-transform: capitalize;
+}
+
 @media screen and (max-width: 1300px) {
     .for_responsive {
         display: block;
@@ -432,4 +440,62 @@
     .fruits_card_section_in .head p {
         font-size: 14px;
     }
+
+    .fc_variant_wrap {
+        overflow: unset;
+        grid-auto-flow: row;
+        grid-auto-columns: 100%;
+        gap: 0px;
+        margin-top: 20px;
+        border: 0.9px solid #919191;
+        border-radius: 12px 12px 0px 0px;
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+
+    .fc_variant_item {
+        margin-top: 0px;
+        border: none;
+        border-bottom: 1px solid #E0E0E0;
+        border-radius: 12px 12px 0px 0px;
+        background: var(----color-background);
+    }
+
+    .fc_variant_item:last-child {
+        border-bottom: none;
+    }
+
+    .fc_variant_item:last-child:hover {
+        border-bottom: none;
+    }
+
+    .fc_variant_item.active {
+        border: none;
+        border-bottom: 1px solid #E0E0E0;
+        border-radius: 0px;
+        background-color: #F5EBC6;
+    }
+
+    .fc_variant_item:hover {
+        border: none;
+        border-bottom: 1px solid #E0E0E0;
+    }
+
+    .fc_variant_item:hover p {
+        font-weight: 400;
+    }
+
+    .fc_variant_item.best_seller::before {
+        right: 16px;
+        top: 28%;
+        left: unset;
+        transform: unset;
+    }
+
+    .fc_variant_item {
+        text-align: left;
+        padding-left: 16px;
+    }
+
+
 }

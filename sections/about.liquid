@@ -1,9 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 <section class="fruits_card_section">
   <div class="container">
     <div class="fruits_card_section_in">
@@ -24,6 +20,16 @@
           <p>There are no products inside of this collection.</p>
         {% endfor %}
       </div>
+    </div>
+  </div>
+   <div class="fruits_cards_slider slider_container for_responsive">
+    <div class="owl-carousel">
+     {% assign collection = section.settings.collection %}
+        {% for product in collection.products limit: 4 %}
+         {% render 'product-card-primary', product: product, collection: collection %}
+        {% else %}
+          <p>There are no products inside of this collection.</p>
+        {% endfor %}
     </div>
   </div>
 </section>
@@ -84,3 +90,4 @@
     });
   });
 </script>
+
