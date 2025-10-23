@@ -11,6 +11,16 @@
         "name": "multi_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "collections",
+      "namespace": "ecomposer",
+      "name": "Define sub collections for current collection",
+      "description": "Set the sub collection for curernt collection.",
+      "type": {
+        "name": "list.collection_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "company": [],
@@ -240,6 +250,56 @@
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
+    },
+    {
+      "key": "per_kg_price",
+      "namespace": "custom",
+      "name": "Per KG Price",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "url",
+      "namespace": "_easifyBoxBuilder",
+      "name": "EasifyBoxBuilderUrl",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "hidden",
+      "namespace": "seo",
+      "name": "Hidden from store search & search engines",
+      "description": "",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "countdown",
+      "namespace": "ecomposer",
+      "name": "EComposer product countdown end at",
+      "description": "Set date and time countdown end at",
+      "type": {
+        "name": "date_time",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "countdown_from",
+      "namespace": "ecomposer",
+      "name": "EComposer product countdown start at",
+      "description": "Set date and time countdown start at",
+      "type": {
+        "name": "date_time",
+        "category": "DATE_TIME"
+      }
     }
   ],
   "variant": [
@@ -351,6 +411,16 @@
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "is_prior",
+      "namespace": "custom",
+      "name": "Is Prior",
+      "description": "Allows you to specify which option will be preselected.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     }
   ],

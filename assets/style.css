@@ -217,6 +217,12 @@ header {
     align-items: center;
     justify-content: space-between;
 }
+.header-in .h-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+}
 .hnav-menu > ul {
     display: flex;
     align-items: center;
@@ -331,6 +337,9 @@ li.nav-item a.nav-link:hover::before {
     object-fit: cover;
     transition: .3s ease all;
 }
+.link-flex:hover .lf-image img {
+    transform: scale(1.12);
+}
 .link-flex .lf-text {
     font-family: var(--scale);
     font-weight: 400;
@@ -339,6 +348,21 @@ li.nav-item a.nav-link:hover::before {
     text-transform: uppercase;
     color: #1A1A1A;
     transition: .3s ease all;
+    position: relative;
+}
+.link-flex .lf-text::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transition: .3s ease all;
+    transform: scale(0);
+}
+.link-flex:hover .lf-text::before {
+    transform: scale(1);
 }
 .child-block-onlylink ul li a {
     font-family: var(--scale);
@@ -348,6 +372,21 @@ li.nav-item a.nav-link:hover::before {
     text-transform: uppercase;
     color: #1A1A1A;
     transition: .3s ease all;
+    position: relative;
+}
+.child-block-onlylink ul li a::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--black);
+    transition: .3s ease all;
+    transform: scale(0);
+}
+.child-block-onlylink ul li a:hover::before {
+    transform: scale(1);
 }
 .header-icons-wrap {
     display: flex;
@@ -356,6 +395,13 @@ li.nav-item a.nav-link:hover::before {
 }
 .header-icons-wrap svg {
     width: 20px;
+}
+.cd-nav-trigger {
+    position: relative;
+    right: 0;
+    margin-left: 0;
+    width: 24px;
+    height: 0px;
 }
 /* Header CSS */
 
@@ -1402,6 +1448,67 @@ section.scroll-sec {
     color: #1A1A1A;
 }
 
+/* Image Text Scroll */
+.image-text-scroll {
+    background-color: #1A1A1A;
+    padding: 40px 0;
+    height: 100vh;
+    position: relative;
+}
+.its-in {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+}
+.durian {
+    max-width: 430px;
+    width: 25%;
+    margin: 0 auto;
+}
+.durian svg {
+    width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+.durian image {
+    opacity: 0;
+}
+.dt-in {
+    max-width: 35ch;
+    position: absolute;
+    opacity: 0;
+}
+.dt-in h3 {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #FCF9F5;
+}
+.dt-in p {
+    color: #FCF9F5;
+    font-size: 16px;
+}
+.dt-in.one {
+    left: 70px;
+    top: 160px;
+}
+.dt-in.two {
+    left: 70px;
+    bottom: 40px;
+}
+.dt-in.three {
+    right: 70px;
+    top: 250px;
+}
+.dt-in.four {
+    right: 160px;
+    max-width: 100%;
+    bottom: 50px;
+}
+/* Image Text Scroll */
 
 /* Footer CSS */
 footer {
