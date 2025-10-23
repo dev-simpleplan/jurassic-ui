@@ -186,7 +186,7 @@
 }
 
 .fc_bottom_outer {
-    padding: 14px 15px 12px 15px;
+    padding: 14px 0px 12px 15px;
 }
 
 .fc_bottom {
@@ -403,6 +403,8 @@
     text-transform: capitalize;
 }
 
+
+
 @media screen and (max-width: 1300px) {
     .for_responsive {
         display: block;
@@ -497,5 +499,33 @@
         padding-left: 16px;
     }
 
+    .fc_bottom_outer {
+        padding: 14px 0px 12px 16px;
+    }
 
+
+}
+
+
+.fc_image {
+    position: relative;
+}
+
+.fc_image img {
+    transition: opacity 0.3s ease;
+}
+
+.fc_image .hover_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.fc_image:hover .main_img {
+    opacity: 0;
+}
+
+.fc_image:hover .hover_img {
+    opacity: 1;
 }
