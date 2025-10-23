@@ -3,6 +3,9 @@
     <div class="desktop-header">
       <div class="header-in">
         <div class="h-left">
+          <div class=" cd-nav-trigger js-cd-nav-trigger text-replace" onclick="openNav()">
+              <div class="navbar_toggler"></div>
+          </div>
           <div class="brand-logo mob-none flex">
             <a href="{{ shop.url }}">
               {% if section.settings.select_logo %}
@@ -17,7 +20,7 @@
           </div>
         </div>
 
-        <div class="h-nav">
+        <div class="h-nav" id="mySidenav">
           <div class="hnav-menu">
             <ul>
               {% assign menu_right = section.blocks | where: 'type', 'nav_menu_right' %}
