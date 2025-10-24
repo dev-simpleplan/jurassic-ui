@@ -1129,6 +1129,12 @@ li.nav-item a.nav-link:hover::before {
     width: 22px;
     height: 22px;
 }
+.vc-carousel .owl-theme .owl-dots .owl-dot span {
+    background-color: #7A7A7A;
+}
+.vc-carousel .owl-theme .owl-dots .owl-dot.active span, .vc-carousel .owl-dot:hover span {
+    background-color: #fff;
+}
 
 /* Scrolling Section */
 section.scroll-sec {
