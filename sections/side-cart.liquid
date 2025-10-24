@@ -1,0 +1,325 @@
+<style>
+
+  /* Side Cart */
+
+  .sideCart {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: #0000005E;
+    z-index: 999;
+  }
+
+  .sideCart:not(.active) {
+    display: none;
+  }
+
+  .sc-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .side-cart {
+    background: #FFFFFF;
+    box-shadow: 0 0 6px 0 #C3C3C34D;
+    width: 40%;
+    height: 100%;
+    margin-left: auto;
+    padding: 28px 20px 24px 36px;
+  }
+  .sc-close {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    cursor: pointer;
+  }
+  .sc-close svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  .sch-left p {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+
+  }
+  .sch-left p span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 136%;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .sch-left {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .sch-left a {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 110%;
+    letter-spacing: 0;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 0;
+    color: #1A1A1A;
+  }
+  .sc-in {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .side-cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+  }
+  .side-cart-empty h3 {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 110%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: capitalize;
+    color: #202322;
+  }
+  .side-cart-empty p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: #1A1A1A;
+  }
+  .jf-icon {
+    display: flex;
+    max-width: 120px;
+    width: 100%;
+  }
+  .jf-icon svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  .sce-txt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+</style>
+
+<div class="side-cart">
+  <div class="sc-wrapper">
+    <div class="sc-head">
+      <div class="sch-left">
+        <p>
+          Cart
+          <span>({{ cart.item_count }} items)</span>
+        </p>
+        {% if cart.item_count > 0 %}
+          <a href="{{ routes.cart_url }}">View Cart</a>
+        {% endif %}
+      </div>
+      <div class="sc-close">
+        {% render 'cross' %}
+      </div>
+    </div>
+    <div class="sc-in">
+      {% if cart.item_count > 0 %}
+        <div class="side-cart-with-items"></div>
+      {% else %}
+        <div class="side-cart-empty">
+          <div class="jf-icon">
+            {% render 'jf' %}
+          </div>
+          <div class="sce-txt">
+            <h3>uh-oh!</h3>
+            <p>You have an empty basket.</p>
+          </div>
+        </div>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const sideCart = document.querySelector('.sideCart');
+  const cartItemsContainer = document.querySelector('.side-cart-with-items');
+
+  // 💰 Currency-aware money formatter
+  function formatMoney(cents) {
+    const value = (cents / 100).toFixed(2);
+    const symbol = window.currencySymbol || '';
+    const code = window.activeCurrency || '';
+    return `${symbol}${value} ${code}`;
+  }
+
+  // 🛒 Open cart
+  document.querySelector('.cart-open')?.addEventListener('click', function() {
+    sideCart.classList.add('active');
+    loadCartItems();
+  });
+
+  // ❌ Close cart
+  document.querySelector('.sc-close')?.addEventListener('click', function() {
+    sideCart.classList.remove('active');
+  });
+
+  // ➕ Add to cart button (AJAX)
+  document.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
+    const addToCartBtn = form.querySelector('#add-to-cart');
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log('✅ Added to cart:', data);
+          sideCart.classList.add('active');
+          loadCartItems();
+        })
+        .catch(err => console.error('Error adding to cart:', err));
+      });
+    }
+  });
+
+  // 🧩 Load current cart
+  function loadCartItems() {
+    fetch(window.Shopify.routes.root + 'cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        console.log('🛒 Cart data:', cart);
+
+        if (!cartItemsContainer) return;
+
+        if (cart.items.length === 0) {
+          cartItemsContainer.innerHTML = `<p>Your cart is empty.</p>`;
+          return;
+        }
+
+        // Render cart items
+        cartItemsContainer.innerHTML = cart.items.map((item, index) => {
+          // Compare at price and discount
+          const comparePrice = item.compare_at_price || item.original_price;
+          const hasDiscount = comparePrice && comparePrice > item.final_line_price;
+          let discountPercent = 0;
+          if (hasDiscount) {
+            discountPercent = Math.round(((comparePrice - item.final_line_price) / comparePrice) * 100);
+          }
+
+          return `
+            <div class="cart-item" data-line="${index + 1}">
+              <img src="${item.image}" alt="${item.title}" width="60" height="60">
+              <div class="cart-item-info">
+                <p class="cart-item-title">${item.title}</p>
+
+                <div class="cart-qty">
+                  <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">−</button>
+                  <span class="qty-count">${item.quantity}</span>
+                  <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">+</button>
+                </div>
+
+                <p class="cart-price">
+                  ${formatMoney(item.final_line_price)}
+                  ${hasDiscount ? `
+                    <span class="compare-price" style="text-decoration:line-through; color:#999; margin-left:5px;">
+                      ${formatMoney(comparePrice)}
+                    </span>
+                    <span class="discount-percent" style="color:red; margin-left:5px;">
+                      (${discountPercent}% OFF)
+                    </span>
+                  ` : ''}
+                </p>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Attach + / − handlers
+        attachQtyHandlers();
+      })
+      .catch(err => console.error('Error loading cart:', err));
+  }
+
+  // 🔄 Update quantity (handles +, −, and delete)
+  function updateCartItem(line, quantity) {
+    fetch(window.Shopify.routes.root + 'cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ line, quantity })
+    })
+    .then(res => res.json())
+    .then(cart => {
+      console.log('✅ Cart updated:', cart);
+      loadCartItems();
+    })
+    .catch(err => console.error('Error updating cart:', err));
+  }
+
+  // 🧠 Attach + and − event handlers
+  function attachQtyHandlers() {
+    const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
+    const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
+
+    plusBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const line = Number(btn.dataset.line);
+        const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
+        const currentQty = Number(qtyCount.textContent);
+        updateCartItem(line, currentQty + 1);
+      });
+    });
+
+    minusBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const line = Number(btn.dataset.line);
+        const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
+        const currentQty = Number(qtyCount.textContent);
+        const newQty = currentQty > 1 ? currentQty - 1 : 0; // 0 removes the product
+        updateCartItem(line, newQty);
+      });
+    });
+  }
+
+  // Load cart on page load
+  loadCartItems();
+  });
+
+
+</script>
+
+{% schema %}
+  {
+    "name": "Side Cart",
+    "class": "sideCart",
+    "tag": "section",
+    "settings": []
+  }
+{% endschema %}
