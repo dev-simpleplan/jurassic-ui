@@ -403,6 +403,24 @@ li.nav-item a.nav-link:hover::before {
     width: 24px;
     height: 0px;
 }
+.header-icons-wrap .cart {
+    position: relative;
+}
+.cart .header__cart-quantity {
+    position: absolute;
+    top: -7px;
+    right: -6px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFC761;
+    color: #000000;
+    font-weight: 500;
+    font-size: 12px;
+}
 /* Header CSS */
 
 /* Homepage CSS */
