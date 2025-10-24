@@ -5,8 +5,8 @@
                 <div class="container-fluid">
                     <div class="slide1-wrap">
                         <div class="sw-first-left">
-                            <h2>This Is What Wild Tastes Like</h2>
-                            <p>Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness.</p>
+                            <h2>{{section.settings.heading_desktop}}</h2>
+                            <p>{{section.settings.heading_sub_desktop}}</p>
                         </div>
                         <div class="sw-first-right">
                             <div class="swfr-in">
@@ -134,8 +134,8 @@
             <div class="scs-slider">
                 <div class="scsslider-heading">
                     <div class="heading center small-width">
-                        <h2>this is what wild tastes like</h2>
-                        <p>Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness.</p>
+                        <h2>{{section.settings.heading_desktop}}</h2>
+                        <p>{{section.settings.heading_sub_desktop}}</p>
                     </div>
                 </div>
                 <div class="owl-carousel owl-theme">
@@ -166,17 +166,136 @@
 </section>
 
 {% schema %}
-  {
-    "name": "scroll-sec",
-    "settings": [
-      
-    ],
-    "presets": [
-      {
-        "name": "scroll-sec",
-        "settings": {
+{
+  "name": "Scroll Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_desktop",
+      "label": "Desktop heading (used in overlay)",
+      "default": "This Is What Wild Tastes Like"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_sub_desktop",
+      "label": "Desktop subheading (overlay)",
+      "default": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desktop_section",
+      "label": "Show desktop horizontal section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_slider",
+      "label": "Show mobile carousel slider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_slider",
+      "label": "Autoplay mobile slider",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout / variant",
+          "options": [
+            { "value": "variant_1", "label": "Variant 1 (left text / right image)" },
+            { "value": "variant_2", "label": "Variant 2 (left image / right text + fruits)" },
+            { "value": "variant_3", "label": "Variant 3 (mix)" }
+          ],
+          "default": "variant_1"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow / small label (optional)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Slide Heading",
+          "default": "Slide heading"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Slide content / paragraph",
+          "default": "Slide paragraph text"
+        },
+        {
+          "type": "image_picker",
+          "id": "main_image",
+          "label": "Main image (large)"
+        },
+        {
+          "type": "image_picker",
+          "id": "scroll_image",
+          "label": "Scroll accent image (the smaller scroll image shown on top)",
+          "info": "Optional small decorative image"
+        },
+        {
+          "type": "image_picker",
+          "id": "side_image",
+          "label": "Secondary side image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "side_heading",
+          "label": "Side heading (optional)"
+        },
+        {
+          "type": "textarea",
+          "id": "side_text",
+          "label": "Side paragraph(s) (optional)"
+        },
+
+        { "type": "header", "content": "Optional fruit icons (used in variant 2)" },
+        {
+          "type": "image_picker",
+          "id": "fruit_1",
+          "label": "Fruit image 1 (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "fruit_2",
+          "label": "Fruit image 2 (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "fruit_3",
+          "label": "Fruit image 3 (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "fruit_4",
+          "label": "Fruit image 4 (optional)"
         }
-      }
-    ]
-  }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Scroll Section (Horizontal)",
+      "category": "Sections",
+      "blocks": [
+        { "type": "slide", "settings": { "layout": "variant_1", "heading": "This Is What Wild Tastes Like", "content": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness." } },
+        { "type": "slide", "settings": { "layout": "variant_2", "heading": "Chemical-Free and Organic", "content": "Many of our fruits are organically certified..." } },
+        { "type": "slide", "settings": { "layout": "variant_3", "heading": "Picked After You Click", "content": "When you place your order before Thursday at 8:00 PM..." } },
+        { "type": "slide", "settings": { "layout": "variant_1", "heading": "Ultra-Fresh Delivery", "content": "From the moment you place an order, your fruits are harvested, packed, and shipped with care." } }
+      ]
+    }
+  ]
+}
 {% endschema %}

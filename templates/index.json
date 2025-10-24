@@ -62,9 +62,11 @@
     "bestseller": {
       "type": "bestseller",
       "settings": {
-        "collection": "",
+        "collection": "fruit",
         "heading": "What’s Best This Week",
-        "subheading": "Discover fruits that are fresh, flavorful, and entirely worth the adventure. Every week, our team tastes and curates the four most delicious, in-season picks, so you get only what’s ripe, rare, and remarkable."
+        "subheading": "Discover fruits that are fresh, flavorful, and entirely worth the adventure. Every week, our team tastes and curates the four most delicious, in-season picks, so you get only what’s ripe, rare, and remarkable.",
+        "cta_url": "shopify://collections",
+        "cta_text": "Explore Fresh Picks, Just In"
       }
     },
     "spacer": {
@@ -211,7 +213,13 @@
     },
     "scroll-section": {
       "type": "scroll-section",
-      "settings": {}
+      "settings": {
+        "heading_desktop": "This Is What Wild Tastes Like",
+        "heading_sub_desktop": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness.",
+        "show_desktop_section": true,
+        "show_mobile_slider": true,
+        "autoplay_slider": false
+      }
     },
     "spacer9": {
       "type": "spacer",
