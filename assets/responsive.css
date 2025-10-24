@@ -306,10 +306,46 @@
         padding: 40px 40px;
         gap: 60px;
     }
+    .footer-bottom-in {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 
 @media(max-width:767px){
     .container {
         padding: 0 20px;
+    }
+    .bcb-reviews-wrap {
+        flex-wrap: wrap;
+    }
+    .bcbr-item {
+        width: 45%;
+    }
+    .vc-carousel .vci-item {
+        transform: scale(1);
+    }
+    .video-carousel .vc-heading {
+        position: static;
+        padding: 0;
+    }
+    .vcheading-in h2 {
+        display: block;
+        font-size: 28px;
+        text-align: center;
+    }
+    .vc-carousel {
+        margin: 0;
+        margin-top: 30px;
+    }
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px 9px;
+    }
+    .c-item .citem-in {
+        gap: 10px;
+    }
+    .citem-text h3 {
+        font-size: 12px;
     }
 }
