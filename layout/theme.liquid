@@ -40,7 +40,7 @@
     {% # Load and preload the critical CSS %}
     {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
-    {{ 'responsive.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'responsive.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -55,11 +55,17 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"></script>
 
+    <script>
+      window.shopCurrency = "{{ shop.currency }}";
+      window.activeCurrency = "{{ cart.currency.iso_code | default: shop.currency }}";
+      window.currencySymbol = "{{ cart.currency.symbol | default: shop.currency_symbol }}";
+    </script>
 
   </head>
 
   <body>
     {% sections 'header-group' %}
+    {% section 'side-cart' %}
 
     <div class="main">
       {{ content_for_layout }}
@@ -80,8 +86,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 
     <script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    setTimeout(() => {
+        document.addEventListener("DOMContentLoaded", (event) => {
+          setTimeout(() => {
       const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
@@ -112,9 +118,9 @@
         }
       });
 
-    }, 0);
+          }, 0);
 
-    if (window.gsap && window.ScrollTrigger) {
+          if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       const mm = gsap.matchMedia();
 
@@ -146,9 +152,9 @@
           tween.kill();
         };
       });
-    }
+          }
 
-    if (window.gsap && window.ScrollTrigger) {
+          if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       const mm = gsap.matchMedia();
 
@@ -200,9 +206,9 @@
           tl.kill();
         };
       });
-    }
-  }); /* ← missing closer added here */
-</script>
+          }
+        }); /* ← missing closer added here */
+    </script>
 
 
     <script>

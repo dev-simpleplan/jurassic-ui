@@ -166,16 +166,14 @@
           <img
             src="{{ product.featured_image | img_url: 'master' }}"
             alt="{{ product.featured_image.alt | escape }}"
-            class="img_sizing"
-          >
+            class="img_sizing">
         </div>
       {% else %}
         <div class="fc_image">
           <img
             src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' | asset_url }}"
             alt="No Image Available"
-            class="img_sizing"
-          >
+            class="img_sizing">
         </div>
       {% endif %}
 
@@ -199,8 +197,7 @@
           <img
             src="{{ certificate.badge_image | img_url:'master' }}"
             alt="{{ certificate.display_name }}"
-            class="img_sizing"
-          >
+            class="img_sizing">
         </div>
       {% endif %}
     </div>
@@ -209,10 +206,7 @@
       <div class="fc_bottom">
         <div class="star_review">
           <div class="star_rating">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002"
-              alt="Star Rating"
-            >
+            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
           </div>
           <div class="rating_info">
             <p>4.9 (200)</p>
@@ -282,27 +276,60 @@
           </p>
         </div>
         <div class="fc_add_to_cart_outer">
-          <form action="/cart/add" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="{{ current_variant.id }}">
-            <input type="hidden" name="quantity" value="1">
+          <form
+            action="/cart/add"
+            method="post"
+            enctype="multipart/form-data">
+            <input
+              type="hidden"
+              name="id"
+              value="{{ current_variant.id }}">
+            <input
+              type="hidden"
+              name="quantity"
+              value="1">
             <div class="fc_add_to_cart">
               <span class="remove_product">
-                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  width="23"
+                  height="22"
+                  viewBox="0 0 23 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M5.09961 11.3408H17.8457"
+                    stroke="#151515"
+                    stroke-width="1.82087"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
                 </svg>
               </span>
               <button
                 type="submit"
+                id="add-to-cart"
                 {% unless product.available %}
-                  disabled
-                {% endunless %}
-              >
+                {% endunless %}>
                 {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
               </button>
               <span class="add_product">
-                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  width="23"
+                  height="22"
+                  viewBox="0 0 23 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M11.5645 4.96582V17.7119"
+                    stroke="#151515"
+                    stroke-width="1.82087"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M5.19727 11.3408H17.9434"
+                    stroke="#151515"
+                    stroke-width="1.82087"
+                    stroke-linecap="round"
+                    stroke-linejoin="round" />
                 </svg>
               </span>
             </div>
