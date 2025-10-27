@@ -125,6 +125,79 @@
     gap: 8px;
   }
 
+  .sc-in .cart-item {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  img.cart-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+  .cart-item-image {
+    position: relative;
+    width: 16%;
+    padding-top: 16%;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  p.cart-item-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    color: #151515;
+  }
+  p.cart-discount-percent {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    display: inline-flex;
+    text-transform: capitalize;
+    color: #397E1B;
+    padding: 4px;
+    border: 1px solid #397E1B;
+    border-radius: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .cart-item-info.hasDiscount {
+    justify-content: space-between;
+  }
+
+  p.cart-price {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 136%;
+    letter-spacing: -0.02em;
+    color: #151515;
+  }
+
+  span.cart-compare-price {
+    font-weight: 400;
+    text-align: right;
+    vertical-align: middle;
+    text-decoration: line-through;
+    color: #6B6B6B;
+    margin-right: 6px;
+  }
+
 </style>
 
 <div class="side-cart">
@@ -166,9 +239,9 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
   const sideCart = document.querySelector('.sideCart');
-  const cartItemsContainer = document.querySelector('.side-cart-with-items');
+  const cartItemsContainer = document.querySelector('.sc-in');
+  const cartItemsWrapper = document.querySelector('.side-cart-with-items');
 
-  // 💰 Currency-aware money formatter
   function formatMoney(cents) {
     const value = (cents / 100).toFixed(2);
     const symbol = window.currencySymbol || '';
@@ -176,18 +249,15 @@
     return `${symbol}${value} ${code}`;
   }
 
-  // 🛒 Open cart
   document.querySelector('.cart-open')?.addEventListener('click', function() {
     sideCart.classList.add('active');
     loadCartItems();
   });
 
-  // ❌ Close cart
   document.querySelector('.sc-close')?.addEventListener('click', function() {
     sideCart.classList.remove('active');
   });
 
-  // ➕ Add to cart button (AJAX)
   document.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
     const addToCartBtn = form.querySelector('#add-to-cart');
     if (addToCartBtn) {
@@ -200,8 +270,7 @@
           body: formData
         })
         .then(res => res.json())
-        .then(data => {
-          console.log('✅ Added to cart:', data);
+        .then(() => {
           sideCart.classList.add('active');
           loadCartItems();
         })
@@ -210,65 +279,82 @@
     }
   });
 
-  // 🧩 Load current cart
-  function loadCartItems() {
-    fetch(window.Shopify.routes.root + 'cart.js')
-      .then(res => res.json())
-      .then(cart => {
-        console.log('🛒 Cart data:', cart);
+  // Load Cart Items with Compare Price
+  async function loadCartItems() {
+    try {
+      const res = await fetch(window.Shopify.routes.root + 'cart.js');
+      const cart = await res.json();
 
-        if (!cartItemsContainer) return;
+      if (!cartItemsContainer) return;
 
-        if (cart.items.length === 0) {
-          cartItemsContainer.innerHTML = `<p>Your cart is empty.</p>`;
-          return;
+      if (cart.items.length === 0) {
+        cartItemsContainer.innerHTML = `
+        <div class="side-cart-empty">
+          <div class="jf-icon">
+            {% render 'jf' %}
+          </div>
+          <div class="sce-txt">
+            <h3>uh-oh!</h3>
+            <p>You have an empty basket.</p>
+          </div>
+        </div>`;
+        return;
+      }
+
+      // For each cart item, fetch compare_at_price from product API
+      const itemHtmlPromises = cart.items.map(async (item, index) => {
+        let compareAtPrice = null;
+
+        try {
+          const productRes = await fetch(`/products/${item.handle}.js`);
+          const productData = await productRes.json();
+
+          const matchedVariant = productData.variants.find(v => v.id === item.variant_id);
+          if (matchedVariant && matchedVariant.compare_at_price) {
+            compareAtPrice = (matchedVariant.compare_at_price).toFixed(2); // convert to 
+          }
+        } catch (err) {
+          console.warn(`Could not fetch product data for ${item.title}:`, err);
         }
 
-        // Render cart items
-        cartItemsContainer.innerHTML = cart.items.map((item, index) => {
-          // Compare at price and discount
-          const comparePrice = item.compare_at_price || item.original_price;
-          const hasDiscount = comparePrice && comparePrice > item.final_line_price;
-          let discountPercent = 0;
-          if (hasDiscount) {
-            discountPercent = Math.round(((comparePrice - item.final_line_price) / comparePrice) * 100);
-          }
+        const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
+        let discountPercent = 0;
+        if (hasDiscount) {
+          discountPercent = Math.round(((compareAtPrice - item.final_line_price) / compareAtPrice) * 100);
+        }
 
-          return `
-            <div class="cart-item" data-line="${index + 1}">
-              <img src="${item.image}" alt="${item.title}" width="60" height="60">
-              <div class="cart-item-info">
-                <p class="cart-item-title">${item.title}</p>
-
-                <div class="cart-qty">
-                  <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">−</button>
-                  <span class="qty-count">${item.quantity}</span>
-                  <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">+</button>
-                </div>
-
-                <p class="cart-price">
-                  ${formatMoney(item.final_line_price)}
-                  ${hasDiscount ? `
-                    <span class="compare-price" style="text-decoration:line-through; color:#999; margin-left:5px;">
-                      ${formatMoney(comparePrice)}
-                    </span>
-                    <span class="discount-percent" style="color:red; margin-left:5px;">
-                      (${discountPercent}% OFF)
-                    </span>
-                  ` : ''}
-                </p>
-              </div>
+        return `
+          <div class="cart-item" data-line="${index + 1}">
+            <div class="cart-item-image">
+              <img src="${item.image}" alt="${item.title}" class="cart-image" />
             </div>
-          `;
-        }).join('');
+            <div class="cart-item-info ${hasDiscount ? `hasDiscount` : ''}">
+              <p class="cart-item-title">${item.title}</p>
+              ${hasDiscount ? `<p class="cart-discount-percent">${discountPercent}% Off</p>` : ''}
+              <p class="cart-price">
+                ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''}
+                ${formatMoney(item.final_line_price)}
+              </p>
+            </div>
+            <div class="cart-qty">
+                <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">−</button>
+                <span class="qty-count">${item.quantity}</span>
+                <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">+</button>
+              </div>
+          </div>
+        `;
+      });
 
-        // Attach + / − handlers
-        attachQtyHandlers();
-      })
-      .catch(err => console.error('Error loading cart:', err));
+      // Wait for all items' HTML to finish loading (since we’re fetching each product)
+      const allItemsHTML = await Promise.all(itemHtmlPromises);
+      cartItemsWrapper.innerHTML = allItemsHTML.join('');
+
+      attachQtyHandlers();
+    } catch (err) {
+      console.error('Error loading cart:', err);
+    }
   }
 
-  // 🔄 Update quantity (handles +, −, and delete)
   function updateCartItem(line, quantity) {
     fetch(window.Shopify.routes.root + 'cart/change.js', {
       method: 'POST',
@@ -276,14 +362,10 @@
       body: JSON.stringify({ line, quantity })
     })
     .then(res => res.json())
-    .then(cart => {
-      console.log('✅ Cart updated:', cart);
-      loadCartItems();
-    })
+    .then(() => loadCartItems())
     .catch(err => console.error('Error updating cart:', err));
   }
 
-  // 🧠 Attach + and − event handlers
   function attachQtyHandlers() {
     const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
     const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
@@ -302,18 +384,16 @@
         const line = Number(btn.dataset.line);
         const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
         const currentQty = Number(qtyCount.textContent);
-        const newQty = currentQty > 1 ? currentQty - 1 : 0; // 0 removes the product
+        const newQty = currentQty > 1 ? currentQty - 1 : 0;
         updateCartItem(line, newQty);
       });
     });
   }
 
-  // Load cart on page load
   loadCartItems();
   });
-
-
 </script>
+
 
 {% schema %}
   {
