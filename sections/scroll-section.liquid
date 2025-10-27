@@ -1,132 +1,137 @@
 <section class="scroll-sec">
     <div class="scrollsec-wrapper">
-        <div class="scrollsec-slide slide_1">
-            <div class="scrollsecslide-in">
-                <div class="container-fluid">
-                    <div class="slide1-wrap">
-                        <div class="sw-first-left">
-                            <h2>{{section.settings.heading_desktop}}</h2>
-                            <p>{{section.settings.heading_sub_desktop}}</p>
-                        </div>
-                        <div class="sw-first-right">
-                            <div class="swfr-in">
-                                <div class="swright-top">
-                                    <div class="swrt-image">
-                                        <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/64efb817b0eda88b82156381eddafbc724f00fdf.jpg?v=1759314045" alt="">
-                                        <div class="swrt-scroll">
-                                            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/scroll-image-jf.png?v=1760000915" alt="">
+        {% for block in section.blocks %}
+            {% if block.type == 'slide1' %}
+                <div class="scrollsec-slide slide_1">
+                    <div class="scrollsecslide-in">
+                        <div class="container-fluid">
+                            <div class="slide1-wrap">
+                                <div class="sw-first-left">
+                                    <h2>{{section.settings.section_heading}}</h2>
+                                    <p>{{section.settings.section_subheading}}</p>
+                                </div>
+                                <div class="sw-first-right">
+                                    <div class="swfr-in">
+                                        <div class="swright-top">
+                                            <div class="swrt-image">
+                                                <img src="{{ block.settings.main_image |  img_url: 'master' }}" alt="">
+                                                <div class="swrt-scroll">
+                                                    <img src="{{ block.settings.scroll_image |  img_url: 'master' }}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swright-bottom">
+                                            <h3>{{ block.settings.side_heading }}</h3>
+                                            <p class="small">{{ block.settings.side_content }}​​</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swright-bottom">
-                                    <h3>Grown with Purpose</h3>
-                                    <p class="small">​​We partner directly with small-scale farmers who care deeply for their land, their people, and their fruit.</p>
-                                    <p class="small">Through close relationships and shared values — organic practices, regenerative soils, and real hardwork — we source rare, often heirloom fruits bursting with flavor and story.</p>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="scrollsec-slide slide_2">
-            <div class="scrollsecslide-in">
-                <div class="container-fluid">
-                    <div class="slide2-wrap">
-                        <div class="sw-second-left">
-                            <div class="sws-image">
-                                <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/chemical-free.jpg?v=1760001070" alt="">
-                            </div>
-                            <div class="sws-content">
-                                <p>No Chemicals. No Compromises.</p>
-                            </div>
-                        </div>
-                        <div class="sw-second-right">
-                            <div class="sws-heading">
-                                <h3>Chemical-Free and Organic</h3>
-                                <p class="small">Many of our fruits are organically certified. Others come from wild groves or small farms that can’t access certification. In those cases, we go further: visiting farms, checking practices, and ensuring they meet organic standards. When no organic option exists, we choose the best alternatives, often with GlobalGAP (Good Agricultural Practices) certification.</p>
-                            </div>
-                            <div class="sws-fruits">
-                                <div class="swsfruits-item fruit1">
-                                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/fruit-appear-1.png?v=1760008246" alt="">
+            {% elsif block.type == 'slide2' %}
+                <div class="scrollsec-slide slide_2">
+                    <div class="scrollsecslide-in">
+                        <div class="container-fluid">
+                            <div class="slide2-wrap">
+                                <div class="sw-second-left">
+                                    <div class="sws-image">
+                                        <img src="{{ block.settings.main_image |  img_url: 'master' }}" alt="">
+                                    </div>
+                                    <div class="sws-content">
+                                        <p>{{ block.settings.image_label }}</p>
+                                    </div>
                                 </div>
-                                <div class="swsfruits-item fruit2">
-                                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/fruit-appear-2.png?v=1760008246" alt="">
-                                </div>
-                                <div class="swsfruits-item fruit3">
-                                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/fruit-appear-3.png?v=1760008246" alt="">
-                                </div>
-                                <div class="swsfruits-item fruit4">
-                                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/fruit-appear-4.png?v=1760008246" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="scrollsec-slide slide_3">
-            <div class="scrollsecslide-in">
-                <div class="container-fluid">
-                    <div class="slide3-wrap">
-                        <div class="sw-three-left">
-                            <div class="swfr-in">
-                                <div class="swright-top">
-                                    <div class="sidetop-text">Harvested only after you order</div>
-                                    <div class="swrt-image">
-                                        <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/346270bb3e5776562c5acbf15ebd1c06f29d763b.jpg?v=1760010868" alt="">
-                                        <div class="swrt-scroll">
-                                            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/scroll-image-jf.png?v=1760000915" alt="">
+                                <div class="sw-second-right">
+                                    <div class="sws-heading">
+                                        <h3>{{ block.settings.side_heading }}</h3>
+                                        <p class="small">{{ block.settings.side_content }}</p>
+                                    </div>
+                                    <div class="sws-fruits">
+                                        <div class="swsfruits-item fruit1">
+                                            <img src="{{ block.settings.fruit1 | img_url: 'master' }}" alt="">
+                                        </div>
+                                        <div class="swsfruits-item fruit2">
+                                            <img src="{{ block.settings.fruit2 | img_url: 'master' }}" alt="">
+                                        </div>
+                                        <div class="swsfruits-item fruit3">
+                                            <img src="{{ block.settings.fruit3 | img_url: 'master' }}" alt="">
+                                        </div>
+                                        <div class="swsfruits-item fruit4">
+                                            <img src="{{ block.settings.fruit4 | img_url: 'master' }}" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swright-bottom">
-                                    <h3>Picked After You Click</h3>
-                                    <p class="small">When you place your order before Thursday at 8:00 PM, your fruits are still soaking in the sun, ripening on the tree. Only after your click do our farmers begin to harvest. That’s how we deliver fruit that’s fresher, fuller, and bursting with flavor.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sw-three-right sw-second-left">
-                            <div class="sws-image">
-                                <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/b88d572ac22b81ad198a96eb7840035457ddb3ec.jpg?v=1760010883" alt="">
-                            </div>
-                            <div class="sws-content">
-                                <p>No Chemicals. No Compromises.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="scrollsec-slide slide_4">
-            <div class="scrollsecslide-in">
-                <div class="container-fluid">
-                    <div class="slide4-wrap">
-                        <div class="sw-four-left">
-                            <div class="sws-heading">
-                                <h3>Harvested at Full Maturity</h3>
-                                <p class="small">Unlike supermarket fruit, ours are harvested at physiological maturity—when nutrients and flavor are fully developed. Some fruits (like avocados or bananas) ripen post-harvest, so we ship them slightly firm. This ensures they arrive safe and natural, needing just 2–3 days at room temperature to reach perfect ripeness—no chemicals, no shortcuts.</p>
-                            </div>
-                        </div>
-                        <div class="sw-four-right">
-                            <div class="swfr-in">
-                                <div class="swright-top">
-                                    <div class="sidetop-text">Reaches you in 5-6 days</div>
-                                    <div class="swrt-image">
-                                        <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/346270bb3e5776562c5acbf15ebd1c06f29d763b.jpg?v=1760010868" alt="">
+            {% elsif block.type == 'slide3' %}
+                <div class="scrollsec-slide slide_3">
+                    <div class="scrollsecslide-in">
+                        <div class="container-fluid">
+                            <div class="slide3-wrap">
+                                <div class="sw-three-left">
+                                    <div class="swfr-in">
+                                        <div class="swright-top">
+                                            <div class="sidetop-text">{{ block.settings.image_label }}</div>
+                                            <div class="swrt-image">
+                                                <img src="{{ block.settings.side_image |  img_url: 'master' }}" alt="">
+                                                <div class="swrt-scroll">
+                                                    <img src="{{ block.settings.scroll_image |  img_url: 'master' }}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swright-bottom">
+                                            <h3>{{ block.settings.side_heading }}</h3>
+                                            <p class="small">{{ block.settings.side_content }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="swright-bottom">
-                                    <h3>Ultra-Fresh Delivery</h3>
-                                    <p class="small">From the moment you place an order, your fruits are harvested, packed, and shipped with the utmost care. We minimize the time between picking and delivery, so your fruits arrive fresh — on average, 5 to 6 days after being plucked from the tree. Straight from the farm to your plate.</p>
+                                <div class="sw-three-right sw-second-left">
+                                    <div class="sws-image">
+                                        <img src="{{ block.settings.main_image |  img_url: 'master' }}" alt="">
+                                    </div>
+                                    <div class="sws-content">
+                                        <p>{{ block.settings.main_image_label }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            {% elsif block.type == 'slide4' %}
+                <div class="scrollsec-slide slide_4">
+                    <div class="scrollsecslide-in">
+                        <div class="container-fluid">
+                            <div class="slide4-wrap">
+                                <div class="sw-four-left">
+                                    <div class="sws-heading">
+                                        <h3>{{ block.settings.left_heading }}</h3>
+                                        <p class="small">{{ block.settings.left_content }}</p>
+                                    </div>
+                                </div>
+                                <div class="sw-four-right">
+                                    <div class="swfr-in">
+                                        <div class="swright-top">
+                                            <div class="sidetop-text">{{ block.settings.side_image_label }}</div>
+                                            <div class="swrt-image">
+                                                <img src="{{ block.settings.main_image |  img_url: 'master' }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="swright-bottom">
+                                            <h3>{{ block.settings.side_heading }}</h3>
+                                            <p class="small">{{ block.settings.side_content }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <div class="scrollsec-slider">
@@ -134,31 +139,94 @@
             <div class="scs-slider">
                 <div class="scsslider-heading">
                     <div class="heading center small-width">
-                        <h2>{{section.settings.heading_desktop}}</h2>
-                        <p>{{section.settings.heading_sub_desktop}}</p>
+                        <h2>{{section.settings.section_heading}}</h2>
+                        <p>{{section.settings.section_subheading}}</p>
                     </div>
                 </div>
                 <div class="owl-carousel owl-theme">
-                    <div class="item">
-                        <div class="scs-item">
-                            <div class="scs-in">
-                                <div class="scs-top">
-                                    <div class="scs-image">
-                                        <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/64efb817b0eda88b82156381eddafbc724f00fdf.jpg?v=1759314045" alt="">
-                                    </div>
-                                </div>
-                                <div class="scs-bottom">
-                                    <div class="swsb-heading">
-                                        <h4>Grown with Purpose</h4>
-                                    </div>
-                                    <div class="swsb-para">
-                                        <p>We partner directly with small-scale farmers who care deeply for their land, their people, and their fruit.</p>
-                                        <p>Through close relationships and shared values — organic practices, regenerative soils, and real hardwork — we source rare, often heirloom fruits bursting with flavor and story.</p>
+                    {% for block in section.blocks %}
+                        {% if block.type == 'slide1' %}
+                            <div class="item">
+                                <div class="scs-item">
+                                    <div class="scs-in">
+                                        <div class="scs-top">
+                                            <div class="scs-image">
+                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="scs-bottom">
+                                            <div class="swsb-heading">
+                                                <h4>{{ block.settings.side_heading }}</h4>
+                                            </div>
+                                            <div class="swsb-para">
+                                                <p>{{ block.settings.side_content }}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        {% elsif block.type == 'slide2' %}
+                            <div class="item">
+                                <div class="scs-item">
+                                    <div class="scs-in">
+                                        <div class="scs-top">
+                                            <div class="scs-image">
+                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="scs-bottom">
+                                            <div class="swsb-heading">
+                                                <h4>{{ block.settings.side_heading }}</h4>
+                                            </div>
+                                            <div class="swsb-para">
+                                                <p>{{ block.settings.side_content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elsif block.type == 'slide3' %}
+                            <div class="item">
+                                <div class="scs-item">
+                                    <div class="scs-in">
+                                        <div class="scs-top">
+                                            <div class="scs-image">
+                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="scs-bottom">
+                                            <div class="swsb-heading">
+                                                <h4>{{ block.settings.side_heading }}</h4>
+                                            </div>
+                                            <div class="swsb-para">
+                                                <p>{{ block.settings.side_content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elsif block.type == 'slide4' %}
+                            <div class="item">
+                                <div class="scs-item">
+                                    <div class="scs-in">
+                                        <div class="scs-top">
+                                            <div class="scs-image">
+                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="scs-bottom">
+                                            <div class="swsb-heading">
+                                                <h4>{{ block.settings.side_heading }}</h4>
+                                            </div>
+                                            <div class="swsb-para">
+                                                <p>{{ block.settings.side_content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -171,131 +239,172 @@
   "settings": [
     {
       "type": "text",
-      "id": "heading_desktop",
-      "label": "Desktop heading (used in overlay)",
+      "id": "section_heading",
+      "label": "Section Heading",
       "default": "This Is What Wild Tastes Like"
     },
     {
       "type": "textarea",
-      "id": "heading_sub_desktop",
-      "label": "Desktop subheading (overlay)",
+      "id": "section_subheading",
+      "label": "Section Subheading",
       "default": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_desktop_section",
-      "label": "Show desktop horizontal section",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_mobile_slider",
-      "label": "Show mobile carousel slider",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay_slider",
-      "label": "Autoplay mobile slider",
-      "default": false
     }
   ],
   "blocks": [
     {
-      "type": "slide",
-      "name": "Slide",
+      "type": "slide1",
+      "name": "Slide 1",
       "settings": [
-        {
-          "type": "select",
-          "id": "layout",
-          "label": "Layout / variant",
-          "options": [
-            { "value": "variant_1", "label": "Variant 1 (left text / right image)" },
-            { "value": "variant_2", "label": "Variant 2 (left image / right text + fruits)" },
-            { "value": "variant_3", "label": "Variant 3 (mix)" }
-          ],
-          "default": "variant_1"
+        { 
+            "type": "text", 
+            "id": "side_heading", 
+            "label": "Side Heading", 
+            "default": "Grown with Purpose"
         },
-        {
-          "type": "text",
-          "id": "eyebrow",
-          "label": "Eyebrow / small label (optional)"
+        { 
+            "type": "textarea", 
+            "id": "side_content", 
+            "label": "Side Content", 
+            "default": "We partner directly with small-scale farmers who care deeply for their land..." 
         },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Slide Heading",
-          "default": "Slide heading"
+            { "type": "image_picker", 
+            "id": "main_image", 
+            "label": "Main Image" 
         },
-        {
-          "type": "textarea",
-          "id": "content",
-          "label": "Slide content / paragraph",
-          "default": "Slide paragraph text"
+            { "type": "image_picker", 
+            "id": "scroll_image", 
+            "label": "Scroll Image" 
+        }
+      ]
+    },
+    {
+      "type": "slide2",
+      "name": "Slide 2",
+      "settings": [
+        { "type": "text", 
+            "id": "side_heading", 
+            "label": "Side Heading", 
+            "default": "Chemical-Free and Organic" 
         },
-        {
-          "type": "image_picker",
-          "id": "main_image",
-          "label": "Main image (large)"
+        { "type": "textarea",
+            "id": "side_content", 
+            "label": "Side Content", 
+            "default": "Many of our fruits are organically certified..." 
         },
-        {
-          "type": "image_picker",
-          "id": "scroll_image",
-          "label": "Scroll accent image (the smaller scroll image shown on top)",
-          "info": "Optional small decorative image"
+        { "type": "image_picker", 
+            "id": "main_image", 
+            "label": "Main Image" 
         },
-        {
-          "type": "image_picker",
-          "id": "side_image",
-          "label": "Secondary side image (optional)"
+        { "type": "text", 
+            "id": "image_label", 
+            "label": "Image Label", 
+            "default": "No Chemicals. No Compromises." 
         },
-        {
-          "type": "text",
-          "id": "side_heading",
-          "label": "Side heading (optional)"
+        { "type": "image_picker", 
+            "id": "fruit1", 
+            "label": "Fruit 1" 
         },
-        {
-          "type": "textarea",
-          "id": "side_text",
-          "label": "Side paragraph(s) (optional)"
+        { "type": "image_picker", 
+            "id": "fruit2", 
+            "label": "Fruit 2" 
         },
-
-        { "type": "header", "content": "Optional fruit icons (used in variant 2)" },
-        {
-          "type": "image_picker",
-          "id": "fruit_1",
-          "label": "Fruit image 1 (optional)"
+            { "type": "image_picker", 
+            "id": "fruit3", 
+            "label": "Fruit 3" 
         },
-        {
-          "type": "image_picker",
-          "id": "fruit_2",
-          "label": "Fruit image 2 (optional)"
+        { "type": "image_picker",
+            "id": "fruit4", 
+            "label": "Fruit 4" 
+        }
+      ]
+    },
+    {
+      "type": "slide3",
+      "name": "Slide 3",
+      "settings": [
+        { "type": "text", 
+            "id": "side_heading", 
+            "label": "Side Heading",
+            "default": "Picked After You Click"
         },
-        {
-          "type": "image_picker",
-          "id": "fruit_3",
-          "label": "Fruit image 3 (optional)"
+        { "type": "textarea", 
+            "id": "side_content", 
+            "label": "Side Content", 
+            "default": "When you place your order before Thursday at 8:00 PM..."
         },
-        {
-          "type": "image_picker",
-          "id": "fruit_4",
-          "label": "Fruit image 4 (optional)"
+            { "type": "image_picker", 
+            "id": "main_image", 
+            "label": "Main Image"
+        },
+        { "type": "text", 
+            "id": "image_label", 
+            "label": "Image Label Text",
+            "default": "Harvested only after you order"
+        },
+            { "type": "image_picker", 
+            "id": "scroll_image", 
+            "label": "Scroll Image" 
+        },
+            { "type": "image_picker", 
+            "id": "side_image",
+            "label": "Side Image" 
+        },
+        { "type": "text", 
+            "id": "main_image_label", 
+            "label": "Main Image Label",
+            "default": "Picked at peak natural ripeness"
+        }
+      ]
+    },
+    {
+      "type": "slide4",
+      "name": "Slide 4",
+      "settings": [
+        { 
+            "type": "text",
+            "id": "left_heading",
+            "label": "Left Heading",
+            "default": "Ultra-Fresh Delivery"
+        },
+        { 
+            "type": "textarea",
+            "id": "left_content",
+            "label": "Left Content",
+            "default": "From the moment you place an order, your fruits are harvested, packed, and shipped..."
+        },
+        { 
+            "type": "image_picker",
+            "id": "main_image",
+            "label": "Side Image" 
+        },
+        { 
+            "type": "text",
+            "id": "side_heading",
+            "label": "Side Heading",
+            "default": "Ultra-Fresh Delivery"
+        },
+        { 
+            "type": "textarea",
+            "id": "side_content",
+            "label": "Side Content",
+            "default": "From the moment you place an order, your fruits are harvested, packed, and shipped..."
+        },
+        { 
+            "type": "text",
+            "id": "side_image_label",
+            "label": "Side Image Label",
+            "default": "Reaches you in 5-6 days"
         }
       ]
     }
   ],
-  "max_blocks": 8,
   "presets": [
     {
-      "name": "Scroll Section (Horizontal)",
-      "category": "Sections",
-      "blocks": [
-        { "type": "slide", "settings": { "layout": "variant_1", "heading": "This Is What Wild Tastes Like", "content": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness." } },
-        { "type": "slide", "settings": { "layout": "variant_2", "heading": "Chemical-Free and Organic", "content": "Many of our fruits are organically certified..." } },
-        { "type": "slide", "settings": { "layout": "variant_3", "heading": "Picked After You Click", "content": "When you place your order before Thursday at 8:00 PM..." } },
-        { "type": "slide", "settings": { "layout": "variant_1", "heading": "Ultra-Fresh Delivery", "content": "From the moment you place an order, your fruits are harvested, packed, and shipped with care." } }
-      ]
+      "name": "Scroll Section Fixed Slides",
+      "category": "Sections"
     }
   ]
 }
 {% endschema %}
+
+
