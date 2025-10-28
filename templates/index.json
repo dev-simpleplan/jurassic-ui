@@ -78,6 +78,7 @@
     "discovery-box": {
       "type": "discovery-box",
       "settings": {
+        "collection": "fruit-sets-gifts",
         "bg-image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
         "heading": "Embark on a Flavor Adventure with Discovery Box",
         "para": "New to Jurassic? This Discovery Box is your perfect start.",
@@ -213,12 +214,62 @@
     },
     "scroll-section": {
       "type": "scroll-section",
+      "blocks": {
+        "slide1_YajRTe": {
+          "type": "slide1",
+          "settings": {
+            "side_heading": "Grown with Purpose",
+            "side_content": "​​We partner directly with small-scale farmers who care deeply for their land, their people, and their fruit.\n\nThrough close relationships and shared values — organic practices, regenerative soils, and real hardwork — we source rare, often heirloom fruits bursting with flavor and story.",
+            "main_image": "shopify://shop_images/real_1.jpg",
+            "scroll_image": "shopify://shop_images/scroll-image-jf.png"
+          }
+        },
+        "slide2_ncKMPY": {
+          "type": "slide2",
+          "settings": {
+            "side_heading": "Chemical-Free and Organic",
+            "side_content": "Many of our fruits are organically certified. Others come from wild groves or small farms that can’t access certification. In those cases, we go further: visiting farms, checking practices, and ensuring they meet organic standards. When no organic option exists, we choose the best alternatives, often with GlobalGAP (Good Agricultural Practices) certification.",
+            "main_image": "shopify://shop_images/roar_1.jpg",
+            "image_label": "No Chemicals. No Compromises.",
+            "fruit1": "shopify://shop_images/fruit-appear-1.png",
+            "fruit2": "shopify://shop_images/fruit-appear-2.png",
+            "fruit3": "shopify://shop_images/fruit-appear-3.png",
+            "fruit4": "shopify://shop_images/fruit-appear-4.png"
+          }
+        },
+        "slide3_UzHckJ": {
+          "type": "slide3",
+          "settings": {
+            "side_heading": "Picked After You Click",
+            "side_content": "When you place your order before Thursday at 8:00 PM, your fruits are still soaking in the sun, ripening on the tree. Only after your click do our farmers begin to harvest. That’s how we deliver fruit that’s fresher, fuller, and bursting with flavor.",
+            "main_image": "shopify://shop_images/b88d572ac22b81ad198a96eb7840035457ddb3ec.jpg",
+            "image_label": "Harvested only after you order",
+            "scroll_image": "shopify://shop_images/scroll-image-jf.png",
+            "side_image": "shopify://shop_images/346270bb3e5776562c5acbf15ebd1c06f29d763b.jpg",
+            "main_image_label": "Picked at peak natural ripeness"
+          }
+        },
+        "slide4_hq3aeX": {
+          "type": "slide4",
+          "settings": {
+            "left_heading": "Harvested at Full Maturity",
+            "left_content": "Unlike supermarket fruit, ours are harvested at physiological maturity—when nutrients and flavor are fully developed. Some fruits (like avocados or bananas) ripen post-harvest, so we ship them slightly firm. This ensures they arrive safe and natural, needing just 2–3 days at room temperature to reach perfect ripeness—no chemicals, no shortcuts.",
+            "main_image": "shopify://shop_images/346270bb3e5776562c5acbf15ebd1c06f29d763b.jpg",
+            "side_heading": "Ultra-Fresh Delivery",
+            "side_content": "From the moment you place an order, your fruits are harvested, packed, and shipped with the utmost care. We minimize the time between picking and delivery, so your fruits arrive fresh — on average, 5 to 6 days after being plucked from the tree. Straight from the farm to your plate.",
+            "side_image_label": "Reaches you in 5-6 days"
+          }
+        }
+      },
+      "block_order": [
+        "slide1_YajRTe",
+        "slide2_ncKMPY",
+        "slide3_UzHckJ",
+        "slide4_hq3aeX"
+      ],
       "settings": {
-        "heading_desktop": "This Is What Wild Tastes Like",
-        "heading_sub_desktop": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness.",
-        "show_desktop_section": true,
-        "show_mobile_slider": true,
-        "autoplay_slider": false
+        "section_heading": "This Is What Wild Tastes Like",
+        "section_subheading": "Taste the difference in every bite — harvested at the peak of ripeness, delivered at the peak of freshness."
       }
     },
     "spacer9": {
