@@ -174,7 +174,7 @@
     display: inline-flex;
     text-transform: capitalize;
     color: #397E1B;
-    padding: 4px;
+    padding: 4px 8px;
     border: 1px solid #397E1B;
     border-radius: 16px;
     align-items: center;
@@ -312,6 +312,78 @@
     }
   }
 
+  .cart-totals > div {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .cart-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .cart-totals .cs-title {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    letter-spacing: 0;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: #1A1A1A;
+  }
+
+  .cart-totals .cs-title span {
+    color: #5C5C5C;
+    font-size: 10px;
+  }
+
+  .cart-totals .cs-res {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 136%;
+    letter-spacing: -0.02em;
+    text-align: right;
+    color: #151515;
+  }
+
+  .cart-totals > div p {
+    width: 48%;
+  }
+
+  .checkout-btn {
+    background: linear-gradient(90deg, #FFC761 0%, #F7A816 138.78%);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 32px;
+    gap: 16px;
+  }
+
+  .checkout-btn .checkout-txt {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #2c2c2c;
+  }
+
+  .checkout-btn .checkout-total {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    text-align: right;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: #1A1A1A;
+  }
+
 
 </style>
 
@@ -324,7 +396,7 @@
       <div class="sch-left">
         <p>
           Cart
-          <span>({{ cart.item_count }} items)</span>
+          <span id="cart_item_count">({{ cart.item_count }} items)</span>
         </p>
         {% if cart.item_count > 0 %}
           <a href="{{ routes.cart_url }}">View Cart</a>
@@ -339,48 +411,41 @@
         <div class="side-cart-with-items-in">
           <div class="side-cart-with-items" data-lenis-prevent></div>
         </div>
-      {% else %}
-        <div class="side-cart-empty">
-          <div class="jf-icon">
-            {% render 'jf' %}
-          </div>
-          <div class="sce-txt">
-            <h3>uh-oh!</h3>
-            <p>You have an empty basket.</p>
-          </div>
-        </div>
 
       {% endif %}
     </div>
-    <div class="sc-footer">
-      <div class="cart-totals">
-        <div class="cart-subtotal">
-          <span>Subtotal</span>
-          <span class="subtotal-amount">₹0.00</span>
+    {% if cart.item_count > 0 %}
+      <div class="sc-footer">
+        <div class="cart-totals">
+          <div class="cart-subtotal">
+            <p class="cs-title">Subtotal</p>
+            <p class="subtotal-amount cs-res">0.00</p>
+          </div>
+          <div class="cart-shipping">
+            <p class="cs-title">shipping
+              <span>(calc. at the checkout)</span>
+            </p>
+            <p class="shipping-amount cs-res">Calculated at checkout</p>
+          </div>
+          <div class="cart-total">
+            <p class="cs-title">Total
+              <span>incl. VAT</span>
+            </p>
+            <p class="total-amount cs-res">0.00</p>
+          </div>
         </div>
-        <div class="cart-shipping">
-          <span>Estimated Shipping</span>
-          <span class="shipping-amount">Calculated at checkout</span>
-        </div>
-        <div class="cart-total">
-          <span>Total</span>
-          <span class="total-amount">₹0.00</span>
-        </div>
+        <form action="/checkout" method="post">
+          <button
+            name="checkout"
+            type="submit"
+            class="checkout-btn custom-btn filled"
+            style="width: 100%;">
+            <span class="checkout-txt">Checkout</span>
+            <span class="checkout-total">0.00</span>
+          </button>
+        </form>
       </div>
-      <form action="/checkout" method="post">
-        <button
-          name="checkout"
-          type="submit"
-          class="checkout-btn"
-          style="width: 100%;">Checkout
-          <span class="checkout-total">₹0.00</span>
-        </button>
-      </form>
-    {% comment %} <a href="{{ routes.checkout_url }}" class="checkout-btn">
-                          Checkout —
-                          <span class="checkout-total">₹0.00</span>
-                  </a> {% endcomment %}
-    </div>
+    {% endif %}
 
   </div>
 </div>
@@ -389,287 +454,313 @@
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
-  const sideCart = document.querySelector('.sideCart');
-  const cartItemsContainer = document.querySelector('.sc-in');
-  const cartItemsWrapper = document.querySelector('.side-cart-with-items');
+    const sideCart = document.querySelector('.sideCart');
+    const cartItemsContainer = document.querySelector('.sc-in');
+    const cartItemsWrapper = document.querySelector('.side-cart-with-items');
 
 
 
-  function formatMoney(cents) {
-    const value = (cents / 100).toFixed(2);
-    const symbol = window.currencySymbol || '';
-    const code = window.activeCurrency || '';
-    return `${symbol}${value} ${code}`;
-  }
-
-  document.querySelector('.cart-open')?.addEventListener('click', function() {
-    sideCart.classList.add('active');
-    loadCartItems();
-  });
-
-  document.querySelector('.sc-close')?.addEventListener('click', function() {
-    sideCart.classList.remove('active');
-  });
-
-  const loader = document.querySelector('.cart-loader');
-
-  function showLoader() {
-    loader?.classList.add('active');
-  }
-
-  function hideLoader() {
-    loader?.classList.remove('active');
-  }
-
-  document.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
-    const addToCartBtn = form.querySelector('#add-to-cart');
-
-    if (addToCartBtn) {
-      addToCartBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-        showLoader();
-
-        try {
-          const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
-            method: 'POST',
-            body: formData
-          });
-
-          if (!response.ok) throw new Error('Network response was not ok');
-
-          const data = await response.json();
-          console.log('Added to cart:', data);
-          sideCart.classList.add('active');
-          await loadCartItems();
-          await fetchShippingRateByRegion();
-        } catch (err) {
-          console.error('Error adding to cart:', err);
-        } finally {
-          hideLoader();
-        }
-      });
+    function formatMoney(cents) {
+      const value = (cents / 100).toFixed(2);
+      const symbol = window.currencySymbol || '';
+      const code = window.activeCurrency || '';
+      return `${symbol}${value} ${code}`;
     }
-  });
 
+    document.querySelector('.cart-open')?.addEventListener('click', function() {
+      sideCart.classList.add('active');
+      loadCartItems();
+    });
 
-  // Load Cart Items with Compare Price
-  async function loadCartItems() {
-    showLoader();
-    try {
-      const res = await fetch(window.Shopify.routes.root + 'cart.js');
-      const cart = await res.json();
-      console.log('Cart Data:', cart);
+    document.querySelector('.sc-close')?.addEventListener('click', function() {
+      sideCart.classList.remove('active');
+    });
 
-      if (!cartItemsContainer) return;
+    const loader = document.querySelector('.cart-loader');
 
-      if (cart.items.length === 0) {
-        cartItemsContainer.innerHTML = `
-        <div class="side-cart-empty">
-          <div class="jf-icon">
-            {% render 'jf' %}
-          </div>
-          <div class="sce-txt">
-            <h3>uh-oh!</h3>
-            <p>You have an empty basket.</p>
-          </div>
-        </div>`;
-        return;
-      }
+    function showLoader() {
+      loader?.classList.add('active');
+    }
 
-      const itemHtmlPromises = cart.items.map(async (item, index) => {
-        let compareAtPrice = null;
+    function hideLoader() {
+      loader?.classList.remove('active');
+    }
 
-        try {
-          const productRes = await fetch(`/products/${item.handle}.js`);
-          const productData = await productRes.json();
+    document.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
+      const addToCartBtn = form.querySelector('#add-to-cart');
 
-          const matchedVariant = productData.variants.find(v => v.id === item.variant_id);
-          if (matchedVariant && matchedVariant.compare_at_price) {
-            compareAtPrice = (matchedVariant.compare_at_price).toFixed(2); // convert to 
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          showLoader();
+
+          try {
+            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              body: formData
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            console.log('Added to cart:', data);
+            sideCart.classList.add('active');
+            await loadCartItems();
+            await fetchShippingRateByRegion();
+          } catch (err) {
+            console.error('Error adding to cart:', err);
+          } finally {
+            hideLoader();
           }
-        } catch (err) {
-          console.warn(`Could not fetch product data for ${item.title}:`, err);
-        }
-
-        const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
-        let discountPercent = 0;
-        if (hasDiscount) {
-          discountPercent = Math.round(((compareAtPrice - item.final_line_price) / compareAtPrice) * 100);
-        }
-
-        return `
-          <div class="cart-item" data-line="${index + 1}">
-            <div class="cart-item-left">
-              <div class="cart-item-image">
-                <img src="${item.image}" alt="${item.title}" class="cart-image" />
-              </div>
-              <div class="cart-item-info ${hasDiscount ? `hasDiscount` : ''}">
-                <p class="cart-item-title">${item.title}</p>
-                ${hasDiscount ? `<p class="cart-discount-percent">${discountPercent}% Off</p>` : ''}
-                <p class="cart-price">
-                  ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''}
-                  ${formatMoney(item.final_line_price)}
-                </p>
-              </div>
-            </div>
-            <div class="cart-qty">
-                <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">
-                  ${item.quantity > 1 
-                    ? `{% render 'minus-icon' %}` 
-                    : `{% render 'bin-icon' %}`
-                  }
-                </button>
-                <span class="qty-count">${item.quantity}</span>
-                <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">
-                  {% render 'plus-icon' %}
-                </button>
-              </div>
-          </div>
-        `;
-      });
-
-      const subtotal = cart.items_subtotal_price;
-      console.log(subtotal);
-      const subtotalDiv = document.querySelector('.subtotal-amount');
-      subtotalDiv.innerHTML = formatMoney(subtotal);
-      const shipping = 0;
-      const total = cart.total_price;
-      const totalDivs = document.querySelectorAll('.total-amount, .checkout-total');
-      totalDivs.forEach(div => {
-        div.innerHTML = formatMoney(total);
-      });
-
-      const allItemsHTML = await Promise.all(itemHtmlPromises);
-      cartItemsWrapper.innerHTML = allItemsHTML.join('');
-
-      cartItemsContainer.querySelectorAll('.cart-item').forEach(item => {
-        const minusBtn = item.querySelector('.qty-btn.minus');
-        const qtyCount = item.querySelector('.qty-count');
-        if (Number(qtyCount.textContent) === 1) {
-          minusBtn.classList.add('one-item');
-        }
-      });
-
-      attachQtyHandlers();
-      fetchShippingRateByRegion();
-    } catch (err) {
-      console.error('Error loading cart:', err);
-    }
-    finally {
-      hideLoader();
-    }
-  }
-
-  async function updateCartItem(line, quantity) {
-    showLoader();
-
-    try {
-      const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ line, quantity })
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const data = await response.json();
-      console.log('Cart updated:', data);
-
-      await loadCartItems(); // Re-render cart after update
-      await fetchShippingRateByRegion();
-    } catch (err) {
-      console.error('Error updating cart:', err);
-    } finally {
-      hideLoader();
-    }
-  }
-
-
-  function attachQtyHandlers() {
-    const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
-    const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
-
-    plusBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const line = Number(btn.dataset.line);
-        const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
-        const currentQty = Number(qtyCount.textContent);
-        updateCartItem(line, currentQty + 1);
-      });
+        });
+      }
     });
 
-    minusBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const line = Number(btn.dataset.line);
-        const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
-        const currentQty = Number(qtyCount.textContent);
-        const newQty = currentQty > 1 ? currentQty - 1 : 0;
-        console.log('New Qty:', newQty);
-        if (newQty === 1) {
-          btn.classList.add('one-item');
+
+    // Load Cart Items with Compare Price
+    async function loadCartItems() {
+      showLoader();
+      try {
+        const res = await fetch(window.Shopify.routes.root + 'cart.js');
+        const cart = await res.json();
+        console.log('Cart Data:', cart);
+
+        if (!cartItemsContainer) return;
+
+        if (cart.items.length === 0) {
+          // Show empty cart state
+          cartItemsContainer.innerHTML = `
+            <div class="side-cart-empty">
+              <div class="jf-icon">
+                {% render 'jf' %}
+              </div>
+              <div class="sce-txt">
+                <h3>uh-oh!</h3>
+                <p>You have an empty basket.</p>
+              </div>
+            </div>`;
+
+          // Hide the items wrapper when empty
+          if (cartItemsWrapper) cartItemsWrapper.style.display = 'none';
+          return;
         } else {
-          btn.classList.remove('one-item');
+          // ✅ Make sure items wrapper is visible when cart has items
+          if (cartItemsWrapper) cartItemsWrapper.style.display = 'block';
+
+          // 🧹 Remove empty-cart section if it exists
+          const emptyDiv = cartItemsContainer.querySelector('.side-cart-empty');
+          if (emptyDiv) emptyDiv.remove();
         }
-        updateCartItem(line, newQty);
-      });
-    });
-  }
 
-  async function fetchShippingRateByRegion() {
-    try {
-      let geoData;
 
-      const cachedGeo = localStorage.getItem('userGeoData');
-      if (cachedGeo) {
-        geoData = JSON.parse(cachedGeo);
-        console.log('Using cached geo data:', geoData);
-      } else {
-        console.log('Fetching geo data from API...');
-        const geoRes = await fetch('https://ipapi.co/json/');
-        geoData = await geoRes.json();
+        const itemHtmlPromises = cart.items.map(async (item, index) => {
+          let compareAtPrice = null;
 
-        localStorage.setItem('userGeoData', JSON.stringify({
-          country_name: geoData.country_name,
-          postal: geoData.postal
-        }));
-      }
+          try {
+            const productRes = await fetch(`/products/${item.handle}.js`);
+            const productData = await productRes.json();
 
-      const country = geoData.country_name;
-      const zip = geoData.postal || '00000'; 
+            const matchedVariant = productData.variants.find(v => v.id === item.variant_id);
+            if (matchedVariant && matchedVariant.compare_at_price) {
+              compareAtPrice = (matchedVariant.compare_at_price).toFixed(2); // convert to 
+            }
+          } catch (err) {
+            console.warn(`Could not fetch product data for ${item.title}:`, err);
+          }
 
-      console.log(`Location detected: ${country}, ZIP: ${zip}`);
+          const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
+          let discountPercent = 0;
+          if (hasDiscount) {
+            discountPercent = Math.round(((compareAtPrice - item.final_line_price) / compareAtPrice) * 100);
+          }
 
-      const res = await fetch(
-        `/cart/shipping_rates.json?shipping_address[country]=${encodeURIComponent(country)}&shipping_address[zip]=${encodeURIComponent(zip)}`
-      );
+          return `
+            <div class="cart-item" data-line="${index + 1}">
+              <div class="cart-item-left">
+                <div class="cart-item-image">
+                  <img src="${item.image}" alt="${item.title}" class="cart-image" />
+                </div>
+                <div class="cart-item-info ${hasDiscount ? `hasDiscount` : ''}">
+                  <p class="cart-item-title">${item.title}</p>
+                  ${hasDiscount ? `<p class="cart-discount-percent">${discountPercent}% Off</p>` : ''}
+                  <p class="cart-price">
+                    ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''}
+                    ${formatMoney(item.final_line_price)}
+                  </p>
+                </div>
+              </div>
+              <div class="cart-qty">
+                  <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">
+                    ${item.quantity > 1 
+                      ? `{% render 'minus-icon' %}` 
+                      : `{% render 'bin-icon' %}`
+                    }
+                  </button>
+                  <span class="qty-count">${item.quantity}</span>
+                  <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">
+                    {% render 'plus-icon' %}
+                  </button>
+                </div>
+            </div>
+          `;
+        });
 
-      if (!res.ok) throw new Error('Failed to fetch shipping rates');
-
-      const data = await res.json();
-      const shippingAmountDiv = document.querySelector('.shipping-amount');
-
-      if (data.shipping_rates && data.shipping_rates.length > 0) {
-        console.log('Available Shipping Rates:', data.shipping_rates);
-        const firstRate = data.shipping_rates[0];
-        console.log(`First Rate: ${firstRate.name} - ${firstRate.price} ${firstRate.currency}`);
-        if (shippingAmountDiv) {
-          shippingAmountDiv.innerHTML = `${formatMoney(firstRate.price)}`;
+        const subtotal = cart.items_subtotal_price;
+        console.log(subtotal);
+        const subtotalDiv = document.querySelector('.subtotal-amount');
+        subtotalDiv.innerHTML = formatMoney(subtotal);
+        const shipping = 0;
+        const total = cart.total_price;
+        const totalDivs = document.querySelectorAll('.total-amount, .checkout-total');
+        totalDivs.forEach(div => {
+          div.innerHTML = formatMoney(total);
+        });
+        const cartCount = cart.item_count;
+        const cartcountSpan = document.getElementById('cart_item_count');
+        const headCount = document.querySelector('.header__cart-quantity');
+        headCount.innerText = cart.item_count;
+        if (cartcountSpan){
+          if (cartCount === 1) {
+            cartcountSpan.innerText = `(${cartCount} item)`;
+          } else if (cartCount > 1) {
+          cartcountSpan.innerText = `(${cartCount} items)`;
+          }
+          else{
+            cartcountSpan.innerText = `(0 item)`;
+          }
         }
-      } else {
-        console.log('No shipping rates available for your region.');
-        if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'NA';
-      }
 
-    } catch (error) {
-      console.error('Error fetching shipping rates:', error);
-      const shippingAmountDiv = document.querySelector('.shipping-amount');
-      if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'NA';
+        const allItemsHTML = await Promise.all(itemHtmlPromises);
+        cartItemsWrapper.innerHTML = allItemsHTML.join('');
+
+        cartItemsContainer.querySelectorAll('.cart-item').forEach(item => {
+          const minusBtn = item.querySelector('.qty-btn.minus');
+          const qtyCount = item.querySelector('.qty-count');
+          if (Number(qtyCount.textContent) === 1) {
+            minusBtn.classList.add('one-item');
+          }
+        });
+
+        attachQtyHandlers();
+        fetchShippingRateByRegion();
+      } catch (err) {
+        console.error('Error loading cart:', err);
+      }
+      finally {
+        hideLoader();
+      }
     }
-  }
 
-  loadCartItems();
+    async function updateCartItem(line, quantity) {
+      showLoader();
+
+      try {
+        const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ line, quantity })
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const data = await response.json();
+        console.log('Cart updated:', data);
+
+        await loadCartItems(); // Re-render cart after update
+        await fetchShippingRateByRegion();
+      } catch (err) {
+        console.error('Error updating cart:', err);
+      } finally {
+        hideLoader();
+      }
+    }
+
+
+    function attachQtyHandlers() {
+      const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
+      const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
+
+      plusBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const line = Number(btn.dataset.line);
+          const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
+          const currentQty = Number(qtyCount.textContent);
+          updateCartItem(line, currentQty + 1);
+        });
+      });
+
+      minusBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const line = Number(btn.dataset.line);
+          const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
+          const currentQty = Number(qtyCount.textContent);
+          const newQty = currentQty > 1 ? currentQty - 1 : 0;
+          console.log('New Qty:', newQty);
+          if (newQty === 1) {
+            btn.classList.add('one-item');
+          } else {
+            btn.classList.remove('one-item');
+          }
+          updateCartItem(line, newQty);
+        });
+      });
+    }
+
+    async function fetchShippingRateByRegion() {
+      try {
+        let geoData;
+
+        const cachedGeo = localStorage.getItem('userGeoData');
+        if (cachedGeo) {
+          geoData = JSON.parse(cachedGeo);
+          console.log('Using cached geo data:', geoData);
+        } else {
+          console.log('Fetching geo data from API...');
+          const geoRes = await fetch('https://ipapi.co/json/');
+          geoData = await geoRes.json();
+
+          localStorage.setItem('userGeoData', JSON.stringify({
+            country_name: geoData.country_name,
+            postal: geoData.postal
+          }));
+        }
+
+        const country = geoData.country_name;
+        const zip = geoData.postal || '00000'; 
+
+        console.log(`Location detected: ${country}, ZIP: ${zip}`);
+
+        const res = await fetch(
+          `/cart/shipping_rates.json?shipping_address[country]=${encodeURIComponent(country)}&shipping_address[zip]=${encodeURIComponent(zip)}`
+        );
+
+        if (!res.ok) throw new Error('Failed to fetch shipping rates');
+
+        const data = await res.json();
+        const shippingAmountDiv = document.querySelector('.shipping-amount');
+
+        if (data.shipping_rates && data.shipping_rates.length > 0) {
+          console.log('Available Shipping Rates:', data.shipping_rates);
+          const firstRate = data.shipping_rates[0];
+          console.log(`First Rate: ${firstRate.name} - ${firstRate.price} ${firstRate.currency}`);
+          if (shippingAmountDiv) {
+            shippingAmountDiv.innerHTML = `${formatMoney(firstRate.price)}`;
+          }
+        } else {
+          console.log('No shipping rates available for your region.');
+          if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
+        }
+
+      } catch (error) {
+        console.error('Error fetching shipping rates:', error);
+        const shippingAmountDiv = document.querySelector('.shipping-amount');
+        if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
+      }
+    }
+
+    loadCartItems();
   });
 </script>
 
