@@ -205,6 +205,7 @@
                                     </div>
                                 </div>
                             </div>
+                        
                         {% elsif block.type == 'slide4' %}
                             <div class="item">
                                 <div class="scs-item">
@@ -212,6 +213,9 @@
                                         <div class="scs-top">
                                             <div class="scs-image">
                                                 <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                            <div class="scs-image-label">
+                                                <p>{{ block.settings.main_image_label }}</p>
                                             </div>
                                         </div>
                                         <div class="scs-bottom">
