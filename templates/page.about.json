@@ -30,6 +30,40 @@
     },
     "mission-vision": {
       "type": "mission-vision",
+      "blocks": {
+        "slide1_AAABL9": {
+          "type": "slide1",
+          "settings": {
+            "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+            "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
+            "slide_heading": "Our Purpose",
+            "slide_content": "We exist to make life flourish — by restoring soils, empowering farmers, nourishing people with real fruit, and spreading a life-affirming energy that inspires health and vitality."
+          }
+        },
+        "slide1_4MizB3": {
+          "type": "slide1",
+          "settings": {
+            "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+            "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
+            "slide_heading": "Our Purpose",
+            "slide_content": "We exist to make life flourish — by restoring soils, empowering farmers, nourishing people with real fruit, and spreading a life-affirming energy that inspires health and vitality."
+          }
+        },
+        "slide1_qfYyyf": {
+          "type": "slide1",
+          "settings": {
+            "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+            "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
+            "slide_heading": "Our Purpose",
+            "slide_content": "We exist to make life flourish — by restoring soils, empowering farmers, nourishing people with real fruit, and spreading a life-affirming energy that inspires health and vitality."
+          }
+        }
+      },
+      "block_order": [
+        "slide1_AAABL9",
+        "slide1_4MizB3",
+        "slide1_qfYyyf"
+      ],
       "settings": {}
     }
   },
