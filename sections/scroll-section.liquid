@@ -173,6 +173,9 @@
                                             <div class="scs-image">
                                                 <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
                                             </div>
+                                            <div class="scs-image-label">
+                                                <p>{{ block.settings.image_label }}</p>
+                                            </div>
                                         </div>
                                         <div class="scs-bottom">
                                             <div class="swsb-heading">
@@ -191,7 +194,10 @@
                                     <div class="scs-in">
                                         <div class="scs-top">
                                             <div class="scs-image">
-                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                                <img src="{{ block.settings.side_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                            <div class="scs-image-label">
+                                                <p>{{ block.settings.image_label }}</p>
                                             </div>
                                         </div>
                                         <div class="scs-bottom">
@@ -205,8 +211,6 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                        {% elsif block.type == 'slide4' %}
                             <div class="item">
                                 <div class="scs-item">
                                     <div class="scs-in">
@@ -216,6 +220,29 @@
                                             </div>
                                             <div class="scs-image-label">
                                                 <p>{{ block.settings.main_image_label }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="scs-bottom">
+                                            <div class="swsb-heading">
+                                                <h4>{{ block.settings.image_heading }}</h4>
+                                            </div>
+                                            <div class="swsb-para">
+                                                <p>{{ block.settings.image_content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elsif block.type == 'slide4' %}
+                            <div class="item">
+                                <div class="scs-item">
+                                    <div class="scs-in">
+                                        <div class="scs-top">
+                                            <div class="scs-image">
+                                                <img src="{{ block.settings.main_image |  img_url:'master' }}" alt="">
+                                            </div>
+                                            <div class="scs-image-label">
+                                                <p>{{ block.settings.side_image_label }}</p>
                                             </div>
                                         </div>
                                         <div class="scs-bottom">
@@ -236,6 +263,7 @@
         </div>
     </div>
 </section>
+
 
 {% schema %}
 {
@@ -344,6 +372,16 @@
             "id": "image_label", 
             "label": "Image Label Text",
             "default": "Harvested only after you order"
+        },
+        { "type": "text", 
+            "id": "image_heading", 
+            "label": "Main Image Heading Mobile",
+            "default": "Harvested at Full Maturity"
+        },
+        { "type": "textarea", 
+            "id": "image_content", 
+            "label": "Main Image Content Mobile", 
+            "default": "Unlike supermarket fruit, ours are harvested at physiological maturity—when nutrients and flavor are fully developed. Some fruits (like avocados or bananas) ripen post-harvest, so we ship them slightly firm. This ensures they arrive safe and natural, needing just 2–3 days at room temperature to reach perfect ripeness—no chemicals, no shortcuts."
         },
             { "type": "image_picker", 
             "id": "scroll_image", 

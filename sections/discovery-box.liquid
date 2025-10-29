@@ -36,11 +36,9 @@
                         {%- if collection == blank or collection.products_count == 0 -%}
                             <p class="noproducts">There are no products inside of this collection.</p>
                         {%- else -%}
-                            <div class="fruits_cards_wrapper for_desktop">
                             {% for product in collection.products limit: 1 %}
                                 {% render 'product-card-primary', product: product, collection: collection %}
                             {% endfor %}
-                            </div>
                         {%- endif -%}
                     </div>
                 </div>

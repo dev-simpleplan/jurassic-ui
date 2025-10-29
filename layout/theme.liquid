@@ -272,6 +272,49 @@
     </script>
 
     <script>
+  (function($){
+    $(document).ready(function(){
+      $('.scrollsec-slider').each(function(){
+        var $scs = $(this);                      // wrapper to receive odd/even class
+        var $owl = $scs.find('.owl-carousel');   // the actual carousel inside
+
+        // helper: set odd/even on wrapper based on 1-based slide position
+        function setOddEvenByPage(pageIndex){
+          var slideNum = (pageIndex || 0) + 1;   // convert 0-based to 1-based
+          var cls = (slideNum % 2) ? 'odd' : 'even';
+          $scs.removeClass('odd even').addClass(cls);
+        }
+
+        // initial class after owl initialized
+        $owl.on('initialized.owl.carousel', function(event){
+          // event.page.index is present in Owl v2 (0-based)
+          var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
+          setOddEvenByPage(pageIndex);
+        });
+
+        // on slide change — update wrapper class
+        $owl.on('changed.owl.carousel', function(event){
+          var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
+          setOddEvenByPage(pageIndex);
+        });
+
+        // If Owl is already initialized before this script runs:
+        if ($owl.hasClass('owl-loaded')) {
+          // try to read current index from data (fallbacks)
+          var carouselData = $owl.data('owl.carousel') || $owl.data('owl'); 
+          var currentPage = (carouselData && carouselData.settings && carouselData._current !== undefined)
+                            ? carouselData._current
+                            : 0;
+          // prefer event.page if available; otherwise use _current or 0
+          setOddEvenByPage(currentPage);
+        }
+      });
+    });
+  })(jQuery);
+</script>
+
+
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".sws-fruits").forEach((container) => {
           const items = Array.from(container.querySelectorAll(".swsfruits-item"));

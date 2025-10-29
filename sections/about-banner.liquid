@@ -1,0 +1,29 @@
+<section class="about-banner">
+    <div class="banner-image">
+        <img class="cover" src="{{ section.settings.banner_image |  img_url: 'master'  }}" alt="">
+    </div>
+    <div class="banner-bottom">
+        <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/footer-shape-top.svg?v=1761573912" alt="">
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "about-banner",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Image"
+      },
+    ],
+    "presets": [
+      {
+        "name": "about-banner",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}
