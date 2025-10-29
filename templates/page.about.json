@@ -9,16 +9,32 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "about",
+    "banner": {
+      "type": "about-banner",
       "settings": {
-        "collection": "fruit-sets-gifts",
-        "heading": "What’s Best This Week",
-        "subheading": "Discover fruits that are fresh, flavorful, and entirely worth the adventure. Every week, our team tastes and curates the four most delicious, in-season picks, so you get only what’s ripe, rare, and remarkable."
+        
       }
+    },
+    "lost-taste": {
+      "type": "lost-taste",
+      "settings": {
+        
+      }
+    },
+    "mission-vision": {
+      "type": "mission-vision",
+      "settings": {
+        
+      },
+      "blocks": {},
+      "block_order": [
+        
+      ]
     }
   },
   "order": [
-    "main"
+    "banner",
+    "lost-taste",
+    "mission-vision"
   ]
 }
