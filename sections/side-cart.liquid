@@ -1,5 +1,4 @@
 <style>
-
   /* Side Cart */
 
   .sideCart {
@@ -22,11 +21,13 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
   .sc-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+
   .side-cart {
     background: #FFFFFF;
     box-shadow: 0 0 6px 0 #C3C3C34D;
@@ -35,17 +36,20 @@
     margin-left: auto;
     padding: 28px 20px 24px 36px;
   }
+
   .sc-close {
     width: 24px;
     height: 24px;
     display: flex;
     cursor: pointer;
   }
+
   .sc-close svg {
     width: 100%;
     height: auto;
     max-height: 100%;
   }
+
   .sch-left p {
     font-weight: 700;
     font-size: 12px;
@@ -55,6 +59,7 @@
     color: #1A1A1A;
 
   }
+
   .sch-left p span {
     font-weight: 400;
     font-size: 12px;
@@ -62,11 +67,13 @@
     letter-spacing: 0.02em;
     text-transform: none;
   }
+
   .sch-left {
     display: flex;
     align-items: center;
     gap: 11px;
   }
+
   .sch-left a {
     font-weight: 400;
     font-size: 12px;
@@ -78,10 +85,12 @@
     text-decoration-thickness: 0;
     color: #1A1A1A;
   }
+
   .sc-in {
     margin-top: auto;
     margin-bottom: auto;
   }
+
   .side-cart-empty {
     display: flex;
     flex-direction: column;
@@ -89,6 +98,7 @@
     justify-content: center;
     gap: 26px;
   }
+
   .side-cart-empty h3 {
     font-weight: 500;
     font-size: 32px;
@@ -98,6 +108,7 @@
     text-transform: capitalize;
     color: #202322;
   }
+
   .side-cart-empty p {
     font-weight: 400;
     font-size: 12px;
@@ -107,16 +118,19 @@
     vertical-align: middle;
     color: #1A1A1A;
   }
+
   .jf-icon {
     display: flex;
     max-width: 120px;
     width: 100%;
   }
+
   .jf-icon svg {
     width: 100%;
     height: auto;
     max-height: 100%;
   }
+
   .sce-txt {
     display: flex;
     flex-direction: column;
@@ -150,6 +164,7 @@
     position: absolute;
     inset: 0;
   }
+
   .cart-item-image {
     position: relative;
     width: 20%;
@@ -166,6 +181,7 @@
     text-transform: capitalize;
     color: #151515;
   }
+
   p.cart-discount-percent {
     font-weight: 600;
     font-size: 12px;
@@ -287,8 +303,7 @@
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease
-    , visibility 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   .cart-loader.active {
@@ -312,7 +327,7 @@
     }
   }
 
-  .cart-totals > div {
+  .cart-totals>div {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -350,7 +365,7 @@
     color: #151515;
   }
 
-  .cart-totals > div p {
+  .cart-totals>div p {
     width: 48%;
   }
 
@@ -383,8 +398,6 @@
     text-transform: capitalize;
     color: #1A1A1A;
   }
-
-
 </style>
 
 <div class="side-cart">
@@ -399,7 +412,7 @@
           <span id="cart_item_count">({{ cart.item_count }} items)</span>
         </p>
         {% if cart.item_count > 0 %}
-          <a href="{{ routes.cart_url }}">View Cart</a>
+        <a href="{{ routes.cart_url }}">View Cart</a>
         {% endif %}
       </div>
       <div class="sc-close">
@@ -430,11 +443,7 @@
         </div>
       </div>
       <form action="/checkout" method="post">
-        <button
-          name="checkout"
-          type="submit"
-          class="checkout-btn custom-btn filled"
-          style="width: 100%;">
+        <button name="checkout" type="submit" class="checkout-btn custom-btn filled" style="width: 100%;">
           <span class="checkout-txt">Checkout</span>
           <span class="checkout-total">0.00</span>
         </button>
@@ -445,9 +454,9 @@
 </div>
 
 
-<script>
+<script id="cart_function">
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const sideCart = document.querySelector('.sideCart');
     const cartItemsContainer = document.querySelector('.sc-in');
     const cartItemsWrapper = document.querySelector('.side-cart-with-items');
@@ -463,12 +472,12 @@
       return `${symbol}${value} ${code}`;
     }
 
-    document.querySelector('.cart-open')?.addEventListener('click', function() {
+    document.querySelector('.cart-open')?.addEventListener('click', function () {
       sideCart.classList.add('active');
       loadCartItems();
     });
 
-    document.querySelector('.sc-close')?.addEventListener('click', function() {
+    document.querySelector('.sc-close')?.addEventListener('click', function () {
       sideCart.classList.remove('active');
     });
 
@@ -515,6 +524,7 @@
     });
 
 
+    // Load and Render Cart Items
     async function loadCartItems() {
       showLoader();
       try {
@@ -552,18 +562,16 @@
         }
 
         // ✅ If cart has items, make sure both sections are visible
-        if (cartItemsWrapper)
-        {
+        if (cartItemsWrapper) {
           cartItemsWrapper.style.display = 'block';
-        } 
+        }
         if (cartFooter) cartFooter.style.display = 'block';
 
         const emptyDiv = cartItemsContainer.querySelector('.side-cart-empty');
-        if (emptyDiv)
-        {
+        if (emptyDiv) {
           emptyDiv.remove();
           cartItemsContainer.appendChild(cartItemsWrapper);
-        } 
+        }
 
         const itemHtmlPromises = cart.items.map(async (item, index) => {
           let compareAtPrice = null;
@@ -625,8 +633,8 @@
 
         if (headCount) headCount.textContent = cart.item_count;
         if (cartCountSpan) {
-          cartCountSpan.textContent = cart.item_count === 1 
-            ? `(1 item)` 
+          cartCountSpan.textContent = cart.item_count === 1
+            ? `(1 item)`
             : `(${cart.item_count} items)`;
         }
 
@@ -647,6 +655,7 @@
     }
 
 
+    // Update Cart item Quantity and Add new item when a product is already in cart.
     async function updateCartItem(line, quantity) {
       showLoader();
 
@@ -672,6 +681,7 @@
     }
 
 
+    // Quantity button handlers
     function attachQtyHandlers() {
       const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
       const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
@@ -702,6 +712,7 @@
       });
     }
 
+    // Show First Shipping option if available. Handled with use case of Not deliverable regions.
     async function fetchShippingRateByRegion() {
       try {
         const failedFlag = localStorage.getItem('shippingRateFailed');
@@ -760,7 +771,7 @@
           }
         } else {
           console.log('No shipping rates available for your region.');
-          localStorage.setItem('shippingRateFailed', 'true'); 
+          localStorage.setItem('shippingRateFailed', 'true');
           if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
         }
 
@@ -775,15 +786,20 @@
 
 
     loadCartItems();
+    // ✅ Expose reinitialization function globally
+    window.initializeCartFunction = function () {
+      console.log('♻️ Reinitializing cart functions...');
+      loadCartItems();
+    };
   });
 </script>
 
 
 {% schema %}
-  {
-    "name": "Side Cart",
-    "class": "sideCart",
-    "tag": "section",
-    "settings": []
-  }
+{
+"name": "Side Cart",
+"class": "sideCart",
+"tag": "section",
+"settings": []
+}
 {% endschema %}

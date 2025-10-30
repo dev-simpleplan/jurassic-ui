@@ -1,168 +1,192 @@
-<discount-field class="discount-field" data-discount="{%- for discount in cart.discount_applications -%}{%- if discount.type == 'discount_code' -%}{{ discount.title }}{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}">
+<discount-field class="discount-field"
+    data-discount="{%- for discount in cart.discount_applications -%}{%- if discount.type == 'discount_code' -%}{{ discount.title }}{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}">
 
-  <form class="discount-field__form">
-    <input
-      type="text"
-      name="discount"
-      autocomplete="off"
-      placeholder="Enter discount code"
-      class="discount-field__input">
-    <button type="submit" class="discount-field__submit-btn">Apply</button>
-  </form>
+    <form class="discount-field__form">
+        <input type="text" name="discount" autocomplete="off" placeholder="Enter discount code"
+            class="discount-field__input">
+        <button type="submit" class="discount-field__submit-btn">Apply</button>
+    </form>
 
-  <div class="discount-field__discounts-list">
-    {% for discount in cart.discount_applications %}
-      {% if discount.type == "discount_code" %}
-        <button
-          type="button"
-          class="discount-field__remove-btn"
-          data-discount="{{ discount.title }}"
-          aria-label="Remove {{ discount.title }} discount">
-          {{ discount.title }}
-          {{ 'icon-close-small.svg' | inline_asset_content }}
+    <div class="discount-field__discounts-list">
+        {% for discount in cart.discount_applications %}
+        {% if discount.type == "discount_code" %}
+        <button type="button" class="discount-field__remove-btn" data-discount="{{ discount.title }}"
+            aria-label="Remove {{ discount.title }} discount">
+            {{ discount.title }}
+            x
         </button>
-      {% endif %}
-    {% endfor %}
-  </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 </discount-field>
 
 <script>
-  class DiscountField extends HTMLElement {
-  constructor() {
-    super();
-    this.form = this.querySelector('.discount-field__form');
-    this.input = this.querySelector('input[name="discount"]');
-    this.submitButton = this.querySelector('.discount-field__submit-btn');
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+            class DiscountField extends HTMLElement {
+                constructor() {
+                    super();
+                    this.form = this.querySelector('.discount-field__form');
+                    this.input = this.querySelector('input[name="discount"]');
+                    this.submitButton = this.querySelector('.discount-field__submit-btn');
+                    this.discountList = this.querySelector('.discount-field__discounts-list');
 
-    this.form.addEventListener('submit', this.handleApplyDiscount.bind(this));
+                    this.form.addEventListener('submit', this.handleApplyDiscount.bind(this));
 
-    this.querySelectorAll('.discount-field__remove-btn').forEach(button => {
-      button.addEventListener('click', this.handleRemoveDiscount.bind(this));
+                    this.querySelectorAll('.discount-field__remove-btn').forEach(button => {
+                        button.addEventListener('click', this.handleRemoveDiscount.bind(this));
+                    });
+
+                    if (typeof window.initializeCartFunction === 'function') {
+                        window.initializeCartFunction();
+                    }
+                }
+
+                // ✅ Apply Discount
+                handleApplyDiscount(e) {
+                    e.preventDefault();
+                    const discountCode = this.input.value.trim();
+                    if (!discountCode) return;
+                    this.applyDiscountInBackground(discountCode);
+                }
+
+                async applyDiscountInBackground(discountCode) {
+                    this.setLoading(true);
+                    try {
+                        console.log(`🎟 Applying discount: ${discountCode}`);
+
+                        // Add to discount list visually
+                        this.discountList.insertAdjacentHTML(
+                            'beforeend',
+                            `<button type="button" class="discount-field__remove-btn" data-discount="${discountCode}" aria-label="Remove ${discountCode} discount">${discountCode} ×</button>`
+                        );
+
+                        // Reattach remove event
+                        this.discountList
+                            .querySelector(`[data-discount="${discountCode}"]`)
+                            .addEventListener('click', this.handleRemoveDiscount.bind(this));
+
+                        // 1️⃣ Apply discount (creates Shopify discount cookie)
+                        await fetch(`/discount/${encodeURIComponent(discountCode)}?redirect=/cart`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        });
+
+                        // 2️⃣ Wait for discount to apply
+                        await new Promise(resolve => setTimeout(resolve, 800));
+
+                        // 3️⃣ Refresh side cart
+                        await this.reRenderCart();
+
+                        console.log('✅ Discount applied and cart updated');
+                        this.input.value = '';
+                    } catch (error) {
+                        console.error('❌ Error applying discount:', error);
+                    } finally {
+                        this.setLoading(false);
+                    }
+                }
+
+                // ✅ Remove Discount (fixes 404 issue)
+                handleRemoveDiscount(e) {
+                    e.preventDefault();
+                    const discountCode = e.currentTarget.dataset.discount;
+                    this.removeDiscount(discountCode);
+                }
+
+                async removeDiscount(discountCode) {
+                    this.setLoading(true);
+                    try {
+                        console.log(`🗑 Removing discount: ${discountCode}`);
+
+                        // 1️⃣ Clear Shopify discount cookie
+                        await fetch('/checkout?discount=', { method: 'GET', credentials: 'include' });
+
+                        // 2️⃣ Wait a bit for server sync
+                        await new Promise(resolve => setTimeout(resolve, 800));
+
+                        // 3️⃣ Remove discount button visually
+                        const button = this.discountList.querySelector(`[data-discount="${discountCode}"]`);
+                        if (button) button.remove();
+
+                        // 4️⃣ Re-render the side cart
+                        await this.reRenderCart();
+
+                        console.log(`✅ Discount ${discountCode} removed successfully`);
+                    } catch (error) {
+                        console.error('❌ Error removing discount:', error);
+                    } finally {
+                        this.setLoading(false);
+                    }
+                }
+
+                // 🔄 Re-render cart after discount apply/remove
+                async reRenderCart() {
+                    try {
+                        const response = await fetch('/?section_id=side-cart');
+                        const text = await response.text();
+                        const html = new DOMParser().parseFromString(text, 'text/html');
+
+                        const newCart = html.querySelector('.side-cart-with-items');
+                        const sideCart = document.querySelector('.side-cart-with-items');
+
+                        if (sideCart && newCart) {
+                            sideCart.innerHTML = newCart.innerHTML;
+
+                            // ♻️ Re-execute #cart_function script if exists
+                            const oldScript = document.querySelector('#cart_function');
+                            const newScript = html.querySelector('#cart_function');
+
+                            if (oldScript) oldScript.remove();
+
+                            if (newScript) {
+                                const freshScript = document.createElement('script');
+                                [...newScript.attributes].forEach(attr => {
+                                    freshScript.setAttribute(attr.name, attr.value);
+                                });
+                                freshScript.textContent = newScript.textContent;
+                                document.body.appendChild(freshScript);
+                                console.log('♻️ Re-executed #cart_function script');
+                            }
+
+                            // ✅ Reinitialize any global cart functions
+                            if (typeof window.initializeCartFunction === 'function') {
+                                window.initializeCartFunction();
+                            } else {
+                                console.warn('⚠️ initializeCartFunction not found.');
+                            }
+                        }
+
+                        // 🔁 Reattach remove button listeners
+                        this.querySelectorAll('.discount-field__remove-btn').forEach(button => {
+                            button.addEventListener('click', this.handleRemoveDiscount.bind(this));
+                        });
+                    } catch (error) {
+                        console.error('Error re-rendering cart:', error);
+                    }
+                }
+
+                setLoading(isLoading) {
+                    if (isLoading) {
+                        this.classList.add('discount-field__loading');
+                        this.submitButton.disabled = true;
+                        this.input.disabled = true;
+                    } else {
+                        this.classList.remove('discount-field__loading');
+                        this.submitButton.disabled = false;
+                        this.input.disabled = false;
+                    }
+                }
+
+                formatMoney(cents) {
+                    const value = (cents / 100).toFixed(2);
+                    const symbol = window.currencySymbol || '';
+                    const code = window.activeCurrency || '';
+                    return `${symbol}${value} ${code}`;
+                }
+            }
+
+            customElements.define('discount-field', DiscountField);
+        }, 1000);
     });
-  }
-
-    handleApplyDiscount(e) {
-  e.preventDefault();
-  const discountCode = this.input.value.trim();
-  if (!discountCode) return;
-
-  this.applyDiscountInBackground(discountCode);
-  }
-
-  async applyDiscountInBackground(discountCode) {
-  this.setLoading(true);
-  try {
-    console.log(`🎟 Applying discount: ${discountCode}`);
-
-    // 1️⃣ Hit Shopify’s discount endpoint in background (sets discount session)
-    await fetch(`/discount/${encodeURIComponent(discountCode)}?redirect=/cart`, {
-      method: 'GET',
-      credentials: 'include'
-    });
-
-    // 2️⃣ Wait briefly for session to update
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    // 3️⃣ Re-render side cart
-    await this.reRenderCart();
-
-    console.log('✅ Discount applied and side cart updated');
-    this.input.value = '';
-  } catch (error) {
-    console.error('❌ Error applying discount:', error);
-  } finally {
-    this.setLoading(false);
-  }
-  }
-
-
-    // handleApplyDiscount(e) {
-    //     e.preventDefault();
-    //     const discountCode = this.input.value.trim();
-    //     if (!discountCode) return;
-
-    //     // Save entered code for display
-    //     localStorage.setItem('appliedDiscount', discountCode);
-
-    //     // Redirect to Shopify's built-in discount URL
-    //     window.location.href = `/discount/${encodeURIComponent(discountCode)}?redirect=/cart`;
-    // }
-
-
-  handleRemoveDiscount(e) {
-    e.preventDefault();
-    const discountToRemove = e.currentTarget.dataset.discount;
-    const existingDiscounts = this.dataset.discount || '';
-    const discountsArray = existingDiscounts ? existingDiscounts.split(',') : [];
-    const updatedDiscounts = discountsArray.filter(d => d !== discountToRemove);
-
-    this.updateCart(updatedDiscounts.join(','));
-  }
-
-  async updateCart(discountCodes) {
-    this.setLoading(true);
-
-    try {
-      const response = await fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          discount_codes: discountCodes,
-        })
-      });
-
-      const cart = await response.json();
-      console.log('Updated cart with discounts:', cart);
-      this.input.value = '';
-
-      await this.reRenderCart(cart);
-    } catch (error) {
-      console.error('Error updating discount:', error);
-    } finally {
-      this.setLoading(false);
-    }
-  }
-
-  setLoading(isLoading) {
-    if (isLoading) {
-      this.classList.add('discount-field__loading');
-      this.submitButton.disabled = true;
-      this.input.disabled = true;
-    } else {
-      this.classList.remove('discount-field__loading');
-      this.submitButton.disabled = false;
-      this.input.disabled = false;
-    }
-  }
-
-  async reRenderCart() {
-  try {
-    const response = await fetch('/?section_id=side-cart');
-    const text = await response.text();
-    const html = new DOMParser().parseFromString(text, 'text/html');
-    const newCart = html.querySelector('.side-cart');
-    console.log(newCart);
-    const sideCart = document.querySelector('.side-cart');
-    if (sideCart && newCart) {
-      sideCart.innerHTML = newCart.innerHTML;
-    }
-  } catch (error) {
-    console.error('Error re-rendering cart:', error);
-  }
-  }
-
-
-
-  formatMoney(cents) {
-    const value = (cents / 100).toFixed(2);
-    const symbol = window.currencySymbol || '';
-    const code = window.activeCurrency || '';
-    return `${symbol}${value} ${code}`;
-  }
-  }
-
-  customElements.define('discount-field', DiscountField);
 </script>
