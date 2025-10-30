@@ -103,7 +103,7 @@
                         await fetch('/checkout?discount=', { method: 'GET', credentials: 'include' });
 
                         // 2️⃣ Wait a bit for server sync
-                        await new Promise(resolve => setTimeout(resolve, 800));
+                        // await new Promise(resolve => setTimeout(resolve, 800));
 
                         // 3️⃣ Remove discount button visually
                         const button = this.discountList.querySelector(`[data-discount="${discountCode}"]`);
