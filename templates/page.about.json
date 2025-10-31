@@ -28,6 +28,12 @@
         "slide2_content": "In 2016, we decided to change that. Soon joined by a third partner, we launched Jurassic Fruits with a simple mission: To bring real flavor back to the table.<br><br>\nFruit that’s grown with care, picked when it’s ready, and bursting with the joy we once knew.<br><br>\nWhat began as a shared childhood dream is now a growing tribe — of farmers, seekers, and flavor lovers — all rediscovering what fruit was always meant to be."
       }
     },
+    "spacer0": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "mission-vision": {
       "type": "mission-vision",
       "blocks": {
@@ -45,8 +51,8 @@
           "settings": {
             "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
             "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
-            "slide_heading": "Our Purpose",
-            "slide_content": "We exist to make life flourish — by restoring soils, empowering farmers, nourishing people with real fruit, and spreading a life-affirming energy that inspires health and vitality."
+            "slide_heading": "Our Vision",
+            "slide_content": "To be the world’s most trusted curator of rare and exotic fruits—sharing nature’s best-kept secrets from remote corners of the world with conscious consumers everywhere."
           }
         },
         "slide1_qfYyyf": {
@@ -54,8 +60,8 @@
           "settings": {
             "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
             "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
-            "slide_heading": "Our Purpose",
-            "slide_content": "We exist to make life flourish — by restoring soils, empowering farmers, nourishing people with real fruit, and spreading a life-affirming energy that inspires health and vitality."
+            "slide_heading": "Our Mission",
+            "slide_content": "To deliver on-demand, nutrient-rich produce—harvested at peak ripeness and traceable to its source—for a truly fresh, meaningful, and sensory journey from soil to soul."
           }
         }
       },
@@ -65,11 +71,47 @@
         "slide1_qfYyyf"
       ],
       "settings": {}
-    }
+    },
+    "spacer1": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "jurassic-way": {
+      "type": "jurassic-way",
+      "settings": {
+        
+      }
+    },
+    "spacer2": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "sustainability": {
+      "type": "sustainability",
+      "settings": {
+        
+      }
+    },
+    "spacer3": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
   },
   "order": [
     "banner",
     "lost-taste",
-    "mission-vision"
+    "spacer0",
+    "mission-vision",
+    "spacer1",
+    "jurassic-way",
+    "spacer2",
+    "sustainability",
+    "spacer3"
   ]
 }
