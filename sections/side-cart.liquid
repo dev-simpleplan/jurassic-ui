@@ -35,6 +35,7 @@
     height: 100%;
     margin-left: auto;
     padding: 28px 20px 24px 36px;
+    position: relative;
   }
 
   .sc-close {
@@ -398,11 +399,38 @@
     text-transform: capitalize;
     color: #1A1A1A;
   }
+
+  .cart-recommendation-wrapper {
+    display: none;
+    position: absolute;
+    right: 100%;
+    flex-direction: column;
+    top: 0;
+    padding: 54px 20px;
+    box-shadow: 0 0 6px 0 #C3C3C34D;
+    background-color: #fff;
+    height: 100dvh;
+    max-width: 250px;
+    min-width: 240px;
+  }
+
+  .cart-recommendation {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100dvh;
+  }
 </style>
 
 <div class="side-cart">
   <div class="cart-loader">
     <div class="loader-spinner"></div>
+  </div>
+  <div class="cart-recommendation-wrapper">
+    <div class="cr-head">you may also like</div>
+    <div class="cart-recommendation" data-lenis-prevent>
+    </div>
   </div>
   <div class="sc-wrapper">
     <div class="sc-head">
@@ -490,6 +518,98 @@
       loader?.classList.remove('active');
     }
 
+    const recommendedCart = async () => {
+      const recommendationWrapper = document.querySelector('.cart-recommendation');
+      const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
+      if (!recommendationIn) return;
+
+      try {
+        showLoader();
+
+        // ✅ Step 1: Get the current cart
+        const cartRes = await fetch('/cart.js');
+        const cart = await cartRes.json();
+        if (!cart.items.length) {
+          recommendationIn.style.display = 'none';
+          hideLoader();
+          return;
+        }
+
+        // ✅ Step 2: Get the first product ID from the cart
+        const firstProductId = cart.items[0].product_id;
+        if (!firstProductId) {
+          recommendationIn.style.display = 'none';
+          hideLoader();
+          return;
+        }
+
+        // ✅ Step 3: Fetch recommended products
+        const response = await fetch(`/recommendations/products.json?product_id=${firstProductId}&limit=8`);
+        const data = await response.json();
+        console.log(data);
+
+        if (!data.products || !data.products.length) {
+          recommendationIn.style.display = 'none';
+          hideLoader();
+          return;
+        }
+
+        // ✅ Step 4: Render recommended products
+        recommendationIn.style.display = 'flex';
+        let recommendationsHtml = '';
+
+        data.products.forEach((product) => {
+          const imageSrc = product.featured_image || (product.images.length ? product.images[0] : '');
+          const price = formatMoney(product.price);
+          const varId = product.variants && product.variants.length ? product.variants[0].id : '';
+
+
+          recommendationsHtml += `
+        <div class="recommended-item">
+              <div class="ri-img">
+                <img src="${imageSrc}" alt="${product.title}" class="product-card__image">
+              </div>
+              <div class="ri-txt">
+                <p class="rit-title">${product.title}</p>
+              </div>
+              <div class="ri-form">
+                <form action="/cart/add" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="${varId}">
+                        <input type="hidden" name="quantity" value="1">
+                        <div class="fc_add_to_cart">
+                            <span class="remove_product">
+                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <button type="submit" id="add-to-cart" {% unless product.available %} {% endunless %}>
+                                {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                            </button>
+                            <span class="add_product">
+                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </div>
+                    </form>
+              </div>
+        </div>
+      `;
+        });
+
+        recommendationWrapper.innerHTML = recommendationsHtml;
+
+      } catch (error) {
+        console.error('❌ Error fetching product recommendations:', error);
+        const recommendationWrapper = document.querySelector('.cart-recommendation');
+        if (recommendationWrapper) recommendationWrapper.style.display = 'none';
+      } finally {
+        hideLoader();
+      }
+    };
+
+
     document.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
       const addToCartBtn = form.querySelector('#add-to-cart');
 
@@ -513,6 +633,7 @@
             sideCart.classList.add('active');
             await loadCartItems();
             await fetchShippingRateByRegion();
+            await recommendedCart();
           } catch (err) {
             console.error('Error adding to cart:', err);
           } finally {
@@ -554,6 +675,8 @@
 
           if (cartItemsWrapper) cartItemsWrapper.style.display = 'none';
           if (cartFooter) cartFooter.style.display = 'none';
+          const cartRec = document.querySelector('.cart-recommendation');
+          if (cartRec) cartRec.style.display = 'none'
 
           if (cartCountSpan) cartCountSpan.textContent = `(0 item)`;
           if (headCount) headCount.textContent = '0';
@@ -571,6 +694,8 @@
           emptyDiv.remove();
           cartItemsContainer.appendChild(cartItemsWrapper);
         }
+        const cartRec = document.querySelector('.cart-recommendation');
+        if (cartRec) cartRec.style.display = 'flex'
 
         const itemHtmlPromises = cart.items.map(async (item, index) => {
           let compareAtPrice = null;
@@ -643,6 +768,7 @@
           if (Number(qtyCount.textContent) === 1) minusBtn.classList.add('one-item');
         });
 
+        recommendedCart();
         attachQtyHandlers();
         fetchShippingRateByRegion();
 
@@ -671,6 +797,7 @@
         console.log('Cart updated:', data);
 
         await loadCartItems(); // Re-render cart after update
+        await recommendedCart();
         await fetchShippingRateByRegion();
       } catch (err) {
         console.error('Error updating cart:', err);

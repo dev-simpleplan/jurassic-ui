@@ -99,18 +99,54 @@
                     try {
                         console.log(`🗑 Removing discount: ${discountCode}`);
 
-                        // 1️⃣ Clear Shopify discount cookie
-                        await fetch('/checkout?discount=', { method: 'GET', credentials: 'include' });
-
-                        // 2️⃣ Wait a bit for server sync
-                        // await new Promise(resolve => setTimeout(resolve, 800));
-
-                        // 3️⃣ Remove discount button visually
-                        const button = this.discountList.querySelector(`[data-discount="${discountCode}"]`);
+                        // 1️⃣ Visually remove the clicked discount button
+                        const button = this.discountList?.querySelector(`[data-discount="${discountCode}"]`);
                         if (button) button.remove();
 
-                        // 4️⃣ Re-render the side cart
+                        // 2️⃣ Clear the specific discount session at checkout
+                        await fetch(`/checkout?discount=${encodeURIComponent(discountCode)}=`, {
+                            method: 'GET',
+                            credentials: 'include'
+                        });
+                        console.log(`🧹 Cleared Shopify checkout discount session for: ${discountCode}`);
+
+                        // 3️⃣ Wait for the session to sync
+                        await new Promise(resolve => setTimeout(resolve, 400));
+
+                        // 4️⃣ Get current cart data
+                        const cartResponse = await fetch('/cart.js');
+                        const cart = await cartResponse.json();
+                        const activeDiscounts = cart.discount_codes?.map(d => d.code) || [];
+
+                        console.log('💬 Discounts before removal:', activeDiscounts);
+
+                        // 5️⃣ Filter out only the one that was clicked
+                        const updatedDiscounts = activeDiscounts.filter(code => code !== discountCode);
+
+                        // 6️⃣ Send updated discounts to Shopify
+                        const updateResponse = await fetch('/cart/update.js', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ discount_codes: updatedDiscounts }),
+                            credentials: 'include'
+                        });
+
+                        if (!updateResponse.ok) throw new Error('Failed to update cart discounts');
+                        const updatedCart = await updateResponse.json();
+
+                        console.log('🛒 Updated cart:', updatedCart);
+
+                        // 7️⃣ Re-render your side cart
                         await this.reRenderCart();
+
+                        // 8️⃣ Reinitialize functions if needed
+                        if (typeof window.initializeCartFunction === 'function') {
+                            window.initializeCartFunction();
+                            console.log('♻️ Cart reinitialized after discount removal');
+                        }
 
                         console.log(`✅ Discount ${discountCode} removed successfully`);
                     } catch (error) {
