@@ -80,8 +80,66 @@
     },
     "jurassic-way": {
       "type": "jurassic-way",
+      "blocks": {
+        "slide_iYCjg7": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/Group_427321151.jpg",
+            "slide_heading": "Clean Farming, Clear Conscience",
+            "slide_content": "Fields thrive with biodiversity. Companion planting, healthy insects, and rich soil work in harmony—resulting in stronger, tastier, more resilient crops."
+          }
+        },
+        "slide_Le3HVB": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "slide_heading": "Let the Wild In",
+            "slide_content": "Fields thrive with biodiversity. Companion planting, healthy insects, and rich soil work in harmony—resulting in stronger, tastier, more resilient crops."
+          }
+        },
+        "slide_k8UeJb": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/Group_427321151.jpg",
+            "slide_heading": "Healthier Soil, Happier Crops",
+            "slide_content": "We don't just grow in soil—we rebuild it. With composting, rotation, and care, every harvest leaves the land richer than before."
+          }
+        },
+        "slide_fXVyca": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "slide_heading": "Partners, Not Just Producers",
+            "slide_content": "Our farmers are more than suppliers. They’re growers with vision—respected, fairly paid, and proud of what they bring to your plate."
+          }
+        },
+        "slide_EVGM6C": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/Group_427321151.jpg",
+            "slide_heading": "Never Stored. Always Savored",
+            "slide_content": "Nothing sits in storage. Fruits are harvested at peak ripeness—so what you taste is how nature intended: juicy, vibrant, unforgettable."
+          }
+        },
+        "slide_qbpp4F": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "slide_heading": "Smart Watering, Thoughtfully Done",
+            "slide_content": "From rainwater harvesting to precision irrigation, our growers treat water like gold—preserving every drop to nourish the next generation of flavor."
+          }
+        }
+      },
+      "block_order": [
+        "slide_iYCjg7",
+        "slide_Le3HVB",
+        "slide_k8UeJb",
+        "slide_fXVyca",
+        "slide_EVGM6C",
+        "slide_qbpp4F"
+      ],
       "settings": {
-        
+        "section_heading": "Fruit Grown, the Jurassic Way"
       }
     },
     "spacer2": {
@@ -92,16 +150,14 @@
     },
     "sustainability": {
       "type": "sustainability",
-      "settings": {
-        
-      }
+      "settings": {}
     },
     "spacer3": {
       "type": "Spacer",
       "settings": {
         "spacer_height": 140
       }
-    },
+    }
   },
   "order": [
     "banner",
