@@ -150,7 +150,43 @@
     },
     "sustainability": {
       "type": "sustainability",
-      "settings": {}
+      "blocks": {
+        "cards_qfWgHX": {
+          "type": "cards",
+          "settings": {
+            "number": 72,
+            "expression": "",
+            "content": "tons of fruit saved from waste"
+          }
+        },
+        "cards_qDA8cP": {
+          "type": "cards",
+          "settings": {
+            "number": 93,
+            "expression": "%",
+            "content": "of packaging is plastic-free"
+          }
+        },
+        "cards_RcaCY4": {
+          "type": "cards",
+          "settings": {
+            "number": 21,
+            "expression": "",
+            "content": "rare heirloom varieties revived"
+          }
+        }
+      },
+      "block_order": [
+        "cards_qfWgHX",
+        "cards_qDA8cP",
+        "cards_RcaCY4"
+      ],
+      "settings": {
+        "heading": "Where Sustainability Bears Real Fruit",
+        "content": "Every fruit you enjoy supports healthy soils, empowered farmers, and a planet that can keep on giving.",
+        "mark_image": "shopify://shop_images/logo-mark--black.svg",
+        "section_image": "shopify://shop_images/d5d86c4bda27bca20005f80f7e602cb2f0af1b91.jpg"
+      }
     },
     "spacer3": {
       "type": "Spacer",
@@ -160,8 +196,25 @@
     },
     "map": {
       "type": "map",
-      "settings": {}
-    },
+      "blocks": {
+        "collection_block_EQmLfF": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fruit",
+            "fruit_image": "shopify://shop_images/fruit-appear-2.png",
+            "top_position": 34,
+            "left_position": 71
+          }
+        }
+      },
+      "block_order": [
+        "collection_block_EQmLfF"
+      ],
+      "settings": {
+        "heading": "A World of Flavor in Your Hands",
+        "subheading": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
+      }
+    }
   },
   "order": [
     "banner",
