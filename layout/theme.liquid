@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
+ {%- render 'ecom_header' -%}
 
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}" />
@@ -370,5 +371,5 @@
     </script>
 
 
-  </body>
+  {%- render "ecom_footer"-%}</body>
 </html>
