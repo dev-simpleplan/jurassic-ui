@@ -1,60 +1,68 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
- {%- render 'ecom_header' -%}
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}" />
-    {% endif %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<head>
+  {%- render 'ecom_header' -%}
 
-    {{ content_for_header }}
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-    <style>
-      @font-face {
-        font-family: 'scale-variable, sans-serif;';
-        src: url('{{ 'Scale-VF-Regular.woff2' | asset_url }}') format('woff2')
-        , url('{{ 'Scale-VF-Regular.woff' | asset_url }}') format('woff');
-        font-weight: 400;
-        font-style: normal;
-        /* font-stretch: 100%; */
-        font-display: swap;
-      }
-    </style>
+  {{ content_for_header }}
 
-    {% comment %} <lincustom.csseconnect" href="https://fonts.googleapis.com"> {% endcomment %}
+  <style>
+    @font-face {
+      font-family: 'scale-variable, sans-serif;';
+      src: url('{{ ' Scale-VF-Regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ ' Scale-VF-Regular.woff' | asset_url }}') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      /* font-stretch: 100%; */
+      font-display: swap;
+    }
+  </style>
+
+  {% comment %} <lincustom.csseconnect" href="https://fonts.googleapis.com"> {% endcomment %}
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+      integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {% # Inlined CSS Variables %}
-  {% render 'css-variables' %}
+    {% render 'css-variables' %}
 
     {% # Load and preload the critical CSS %}
     {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
-  {{ 'responsive.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom-2.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'responsive.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'responsive-2.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
 
     {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}" />
+    <meta name="description" content="{{ page_description | escape }}" />
     {% endif %}
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
       window.shopCurrency = "{{ shop.currency }}";
@@ -62,314 +70,316 @@
       window.currencySymbol = "{{ cart.currency.symbol | default: shop.currency_symbol }}";
     </script>
 
-  </head>
+</head>
 
-  <body>
-    {% sections 'header-group' %}
-    {% section 'side-cart' %}
+<body>
+  {% sections 'header-group' %}
+  {% section 'side-cart' %}
 
-    <div class="main">
-      {{ content_for_layout }}
-    </div>
+  <div class="main">
+    {{ content_for_layout }}
+  </div>
 
-    {% sections 'footer-group' %}
+  {% sections 'footer-group' %}
 
-    {% comment %} Script Tags {% endcomment %}
-    <script src="https://unpkg.com/lenis@1.3.1/dist/lenis.min.js" defer></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
-    <script src="{{ 'product-card.js' |  asset_url }}"></script>
-    <script src="{{ 'custom.js' |  asset_url }}"></script>
+  {% comment %} Script Tags {% endcomment %}
+  <script src="https://unpkg.com/lenis@1.3.1/dist/lenis.min.js" defer></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+  <script src="{{ 'product-card.js' |  asset_url }}"></script>
+  <script src="{{ 'custom.js' |  asset_url }}"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-          setTimeout(() => {
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      });
+  <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+      setTimeout(() => {
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
 
-      function raf(time) {
-        lenis.raf(time);
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
+
+        // Header Scroll Backdrop
+        let removeTimer;
+        let allowHover = true;
+        const header = document.querySelector('header');
+
+        lenis.on('scroll', ({ scroll, limit }) => {
+          const scrollPercentage = (scroll / limit) * 100;
+          allowHover = scrollPercentage <= 5;
+
+          // header backdrop logic
+          if (scrollPercentage > 5) {
+            header.classList.add('backdrop');
+            // force-close menu if you scrolled past 5%
+            clearTimeout(removeTimer);
+          } else {
+            header.classList.remove('backdrop');
+          }
+        });
+
+      }, 0);
+
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 993px)", () => {
+          const sideScrollSection = document.querySelector(".scroll-sec");
+          const container = document.querySelector(".scrollsec-wrapper");
+          if (!sideScrollSection || !container) return;
+
+          const getLen = () => container.scrollWidth - sideScrollSection.clientWidth;
+
+          const tween = gsap.to(container, {
+            x: () => -getLen(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: sideScrollSection,
+              start: "top top",
+              end: () => `+=${getLen()}`,
+              scrub: true,
+              pin: true,
+              pinSpacer: false,
+              anticipatePin: 1
+            }
+          });
+
+          window.addEventListener("resize", ScrollTrigger.refresh);
+
+          return () => {
+            window.removeEventListener("resize", ScrollTrigger.refresh);
+            tween.kill();
+          };
+        });
       }
-      requestAnimationFrame(raf);
 
-      // Header Scroll Backdrop
-      let removeTimer;
-      let allowHover = true;
-      const header = document.querySelector('header');
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        const mm = gsap.matchMedia();
 
-      lenis.on('scroll', ({ scroll, limit }) => {
-        const scrollPercentage = (scroll / limit) * 100;
-        allowHover = scrollPercentage <= 5;
+        mm.add("(min-width: 993px)", () => {
+          const imageText = document.querySelector(".image-text-scroll");
+          if (!imageText) return;
 
-        // header backdrop logic
-        if (scrollPercentage > 5) {
-          header.classList.add('backdrop');
-          // force-close menu if you scrolled past 5%
-          clearTimeout(removeTimer);
-        } else {
-          header.classList.remove('backdrop');
-        }
-      });
+          gsap.set(
+            ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
+            { opacity: 0 }
+          );
 
-          }, 0);
-
-          if (window.gsap && window.ScrollTrigger) {
-      gsap.registerPlugin(ScrollTrigger);
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 993px)", () => {
-        const sideScrollSection = document.querySelector(".scroll-sec");
-        const container = document.querySelector(".scrollsec-wrapper");
-        if (!sideScrollSection || !container) return;
-
-        const getLen = () => container.scrollWidth - sideScrollSection.clientWidth;
-
-        const tween = gsap.to(container, {
-          x: () => -getLen(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: sideScrollSection,
-            start: "top top",
-            end: () => `+=${getLen()}`,
-            scrub: true,
-            pin: true,
-            pinSpacer: false,
-            anticipatePin: 1
-          }
-        });
-
-        window.addEventListener("resize", ScrollTrigger.refresh);
-
-        return () => {
-          window.removeEventListener("resize", ScrollTrigger.refresh);
-          tween.kill();
-        };
-      });
-          }
-
-          if (window.gsap && window.ScrollTrigger) {
-      gsap.registerPlugin(ScrollTrigger);
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 993px)", () => {
-        const imageText = document.querySelector(".image-text-scroll");
-        if (!imageText) return;
-
-        gsap.set(
-          ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
-          { opacity: 0 }
-        );
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: imageText,
-            start: "top top",
-            end: "+=300%",
-            pin: true,
-            scrub: 1,
-            snap: {
-              snapTo: "labels",
-              duration: { min: 0.2, max: 0.5 },
-              delay: 0.5,
-              ease: "none"
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: imageText,
+              start: "top top",
+              end: "+=300%",
+              pin: true,
+              scrub: 1,
+              snap: {
+                snapTo: "labels",
+                duration: { min: 0.2, max: 0.5 },
+                delay: 0.5,
+                ease: "none"
+              }
             }
-          }
+          });
+
+          tl.addLabel("step1")
+            .to("#image1", { opacity: 1, duration: 0.8 })
+            .addLabel("step2")
+            .to(".dt-in.one", { opacity: 1, duration: 0.8 })
+            .addLabel("step3")
+            .to("#image3", { opacity: 1, duration: 0.8 })
+            .addLabel("step4")
+            .to(".dt-in.three", { opacity: 1, duration: 0.8 })
+            .addLabel("step5")
+            .to("#image2", { opacity: 1, duration: 0.8 })
+            .addLabel("step6")
+            .to(".dt-in.two", { opacity: 1, duration: 0.8 })
+            .addLabel("step7")
+            .to(".dt-in.four", { opacity: 1, duration: 0.8 });
+
+          window.addEventListener("resize", ScrollTrigger.refresh);
+
+          return () => {
+            window.removeEventListener("resize", ScrollTrigger.refresh);
+            tl.scrollTrigger && tl.scrollTrigger.kill();
+            tl.kill();
+          };
         });
-
-        tl.addLabel("step1")
-          .to("#image1", { opacity: 1, duration: 0.8 })
-          .addLabel("step2")
-          .to(".dt-in.one", { opacity: 1, duration: 0.8 })
-          .addLabel("step3")
-          .to("#image3", { opacity: 1, duration: 0.8 })
-          .addLabel("step4")
-          .to(".dt-in.three", { opacity: 1, duration: 0.8 })
-          .addLabel("step5")
-          .to("#image2", { opacity: 1, duration: 0.8 })
-          .addLabel("step6")
-          .to(".dt-in.two", { opacity: 1, duration: 0.8 })
-          .addLabel("step7")
-          .to(".dt-in.four", { opacity: 1, duration: 0.8 });
-
-        window.addEventListener("resize", ScrollTrigger.refresh);
-
-        return () => {
-          window.removeEventListener("resize", ScrollTrigger.refresh);
-          tl.scrollTrigger && tl.scrollTrigger.kill();
-          tl.kill();
-        };
-      });
-          }
-        }); /* ← missing closer added here */
-    </script>
+      }
+    }); /* ← missing closer added here */
+  </script>
 
 
-    <script>
-      AOS.init();
-    </script>
+  <script>
+    AOS.init();
+  </script>
 
-    <script>
-      var slidesToShow = ($(window).width() < 1000) ? 1.5 : 4;
-        $('.creviews-slider .bxslider').bxSlider({
-            minSlides: slidesToShow,
-            maxSlides: slidesToShow,
-            slideWidth: 400,
-            slideMargin: 16,
-            ticker: true,
-            infiniteLoop: true,
-            tickerHover: true,
-            speed: 22000
-        });
-
-      $('.vc-carousel .owl-carousel').owlCarousel({
-        center: true,
-        autoplay: true,
-        autoplayTimeout: 15000,
-        items:2,
-        loop:true,
-        margin:10,
-        responsive:{
-            0:{
-                items:2,
-                margin:6
-            },
-            600:{
-                items:2
-            },
-            900:{
-                items:4
-            }
-        }
-      });
-
-      $('.scs-slider .owl-carousel').owlCarousel({
-        items:1,
-        loop:false,
-        margin:30,
-        autoplay: true,
-        autoplayTimeout: 15000,
-        dots: true,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:2
-            },
-            1000:{
-                items:2
-            }
-        }
-      });
-    </script>
-
-    <script>
-  (function($){
-    $(document).ready(function(){
-      $('.scrollsec-slider').each(function(){
-        var $scs = $(this);                      // wrapper to receive odd/even class
-        var $owl = $scs.find('.owl-carousel');   // the actual carousel inside
-
-        // helper: set odd/even on wrapper based on 1-based slide position
-        function setOddEvenByPage(pageIndex){
-          var slideNum = (pageIndex || 0) + 1;   // convert 0-based to 1-based
-          var cls = (slideNum % 2) ? 'odd' : 'even';
-          $scs.removeClass('odd even').addClass(cls);
-        }
-
-        // initial class after owl initialized
-        $owl.on('initialized.owl.carousel', function(event){
-          // event.page.index is present in Owl v2 (0-based)
-          var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
-          setOddEvenByPage(pageIndex);
-        });
-
-        // on slide change — update wrapper class
-        $owl.on('changed.owl.carousel', function(event){
-          var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
-          setOddEvenByPage(pageIndex);
-        });
-
-        // If Owl is already initialized before this script runs:
-        if ($owl.hasClass('owl-loaded')) {
-          // try to read current index from data (fallbacks)
-          var carouselData = $owl.data('owl.carousel') || $owl.data('owl'); 
-          var currentPage = (carouselData && carouselData.settings && carouselData._current !== undefined)
-                            ? carouselData._current
-                            : 0;
-          // prefer event.page if available; otherwise use _current or 0
-          setOddEvenByPage(currentPage);
-        }
-      });
+  <script>
+    var slidesToShow = ($(window).width() < 1000) ? 1.5 : 4;
+    $('.creviews-slider .bxslider').bxSlider({
+      minSlides: slidesToShow,
+      maxSlides: slidesToShow,
+      slideWidth: 400,
+      slideMargin: 16,
+      ticker: true,
+      infiniteLoop: true,
+      tickerHover: true,
+      speed: 22000
     });
-  })(jQuery);
-</script>
+
+    $('.vc-carousel .owl-carousel').owlCarousel({
+      center: true,
+      autoplay: true,
+      autoplayTimeout: 15000,
+      items: 2,
+      loop: true,
+      margin: 10,
+      responsive: {
+        0: {
+          items: 2,
+          margin: 6
+        },
+        600: {
+          items: 2
+        },
+        900: {
+          items: 4
+        }
+      }
+    });
+
+    $('.scs-slider .owl-carousel').owlCarousel({
+      items: 1,
+      loop: false,
+      margin: 30,
+      autoplay: true,
+      autoplayTimeout: 15000,
+      dots: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 2
+        },
+        1000: {
+          items: 2
+        }
+      }
+    });
+  </script>
+
+  <script>
+    (function ($) {
+      $(document).ready(function () {
+        $('.scrollsec-slider').each(function () {
+          var $scs = $(this);                      // wrapper to receive odd/even class
+          var $owl = $scs.find('.owl-carousel');   // the actual carousel inside
+
+          // helper: set odd/even on wrapper based on 1-based slide position
+          function setOddEvenByPage(pageIndex) {
+            var slideNum = (pageIndex || 0) + 1;   // convert 0-based to 1-based
+            var cls = (slideNum % 2) ? 'odd' : 'even';
+            $scs.removeClass('odd even').addClass(cls);
+          }
+
+          // initial class after owl initialized
+          $owl.on('initialized.owl.carousel', function (event) {
+            // event.page.index is present in Owl v2 (0-based)
+            var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
+            setOddEvenByPage(pageIndex);
+          });
+
+          // on slide change — update wrapper class
+          $owl.on('changed.owl.carousel', function (event) {
+            var pageIndex = (event.page && event.page.index !== undefined) ? event.page.index : 0;
+            setOddEvenByPage(pageIndex);
+          });
+
+          // If Owl is already initialized before this script runs:
+          if ($owl.hasClass('owl-loaded')) {
+            // try to read current index from data (fallbacks)
+            var carouselData = $owl.data('owl.carousel') || $owl.data('owl');
+            var currentPage = (carouselData && carouselData.settings && carouselData._current !== undefined)
+              ? carouselData._current
+              : 0;
+            // prefer event.page if available; otherwise use _current or 0
+            setOddEvenByPage(currentPage);
+          }
+        });
+      });
+    })(jQuery);
+  </script>
 
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll(".sws-fruits").forEach((container) => {
-          const items = Array.from(container.querySelectorAll(".swsfruits-item"));
-          const shouldReset = container.dataset.reset === "true";
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".sws-fruits").forEach((container) => {
+        const items = Array.from(container.querySelectorAll(".swsfruits-item"));
+        const shouldReset = container.dataset.reset === "true";
 
-          container.addEventListener("mouseenter", () => {
-            items.forEach((el, index) => {
-              setTimeout(() => {
-                el.classList.add("visible");
-              }, index * 200); // 200ms delay per item (adjust as needed)
-            });
+        container.addEventListener("mouseenter", () => {
+          items.forEach((el, index) => {
+            setTimeout(() => {
+              el.classList.add("visible");
+            }, index * 200); // 200ms delay per item (adjust as needed)
           });
         });
       });
-    </script>
+    });
+  </script>
 
-    <script>
-      function openNav() {
-        document.getElementById("mySidenav").classList.toggle("active");
-        document.body.classList.toggle("stay");
-        document.querySelector(".navbar_toggler")?.classList.toggle("open");
+  <script>
+    function openNav() {
+      document.getElementById("mySidenav").classList.toggle("active");
+      document.body.classList.toggle("stay");
+      document.querySelector(".navbar_toggler")?.classList.toggle("open");
+    }
+
+    var $cmenu = $('.hnav-menu');
+    $cmenu.find('.has-mega-menu > .arrow').on('click', function (e) {
+      e.preventDefault();
+      if ($(this).next('.mega-menu').is(':visible')) {
+        $(this).removeClass('active');
+        $(this).next('.mega-menu').slideUp();
+      } else {
+        $cmenu.find('.has-mega-menu > .arrow').removeClass('active');
+        $(this).addClass('active');
+        $cmenu.find('.has-mega-menu > .arrow').next('.mega-menu').slideUp();
+        $(this).next('.mega-menu').slideToggle();
       }
+    });
 
-      var $cmenu = $('.hnav-menu');
-        $cmenu.find('.has-mega-menu > .arrow').on('click', function(e) {
-          e.preventDefault();
-          if($(this).next('.mega-menu').is(':visible')) {
-              $(this).removeClass('active');
-              $(this).next('.mega-menu').slideUp();
-          } else {
-              $cmenu.find('.has-mega-menu > .arrow').removeClass('active');
-              $(this).addClass('active');
-              $cmenu.find('.has-mega-menu > .arrow').next('.mega-menu').slideUp();
-              $(this).next('.mega-menu').slideToggle();
-          }
-        });
+    /* Close the side navigation */
+    // function closeNav() {
+    //   document.getElementById("mySidenav").classList.remove("active");
+    //   document.body.classList.remove("stay");
+    //   document.querySelector(".navbar_toggler")?.classList.remove("open");
+    // }
 
-      /* Close the side navigation */
-      // function closeNav() {
-      //   document.getElementById("mySidenav").classList.remove("active");
-      //   document.body.classList.remove("stay");
-      //   document.querySelector(".navbar_toggler")?.classList.remove("open");
-      // }
+    // Close nav when clicking anywhere on the page
+    // document.documentElement.addEventListener("click", () => {
+    //   document.getElementById("mySidenav").classList.remove("active");
+    //   document.body.classList.remove("stay");
+    //   document.querySelector(".navbar_toggler")?.classList.remove("open");
+    // });
 
-      // Close nav when clicking anywhere on the page
-      // document.documentElement.addEventListener("click", () => {
-      //   document.getElementById("mySidenav").classList.remove("active");
-      //   document.body.classList.remove("stay");
-      //   document.querySelector(".navbar_toggler")?.classList.remove("open");
-      // });
-
-    </script>
+  </script>
 
 
-  {%- render "ecom_footer"-%}</body>
+  {%- render "ecom_footer"-%}
+</body>
+
 </html>
