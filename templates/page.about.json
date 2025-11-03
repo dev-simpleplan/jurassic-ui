@@ -205,10 +205,20 @@
             "top_position": 34,
             "left_position": 71
           }
+        },
+        "collection_block_Q4AKGg": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fine-food",
+            "fruit_image": "shopify://shop_images/fruit-appear-1.png",
+            "top_position": 27,
+            "left_position": 50
+          }
         }
       },
       "block_order": [
-        "collection_block_EQmLfF"
+        "collection_block_EQmLfF",
+        "collection_block_Q4AKGg"
       ],
       "settings": {
         "heading": "A World of Flavor in Your Hands",
