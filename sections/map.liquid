@@ -1,0 +1,379 @@
+<!-- Swiper CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Preload Product Data for All Collections (before main JS) -->
+<script>
+  window.collectionProductsData = {
+    {% for block in section.blocks %}
+      "{{ block.settings.collection.handle }}": [
+        {% assign collection = collections[block.settings.collection.handle] %}
+        {% if collection.products_count > 0 %}
+          {% for product in collection.products %}
+            {
+              "title": {{ product.title | json }},
+              "image_url": {{ product.featured_image | img_url: 'medium' | json }},
+              "product_url": {{ product.url | json }},
+              "price": {{ product.price | money | json }},
+              "vendor": {{ product.vendor | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        {% endif %}
+      ]{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  };
+</script>
+
+<section class="worldMap">
+  <div class="container-fluid">
+    <div class="wmap-in">
+      <div class="wmap-grid">
+        <div class="wmap-left">
+          <div class="wpl-wrap">
+            <div class="wplw-top">
+              <div class="heading left">
+                <h2>{{ section.settings.heading }}</h2>
+                <p class="small">{{ section.settings.subheading }}</p>
+              </div>
+            </div>
+            <div class="wplw-bottom">
+              <div class="cards-slider">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <!-- Initially blank, JS will fill this -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wmap-right">
+          <div class="map-image">
+            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/World.svg?v=1761908094" alt="">
+          </div>
+          <div class="map-points">
+            {% for block in section.blocks %}
+              <div class="map-items" data-collection-handle="{{ block.settings.collection.handle }}">
+                <div class="dot" style="top:{{ block.settings.top_position }};left:{{ block.settings.left_position }}"></div>
+                <div class="mapitem-image">
+                  <img class="icon collection-img"
+                       src="{{ block.settings.fruit_image | img_url: 'master' }}"
+                       alt="{{ block.settings.fruit_image.alt }}"
+                       data-collection-handle="{{ block.settings.collection.handle }}"
+                       style="width: 60px; cursor: pointer; border: 2px solid #eee; border-radius: 10px; margin: 10px;" />
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Helper to build product slide (customize contents as needed)
+  async function renderProductCard(product) {
+    const mapWrapper = document.querySelector('.worldMap');
+    try{
+        const response = await fetch('/?section_id=worldMap');
+        const text = await response.text();
+        const html = new DOMParser().parseFromString(text, 'text/html');
+
+        if(!mapWrapper) return;
+
+        console.log(html);
+    }
+    catch(error){
+        console.error(error);
+    }
+  }
+
+  renderProductCard();
+});
+</script>
+
+{% schema %}
+{
+  "name": "map",
+  "tag": "section",
+  "class" : "worldMap",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "A World of Flavor in Your Hands"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section subheading",
+      "default": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "fruit_image",
+          "label": "Fruit Image"
+        },
+        {
+          "type": "range",
+          "id": "top_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Top Position",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Left Position",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "map",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
+
+{% comment %} <script>
+    return `
+      <div class="product-card-primary">
+  <div class="fruits_card">
+    <div class="fc_top">
+      {% assign images = product.images %}
+
+      <div class="fc_image">
+        {% if images.size > 0 %}
+          <img
+            src="${images.first}"
+            alt="{{ product.title | escape }}"
+            class="img_sizing primary-img">
+
+          {% if images.size > 1 %}
+            <img
+              src="{{ images[1] | img_url: 'master' }}"
+              alt="${product.title}"
+              class="img_sizing hover-img">
+          {% endif %}
+        {% else %}
+          <img
+            src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' }}"
+            alt="No Image Available"
+            class="img_sizing primary-img">
+        {% endif %}
+      </div>
+
+      {% assign product_tags = product.tags | downcase %}
+      {% if product.tags.size > 0 %}
+        <div class="fc_category_tags">
+          {% for tag in product.tags %}
+            {% unless tag == 'Best Seller' %}
+              <span>{{ tag }}</span>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if product.tags contains 'Best Seller' %}
+        <div class="fc_bestsell_tags">
+          <span>Bestseller</span>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.custom.certificate %}
+        {% assign certificate = product.metafields.custom.certificate.value %}
+        {% for item in product.metafields.custom.certificate.value %}
+          <div class="fc_organic_auth">
+            <img
+              src="{{ item.badge_image | img_url:'master' }}"
+              alt="{{ item.display_name }}"
+              class="img_sizing">
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="fc_bottom_outer">
+      <div class="fc_bottom">
+          
+          <div class="fc_bottom_top">
+              <div class="star_review">
+                  <div class="star_rating">
+                      <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
+                  </div>
+                  <div class="rating_info">
+                      <p>4.9 (200)</p>
+                      {% if product.metafields.custom.country_of_origin %}
+                      <span class="dot_seperator"></span>
+                      <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+                      {% endif %}
+                  </div>
+              </div>
+              <p class="fc_product_title">
+                  <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
+              </p>
+          </div>
+
+          <div class="fc_bottom_bottom">
+              <div class="fc_bottom_center">
+                <div class="fc_variant_outer">
+                    <div class="fc_variant_wrap">
+                        {% for variant in product.variants %}
+                        <div class="fc_variant_item {% if forloop.first %}active{% endif %}" data-id="{{ variant.id }}" data-price="{{ variant.price | money }}" data-compare="{{ variant.compare_at_price | money }}" data-inventory="{{ variant.inventory_quantity }}" data-image="{{ variant.image | img_url: 'master' }}">
+                            <p class="weight">
+                                {{ variant.title }}
+                                {% if variant.compare_at_price > variant.price %}
+                                <span>
+                                    {{
+                                variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
+                              -}}
+                                    % Off
+                                </span>
+                                {% endif %}
+                            </p>
+                            <p class="quantity">
+                                {% if variant.metafields.custom.pieces %}
+                                {{ variant.metafields.custom.pieces }} Piece
+                                {% else %}
+                                by weight
+                                {% endif %}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="selected_variant_dropdown"></div>
+                </div>
+            </div>
+
+            <div class="fc_bottom_end">
+                <div class="fc_price_weight">
+                    {% assign current_variant = product.selected_or_first_available_variant %}
+                    {% if current_variant.compare_at_price > current_variant.price %}
+                    <p>
+                        <strike id="compare_price">{{ current_variant.compare_at_price | money }}</strike>
+                        <span class="selling_price">{{ current_variant.price | money }}</span>
+                    </p>
+                    {% else %}
+                    <p>
+                        <span class="selling_price">{{ current_variant.price | money }}</span>
+                    </p>
+                    {% endif %}
+                    {% assign current_variant = product.selected_or_first_available_variant %}
+                    <p class="fc_weight">
+                        {{ product.metafields.custom.per_kg_price | times: 100 | money_with_currency | remove: '.00' }}/Kg
+                    </p>
+                </div>
+                <div class="fc_add_to_cart_outer">
+                    <form action="/cart/add" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{ current_variant.id }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <div class="fc_add_to_cart">
+                            <span class="remove_product">
+                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <button type="submit" id="add-to-cart" {% unless product.available %} {% endunless %}>
+                                {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                            </button>
+                            <span class="add_product">
+                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="fc_trust_text">
+                    <p>Only {{ current_variant.inventory_quantity }} Left</p>
+                    <span class="dot_seperator"></span>
+                    <p>Ships in 24 hrs</p>
+                    <span class="dot_seperator"></span>
+                    <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
+                </div>
+            </div>
+          </div>
+
+
+      </div>
+  </div>
+  </div>
+</div>
+    `;
+  }
+
+  var swiper;
+
+  function initializeSwiper() {
+    swiper = new Swiper(".mySwiper", {
+      effect: "cards",
+      grabCursor: true,
+      slidesPerView: 'auto'
+    });
+  }
+
+  function fetchProductsAndUpdateSwiper(collectionHandle) {
+    var products = window.collectionProductsData[collectionHandle] || [];
+    if (swiper) {
+      swiper.destroy(true, true);
+      swiper = null;
+    }
+    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
+    swiperWrapper.innerHTML = "";
+
+    if (products.length === 0) {
+      swiperWrapper.innerHTML = '<p style="padding:20px">No products found in this collection.</p>';
+    } else {
+      products.forEach(function(product) {
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = renderProductCard(product);
+        swiperWrapper.appendChild(slide);
+      });
+    }
+    initializeSwiper();
+  }
+
+  // Setup initial slider with first collection (if any)
+  var firstCollection = Object.keys(window.collectionProductsData)[0];
+  if (firstCollection) {
+    fetchProductsAndUpdateSwiper(firstCollection);
+  } else {
+    // No collections configured
+    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
+    swiperWrapper.innerHTML = '<p style="padding:20px">No collections configured yet.</p>';
+  }
+
+  // Event delegation for all collection images
+  document.querySelector('.map-points').addEventListener('click', function(e) {
+    if (e.target.classList.contains('collection-img')) {
+      var collectionHandle = e.target.dataset.collectionHandle;
+      fetchProductsAndUpdateSwiper(collectionHandle);
+    }
+</script> {% endcomment %}
