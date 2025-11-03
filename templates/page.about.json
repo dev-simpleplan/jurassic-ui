@@ -157,7 +157,11 @@
       "settings": {
         "spacer_height": 140
       }
-    }
+    },
+    "map": {
+      "type": "map",
+      "settings": {}
+    },
   },
   "order": [
     "banner",
@@ -168,6 +172,7 @@
     "jurassic-way",
     "spacer2",
     "sustainability",
-    "spacer3"
+    "spacer3",
+    "map"
   ]
 }

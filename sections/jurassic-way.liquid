@@ -1,3 +1,6 @@
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 <section class="jurassic-way">
     <div class="jw-head">
         <div class="container-fluid">
@@ -5,20 +8,12 @@
                 <div class="heading left small">
                     <h2>{{ section.settings.section_heading }}</h2>
                 </div>
-                <div class="jw-links">
-                    {% for block in section.blocks %}
-                        <div class="jwlink-item" href="#{{ block.settings.slide_heading | replace: ' ', '' | downcase }}">
-                            {{ block.settings.slide_heading }}
-                        </div>
-                    {% endfor %}
-                </div>
             </div>
         </div>
     </div>
     <div class="jw-carousel">
-        {% comment %} <div class="slick"> {% endcomment %}
             {% for block in section.blocks %}
-                <div class="item">
+                <div class="item" data-title="{{ block.settings.slide_heading }}">
                     <div class="jw-owl-item">
                         <div class="jwowl-grid">
                             <div class="jwowlgrid-text">
@@ -34,9 +29,42 @@
                     </div>
                 </div>
             {% endfor %}
-        {% comment %} </div> {% endcomment %}
     </div>
 </section>
+
+{% comment %} <script>
+    $('.jw-carousel').slick({
+        vertical: true,
+        verticalSwiping: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true
+    });
+</script> {% endcomment %}
+
+<script>
+(function($){
+  $(function(){
+    var $carousel = $('.jurassic-way .jw-carousel');
+        $carousel.slick({
+            vertical: true,
+            verticalSwiping: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: true,
+            arrows: true,
+            infinite: false,
+            adaptiveHeight: true,
+            customPaging: function(slick, index) {
+                var $slide = $(slick.$slides[index]);
+                var title = $slide.data('title') || ('Slide ' + (index + 1));
+                return '<button type="button" class="slick-dot-btn">' + title + '</button>';
+            }
+        });
+  });
+})(jQuery);
+</script>
+
 
 {% schema %}
   {
