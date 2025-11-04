@@ -224,6 +224,53 @@
         "heading": "A World of Flavor in Your Hands",
         "subheading": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
       }
+    },
+    "spacer_hF47x4": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "image_scroll_dTgDqW": {
+      "type": "image-scroll",
+      "blocks": {
+        "slide_dX3XYx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/d5d86c4bda27bca20005f80f7e602cb2f0af1b91.jpg"
+          }
+        },
+        "slide_YtG3Xe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Group_427321151.jpg"
+          }
+        },
+        "slide_Jmw733": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/roar_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_dX3XYx",
+        "slide_YtG3Xe",
+        "slide_Jmw733"
+      ],
+      "name": "imagesscroll",
+      "settings": {
+        "heading": "The Crew Behind Your Journey to Wild Taste",
+        "subheading": "We’re the hands and hearts behind the flavor — driven by purpose, powered by fruit. Everyone leads, everyone cares. We move fast, laugh loud, and never lose sight of what matters."
+      }
+    },
+    "spacer_gKLbBq": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
@@ -236,6 +283,9 @@
     "spacer2",
     "sustainability",
     "spacer3",
-    "map"
+    "map",
+    "spacer_hF47x4",
+    "image_scroll_dTgDqW",
+    "spacer_gKLbBq"
   ]
 }
