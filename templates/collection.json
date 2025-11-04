@@ -11,7 +11,45 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "blocks": {
+        "collection_fzjyp7": {
+          "type": "collection",
+          "settings": {
+            "col": "mangoes",
+            "col_name": ""
+          }
+        },
+        "collection_TGXNHp": {
+          "type": "collection",
+          "settings": {
+            "col": "farmer-box",
+            "col_name": ""
+          }
+        },
+        "collection_PpEayN": {
+          "type": "collection",
+          "settings": {
+            "col": "avocados",
+            "col_name": ""
+          }
+        },
+        "collection_WbpNNG": {
+          "type": "collection",
+          "settings": {
+            "col": "coconuts",
+            "col_name": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_fzjyp7",
+        "collection_TGXNHp",
+        "collection_PpEayN",
+        "collection_WbpNNG"
+      ],
+      "settings": {
+        "head": ""
+      }
     },
     "spacer0": {
       "type": "spacer",
