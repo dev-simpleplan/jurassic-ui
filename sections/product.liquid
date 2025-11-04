@@ -1,24 +1,26 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
 {% assign selected_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
   <div class="container">
     <div class="pro-grid">
       <div class="pro-img">
-        <div class="swiper">
-          <div class="swiper-wrapper">
-            {% for media in product.media %}
-              <div class="swiper-slide">
-                <div class="pro-img-con">
-                  {% render 'product-media' | media: media %}
-                </div>
+        <div class="prod-main-image">
+          {% for media in product.media %}
+            <div class="item">
+              <div class="prod-main">
+                {% render 'product-media' | media: media %}
               </div>
-            {% endfor %}
-          </div>
-          <div class="swiper-pagination"></div>
+            </div>
+          {% endfor %}
         </div>
-
+        <div class="prod-thumb-image">
+          {% for media in product.media %}
+            <div class="item">
+              <div class="prod-thumb">
+                {% render 'product-media' | media: media %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
       </div>
       <div class="pro-desp">
         {% form 'product'
