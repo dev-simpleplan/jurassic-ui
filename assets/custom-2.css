@@ -309,6 +309,9 @@
 .seo-sec-wrapper {
   max-width: 90ch;
 }
+.filter-cross-div {
+  display: none;
+}
 
 /* Collection banner for Category Pages */
 
