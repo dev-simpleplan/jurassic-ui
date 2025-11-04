@@ -1,47 +1,352 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
+<div class="collection-main">
+  <div class="container">
+    <div class="cm-wrapper">
+      <div class="head">
+        <div class="breadcrumbs">
+          <a href="{{ shop.url }}">Home</a>
+          <p>
+            >
+          </p>
+          <p>
+            {% if collection.handle == 'all' %}
+              All {{ collection.title }}
+            {% else %}
+              {{ collection.title }}
+            {% endif %}
+          </p>
+        </div>
+        <h1>
+          {% if collection.handle == 'all' %}
+            All {{ collection.title }}
+          {% else %}
+            {{ collection.title }}
+          {% endif %}
+        </h1>
+      </div>
+      <div class="tc-filter-wrap">
+        <div class="filter-wrap filter">
+          <div class="filter-sidebar">
+            <div class="filter-sidebar-form">
+              <form>
+                {%- for filter in collection.filters -%}
+                  <div class="form-filter-wrap {{ filter.type }}">
+                    <div class="ff-head">
+                      <p>{{ filter.label }}</p>
+                      <div class="filter-down-arrow">
+                        {% render "icon-arrow_down" %}
+                      </div>
+                    </div>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
+                    <div class="ff-in">
+                      {%- case filter.type -%}
+                        {%- when 'boolean' -%}
+                          <ul>
+                            <li>
+                              <label for="Filter-{{ filter.param_name }}-{{ filter.true_value.value }}">
+                                <input
+                                  type="radio"
+                                  name="{{ filter.param_name }}"
+                                  value="{{ filter.true_value.value }}"
+                                  id="Filter-{{ filter.param_name }}"
+                                  {% if filter.true_value.active -%}
+                                  checked{%- endif %}
+                                  {% if filter.true_value.count == 0 and filter.true_value.active == false -%}
+                                  disabled{%- endif -%} />{{ filter.true_value.label }}</label>
+                            </li>
+                            <li>
+                              <label for="Filter-{{ filter.param_name }}-{{ filter.false_value.value }}">
+                                <input
+                                  type="radio"
+                                  name="{{ filter.param_name }}"
+                                  value="{{ filter.false_value.value }}"
+                                  id="Filter-{{ filter.param_name }}"
+                                  {% if filter.false_value.active -%}
+                                  checked{%- endif %}
+                                  {% if filter.false_value.count == 0 and filter.false_value.active == false -%}
+                                  disabled{%- endif %} />{{ filter.false_value.label }}</label>
+                            </li>
+                          </ul>
+                        {%- when 'list' -%}
+                          <ul>
+                            {%- for filter_value in filter.values -%}
+                              <li>
+                                <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                  <input
+                                    type="checkbox"
+                                    name="{{ filter_value.param_name }}"
+                                    value="{{ filter_value.value }}"
+                                    id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                    {% if filter_value.active -%}
+                                    checked{%- endif %}
+                                    {% if filter_value.count == 0 and filter_value.active == false -%}
+                                    disabled{%- endif %} />
+                                  <span>
+                                    {%- case filter_value.display.type -%}
+                                      {%- when 'colors' -%}
+                                        {% liquid
+                                          assign size_limit = filter_value.display.value.size | at_most: 4
+                                          assign rotation = '0deg'
+                                          if size_limit == 2
+                                            assign rotation = '45deg'
+                                          endif
 
-<h1>{{ collection.title }}</h1>
+                                          assign angle_increment = 360 | divided_by: size_limit
+                                          assign angle = 0
+                                        %}
+                                        {%- capture conic_gradient -%}
+                                        {%- for color in filter_value.display.value limit: size_limit -%}
+                                          {{ color }} {{ angle }}deg{%- assign angle = angle | plus: angle_increment %} {{ angle }}deg{%- unless forloop.last %}, {%- endunless -%}
+                                        {%- endfor -%}
+                                      {%- endcapture -%}
+                                        <span style="width: '25px', height: '25px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'conic-gradient({{ conic_gradient }})', transform: 'rotateZ({{ rotation }})'}}"></span>
+                                      {%- when 'image' -%}
+                                        {{
+                                          filter_value.display.value | image_url: width: 25 | image_tag: alt: filter_value.display.value.alt
+                                        }}
+                                      {%- else -%}
+                                        <span class="visual-display__child"></span>
+                                    {%- endcase -%}
+                                  </span>
+                                  {{ filter_value.label }}
+                                </label>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- when 'price_range' -%}
+                          <div class="filter-group-display__price-range">
+                            <div class="range-slider">
+                                <!-- Range Inputs -->
+                              <input
+                                type="range"
+                                id="PriceRangeMin"
+                                min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                value="{{ filter.min_value.value | default: 0 | money_without_currency | replace: ',', '' }}"
+                                step="1">
+                              <input
+                                type="range"
+                                id="PriceRangeMax"
+                                min="0"
+                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                value="{{ filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', '' }}"
+                                step="1">
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+                              <!-- Progress Track -->
+                              <div class="slider-track"></div>
+                            </div>
+
+                            <!-- Output Values -->
+                            <div class="price-range-output">
+                              <span>{{ cart.currency.symbol }}
+                                <span id="PriceMinValue">{{ filter.min_value.value | default: 0 | money_without_currency | replace: ',', '' }}</span>
+                              </span>
+                              <span>{{ cart.currency.symbol }}
+                                <span id="PriceMaxValue">{{ filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', '' }}</span>
+                              </span>
+                            </div>
+
+                            <!-- Hidden Inputs for AJAX -->
+                            <input
+                              type="hidden"
+                              name="{{ filter.min_value.param_name }}"
+                              id="HiddenPriceMin"
+                              value="{{ filter.min_value.value | default: 0 | money_without_currency | replace: ',', '' }}">
+                            <input
+                              type="hidden"
+                              name="{{ filter.max_value.param_name }}"
+                              id="HiddenPriceMax"
+                              value="{{ filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', '' }}">
+                          </div>
+                      {%- endcase -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+                <div class="clear-filter">
+                  <a href="{{ collection.url }}" class="">Reset</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="filter-wrap sort-by">
+          <select id="sort-by">
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+            {% for option in collection.sort_options %}
+              <option
+                value="{{ option.value }}"
+                {% if option.value == sort_by %}
+                selected="selected"
+                {% endif %}>
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
         </div>
       </div>
-    {% endfor %}
-
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
+      <div class="collection-wrapper" id="ProductGrid">
+        {% paginate collection.products by section.settings.number_of_product %}
+          {% for product in collection.products %}
+            {% render 'product-card-primary' | product: product %}
+          {% endfor %}
+          {% render 'pagination' | pagination: paginate %}
+        {% endpaginate %}
+      </div>
+    </div>
+  </div>
 </div>
 
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-{% endstylesheet %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const filterForm = document.querySelector(".tc-filter-wrap form");
+    const productGrid = document.querySelector("#ProductGrid");
+    const sortBy = document.querySelector("#sort-by");
 
-{% schema %}
-{
-  "name": "t:general.collection",
-  "settings": []
-}
-{% endschema %}
+    if (!filterForm || !productGrid) return;
+
+    function updateProductGrid(extraParams = {}, urlOverride = null) {
+      const formData = new FormData(filterForm);
+      const searchParams = new URLSearchParams(formData);
+
+      // Add/override extra params (sort_by, page, etc.)
+      Object.keys(extraParams).forEach((key) => {
+        searchParams.set(key, extraParams[key]);
+      });
+
+      // Use override url if pagination clicked, else build from filters
+      let url = urlOverride ? urlOverride : `${window.location.pathname}?${searchParams.toString()}`;
+
+      fetch(url)
+        .then((res) => res.text())
+        .then((data) => {
+          const parser = new DOMParser();
+          const newDoc = parser.parseFromString(data, "text/html");
+
+          const newGrid = newDoc.querySelector("#ProductGrid");
+          if (newGrid) {
+            productGrid.innerHTML = newGrid.innerHTML;
+          }
+
+          // Update browser URL
+          window.history.pushState({}, "", url);
+
+          // Rebind pagination events
+          bindPaginationLinks();
+
+          // Scroll to product grid with offset
+          const offset = 100; // adjust to your header height or preference
+          const topPos = productGrid.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: topPos, behavior: "smooth" });
+        })
+        .catch((err) => console.error("Filter/sort/pagination update error:", err));
+    }
+
+    // === Filter Handling ===
+    filterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      updateProductGrid();
+    });
+
+    filterForm.querySelectorAll("input[type='checkbox'], input[type='number']").forEach((input) => {
+      input.addEventListener("change", () => {
+        updateProductGrid();
+      });
+    });
+
+    // === Sort Handling (via AJAX) ===
+    if (sortBy) {
+      sortBy.addEventListener("change", (e) => {
+        updateProductGrid({ sort_by: e.target.value });
+      });
+    }
+
+    // === Pagination Handling (via AJAX) ===
+    function bindPaginationLinks() {
+      const paginationLinks = document.querySelectorAll(".pagination a");
+      paginationLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const url = this.getAttribute("href");
+          updateProductGrid({}, url);
+        });
+      });
+    }
+    bindPaginationLinks();
+
+    // === Two-Way Price Range Slider ===
+    const priceMin = document.querySelector("#PriceRangeMin");
+    const priceMax = document.querySelector("#PriceRangeMax");
+    const priceMinOutput = document.querySelector("#PriceMinValue");
+    const priceMaxOutput = document.querySelector("#PriceMaxValue");
+    const hiddenMin = document.querySelector("#HiddenPriceMin");
+    const hiddenMax = document.querySelector("#HiddenPriceMax");
+    const sliderTrack = document.querySelector(".slider-track");
+
+    if (priceMin && priceMax && priceMinOutput && priceMaxOutput && hiddenMin && hiddenMax && sliderTrack) {
+      function updateSliderTrack() {
+        const minVal = parseInt(priceMin.value);
+        const maxVal = parseInt(priceMax.value);
+        const rangeMax = parseInt(priceMax.max);
+
+        const percent1 = (minVal / rangeMax) * 100;
+        const percent2 = (maxVal / rangeMax) * 100;
+
+        sliderTrack.style.background = `linear-gradient(to right, #ddd ${percent1}%, #000 ${percent1}%, #000 ${percent2}%, #ddd ${percent2}%)`;
+      }
+
+      function syncValues() {
+        let minVal = parseInt(priceMin.value);
+        let maxVal = parseInt(priceMax.value);
+
+        if (minVal > maxVal) {
+          [minVal, maxVal] = [maxVal, minVal]; // swap if needed
+        }
+
+        priceMinOutput.textContent = minVal;
+        priceMaxOutput.textContent = maxVal;
+
+        hiddenMin.value = minVal;
+        hiddenMax.value = maxVal;
+
+        updateSliderTrack();
+      }
+
+      syncValues();
+
+      priceMin.addEventListener("input", syncValues);
+      priceMax.addEventListener("input", syncValues);
+
+      priceMin.addEventListener("change", updateProductGrid);
+      priceMax.addEventListener("change", updateProductGrid);
+    }
+  });
+
+</script>
+
+<script>
+   $(document).ready(function(){
+    $(".form-filter-wrap.list .ff-head").click(function(){
+      let $current = $(this).siblings(".ff-in");
+      let $parent = $(this).parent(".form-filter-wrap.list");
+
+      if ($current.is(":visible")) {
+        // If already open, close it and remove active
+        $current.slideUp();
+        $(this).removeClass("active");
+        $parent.removeClass("active");
+      } else {
+        // Close all, remove active from others
+        $(".list .ff-in").slideUp();
+        $(".list .ff-head").removeClass("active");
+        $(".form-filter-wrap.list").removeClass("active");
+
+
+        // Open current, add active
+        $current.slideDown();
+        $(this).addClass("active");
+        $parent.addClass("active");
+      }
+    });
+  });
+
+</script>
