@@ -515,21 +515,6 @@
       "settings": {
         "spacer_height": 140
       }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "left-image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
-        "right-image": "shopify://shop_images/64efb817b0eda88b82156381eddafbc724f00fdf.jpg",
-        "heading": "Join the expedition",
-        "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
-      }
-    },
-    "spacer5": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 140
-      }
     }
   },
   "order": [
@@ -556,7 +541,5 @@
     "spacer10",
     "video",
     "spacer4",
-    "newsletter",
-    "spacer5"
   ]
 }
