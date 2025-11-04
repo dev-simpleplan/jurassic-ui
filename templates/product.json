@@ -51,9 +51,13 @@
         "checkout_buttons"
       ],
       "settings": {}
+    },
+    "spacer0": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
-  "order": [
-    "template"
-  ]
+  "order": ["template", "spacer0"]
 }
