@@ -9,6 +9,21 @@
  */
 {
   "current": {
+    "sections": {
+      "side-cart": {
+        "type": "side-cart",
+        "settings": {}
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "left-image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+          "right-image": "shopify://shop_images/64efb817b0eda88b82156381eddafbc724f00fdf.jpg",
+          "heading": "Join the expedition",
+          "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
+        }
+      }
+    },
     "content_for_index": [],
     "blocks": {
       "1232542678405107163": {
