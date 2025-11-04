@@ -184,6 +184,9 @@
 .form-filter-wrap.list .ff-in li {
   padding: 5px;
 }
+.form-filter-wrap.price_range {
+  display: none !important;
+}
 .filter-wrap.sort-by select {
   background: transparent;
   border: none;
