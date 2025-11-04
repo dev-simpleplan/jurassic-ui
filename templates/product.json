@@ -2,7 +2,7 @@
   "name": "Product",
   "sections": {
     "template": {
-      "type": "template-product",
+      "type": "product",
       "blocks": {
         "vendor": {
           "type": "vendor"

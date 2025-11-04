@@ -1,3 +1,13 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<script
+  type="text/javascript"
+  src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+  defer></script>
+
+
 {% assign selected_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
   <div class="container">
@@ -192,16 +202,24 @@
   </script>
 
   <script>
-    const swiper = new Swiper('.swiper', {
-        direction:'vertical',
-        slidesPerView:1,
-        mousewheel:true,
-    
-        pagination:{
-            el: '.swiper-pagination',
-            clickable: false,
-        },
-    });
+    $(document).ready(function(){
+        $('.prod-main-image').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.prod-thumb-image'
+      });
+      $('.prod-thumb-image').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        asNavFor: '.prod-main-image',
+        focusOnSelect: true,
+        centerMode: true,
+        vertical: true,
+        arrows: false
+      });
+    })
   </script>
 
   {% schema %}
