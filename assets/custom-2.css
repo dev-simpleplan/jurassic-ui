@@ -78,6 +78,7 @@
   text-decoration-thickness: 0%;
   text-decoration-skip-ink: auto;
   color: #1a1a1a;
+  text-underline-offset: 3px;
 }
 .form-filter-wrap.list .ff-head {
   display: flex;

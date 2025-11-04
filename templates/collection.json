@@ -12,9 +12,22 @@
     "main": {
       "type": "collection",
       "settings": {}
+    },
+    "spacer0": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "seo": {
+      "type": "seo-section"
+    },
+    "spacer1": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main", "spacer0", "seo", "spacer1"]
 }

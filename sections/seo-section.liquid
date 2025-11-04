@@ -1,0 +1,27 @@
+{% assign metafield_value = collection.metafields.custom.seo_focused_paragraph %}
+{% assign schema_setting = section.settings.text %}
+
+<div class="seo-section">
+  <div class="container">
+    <div class="seo-sec-wrapper">
+      {% if metafield_value %}
+        {{ collection.metafields.custom.seo_focused_paragraph | metafield_tag }}
+      {% elsif schema_setting %}
+        {{ section.settings.text }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Seo Section",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Seo Text"
+      }
+    ]
+  }
+{% endschema %}
