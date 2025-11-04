@@ -20,7 +20,10 @@
       }
     },
     "seo": {
-      "type": "seo-section"
+      "type": "seo-section",
+      "settings": {
+        "text": "<p>Why do our organic and wild fruits contain more vitamins?</p><p>Several reasons.</p><p>First, most of our fruit is grown without the use of synthetic fertilizers or pesticides. This results in nutritious, living soil and allows the fruit to absorb more nutrients from the soil, resulting in higher vitamin content.</p><p>Secondly, our fruits are not harvested at an early stage but at the ultimate point of physiological maturity. Their flavor and nutritional profile is therefore the most complete.</p><p>Thirdly, it has been shown that the amount of nutrients in fresh fruits and vegetables decreases the longer they are stored after harvest. Our fruit is delivered to you on average 5 days after harvest. Tropical fruits from the supermarket are usually harvested 3 weeks or more before they arrive in the store. </p><p>Finally, we select as many old, wild and nutrient-rich and antioxidant-rich fruit varieties as possible.</p><p>For example, have you ever heard of safu, a wild fruit from Africa that tastes like pizza, and contains rare fatty acids?</p><p>The jackfruit is another delicious wild fruit that grows in the tropics. It is one of the oldest fruits on earth. With us, you can take advantage of this reserve of vitamins and antioxidants, ideally usable by the body because they have been adapted to our biology for thousands of years.</p><p>Our fruits provide your body with the best nutrients of nature, for an optimal health.</p><p>More vitamins, better absorbable, means more energy and vitality every day. </p><p>So choose micronutrient-rich living foods and unleash your full potential 🌈💪</p><p>Our exotic fruit from Europe (Mediterranean)</p><p>What exotic fruits can grow in Europe?</p><p>Much more than you might think!</p><p>Mediterranean countries like Spain, Italy and even France have microclimates that allow the cultivation of many tropical and subtropical fruits. Among them are avocados, bananas, anones, pomegranates, papayas, passion fruits and especially mangoes.</p><p>In fact, about half of our fruits are grown in the Mediterranean region, in the sunniest part of Europe. </p><p>The problem with the Mediterranean fruit you find in stores?</p><ul><li>They generally come from monocultures that deteriorate the soil and the fauna.</li><li>They are over-irrigated because their soil is half dead and therefore does not retain water.</li><li>They are often treated with chemicals, both pre and post harvest. The only purpose is to make them shinier and more attractive on the shelves.</li><li>They are often picked too early, before they have fully developed their aromas. This is the case with avocado, for example, which are harvested after 6 to 9 months on the tree by most producers. The Jurassic Fruit ones are harvested after 9 to 16 months on the tree (fun fact: the old avocados are then next to the very young ones of the new bloom, on the same branches!).</li></ul><p>Our producers cultivate differently.</p><p>They are small organic producers who practice regenerative agriculture. The soil of their \"fincas\" (farms) is alive and they plant a diversity of trees and plants based on the principles of permaculture.</p><p>For a full flavor, we ask them to leave the fruit on the tree longer. Fruits that are delivered to you only 5 days on average after harvest.</p><p>Want to enjoy fresh, nutritious and great tasting fruit from small European organic producers? </p><p>Order now while the fruit is still on the tree and receive it after a few days at home or at the office!</p>"
+      }
     },
     "spacer1": {
       "type": "spacer",
@@ -29,5 +32,10 @@
       }
     }
   },
-  "order": ["main", "spacer0", "seo", "spacer1"]
+  "order": [
+    "main",
+    "spacer0",
+    "seo",
+    "spacer1"
+  ]
 }
