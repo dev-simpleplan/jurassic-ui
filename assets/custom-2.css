@@ -19,7 +19,8 @@
 .collection-main .breadcrumbs a {
   color: #1a1a1a;
 }
-.collection-main h1 {
+.collection-main h1,
+.collection-main h2 {
   font-size: clamp(32px, 4vw, 46px);
 }
 .collection-main .head {
@@ -255,3 +256,70 @@
 .filter-wrap.filter {
   width: 75%;
 }
+
+/* Seo Focused Section */
+
+.seo-sec-wrapper p {
+  font-size: 16px;
+  color: #1a1a1a;
+  line-height: 150%;
+  letter-spacing: 0em;
+}
+.seo-sec-wrapper h2 {
+  font-size: clamp(24px, 3.5vw, 38px);
+  margin-bottom: 12px;
+  margin-top: 24px;
+}
+
+.seo-sec-wrapper h3 {
+  font-size: clamp(20px, 3.5vw, 32px);
+  margin-bottom: 12px;
+  margin-top: 18px;
+}
+
+.seo-sec-wrapper h4,
+.seo-sec-wrapper h5,
+.seo-sec-wrapper h6 {
+  font-size: clamp(18px, 3.5vw, 28px);
+  margin-bottom: 12px;
+  margin-top: 16px;
+}
+.seo-sec-wrapper a {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 1px;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 0%;
+  text-decoration-skip-ink: auto;
+  color: #1a1a1a;
+  text-underline-offset: 3px;
+}
+.seo-sec-wrapper ul {
+  list-style: disc;
+  padding-left: 32px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.seo-sec-wrapper {
+  max-width: 90ch;
+}
+
+/* Collection banner for Category Pages */
+
+.collection-banner {
+  background-color: #dbd7c8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 58px 0;
+}
+.collection-banner h1 {
+  font-size: clamp(32px, 4vw, 46px);
+}
+
+/* Collection Page Ends */

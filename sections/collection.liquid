@@ -1,3 +1,28 @@
+{% if collection.handle != 'all' %}
+  <div class="collection-banner">
+    <div class="container">
+      <div class="cb-wrapper">
+        <div class="heading center">
+          <h1>Exotic Fruits in season</h1>
+        </div>
+        <div class="cb-collection">
+          {% for block in section.blocks %}
+            {% assign collection = block.settings.col %}
+            <a href="{{ collection.url }}" class="cbcIn">
+              <div class="cbcImg">
+                <img src="{{ collection.featured_image | img_url:'master' }}" alt="{{ collection.title }}">
+              </div>
+              <div class="cbcTxt">
+                <p>{{ collection.title }}</p>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 <div class="collection-main">
   <div class="container">
     <div class="cm-wrapper">
@@ -15,13 +40,11 @@
             {% endif %}
           </p>
         </div>
-        <h1>
-          {% if collection.handle == 'all' %}
-            All {{ collection.title }}
-          {% else %}
-            {{ collection.title }}
-          {% endif %}
-        </h1>
+        {% if collection.handle == 'all' %}
+          <h1>All {{ collection.title }}</h1>
+        {% else %}
+          <h2>{{ collection.title }}</h2>
+        {% endif %}
       </div>
       <div class="tc-filter-wrap">
         <div class="filter-wrap filter">
@@ -353,9 +376,36 @@
 
 {% schema %}
   {
-    "name": "Collection All",
+    "name": "Collection",
     "tag": "section",
     "class": "collectionMain",
-    "settings": []
+    "settings": [
+      {
+        "type": "text",
+        "id": "head",
+        "label": "Category Pages Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Category Collections",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "col",
+            "label": "Select Collection"
+          }, {
+            "type": "text",
+            "id": "col_name",
+            "label": "Collection Name(optional)"
+          }, {
+            "type": "image_picker",
+            "id": "col_img",
+            "label": "Collection Image(optional)"
+          }
+        ]
+      }
+    ]
   }
 {% endschema %}

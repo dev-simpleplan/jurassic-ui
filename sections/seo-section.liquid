@@ -1,13 +1,13 @@
 {% assign schema_setting = section.settings.text %}
-{% assign collection_description = collection.description %}
+{% assign collection_description = collection.description | strip_html | strip %}
 
 <div class="seo-section">
   <div class="container">
     <div class="seo-sec-wrapper">
-      {% if schema_setting %}
-        {{ section.settings.text }}
-      {% elsif collection_description %}
+      {% if collection_description != blank %}
         {{ collection.description }}
+      {% else %}
+        {{ schema_setting }}
       {% endif %}
     </div>
   </div>
