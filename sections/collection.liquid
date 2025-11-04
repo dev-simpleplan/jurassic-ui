@@ -10,10 +10,15 @@
             {% assign collection = block.settings.col %}
             <a href="{{ collection.url }}" class="cbcIn">
               <div class="cbcImg">
-                <img src="{{ collection.featured_image | img_url:'master' }}" alt="{{ collection.title }}">
+                {% assign collection_img = collection.featured_image %}
+                {% if collection_img != '' %}
+                  <img src="{{ collection.featured_image | img_url:'master' }}" alt="{{ collection.title }}">
+                {% else %}
+                  <img src="{{ block.settings.col_img | img_url:'master' }}" alt="{{ collection.title }}">
+                {% endif %}
               </div>
               <div class="cbcTxt">
-                <p>{{ collection.title }}</p>
+                <p>{{ collection.title | strip_html | strip }}</p>
               </div>
             </a>
           {% endfor %}

@@ -321,5 +321,67 @@
 .collection-banner h1 {
   font-size: clamp(32px, 4vw, 46px);
 }
+.cb-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.cb-collection {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+}
+.cb-collection a.cbcIn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.cb-collection a.cbcIn .cbcImg {
+  width: 83px;
+  height: 83px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.cb-collection a.cbcIn .cbcImg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1;
+  transition: 0.6s all ease;
+}
+.cb-collection a.cbcIn:hover .cbcImg img {
+  scale: 1.1;
+}
+.cb-collection a.cbcIn .cbcTxt p {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.25em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  position: relative;
+}
+.cb-collection a.cbcIn .cbcTxt p::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  height: 1px;
+  transform: scaleX(0);
+  bottom: 0;
+  left: 0;
+  transform-origin: bottom center;
+  transition: transform 0.25s ease-out;
+  background-color: #1a1a1a;
+}
+.cb-collection a.cbcIn:hover .cbcTxt p::after {
+  transform: scaleX(1);
+  transform-origin: bottom center;
+}
 
 /* Collection Page Ends */
