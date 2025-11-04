@@ -53,14 +53,13 @@
           </div>
           <div class="map-points">
             {% for block in section.blocks %}
-              <div class="map-items" data-collection-handle="{{ block.settings.collection.handle }}">
-                <div class="dot" style="top:{{ block.settings.top_position }};left:{{ block.settings.left_position }}"></div>
+              <div class="map-items{% if forloop.first %} active{% endif %}" style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%" data-collection-handle="{{ block.settings.collection.handle }}">
+                <div class="dot" data-collection-handle="{{ block.settings.collection.handle }}"></div>
                 <div class="mapitem-image">
                   <img class="icon collection-img"
                        src="{{ block.settings.fruit_image | img_url: 'master' }}"
                        alt="{{ block.settings.fruit_image.alt }}"
-                       data-collection-handle="{{ block.settings.collection.handle }}"
-                       style="width: 60px; cursor: pointer; border: 2px solid #eee; border-radius: 10px; margin: 10px;" />
+                       style="" />
                 </div>
               </div>
             {% endfor %}
@@ -71,7 +70,7 @@
   </div>
 </section>
 
-<script>
+{% comment %} <script>
 document.addEventListener('DOMContentLoaded', function () {
   // Helper to build product slide (customize contents as needed)
   async function renderProductCard(product) {
@@ -91,6 +90,109 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   renderProductCard();
+});
+</script> {% endcomment %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Helper to build product slide (customize contents as needed)
+  function renderProductCard(product) {
+    return `
+      <a href="${product.product_url}" class="product-card" style="display:block;text-decoration:none;color:inherit;">
+        <div class="product-image">
+          <img src="${product.image_url}" alt="${product.title}" style="width:100%;border-radius:6px;">
+        </div>
+        <div class="product-details" style="padding:10px 0;">
+          <h3 style="margin:0;font-size:1rem;">${product.title}</h3>
+          <p class="vendor" style="margin:0;color:#888;">${product.vendor}</p>
+          <p class="price" style="margin:0;color:#222;font-weight:bold;">${product.price}</p>
+        </div>
+      </a>
+    `;
+  }
+
+  var swiper;
+
+  function initializeSwiper() {
+    swiper = new Swiper(".mySwiper", {
+      effect: "cards",
+      grabCursor: true,
+    });
+  }
+
+  function triggerFadeOnSwiper() {
+  var swiperEl = document.querySelector('.mySwiper');
+  swiperEl.classList.remove('swiper-fade-in'); // Reset
+  swiperEl.classList.add('swiper-fade-init');
+  setTimeout(function() {
+    swiperEl.classList.add('swiper-fade-in');
+  }, 20); // Short delay to allow adding the class
+  setTimeout(function() {
+    swiperEl.classList.remove('swiper-fade-init');
+    swiperEl.classList.remove('swiper-fade-in');
+  }, 1200); // Remove the classes after 1.2 sec
+}
+
+function fetchProductsAndUpdateSwiper(collectionHandle) {
+  var products = window.collectionProductsData[collectionHandle] || [];
+  if (swiper) {
+    swiper.destroy(true, true);
+    swiper = null;
+  }
+  var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
+  swiperWrapper.innerHTML = "";
+
+  if (products.length === 0) {
+    swiperWrapper.innerHTML = '<p style="padding:20px">No products found in this collection.</p>';
+  } else {
+    products.forEach(function(product) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.innerHTML = renderProductCard(product);
+      swiperWrapper.appendChild(slide);
+    });
+  }
+  initializeSwiper();
+  triggerFadeOnSwiper(); // <-- Trigger fade after initializing Swiper
+}
+
+// On initial load:
+var firstCollection = Object.keys(window.collectionProductsData)[0];
+if (firstCollection) {
+  fetchProductsAndUpdateSwiper(firstCollection);
+  // The above triggers fade, so no need to call triggerFadeOnSwiper separately
+}
+
+else {
+    // No collections configured
+    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
+    swiperWrapper.innerHTML = '<p style="padding:20px">No collections configured yet.</p>';
+  }
+
+  // Event delegation for all collection images
+  document.querySelector('.map-points').addEventListener('click', function(e) {
+  // If clicked element is either the dot OR the fruit image
+  var clicked = null;
+  if (e.target.classList.contains('dot') || e.target.classList.contains('collection-img')) {
+    clicked = e.target.closest('.map-items');
+  }
+  if (!clicked) return;
+
+  // Update Swiper with the correct collection (if needed)
+  var handle = clicked.dataset.collectionHandle;
+  if (handle) {
+    fetchProductsAndUpdateSwiper(handle);
+  }
+
+  // Remove "active" from ALL .map-items
+  document.querySelectorAll('.map-points .map-items').forEach(function(item) {
+    item.classList.remove('active');
+  });
+
+  // Add "active" to the one just clicked
+  clicked.classList.add('active');
+});
+
 });
 </script>
 
@@ -324,9 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
   </div>
   </div>
-</div>
-    `;
-  }
+</div>`;
 
   var swiper;
 
