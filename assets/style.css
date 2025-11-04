@@ -1865,9 +1865,14 @@ footer::before {
   width: 100%;
   height: 100px;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
 }
 .banner-bottom img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 .lost-taste {
   background-color: var(--grey-black);
@@ -1877,6 +1882,7 @@ footer::before {
   display: flex;
   flex-direction: column;
   position: relative;
+  container-type: inline-size;
 }
 .lost-taste .custom-heading .logo-icon {
   position: absolute;
@@ -1888,7 +1894,7 @@ footer::before {
   height: auto;
 }
 .lost-taste .custom-heading h1 {
-  font-size: 5.2vw;
+  font-size: 7.5cqw;
   width: 100%;
   text-align: center;
   display: block;
@@ -1985,6 +1991,9 @@ footer::before {
 .ltbotr-image {
   aspect-ratio: 12/13;
   overflow: hidden;
+}
+.ltbotr-image.hidden {
+    display: none;
 }
 .ltbotr-image img {
   width: 100%;
@@ -2300,6 +2309,10 @@ footer::before {
   color: var(--black);
   max-width: 15ch;
   text-align: left;
+  text-transform: none;
+}
+.wmap-in .wmap-head {
+    display: none;
 }
 .wmap-grid {
   display: grid;
@@ -2416,6 +2429,80 @@ footer::before {
 }
 .swiper-fade-init.swiper-fade-in {
   opacity: 0;
+}
+.imgcroll-in {  
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+}
+.sec-heading.small .heading h2 {
+    max-width: 17ch;
+}
+.sec-heading.small .heading p {
+    max-width: 52ch;
+}
+.scrollimg-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    position: relative;
+}
+.scrollimg-wrap .scroll-image {
+    aspect-ratio: 2/1;
+    overflow: clip;
+}
+.scroll-image img {
+    width: 100%;
+    height: 110%;
+    animation: parallax linear;
+    animation-timeline: view();
+    animation-range-start: cover;
+    animation-range-end: cover;
+}
+@keyframes parallax {
+    0% {
+    transform: translateY(-100px)
+    }
+
+    10% {
+    transform: translateY(-80px)
+    }
+
+    20% {
+    transform: translateY(-60px)
+    }
+
+    30% {
+    transform: translateY(-40px)
+    }
+
+    40% {
+    transform: translateY(-20px)
+    }
+
+    50% {
+    transform: translateY(0px)
+    }
+
+    60% {
+    transform: translateY(20px)
+    }
+
+    70% {
+    transform: translateY(40px)
+    }
+
+    80% {
+    transform: translateY(60px)
+    }
+
+    90% {
+    transform: translateY(80px)
+    }
+
+    100% {
+    transform: translateY(100px)
+    }
 }
 
 /* About Page CSS */
