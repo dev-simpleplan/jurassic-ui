@@ -1,0 +1,132 @@
+/* Responsive Css Starts */
+/* Max Width 1800px */
+@media (max-width: 1800px) {
+}
+/* Max Width 1800px Ends */
+/* Max Width 1700px */
+@media (max-width: 1700px) {
+}
+/* Max Width 1700px Ends */
+/* Max Width 1600px */
+@media (max-width: 1600px) {
+}
+/* Max Width 1600px Ends */
+/* Max Width 1500px */
+@media (max-width: 1500px) {
+}
+/* Max Width 1500px Ends */
+/* Max Width 1400px */
+@media (max-width: 1400px) {
+}
+/* Max Width 1400px Ends */
+/* Max Width 1300px */
+@media (max-width: 1300px) {
+  .collection-wrapper {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+/* Max Width 1300px Ends */
+/* Max Width 1200px */
+@media (max-width: 1200px) {
+  .seo-sec-wrapper p {
+    font-size: 14px;
+  }
+}
+/* Max Width 1200px Ends */
+/* Max Width 1100px */
+@media (max-width: 1100px) {
+}
+/* Max Width 1100px Ends */
+/* Max Width 991px */
+@media (max-width: 991px) {
+  .collection-wrapper {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* Max Width 991px Ends */
+/* Max Width 767px */
+@media (max-width: 767px) {
+  .collection-wrapper {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .filter-buttton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 1px;
+    text-align: right;
+    text-transform: uppercase;
+  }
+  .filter-buttton svg {
+    width: 12px;
+    height: 12px;
+  }
+  .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    background: #ffffff;
+    z-index: 999;
+    padding: 40px 20px;
+    width: 100%;
+    transition: 0.2s all ease;
+    clip-path: inset(0 100% 0 0);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+  .filter-sidebar.active {
+    transition: 1s all ease;
+    clip-path: inset(0 0% 0 0);
+  }
+  .filter-sidebar form {
+    flex-direction: column;
+  }
+  .form-filter-wrap.list .ff-in {
+    position: static;
+    border: none;
+  }
+  .filter-cross-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filter-cross-div p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter-cross-div p span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 1px;
+    text-align: right;
+    text-transform: uppercase;
+  }
+  .filter-cross-div .filter-close-mob {
+    width: 18px;
+    height: 18px;
+  }
+  .filter-cross-div .filter-close-mob svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+  .filter-cross-div p svg {
+    width: 12px;
+    height: 12px;
+  }
+  .filter-sidebar-form {
+    height: 85vh;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+}
+/* Max Width 767px Ends */
+/* Responsive Css Ends */

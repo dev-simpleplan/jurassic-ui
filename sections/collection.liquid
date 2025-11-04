@@ -3,22 +3,27 @@
     <div class="container">
       <div class="cb-wrapper">
         <div class="heading center">
-          <h1>Exotic Fruits in season</h1>
+          <h1>{{ section.settings.head }}</h1>
         </div>
         <div class="cb-collection">
           {% for block in section.blocks %}
-            {% assign collection = block.settings.col %}
-            <a href="{{ collection.url }}" class="cbcIn">
+            {% assign collection_item = block.settings.col %}
+            <a href="{{ collection_item.url }}" class="cbcIn">
               <div class="cbcImg">
-                {% assign collection_img = collection.featured_image %}
-                {% if collection_img != '' %}
-                  <img src="{{ collection.featured_image | img_url:'master' }}" alt="{{ collection.title }}">
-                {% else %}
-                  <img src="{{ block.settings.col_img | img_url:'master' }}" alt="{{ collection.title }}">
+                {% if collection_item.featured_image %}
+                  <img src="{{ collection_item.featured_image | img_url: 'master' }}" alt="{{ collection_item.title }}">
+                {% elsif block.settings.col_img %}
+                  <img src="{{ block.settings.col_img | img_url: 'master' }}" alt="{{ collection_item.title }}">
                 {% endif %}
               </div>
+
               <div class="cbcTxt">
-                <p>{{ collection.title | strip_html | strip }}</p>
+                {% assign collection_title = block.settings.col_name %}
+                {% if collection_title == '' %}
+                  <p>{{ collection_item.title | strip_html | strip }}</p>
+                {% else %}
+                  <p>{{ block.settings.col_name }}</p>
+                {% endif %}
               </div>
             </a>
           {% endfor %}
@@ -53,7 +58,19 @@
       </div>
       <div class="tc-filter-wrap">
         <div class="filter-wrap filter">
+          <div class="filter-buttton">
+            Filter
+            {% render 'filter-icon' %}
+          </div>
           <div class="filter-sidebar">
+            <div class="filter-cross-div">
+              <p>
+                <span>Filter</span>
+                {% render 'filter-icon' %}</p>
+              <div class="filter-close-mob">
+                {% render 'cross' %}
+              </div>
+            </div>
             <div class="filter-sidebar-form">
               <form>
                 {%- for filter in collection.filters -%}
@@ -199,12 +216,15 @@
         <div class="filter-wrap sort-by">
           <select id="sort-by">
             {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-
+            <option
+              value=""
+              disabled
+              selected>Sort by</option>
             {% for option in collection.sort_options %}
               <option
                 value="{{ option.value }}"
                 {% if option.value == sort_by %}
-                selected="selected"
+                style="display:none"
                 {% endif %}>
                 {{ option.name }}
               </option>
@@ -377,6 +397,22 @@
     });
   });
 
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const filter_button = document.querySelector('.filter-buttton');
+      const filter_sidebar = document.querySelector('.filter-sidebar');
+      const filter_close = document.querySelector('.filter-close-mob');
+
+      filter_button.addEventListener('click', function() {
+        filter_sidebar.classList.add('active');
+      });
+
+      filter_close.addEventListener('click', function() {
+        filter_sidebar.classList.remove('active');
+      })
+  });
 </script>
 
 {% schema %}

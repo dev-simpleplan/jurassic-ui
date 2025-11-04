@@ -22,6 +22,7 @@
 .collection-main h1,
 .collection-main h2 {
   font-size: clamp(32px, 4vw, 46px);
+  text-transform: capitalize;
 }
 .collection-main .head {
   display: flex;
@@ -103,7 +104,7 @@
   flex-shrink: 0;
   transition: 0.6s all ease;
 }
-.active .filter-down-arrow {
+.form-filter-wrap.list.active .filter-down-arrow {
   transform: rotate(180deg);
 }
 .filter-down-arrow svg {
@@ -191,7 +192,7 @@
   position: relative;
   padding-right: 20px;
   background-image: url("https://cdn.shopify.com/s/files/1/0752/8015/4881/files/down-arrow.svg?v=1762171493");
-  background-position: right 55%;
+  background-position: right 35%;
   background-repeat: no-repeat;
   background-size: 10px 10px;
   outline: none;
@@ -330,6 +331,7 @@
   display: flex;
   justify-content: center;
   gap: 48px;
+  flex-wrap: wrap;
 }
 .cb-collection a.cbcIn {
   display: flex;
@@ -382,6 +384,9 @@
 .cb-collection a.cbcIn:hover .cbcTxt p::after {
   transform: scaleX(1);
   transform-origin: bottom center;
+}
+.filter-buttton {
+  display: none;
 }
 
 /* Collection Page Ends */
