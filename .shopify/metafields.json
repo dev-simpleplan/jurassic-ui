@@ -21,6 +21,16 @@
         "name": "list.collection_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "seo_focused_paragraph",
+      "namespace": "custom",
+      "name": "Seo Focused Paragraph",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "company": [],
