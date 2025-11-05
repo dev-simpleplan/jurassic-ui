@@ -25,11 +25,12 @@
         font-family: 'scale-variable, sans-serif;';
         src: url('{{ ' Scale-VF-Regular.woff2' | asset_url }}') format('woff2')
         , url('{{ ' Scale-VF-Regular.woff' | asset_url }}') format('woff');
-        font-weight: 400;
+        font-weight: <weight>;
         font-style: normal;
-        /* font-stretch: 100%; */
+        font-stretch: 100%;
         font-display: swap;
       }
+
     {%- endstyle -%}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />

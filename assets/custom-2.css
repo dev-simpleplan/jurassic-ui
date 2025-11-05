@@ -407,12 +407,12 @@
 .pro-img {
   display: flex;
   flex-direction: row-reverse;
-  width: 55%;
+  width: 60%;
   justify-content: space-between;
   align-items: stretch;
 }
 .pro-desp {
-  width: 40%;
+  width: 38%;
 }
 .prod-main-image {
   width: 80%;
@@ -449,6 +449,67 @@
 .prod-main-image .slick-list,
 .prod-main-image .slick-track {
   height: 100%;
+}
+
+/* Product Information Block */
+.title-review {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.ts-certificate {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.ts-certificate .tsc-img {
+  display: flex;
+  max-width: 34px;
+}
+.ts-certificate .tsc-img img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  aspect-ratio: 3/2;
+  border-radius: 4px;
+}
+.tr-testimonial p {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #202322;
+  padding-left: 8px;
+  margin-top: -2px;
+  max-width: 39ch;
+}
+.tr-testimonial svg {
+  width: 100%;
+  max-width: 16px;
+  height: auto;
+  max-height: 100%;
+}
+.tr-review-certi {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+.product-info .title {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  padding: 16px;
+  border-radius: 20px;
+}
+.product-info .title h1 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: 0em;
+  color: #202322;
 }
 
 /* Product Page Ends */

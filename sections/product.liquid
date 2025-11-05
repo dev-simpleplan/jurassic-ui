@@ -7,7 +7,6 @@
   src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
   defer></script>
 
-
 {% assign selected_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
   <div class="container">
@@ -44,17 +43,55 @@
 
           {% for block in section.blocks %}
             {% case block.type %}
-              {% when 'vendor' %}
-                <div class="vendor">
-                  <span class="pr-vendor">{{ product.vendor }}</span>
-                </div>
               {% when 'title' %}
                 <div class="title">
+                  <div class="title-review">
+                    {% if block.settings.show_testimonial == true %}
+                      <div class="tr-testimonial">
+                        {% render 'testimonial-icon' %}
+                        {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                      </div>
+                    {% endif %}
+                    {% assign certificate = product.metafields.custom.certificate %}
+                    <div class="tr-review-certi">
+                      <div class="ts-certificate">
+                        {% if certificate != '' %}
+                          {% for item in certificate.value %}
+                            <div class="tsc-img">
+                              <img
+                                src="{{ item.badge_image |  img_url: 'master' }}"
+                                alt="{{ item.display_name }}"
+                                class="img">
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
                   <h1>{{ product.title }}</h1>
+                </div>
+              {% when 'product_info' %}
+                <div class="product-info">
+                  {% comment %} For Origin {% endcomment %}
+                  <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      {% for item in product.metafields.custom.country_of_origin.value %}
+                        {% assign countryName = country_name.value %}
+                        {% for i in countryName.value %}
+                          {{ i.country_name }}
+                        {% endfor %}
+                        {{ item.country_name }}
+                      {% endfor %}
+
+                    </div>
+                  </div>
                 </div>
               {% when 'price' %}
                 <div class="price" id="price-{{ section.id }}">
-                  <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
+                  {% if selected_variant.price < selected_variant.compare_at_price %}
+                    <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
+                  {% endif %}
                   <span class="sell-price">
                     {{ selected_variant.price | money }}
                   </span>
@@ -68,28 +105,25 @@
                   {% unless product.has_only_default_variant %}
                     <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                       {% for option in product.options_with_values %}
-                        <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
-
-                        <div>
-                          <select name="options[{{ option.name | escape }}]" id="Option-{{ section.id }}-{{ forloop.index0 }}">
+                        <div class="variant-option">
+                          <label>{{ option.name }}</label>
+                          <ul class="variant-values" data-index="{{ forloop.index0 }}">
                             {% for value in option.values %}
-                              <option
-                                value="{{ value | escape }}"
-                                {% if option.selected_value == value %}
-                                selected="selected"
-                                {% endif %}>
+                              <li class="variant-value {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">
                                 {{ value }}
-                              </option>
+                              </li>
                             {% endfor %}
-                          </select>
+                          </ul>
                         </div>
-
-                        <script type="application/json">{{ product.variants | json }}
-                        </script>
                       {% endfor %}
+
+                      <script type="application/json">
+                        {{ product.variants | json }}
+                      </script>
                     </variant-selector>
                   {% endunless %}
                 </div>
+
               {% when 'quantity' %}
                 <div class="quantity">
                   <label for="Quantity-{{ section.id }}">Quantity</label>
@@ -112,7 +146,7 @@
                   <button
                     type="submit"
                     name="add"
-                    {% if selected_variant.available == false %}
+                    {% if selected_variant.available==false %}
                     disabled
                     {% endif %}>
                     {% if selected_variant.available == false %}
@@ -123,6 +157,7 @@
                   </button>
                 </div>
             {% else %}
+
               {% endcase %}
             {% endfor %}
           {% endform %}
@@ -132,94 +167,105 @@
   </div>
 
   <script defer>
-    class VariantSelector extends HTMLElement{
-        constructor(){
-            super();
-            this.addEventListener("change", this.onVariantChange);
-        }
-    
-        onVariantChange(){
-            this.getSelectedOptions();
-            this.getSelectedVariant();
-            if(this.currentVariant){
-                this.updateURL();
-                this.updateFormID();
-                this.updatePrice();
-            }
-        }
-    
-        getSelectedOptions(){
-            this.options = Array.from(this.querySelectorAll('select'), (select) => select.value);
-            console.log(this.options);
-        }
-    
-        getVariantJSON(){
-            this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
-            return this.variantData;
-        }
-    
-        getSelectedVariant(){
-            this.currentVariant = this.getVariantJSON().find(
-                (variant)=>{
-                    const findings = !variant.options.map(
-                        (option, index) => {
-                            return this.options[index] === option;
-                        }
-                    ).includes(false);
-    
-                    if(findings) return variant;
-                }
-            );
-    
-            console.log(this.currentVariant)
-        }
-    
-        updateURL(){
-            if(!this.currentVariant) return;
-            window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
-        }
-    
-        updateFormID(){
-            const form_input = document.querySelector("#product-form").querySelector('input[name="id"]');
-            form_input.value = this.currentVariant.id;
-        }
-    
-        updatePrice(){
-            fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
-            .then((response) => response.text())
-            .then((responseText)=>{
-                {% comment %} const id = `price-${this.datatset.section}`; {% endcomment %}
-                const html = new DOMParser().parseFromString(responseText, 'text/html');
-    
-                const oldPrice=document.getElementById('price-{{ section.id }}');
-                const newPrice=html.getElementById('price-{{ section.id }}');
-    
-                if(oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
-            });
-        }
+      class VariantSelector extends HTMLElement {
+    constructor() {
+      super();
+      this.addEventListener('click', this.onVariantClick.bind(this));
     }
-    customElements.define("variant-selector", VariantSelector);
+
+    onVariantClick(e) {
+      const clickedLi = e.target.closest('.variant-value');
+      if (!clickedLi) return;
+
+      const parentUl = clickedLi.closest('.variant-values');
+      if (!parentUl) return;
+
+      // Remove active class from all siblings
+      parentUl.querySelectorAll('.variant-value').forEach((li) => li.classList.remove('active'));
+      clickedLi.classList.add('active');
+
+      // Proceed with variant logic
+      this.getSelectedOptions();
+      this.getSelectedVariant();
+
+      if (this.currentVariant) {
+        this.updateURL();
+        this.updateFormID();
+        this.updatePrice();
+      }
+    }
+
+    getSelectedOptions() {
+      this.options = Array.from(this.querySelectorAll('.variant-values'), (ul) => {
+        const activeLi = ul.querySelector('.variant-value.active');
+        return activeLi ? activeLi.dataset.value : null;
+      }).filter(Boolean);
+
+      console.log('Selected options:', this.options);
+    }
+
+    getVariantJSON() {
+      this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
+      return this.variantData;
+    }
+
+    getSelectedVariant() {
+      const variants = this.getVariantJSON();
+      this.currentVariant = variants.find((variant) =>
+        variant.options.every((opt, index) => opt === this.options[index])
+      );
+
+      console.log('Selected Variant:', this.currentVariant);
+    }
+
+    updateURL() {
+      if (!this.currentVariant) return;
+      window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
+    }
+
+    updateFormID() {
+      const formInput = document.querySelector('#product-form')?.querySelector('input[name="id"]');
+      if (formInput && this.currentVariant) {
+        formInput.value = this.currentVariant.id;
+      }
+    }
+
+    updatePrice() {
+      if (!this.currentVariant) return;
+      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+        .then((response) => response.text())
+        .then((responseText) => {
+          const html = new DOMParser().parseFromString(responseText, 'text/html');
+          const oldPrice = document.getElementById('price-{{ section.id }}');
+          const newPrice = html.getElementById('price-{{ section.id }}');
+
+          if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
+        });
+    }
+      }
+
+      customElements.define('variant-selector', VariantSelector);
   </script>
 
   <script>
-    $(document).ready(function(){
-        $('.prod-main-image').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        asNavFor: '.prod-thumb-image'
+      $(document).ready(function () {
+    $('.prod-main-image').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.prod-thumb-image',
+    });
+    $('.prod-thumb-image').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      asNavFor: '.prod-main-image',
+      focusOnSelect: true,
+      centerMode: true,
+      vertical: true,
+      arrows: false,
+    });
       });
-      $('.prod-thumb-image').slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        asNavFor: '.prod-main-image',
-        focusOnSelect: true,
-        centerMode: true,
-        vertical: true,
-        arrows: false
-      });
-    })
   </script>
 
   {% schema %}
@@ -227,14 +273,64 @@
       "name": "Product",
       "blocks": [
         {
-          "type": "vendor",
-          "name": "Vendor",
-          "limit": 1
-        },
-        {
           "type": "title",
           "name": "Title",
-          "limit": 1
+          "limit": 1,
+          "settings": [
+            {
+              "type": "checkbox",
+              "id": "show_testimonial",
+              "label": "Show Title Testimonial",
+              "default": true
+            }, {
+              "type": "richtext",
+              "id": "title_testimonial",
+              "label": "Testimonial Above Tilte"
+            }
+          ]
+        },
+        {
+          "type": "product_info",
+          "name": "Product Information",
+          "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "info_1_head",
+              "label": "Info 1 Heading"
+            },
+            {
+              "type": "text",
+              "id": "info_1_body",
+              "label": "Info 1 Body"
+            },
+            {
+              "type": "text",
+              "id": "info_2_head",
+              "label": "Info 2 Heading"
+            },
+            {
+              "type": "text",
+              "id": "info_2_body",
+              "label": "Info 2 Body"
+            }, {
+              "type": "text",
+              "id": "info_3_head",
+              "label": "Info 3 Heading"
+            }, {
+              "type": "text",
+              "id": "info_3_body",
+              "label": "Info 3 Body"
+            }, {
+              "type": "text",
+              "id": "info_4_head",
+              "label": "Info 4 Heading"
+            }, {
+              "type": "text",
+              "id": "info_4_body",
+              "label": "Info 4 Body"
+            }
+          ]
         },
         {
           "type": "price",

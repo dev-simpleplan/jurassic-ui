@@ -12,12 +12,12 @@
     "template": {
       "type": "product",
       "blocks": {
-        "vendor": {
-          "type": "vendor",
-          "settings": {}
-        },
         "title": {
           "type": "title",
+          "settings": {}
+        },
+        "product_info": {
+          "type": "product_info",
           "settings": {}
         },
         "price": {
@@ -42,8 +42,8 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "product_info",
         "price",
         "variant_selector",
         "quantity",
