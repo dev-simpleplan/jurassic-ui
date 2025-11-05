@@ -2446,6 +2446,7 @@ footer::before {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 6px;
     position: relative;
+    overflow: hidden;
 }
 .scrollimg-wrap .scroll-image {
     aspect-ratio: 2/1;
@@ -2612,7 +2613,7 @@ footer::before {
     width: 100%;
 }
 .jni-slider .splide__track {
-    padding-right: 11% !important;
+    padding-right: 8% !important;
     position: relative;
     padding-left: 6% !important;
 }
@@ -2684,6 +2685,39 @@ footer::before {
   height: 100%;
   object-fit: contain;
   object-position: top;
+}
+.usp-ticker {
+  padding: 40px 0;
+  background-color: #DBD7C8;
+}
+.ticker-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.ticker-wrap .tw-image {
+  height: 50px;
+  width: auto;
+}
+.tw-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.tw-text {
+  font-family: var(--scale);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 1.12px;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+.usp-ticker .splide__pagination {
+  display: none;
 }
 
 /* Product Page CSS */
