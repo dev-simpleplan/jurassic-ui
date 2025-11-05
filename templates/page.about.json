@@ -37,13 +37,35 @@
     "jurassic-nature": {
       "type": "jurassic-by-nature",
       "settings": {
-        
+        "section_heading": "Jurassic by Nature",
+        "section_subheading": "A Fruit Born With the Dinosaurs... and Still Intact",
+        "bg_image": "shopify://shop_images/f15cc9c03563da8897c4710661a87979e449a3f6.jpg",
+        "icon-outer": "shopify://shop_images/jj-rotating-text.svg",
+        "icon-inner": "shopify://shop_images/jk-mark-white.svg",
+        "item_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image1": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image2": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png",
+        "item_image3": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image4": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image5": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png"
+      }
+    },
+    "spacer_Nh7Bjn": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
       }
     },
     "usp-ticker": {
       "type": "usp-ticker",
+      "settings": {}
+    },
+    "spacer_BmkhaA": {
+      "type": "spacer",
+      "name": "Spacer",
       "settings": {
-        
+        "spacer_height": 140
       }
     },
     "mission-vision": {
@@ -290,7 +312,9 @@
     "lost-taste",
     "spacer0",
     "jurassic-nature",
+    "spacer_Nh7Bjn",
     "usp-ticker",
+    "spacer_BmkhaA",
     "mission-vision",
     "spacer1",
     "jurassic-way",
