@@ -804,4 +804,69 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .scrollimg-wrap .scroll-image img {
     object-fit: cover;
   }
+  .worldMap {
+    padding-bottom: 80px;
+  }
+  .jn-in {
+    gap: 130px;
+  }
+  .jni-slider .splide__track {
+    padding-right: 6%!important;
+  }
+  .jn-icon .outer {
+    width: 90px;
+    height: 90px;
+  }
+  .jn-icon .inner img {
+      width: 20px;
+  }
+  .jbniitem-image {
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: -10px;
+  }
+  .jbn-item {
+    padding-bottom: 40px;
+  }
+  .jbn-item::before {
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .jbn-item .jbnitem-textbox {
+    width: 100%;
+  }
+  .jni-slider {
+    padding-bottom: 50px;
+  }
+  .jni-slider .splide__arrows {
+    position: absolute;
+    bottom: 0;
+    z-index: 9;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+  .jni-slider .splide__arrow {
+    position: relative;
+    transform: none;
+    width: 38px;
+    height: 38px;
+    background-color: #FCF9F5;
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Vector_-_2025-11-05T162113.193.svg?v=1762339888);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: center;
+    opacity: 1;
+  }
+  .jni-slider .splide__arrow.splide__arrow--next {
+    transform: rotate(180deg);
+  }
+  .jni-slider .splide__arrow svg {
+    display: none;
+  }
 }
