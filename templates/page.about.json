@@ -34,6 +34,18 @@
         "spacer_height": 140
       }
     },
+    "jurassic-nature": {
+      "type": "jurassic-by-nature",
+      "settings": {
+        
+      }
+    },
+    "usp-ticker": {
+      "type": "usp-ticker",
+      "settings": {
+        
+      }
+    },
     "mission-vision": {
       "type": "mission-vision",
       "blocks": {
@@ -277,6 +289,8 @@
     "banner",
     "lost-taste",
     "spacer0",
+    "jurassic-nature",
+    "usp-ticker",
     "mission-vision",
     "spacer1",
     "jurassic-way",

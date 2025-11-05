@@ -2409,7 +2409,7 @@ footer::before {
   width: 100%;
   /* overflow: hidden; */
 }
-.cards-slider, .swiper {
+.cards-slider, .cards-slider .swiper {
   max-width: 350px;   /* Adjust as desired: 300px–450px is typical */
   width: 100%;
   margin: 0 auto; /* Center the slider horizontally */
@@ -2504,8 +2504,189 @@ footer::before {
     transform: translateY(100px)
     }
 }
-
 /* About Page CSS */
+
+
+/* Product Page CSS */
+.jurassic-nature {
+    position: relative;
+    /* height: 100vh; */
+    overflow: hidden;
+    padding: 80px 0;
+    background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 89.16%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 87.62%);
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+.jurassic-nature .bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.jnheading-wrap {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+.jn-icon {
+  position: relative;
+}
+.jn-icon .outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+}
+.jn-icon .outer img {
+  width: 100%;
+  -webkit-animation: rotating 10s linear infinite;
+  -moz-animation: rotating 10s linear infinite;
+  -ms-animation: rotating 10s linear infinite;
+  -o-animation: rotating 10s linear infinite;
+  animation: rotating 10s linear infinite;
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.jn-icon .inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jn-icon .inner img {
+  width: 30px;
+}
+.jn-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 240px;
+}
+.jni-slider {
+    width: 100%;
+}
+.jni-slider .jbnSwiper {
+    width: 100%;
+}
+.jni-slider .splide__track {
+    padding-right: 11% !important;
+    position: relative;
+    padding-left: 6% !important;
+}
+.jni-slider .splide__track::before {
+  content: '';
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #FFFFFF;
+}
+.jni-slider .splide__pagination {
+  display: none;
+}
+.jbn-item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  padding-bottom: 20px;
+}
+.jbn-item::before {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  right: 36%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+.jbn-item .jbnitem-textbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid #E7E7E7;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 82%;
+}
+.jbnitem-textbox .jbtb-top {
+  color: #DBD7C8;
+  font-size: 14px;
+  font-family: var(--scale);
+  letter-spacing: 1.28px;
+  text-transform: capitalize;
+  background-color: #1A1A1A;
+  padding: 14px 18px;
+  border-bottom: 1px solid #E7E7E7;
+}
+.jbnitem-textbox .jbtb-bottom {
+  background-color: #FFFFFF;
+  padding: 16px 18px 22px 18px;
+}
+.jbtb-bottom p {
+  color: #1A1A1A;
+  font-size: 12px;
+  letter-spacing: 0px;
+}
+.jbniitem-image {
+  width: 80%;
+  margin-left: auto;
+  margin-top: -30px;
+  aspect-ratio: 1/1;
+}
+.jbniitem-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top;
+}
+
+/* Product Page CSS */
 
 @media (max-width: 1500px) {
   .swrt-image .swrt-scroll {
