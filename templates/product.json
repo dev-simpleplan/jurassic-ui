@@ -53,11 +53,128 @@
       "settings": {}
     },
     "spacer0": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "jurassic-nature": {
+      "type": "jurassic-by-nature",
+      "settings": {
+        "section_heading": "Jurassic by Nature",
+        "section_subheading": "A Fruit Born With the Dinosaurs... and Still Intact",
+        "bg_image": "shopify://shop_images/f15cc9c03563da8897c4710661a87979e449a3f6.jpg",
+        "icon-outer": "shopify://shop_images/jj-rotating-text.svg",
+        "icon-inner": "shopify://shop_images/jk-mark-white.svg",
+        "item_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image1": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image2": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png",
+        "item_image3": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image4": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image5": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png"
+      }
+    },
+    "spacer_Nh7Bjn": {
       "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "usp-ticker": {
+      "type": "usp-ticker",
+      "blocks": {
+        "cards_LUJjzq": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_f78J3x": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_4tRDRB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_YemYXY": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_xerDPJ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_EkaPMQ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_7MHNaB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_gKwDPP": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_PcKgVt": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        }
+      },
+      "block_order": [
+        "cards_LUJjzq",
+        "cards_f78J3x",
+        "cards_4tRDRB",
+        "cards_YemYXY",
+        "cards_xerDPJ",
+        "cards_EkaPMQ",
+        "cards_7MHNaB",
+        "cards_gKwDPP",
+        "cards_PcKgVt"
+      ],
+      "settings": {}
+    },
+    "spacer_BmkhaA": {
+      "type": "spacer",
+      "name": "Spacer",
       "settings": {
         "spacer_height": 140
       }
     }
   },
-  "order": ["template", "spacer0"]
+  "order": [
+    "template",
+    "spacer0",
+    "jurassic-nature",
+    "spacer_Nh7Bjn",
+    "usp-ticker",
+    "spacer_BmkhaA"
+  ]
 }
