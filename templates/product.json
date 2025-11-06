@@ -167,7 +167,14 @@
       "settings": {
         "spacer_height": 140
       }
-    }
+    },
+    "facts": {
+      "type": "facts",
+      "name": "facts",
+      "settings": {
+        
+      }
+    },
   },
   "order": [
     "template",
@@ -175,6 +182,7 @@
     "jurassic-nature",
     "spacer_Nh7Bjn",
     "usp-ticker",
-    "spacer_BmkhaA"
+    "spacer_BmkhaA",
+    "facts"
   ]
 }
