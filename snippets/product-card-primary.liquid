@@ -1,8 +1,9 @@
 <div class="product-card-primary">
   <div class="fruits_card">
-    <div class="fc_top">
+  <a href="{{ product.url }}">
+  <div class="fc_top">
       {% assign images = product.images %}
-
+      
       <div class="fc_image">
         {% if images.size > 0 %}
           <img
@@ -23,6 +24,7 @@
             class="img_sizing primary-img">
         {% endif %}
       </div>
+      
 
       {% assign product_tags = product.tags | downcase %}
       {% if product.tags.size > 0 %}
@@ -53,6 +55,7 @@
         {% endfor %}
       {% endif %}
     </div>
+    </a>
 
     <div class="fc_bottom_outer">
       <div class="fc_bottom">
