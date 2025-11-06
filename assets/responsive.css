@@ -869,4 +869,10 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .jni-slider .splide__arrow svg {
     display: none;
   }
+  .scrollimg-wrap .gallery__grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery__grid .scroll-image {
+    height: auto;
+  }
 }
