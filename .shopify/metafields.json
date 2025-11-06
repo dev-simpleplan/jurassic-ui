@@ -350,6 +350,56 @@
         "name": "list.product_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "product_info_4",
+      "namespace": "custom",
+      "name": "Product Info 4",
+      "description": "Product Information below the Product title, For ex: Warning",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_info_3",
+      "namespace": "custom",
+      "name": "Product Info 3",
+      "description": "Product Information below the Product title, For ex: Did you Know?",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_usp",
+      "namespace": "custom",
+      "name": "Product USP",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "store_usp",
+      "namespace": "custom",
+      "name": "Store USP",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "title_testimonial",
+      "namespace": "custom",
+      "name": "Title Testimonial",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [

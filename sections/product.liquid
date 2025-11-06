@@ -76,16 +76,11 @@
                   <div class="pi-item">
                     {% render 'green-tick' %}
                     <div class="pii-info">
-                      {% for item in product.metafields.custom.country_of_origin.value %}
-                        {% assign countryName = country_name.value %}
-                        {% for i in countryName.value %}
-                          {{ i.country_name }}
-                        {% endfor %}
-                        {{ item.country_name }}
-                      {% endfor %}
-
+                      {{ product.metafields.custom.country_of_origin.value.country_name }}
                     </div>
                   </div>
+                {% comment %} For other Product Information {% endcomment %}
+
                 </div>
               {% when 'price' %}
                 <div class="price" id="price-{{ section.id }}">
