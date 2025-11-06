@@ -1,3 +1,6 @@
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
 <section class="imagescroll">
     <div class="container-fluid">
         <div class="imgcroll-in" id="trigger1">
@@ -7,26 +10,75 @@
                     <p>{{ section.settings.subheading }}</p>
                 </div>
             </div>
-            <div class="scrollimg-wrap">
-                {% for block in section.blocks %}
-                    <div class="scroll-image" id="pin1">
-                         <img class="icon collection-img" src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}" />
+            <div id="stackingGallery">
+                <div class="scrollimg-wrap">
+                    <div class="gallery__grid">
+                        {% for block in section.blocks %}
+                            <div class="scroll-image index-{{ forloop.index }}" id="pin1">
+                                <img class="icon collection-img" src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}" />
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <script>
-    $(function () { // wait for document ready
-        // build scene
-        var scene = new ScrollMagic.Scene({triggerElement: "#trigger1", duration: 300})
-            .setPin("#pin1")
-            .addIndicators({name: "1 (duration: 300)"}) // add indicators (requires plugin)
-            .addTo(controller);
+    gsap.registerPlugin(ScrollTrigger);
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+        const cards = gsap.utils.toArray('.scroll-image');
+        const wrapper = document.querySelector(".imagescroll")
+
+        // park items near the bottom initially
+            gsap.set('.index-1', {
+                yPercent: 20, 
+                rotate: -5
+            });
+            gsap.set('.index-2', {
+                yPercent: 60, 
+                rotate: 8
+            });
+            gsap.set('.index-3', {
+                yPercent: 40, 
+                rotate: -5
+            });
+        // gsap.set(cards, { yPercent: 120, opacity: 0, rotateX: 6, transformOrigin: '50% 100%' });
+
+        const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: wrapper,
+            start: 'top top',
+            end: '+=100%',
+            scrub: true,
+            pin: wrapper,
+            pinSpacing: true,
+            anticipatePin: false,
+            invalidateOnRefresh: true,
+            // markers: true,
+        }
+        });
+
+        cards.forEach((card,i) =>{
+            tl.to(card, {
+                yPercent: 0,
+                rotate: 0,
+                ease: 'ease',
+                stagger: 1
+            }, 0)
+        });
+
+        // subtle grid parallax while revealing (also bound to scroll)
+        tl.from('.gallery__grid', { yPercent: 6, ease: 'none' }, 0);
+
+        
     });
-</script>
+
+
+  </script>
 
 {% schema %}
   {

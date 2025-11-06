@@ -1858,6 +1858,9 @@ footer::before {
   min-height: 400px;
   overflow: hidden;
 }
+.about-banner .banner-image img {
+  object-position: 100% 20%;
+}
 .about-banner .banner-bottom {
   position: absolute;
   bottom: 0;
@@ -2434,6 +2437,7 @@ footer::before {
     display: grid;
     grid-template-columns: 1fr;
     gap: 50px;
+    height: 100%;
 }
 .sec-heading.small .heading h2 {
     max-width: 17ch;
@@ -2441,24 +2445,43 @@ footer::before {
 .sec-heading.small .heading p {
     max-width: 52ch;
 }
+#stackingGallery {
+  width: 100%;
+  height: 100%;
+}
 .scrollimg-wrap {
+  width: 100%;
+  height: 100%;
+}
+section.imagescroll{
+  min-height: 100vh;
+}
+
+.imagescroll .container-fluid{
+  height: 100%;
+}
+
+
+.scrollimg-wrap .gallery__grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 6px;
     position: relative;
-    overflow: hidden;
+    height: 100%;
+    /* align-items: center; */
 }
-.scrollimg-wrap .scroll-image {
-    aspect-ratio: 2/1;
-    overflow: clip;
+.gallery__grid .scroll-image {
+   height: 300px;
+   overflow: hidden;
 }
 .scroll-image img {
     width: 100%;
-    height: 110%;
-    animation: parallax linear;
+    height: 100%;
+    object-fit: cover;
+    /* animation: parallax linear;
     animation-timeline: view();
     animation-range-start: cover;
-    animation-range-end: cover;
+    animation-range-end: cover; */
 }
 @keyframes parallax {
     0% {
