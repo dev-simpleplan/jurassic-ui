@@ -198,6 +198,12 @@ a:hover {
 .heading.white p {
     color: #fcf9f5;
 }
+.heading.md h2 {
+    max-width: 22ch;
+}
+.heading.md p {
+
+}
 /* Header CSS */
 header {
     background-color: var(--body-bg);
@@ -2717,6 +2723,15 @@ section.imagescroll {
     height: 100%;
     object-fit: cover;
 }
+.facts .facts-heading {
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+}
 .facts-data .factsdata-item {
     position: absolute;
     top: 44%;
@@ -2747,15 +2762,13 @@ section.imagescroll {
     justify-content: center;
     transition: .3s ease all;
     opacity: 0;
-    visibility: hidden;
     position: absolute;
     top: 0;
-    width: 300px;
+    width: 350px;
     left: -100px;
 }
 .factsdata-item .facts-hover:hover ~ .facts-hover-data {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1!important;
 }
 .facts-hover-data .fhd-top {
     background-color: #FCF9F5;
@@ -2784,8 +2797,8 @@ section.imagescroll {
     margin-left: auto;
     margin-right: auto;
     background-color: #DBD7C8;
-    padding: 20px 0;
-    margin-top: -30px;
+    padding: 14px 0;
+    margin-top: -22px;
     position: relative;
 }
 .fhd-bottom .fhdb-image {
@@ -2809,9 +2822,10 @@ section.imagescroll {
     top: -8px;
     font-family: var(--scale);
     font-weight: 300;
-    font-size: 22px;
+    font-size: 20px;
     letter-spacing: 1.12px;
     color: #FCF9F5;
+    text-transform: capitalize;
 }
 /* Product Page CSS */
 
