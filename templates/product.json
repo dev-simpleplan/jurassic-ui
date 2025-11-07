@@ -20,6 +20,14 @@
           "type": "product_info",
           "settings": {}
         },
+        "product_usp": {
+          "type": "product_usp",
+          "settings": {}
+        },
+        "store_usp": {
+          "type": "store_usp",
+          "settings": {}
+        },
         "price": {
           "type": "price",
           "settings": {}
@@ -44,6 +52,8 @@
       "block_order": [
         "title",
         "product_info",
+        "product_usp",
+        "store_usp",
         "price",
         "variant_selector",
         "quantity",
@@ -171,10 +181,8 @@
     "facts": {
       "type": "facts",
       "name": "facts",
-      "settings": {
-        
-      }
-    },
+      "settings": {}
+    }
   },
   "order": [
     "template",

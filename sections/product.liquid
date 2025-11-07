@@ -71,16 +71,89 @@
                   <h1>{{ product.title }}</h1>
                 </div>
               {% when 'product_info' %}
-                <div class="product-info">
+                <div class="product-info-block">
                   {% comment %} For Origin {% endcomment %}
                   <div class="pi-item">
                     {% render 'green-tick' %}
                     <div class="pii-info">
-                      {{ product.metafields.custom.country_of_origin.value.country_name }}
+                      <p>
+                        <strong>Origin:</strong>
+                        {{ product.metafields.custom.country_of_origin.value.country_name }}
+                      </p>
                     </div>
                   </div>
-                {% comment %} For other Product Information {% endcomment %}
+                  {% comment %} Seasonality {% endcomment %}
+                  <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      <p>
+                        <strong>Seasonality:</strong>
+                        {{ product.metafields.custom.country_season.value.season.value.seasonality }}
+                      </p>
+                    </div>
+                  </div>
 
+                  {% comment %} Additional Information {% endcomment %}
+                  {% for item in product.metafields.custom.additional_information.value %}
+                    <div class="pi-item">
+                      {% render 'green-tick' %}
+                      <div class="pii-info">
+                        <p>
+                          <strong>{{ item.inforamation_title }}</strong>
+                          {{ item.information_paragraph }}
+                        </p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% when 'product_usp' %}
+                <div class="product-usp">
+                  {% for item in product.metafields.custom.product_usp.value %}
+                    <div class="pu-item">
+                      <div class="pui-icon">
+                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
+                      </div>
+                      <div class="pui-txt">
+                        <p>{{ item.usp_text }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% when 'store_usp' %}
+                <div class="store-usp">
+                  {% comment %} For Shipping USP {% endcomment %}
+                  <div class="su-item">
+                    <div class="sui-icon">
+                      <img src="{{ block.settings.shipping_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.shipping_usp_text }}">
+                    </div>
+                    <div class="sui-txt">
+                      <a href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
+                    </div>
+                  </div>
+
+                  {% comment %} For Freshness USP {% endcomment %}
+                  {% if product.metafields.custom.fresh_product != true %}
+
+                  {% else %}
+                    <div class="su-item">
+                      <div class="sui-icon">
+                        <img src="{{ block.settings.freshness_icon |  img_url: 'master' }}" alt="{{ block.settings.freshness_text }}">
+                      </div>
+                      <div class="sui-txt">
+                        <p id="delivered-fresh">{{ block.settings.freshness_text }}</p>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% comment %} For Payment USP {% endcomment %}
+                  <div class="su-item">
+                    <div class="sui-icon">
+                      <img src="{{ block.settings.payment_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.payment_usp_text }}">
+                    </div>
+                    <div class="sui-txt">
+                      <p id="delivered-fresh">{{ block.settings.payment_usp_text }}</p>
+                    </div>
+                  </div>
                 </div>
               {% when 'price' %}
                 <div class="price" id="price-{{ section.id }}">
@@ -141,6 +214,7 @@
                   <button
                     type="submit"
                     name="add"
+                    id="add-to-cart"
                     {% if selected_variant.available==false %}
                     disabled
                     {% endif %}>
@@ -287,52 +361,56 @@
         {
           "type": "product_info",
           "name": "Product Information",
-          "limit": 1,
-          "settings": [
-            {
-              "type": "text",
-              "id": "info_1_head",
-              "label": "Info 1 Heading"
-            },
-            {
-              "type": "text",
-              "id": "info_1_body",
-              "label": "Info 1 Body"
-            },
-            {
-              "type": "text",
-              "id": "info_2_head",
-              "label": "Info 2 Heading"
-            },
-            {
-              "type": "text",
-              "id": "info_2_body",
-              "label": "Info 2 Body"
-            }, {
-              "type": "text",
-              "id": "info_3_head",
-              "label": "Info 3 Heading"
-            }, {
-              "type": "text",
-              "id": "info_3_body",
-              "label": "Info 3 Body"
-            }, {
-              "type": "text",
-              "id": "info_4_head",
-              "label": "Info 4 Heading"
-            }, {
-              "type": "text",
-              "id": "info_4_body",
-              "label": "Info 4 Body"
-            }
-          ]
-        },
-        {
-          "type": "price",
-          "name": "Price",
           "limit": 1
         },
         {
+          "type": "product_usp",
+          "name": "Product Usp",
+          "limit": 1
+        },
+        {
+          "type": "store_usp",
+          "name": "Store USP",
+          "limit": 1,
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "shipping_usp_icon",
+              "label": "Shipping USP Icon"
+            },
+            {
+              "type": "page",
+              "id": "shipping_usp_page",
+              "label": "Shipping Page"
+            },
+            {
+              "type": "text",
+              "id": "shipping_usp_text",
+              "label": "Shipping USP Text"
+            },
+            {
+              "type": "image_picker",
+              "id": "freshness_icon",
+              "label": "Freshness Icon"
+            }, {
+              "type": "text",
+              "id": "freshness_text",
+              "label": "Freshness Text"
+            }, {
+              "type": "image_picker",
+              "id": "payment_usp_icon",
+              "label": "Payment USP Icon"
+            }, {
+              "type": "text",
+              "id": "payment_usp_text",
+              "label": "Payment USP Text"
+            }
+          ]
+        }, {
+          "type": "price",
+          "name": "Price",
+          "limit": 1
+        }, {
           "type": "variant_selector",
           "name": "Variant Selector",
           "limit": 1
