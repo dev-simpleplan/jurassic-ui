@@ -601,4 +601,45 @@
   aspect-ratio: 1/1;
   object-fit: contain;
 }
+.store-usp {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+.store-usp .su-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 20px;
+  padding: 16px 18px;
+}
+.store-usp .su-item .sui-icon {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+}
+.store-usp .su-item .sui-icon img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+.store-usp .su-item p,
+.store-usp .su-item a {
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #1a1a1a;
+  display: inline-flex;
+}
+.store-usp .su-item a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 /* Product Page Ends */
