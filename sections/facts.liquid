@@ -3,58 +3,32 @@
         {% comment %} <img class="cover" src="{{ section.settings.bg_image | img_url: 'master' }}" alt="{{ block.settings.bg_image.alt }}" /> {% endcomment %}
          <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Rectangle_25307.jpg?v=1762433592" alt="">
     </div>
+    <div class="facts-heading">
+        <div class="heading center white md">
+            <h2>{{ section.settings.heading }}</h2>
+            <p>{{ section.settings.subheading }}</p>
+        </div>
+    </div>
     <div class="facts-data">
-        <div class="factsdata-item">
-            <div class="facts-item-in">
-                <div class="facts-hover"></div>
-                <div class="facts-hover-data">
-                    <div class="fhd-top">
-                        <p class="fhd-top-para">Two ancient lineages:</p>
-                        <p class="fhd-bottom-para"><b>Indo-Atlantic (India, Sri Lanka)</b> and <b>Pacific (Indonesia, Philippines).</b></p>
-                    </div>
-                    <div class="fhd-bottom">
-                        <div class="fhdb-image">
-                            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/image_69.png?v=1762435701" alt="">
+        {% for block in section.blocks %}
+            <div class="factsdata-item" style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%">
+                <div class="facts-item-in">
+                    <div class="facts-hover"></div>
+                    <div class="facts-hover-data" style="opacity: {% if block.settings.show_item %}1{% else %}0{% endif %};">
+                        <div class="fhd-top">
+                            <div class="fhd-top-para">{{ block.settings.facts_top_data }}</div>
+                            <div class="fhd-bottom-para">{{ block.settings.facts_bottom_data }}</div>
                         </div>
-                        <p>Origin</p>
+                        <div class="fhd-bottom">
+                            <div class="fhdb-image">
+                                <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/image_69.png?v=1762435701" alt="">
+                            </div>
+                            <p>{{ block.settings.facts_heading }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="factsdata-item sec">
-            <div class="facts-item-in">
-                <div class="facts-hover"></div>
-                <div class="facts-hover-data">
-                    <div class="fhd-top">
-                        {% comment %} <p class="fhd-top-para">Two ancient lineages:</p> {% endcomment %}
-                        <p class="fhd-bottom-para">Coconuts are still propagated naturally, often germinating where they fall. <b>This nut remains untamed.</b></p>
-                    </div>
-                    <div class="fhd-bottom">
-                        <div class="fhdb-image">
-                            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/image_69.png?v=1762435701" alt="">
-                        </div>
-                        <p>Domestication</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="factsdata-item third">
-            <div class="facts-item-in">
-                <div class="facts-hover"></div>
-                <div class="facts-hover-data">
-                    <div class="fhd-top">
-                        <p class="fhd-top-para">Two ancient lineages:</p>
-                        <p class="fhd-bottom-para">A coconut can survive over <b>3 months at sea</b> and still germinate. It's a natural life capsule, built for oceanic exploration.</p>
-                    </div>
-                    <div class="fhd-bottom">
-                        <div class="fhdb-image">
-                            <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/image_69.png?v=1762435701" alt="">
-                        </div>
-                        <p>survival fact</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 
@@ -63,8 +37,67 @@
     "name": "facts",
     "tag": "section",
     "settings": [
-
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Paragraph"
+        }
     ],
+    "blocks": [
+        {
+          "type": "title",
+          "name": "Title",
+          "limit": 3,
+          "settings": [
+            {
+              "type": "checkbox",
+              "id": "show_item",
+              "label": "Show Item On Screen (Uncheck after adding content)",
+              "default": false
+            },
+            {
+                "type": "range",
+                "id": "top_position",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "label": "Top Position",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "left_position",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "label": "Left Position",
+                "default": 0
+            },
+            {
+              "type": "richtext",
+              "id": "facts_top_data",
+              "label": "Facts top text"
+            },
+            {
+              "type": "richtext",
+              "id": "facts_bottom_data",
+              "label": "Facts bottom text"
+            },
+            {
+                "type": "text",
+                "id": "facts_heading",
+                "label": "Fact Item Heading"
+            }
+          ]
+        }
+      ],
     "presets": [
         {
             "name": "facts",
