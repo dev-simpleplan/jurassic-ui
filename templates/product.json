@@ -47,6 +47,14 @@
           "type": "variant_selector",
           "settings": {}
         },
+        "delivery_info_WFVGrD": {
+          "type": "delivery-info",
+          "settings": {
+            "delivery_message": "Max. freshness, min. waste — we harvest after you order.",
+            "popup_button": "click here to get delivery information (cost, delay)",
+            "page": "delivery-popup"
+          }
+        },
         "quantity": {
           "type": "quantity",
           "settings": {}
@@ -67,6 +75,7 @@
         "store_usp",
         "price",
         "variant_selector",
+        "delivery_info_WFVGrD",
         "quantity",
         "description",
         "checkout_buttons"

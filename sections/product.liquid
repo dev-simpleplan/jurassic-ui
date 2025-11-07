@@ -192,6 +192,9 @@
                   {% endunless %}
                 </div>
 
+              {% when 'delivery-info' %}
+                {% render 'product-delivery-info'
+                  , block: block %}
               {% when 'quantity' %}
                 <div class="quantity">
                   <label for="Quantity-{{ section.id }}">Quantity</label>
@@ -230,6 +233,45 @@
               {% endcase %}
             {% endfor %}
           {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
+  <div class="product_delivery_modal_container modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delivery-cost-title">How much does delivery cost and how long does it take?</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <svg
+              width="15px"
+              height="15px"
+              fill="none"
+              class="icon icon-close"
+              viewBox="0 0 18 17">
+              <path fill="currentColor" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" data-load="/en/_faq/42/delivery-cost">
+          <div>
+            <p style='margin:0;'>
+              <span class="product_delivery_modal_deliver_to">Deliver to</span>
+              {{ localization.country }}:
+              <span class="calculated-delivery-date-price">9,90 €</span>
+            </p>
+            <p style='margin:0;'>
+              <span class="product_delivery_modal_order_today">Order today to get it from</span>
+              <span class="calculated-delivery-date"></span>
+            </p>
+          </div>
+          {{ deliveryBlock.settings.page.content }}
         </div>
       </div>
     </div>
@@ -414,6 +456,26 @@
           "type": "variant_selector",
           "name": "Variant Selector",
           "limit": 1
+        }, {
+          "type": "delivery-info",
+          "name": "Delivery information",
+          "settings": [
+            {
+              "type": "text",
+              "id": "delivery_message",
+              "label": "Delivery message",
+              "default": "Max. freshness, min. waste — we harvest after you order."
+            }, {
+              "type": "text",
+              "id": "popup_button",
+              "label": "Popup button text",
+              "default": "click here to get delivery information (cost, delay)"
+            }, {
+              "type": "page",
+              "id": "page",
+              "label": "Modal content"
+            }
+          ]
         }, {
           "type": "quantity",
           "name": "Quantity",

@@ -304,7 +304,8 @@
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease
+    , visibility 0.3s ease;
   }
 
   .cart-loader.active {
@@ -328,7 +329,7 @@
     }
   }
 
-  .cart-totals>div {
+  .cart-totals > div {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -366,7 +367,7 @@
     color: #151515;
   }
 
-  .cart-totals>div p {
+  .cart-totals > div p {
     width: 48%;
   }
 
@@ -409,7 +410,7 @@
     padding: 54px 20px;
     box-shadow: 0 0 6px 0 #C3C3C34D;
     background-color: #fff;
-    height: 100dvh;
+    height: 100 dvh;
     max-width: 250px;
     min-width: 240px;
   }
@@ -419,7 +420,7 @@
     flex-direction: column;
     overflow: hidden;
     overflow-y: auto;
-    height: 100dvh;
+    height: 100 dvh;
   }
 </style>
 
@@ -429,8 +430,7 @@
   </div>
   <div class="cart-recommendation-wrapper">
     <div class="cr-head">you may also like</div>
-    <div class="cart-recommendation" data-lenis-prevent>
-    </div>
+    <div class="cart-recommendation" data-lenis-prevent></div>
   </div>
   <div class="sc-wrapper">
     <div class="sc-head">
@@ -440,12 +440,42 @@
           <span id="cart_item_count">({{ cart.item_count }} items)</span>
         </p>
         {% if cart.item_count > 0 %}
-        <a href="{{ routes.cart_url }}">View Cart</a>
+          <a href="{{ routes.cart_url }}">View Cart</a>
         {% endif %}
       </div>
       <div class="sc-close">
         {% render 'cross' %}
       </div>
+    </div>
+    <div
+      class="sc-shipping-arrival"
+      data-user-language="{{ request.locale.name }}"
+      data-user-iso="{{ request.locale.iso_code }}">
+      {% render 'shipping-icon' %}
+      <p>Arrives
+        <span id="arrival-date">Sep 2 - Sep 4</span>
+      </p>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+          try {
+            const response = await fetch('/cart.js');
+            const cart = await response.json();
+
+            const scriptTag = document.createElement('script');
+            scriptTag.id = 'cart-data';
+            scriptTag.type = 'application/json';
+            scriptTag.textContent = JSON.stringify(cart);
+            const cartData = document.querySelector(".sc-shipping-arrival");
+
+            cartData.appendChild(scriptTag);
+
+            console.log('🛒 Cart data:', cart);
+          } catch (error) {
+            console.error('Error fetching cart:', error);
+          }
+        });
+      </script>
     </div>
     <div class="sc-in">
       <div class="side-cart-with-items" data-lenis-prevent></div>
@@ -471,7 +501,11 @@
         </div>
       </div>
       <form action="/checkout" method="post">
-        <button name="checkout" type="submit" class="checkout-btn custom-btn filled" style="width: 100%;">
+        <button
+          name="checkout"
+          type="submit"
+          class="checkout-btn custom-btn filled"
+          style="width: 100%;">
           <span class="checkout-txt">Checkout</span>
           <span class="checkout-total">0.00</span>
         </button>
@@ -922,10 +956,10 @@
 
 
 {% schema %}
-{
-"name": "Side Cart",
-"class": "sideCart",
-"tag": "section",
-"settings": []
-}
+  {
+    "name": "Side Cart",
+    "class": "sideCart",
+    "tag": "section",
+    "settings": []
+  }
 {% endschema %}

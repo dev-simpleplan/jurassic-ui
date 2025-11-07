@@ -616,6 +616,7 @@
   border: 1px solid #e5e3df;
   border-radius: 20px;
   padding: 16px 18px;
+  flex: 1 1 100%;
 }
 .store-usp .su-item .sui-icon {
   width: 35px;
@@ -642,4 +643,29 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+.sc-shipping-arrival {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 16px;
+  padding: 8px 24px;
+  gap: 10px;
+  margin-top: 12px;
+}
+.sc-shipping-arrival p {
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #1a1a1a;
+}
+.sc-shipping-arrival p span {
+  font-weight: 600;
+}
+.sc-shipping-arrival svg {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
 /* Product Page Ends */
