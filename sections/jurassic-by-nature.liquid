@@ -98,30 +98,63 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var splide = new Splide('.jni-slider', {
-      perPage: 3,
-      perMove: 1,
-      arrows: false,
-      pagination: false,
-      gap: '60px',
-      // drag: 'free',
-      breakpoints: {
-        1200: {
-          perPage: 2,
-        },
-        1000: {
-          perPage: 2,
-        },
-        600: {
-          perPage: 1,
-        //   gap: '0px',
-          arrows: true,
-        },
-      },
-    });
-    splide.mount();
+document.addEventListener('DOMContentLoaded', function () {
+  var splide = new Splide('.jni-slider', {
+    perPage: 3,
+    perMove: 1,
+    arrows: false,
+    pagination: false,
+    gap: '60px',
+    drag: 'free',
+    flickPower: 300,
+    flickMaxPages: 1,
+    speed: 600,
+    waitForTransition: false,
+    breakpoints: {
+      1200: { perPage: 2 },
+      1000: { perPage: 2 },
+      600:  { perPage: 1, arrows: true },
+    },
   });
+
+  splide.mount();
+
+  const track = document.querySelector('.jni-slider .splide__track');
+
+  const STEP_THRESHOLD = 140;         // increase threshold for finer control
+  const COOLDOWN_MS = 140;            // prevent rapid consecutive jumps
+  let accum = 0;
+  let lastGo = 0;
+
+  function clampIndex(idx) {
+    const perPage = splide.options.perPage || 1;
+    const slides  = splide.root.querySelectorAll('.splide__slide').length;
+    const maxIdx  = Math.max(0, slides - perPage);
+    return Math.max(0, Math.min(idx, maxIdx));
+  }
+
+  track.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+
+    e.preventDefault();
+    accum += e.deltaX;
+
+    const now = performance.now();
+    if (now - lastGo < COOLDOWN_MS) return;
+
+    const rawSteps = Math.trunc(accum / STEP_THRESHOLD);
+    if (rawSteps !== 0) {
+      const step = Math.sign(rawSteps);        // clamp to -1 / +1 per tick
+      const target = clampIndex(splide.index + step);
+      if (target !== splide.index) {
+        splide.go(target);
+        lastGo = now;
+      }
+      // keep only the remainder but remove the step we just consumed
+      accum -= step * STEP_THRESHOLD;
+    }
+  }, { passive: false });
+});
 </script>
 
 
