@@ -14,7 +14,10 @@
       "blocks": {
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "show_testimonial": true,
+            "title_testimonial": ""
+          }
         },
         "product_info": {
           "type": "product_info",
@@ -26,7 +29,15 @@
         },
         "store_usp": {
           "type": "store_usp",
-          "settings": {}
+          "settings": {
+            "shipping_usp_icon": "shopify://shop_images/truck.svg",
+            "shipping_usp_page": "",
+            "shipping_usp_text": "Free shipping from 89 €*",
+            "freshness_icon": "shopify://shop_images/box.svg",
+            "freshness_text": "24h freshness guarantee",
+            "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
+            "payment_usp_text": "Secure Payment"
+          }
         },
         "price": {
           "type": "price",
