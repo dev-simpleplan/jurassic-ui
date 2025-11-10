@@ -238,6 +238,105 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "three-icon-sec": {
+      "type": "three-icon-sec",
+      "blocks": {
+        "cards_P3Btyy": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Vector_-_2025-11-10T162939.731.svg",
+            "text": "See exactly what you’re paying for — down to the gram. Fair pricing by box size and weight."
+          }
+        },
+        "cards_47PU9w": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Vector_-_2025-11-10T162944.693.svg",
+            "text": "We source rare fruits from remote regions. Each price reflects distance, seasonality, and what it takes to get them to you."
+          }
+        },
+        "cards_kb9bFP": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Group_427322701.svg",
+            "text": "Know your delivery cost upfront. Clear timelines and options that work for you"
+          }
+        }
+      },
+      "block_order": [
+        "cards_P3Btyy",
+        "cards_47PU9w",
+        "cards_kb9bFP"
+      ],
+      "name": "three-icon-sec",
+      "settings": {
+        "bg-image": "shopify://shop_images/counter-bg.jpg",
+        "heading": "The Honest Price Tag",
+        "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
+      }
+    },
+    "left-image-with-items": {
+      "type": "left-image-with-items",
+      "blocks": {
+        "cards_FEmMR3": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Guardians of the Land",
+            "para_text": "Our farmers grow with care, tending to wild groves and heritage orchards using age-old, chemical-free methods."
+          }
+        },
+        "cards_wxQ7xD": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Ripe with Intention",
+            "para_text": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
+          }
+        },
+        "cards_eGXAwz": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Guardians of the Land",
+            "para_text": "Our farmers grow with care, tending to wild groves and heritage orchards using age-old, chemical-free methods."
+          }
+        },
+        "cards_Mi37EN": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Ripe with Intention",
+            "para_text": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
+          }
+        },
+        "cards_rXQKrp": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Faces Behind the Flavor",
+            "para_text": "These are smallholders with big hearts. Their work is dignified, their stories real, their impact lasting."
+          }
+        },
+        "cards_ixEMk3": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Connected by Care",
+            "para_text": "From their hands to your home, our direct partnerships ensure purity, fairness, and a shared love for food done right."
+          }
+        }
+      },
+      "block_order": [
+        "cards_FEmMR3",
+        "cards_wxQ7xD",
+        "cards_eGXAwz",
+        "cards_Mi37EN",
+        "cards_rXQKrp",
+        "cards_ixEMk3"
+      ],
+      "name": "left-image-with-items",
+      "settings": {
+        "video_img": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
+        "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4",
+        "heading": "​​The Hands That Harvest Paradise",
+        "sub_heading": "From sun-drenched mornings to mindful harvests—meet the growers behind your cravings."
+      }
     }
   },
   "order": [
@@ -248,6 +347,8 @@
     "usp-ticker",
     "spacer_BmkhaA",
     "facts",
-    "spacer_LKTbj6"
+    "spacer_LKTbj6",
+    "three-icon-sec",
+    "left-image-with-items"
   ]
 }
