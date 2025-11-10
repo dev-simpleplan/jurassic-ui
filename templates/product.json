@@ -276,6 +276,13 @@
         "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
       }
     },
+    "spacer_1": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "left-image-with-items": {
       "type": "left-image-with-items",
       "blocks": {
@@ -337,6 +344,20 @@
         "heading": "​​The Hands That Harvest Paradise",
         "sub_heading": "From sun-drenched mornings to mindful harvests—meet the growers behind your cravings."
       }
+    },
+    "spacer_2": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "name": "faq",
+      "settings": {
+        
+      }
     }
   },
   "order": [
@@ -349,6 +370,9 @@
     "facts",
     "spacer_LKTbj6",
     "three-icon-sec",
-    "left-image-with-items"
+    "spacer_1",
+    "left-image-with-items",
+    "spacer_2",
+    "faq"
   ]
 }

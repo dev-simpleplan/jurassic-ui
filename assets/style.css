@@ -204,6 +204,28 @@ a:hover {
 .heading.md p {
 
 }
+.heading.with-link {
+    position: relative;
+    padding-right: 120px;
+}
+.heading.with-link h2 {
+    max-width: 24ch;
+}
+.heading.with-link .heading-link {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.heading-link a {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.16px;
+    text-decoration: underline;
+    color: var(--grey-black);
+}
+.heading-link a:hover {
+
+}
 /* Header CSS */
 header {
     background-color: var(--body-bg);
@@ -2915,6 +2937,74 @@ section.imagescroll {
     text-align: center;
     max-width: 42ch;
     line-height: 140%;
+}
+.liwi-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+}
+.liwi-left .ll-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.ll-image>video, .ll-image>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.ll-image .video-control {
+    width: 70px;
+    height: 70px;
+    transition: opacity 260ms ease, visibility 260ms ease;
+    opacity: 1;
+    visibility: visible;
+}
+.ll-image .video-control.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ll-image .video-control-symbol {
+    width: 22px;
+    height: 22px;
+}
+.liwi-right .lr-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding-bottom: 30px;
+}
+.lr-content .heading h2 {
+    max-width: 14ch;
+}
+.lr-content .heading p {
+    max-width: 46ch;
+}
+.lrcontent-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 80px;
+}
+.lrcont-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.lrcont-item .lrci-head {
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--grey-black);
+}
+.lrcont-item .lrci-para p {
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0px;
+    line-height: 140%;
+    color: var(--grey-black);
 }
 /* Product Page CSS */
 
