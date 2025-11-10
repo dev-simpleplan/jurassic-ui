@@ -192,9 +192,7 @@
                   {% endunless %}
                 </div>
 
-              {% when 'delivery-info' %}
-                {% render 'product-delivery-info'
-                  , block: block %}
+
               {% when 'quantity' %}
                 <div class="quantity">
                   <label for="Quantity-{{ section.id }}">Quantity</label>
@@ -236,6 +234,9 @@
         </div>
       </div>
     </div>
+    <script type="application/ld+json">
+      {{ product | structured_data }}
+    </script>
   </div>
 
   {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}

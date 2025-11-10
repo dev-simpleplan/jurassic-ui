@@ -139,12 +139,12 @@
                             
 
                             {%- comment -%} RIGHT: optional promo image from block setting {%- endcomment -%}
-                            {%- if block.settings.mega_menu_img_right != blank -%}
+                            {%- if block.settings.product_list != '' -%}
+                            {% for item in block.settings.product_list %}
                               <div class="mms-right">
-                                <img
-                                  src="{{ block.settings.mega_menu_img_right | image_url: width: 640 }}"
-                                  alt="{{ selected_menu.title | escape }}">
+                                {{ item.title }}
                               </div>
+                            {% endfor %}
                             {%- endif -%}
                           </div>
                         </div>
@@ -216,6 +216,12 @@
             "type": "image_picker",
             "id": "mega_menu_img_right",
             "label": "Mega Menu Image Right"
+          },
+          {
+            "type": "product_list",
+            "id": "product_list",
+            "label": "Select Products",
+            "limit": 3
           }
         ]
       }
