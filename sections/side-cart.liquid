@@ -450,7 +450,8 @@
     <div
       class="sc-shipping-arrival"
       data-user-language="{{ request.locale.name }}"
-      data-user-iso="{{ request.locale.iso_code }}">
+      data-user-iso="{{ request.locale.iso_code }}"
+      data-user-selected-country={{ localization.country.iso_code | json }}>
       {% render 'shipping-icon' %}
       <p>Arrives
         <span id="arrival-date">Sep 2 - Sep 4</span>

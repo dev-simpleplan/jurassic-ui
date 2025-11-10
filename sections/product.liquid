@@ -156,40 +156,94 @@
                   </div>
                 </div>
               {% when 'price' %}
-                <div class="price" id="price-{{ section.id }}">
-                  {% if selected_variant.price < selected_variant.compare_at_price %}
-                    <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
-                  {% endif %}
-                  <span class="sell-price">
-                    {{ selected_variant.price | money }}
-                  </span>
 
-                  {% if selected_variant.price < selected_variant.compare_at_price %}
-                    <span>Sale</span>
-                  {% endif %}
-                </div>
               {% when 'variant_selector' %}
                 <div class="variant">
-                  {% unless product.has_only_default_variant %}
-                    <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
-                      {% for option in product.options_with_values %}
-                        <div class="variant-option">
-                          <label>{{ option.name }}</label>
-                          <ul class="variant-values" data-index="{{ forloop.index0 }}">
-                            {% for value in option.values %}
-                              <li class="variant-value {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">
-                                {{ value }}
-                              </li>
-                            {% endfor %}
-                          </ul>
-                        </div>
-                      {% endfor %}
+                  <div class="variant-wrapper">
+                    <div class="select_variant">
+                      {% unless product.has_only_default_variant %}
+                        <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                          <div class="sv-perKg">
+                            <p>Select variant</p>
+                            <div class="perKg">
+                              {% if selected_variant.unit_price_measurement %}
+                                {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                              {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                              {% else %}
+                                {{ selected_variant.price | money }} / unit
+                              {% endif %}
+                            </div>
+                          </div>
+                          {% for option in product.options_with_values %}
+                            <div class="variant-option" data-option="{{ option.name }}">
+                              <ul class="variant-values" data-index="{{ forloop.index0 }}">
+                                {% for value in option.values %}
+                                  {% assign matched_variant = nil %}
 
-                      <script type="application/json">
-                        {{ product.variants | json }}
-                      </script>
-                    </variant-selector>
-                  {% endunless %}
+                                  {% for variant in product.variants %}
+                                    {% case option.position %}
+                                      {% when 1 %}
+                                        {% if variant.option1 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 2 %}
+                                        {% if variant.option2 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 3 %}
+                                        {% if variant.option3 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                    {% endcase %}
+                                  {% endfor %}
+
+                                  <li class="variant-value {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">
+                                    {{ value }}
+                                    {% if matched_variant.compare_at_price > matched_variant.price %}
+                                      {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
+                                      {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
+                                      <span class="variant-discount">{{ discount_percentage }}% OFF</span>
+                                    {% endif %}
+                                    {% if matched_variant.unit_price_measurement %}
+                                      <span class="variant-qty">
+                                        {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
+                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
+                                        {% else %}
+                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
+                                        {% endif %}
+                                      </span>
+                                    {% endif %}
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                          {% endfor %}
+
+                          <script type="application/json">
+                            {{ product.variants | json }}
+                          </script>
+                        </variant-selector>
+                      {% endunless %}
+                    </div>
+                    <div class="priceCheckout">
+                      <div class="price" id="price-{{ section.id }}">
+                        {% if selected_variant.price < selected_variant.compare_at_price %}
+                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
+                        {% endif %}
+                        <span class="sell-price">
+                          {{ selected_variant.price | money }}
+                        </span>
+
+                        {% if selected_variant.price < selected_variant.compare_at_price %}
+                          <span>Sale</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
 
@@ -351,7 +405,11 @@
           const oldPrice = document.getElementById('price-{{ section.id }}');
           const newPrice = html.getElementById('price-{{ section.id }}');
 
+          const oldPerkg = document.querySelector(".perKg");
+          const newPerkg = html.querySelector(".perKg");
+
           if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
+          if (oldPerkg && newPerkg) oldPerkg.innerHTML = newPerkg.innerHTML;
         });
     }
       }

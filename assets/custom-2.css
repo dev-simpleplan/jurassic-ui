@@ -667,5 +667,40 @@
   height: 35px;
   flex-shrink: 0;
 }
+.variant {
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+.sv-perKg {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.sv-perKg p {
+  font-family: var(--scale);
+  font-weight: 500;
+  font-size: 12px;
+  leading-trim: CAP_HEIGHT;
+  line-height: 150%;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #202322;
+}
+.sv-perKg .perKg {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #6b6b6b;
+}
+.variant-option ul {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  justify-content: flex-start;
+}
 
 /* Product Page Ends */
