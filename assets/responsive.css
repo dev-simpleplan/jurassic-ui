@@ -875,4 +875,8 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .gallery__grid .scroll-image {
     height: auto;
   }
+  .tic-wrap {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
 }

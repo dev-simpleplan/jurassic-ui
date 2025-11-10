@@ -252,6 +252,13 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "three-icon-sec": {
+      "type": "three-icon-sec",
+      "name": "three-icon-sec",
+      "settings": {
+        
+      }
     }
   },
   "order": [
@@ -262,6 +269,7 @@
     "usp-ticker",
     "spacer_BmkhaA",
     "facts",
-    "spacer_LKTbj6"
+    "spacer_LKTbj6",
+    "three-icon-sec"
   ]
 }
