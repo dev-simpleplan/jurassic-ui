@@ -259,6 +259,13 @@
       "settings": {
         
       }
+    },
+    "left-image-with-items": {
+      "type": "left-image-with-items",
+      "name": "left-image-with-items",
+      "settings": {
+        
+      }
     }
   },
   "order": [
@@ -270,6 +277,7 @@
     "spacer_BmkhaA",
     "facts",
     "spacer_LKTbj6",
-    "three-icon-sec"
+    "three-icon-sec",
+    "left-image-with-items"
   ]
 }
