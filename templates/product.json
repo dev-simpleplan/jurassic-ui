@@ -226,7 +226,7 @@
         "title_zNyBLK": {
           "type": "title",
           "settings": {
-            "show_item": true,
+            "show_item": false,
             "top_position": 12,
             "left_position": 81,
             "facts_top_data": "",
@@ -245,6 +245,13 @@
         "heading": "want to learn some interesting facts about the fruit’s",
         "subheading": "Find coconuts to reveal fun facts!!!"
       }
+    },
+    "spacer_LKTbj6": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
@@ -254,6 +261,7 @@
     "spacer_Nh7Bjn",
     "usp-ticker",
     "spacer_BmkhaA",
-    "facts"
+    "facts",
+    "spacer_LKTbj6"
   ]
 }
