@@ -2712,6 +2712,7 @@ section.imagescroll {
     position: relative;
     min-height: 700px;
     height: 100vh;
+    overflow: hidden;
 }
 .facts .facts-bg {
     position: relative;
@@ -2766,6 +2767,37 @@ section.imagescroll {
     top: 0;
     width: 350px;
     left: -100px;
+}
+.facts-hover-data::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: rgba(34, 101, 0, 0.5);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    filter: blur(25px);
+}
+.facts-hover-data::after {
+    content: '';
+    position: absolute;
+    bottom: -64px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50px;
+    height: 50px;border-radius: 50%;
+    background: linear-gradient(90deg, #FFC761 0%, #F7A816 138.78%);
+    box-shadow: 0px 0px 9px 0px #7A4F0099 inset;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    filter: blur(25);
+    z-index: 1;
 }
 .factsdata-item .facts-hover:hover ~ .facts-hover-data {
     opacity: 1!important;
@@ -2826,6 +2858,63 @@ section.imagescroll {
     letter-spacing: 1.12px;
     color: #FCF9F5;
     text-transform: capitalize;
+}
+.tic-section {
+    position: relative;
+    padding: 140px 0;
+}
+.tic-section .tic-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.tic-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.tic-section .tic-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(176.82deg, rgba(0, 0, 0, 0) -22.64%, #1a1a1a 91%);
+}
+.tic-wrap {
+    margin-top: 80px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.tic-wrap .tic-item {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+}
+.tici-image {
+    width: auto;
+    height: 96px;
+}
+.tici-image img {
+    height: 100%;
+    width: auto;
+}
+.tici-text {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgba(252, 249, 245, 1);
+    text-align: center;
+    max-width: 42ch;
+    line-height: 140%;
 }
 /* Product Page CSS */
 

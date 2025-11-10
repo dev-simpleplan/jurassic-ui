@@ -1,0 +1,133 @@
+<div class="liwi">
+    <div class="container-fluid">
+        <div class="liwi-wrap">
+            <div class="liwi-left">
+                <div class="ll-image">
+                    {% if section.settings.video_link != blank %}
+                        {{ section.settings.video_link | video_tag:
+                            autoplay: false,
+                            loop: true,
+                            muted: false,
+                            controls: false,
+                            playsinline: true,
+                            class: 'img ab'
+                        }}
+                        <button class="video-control" aria-label="Video Play Button">
+                            <span class="video-control-play">
+                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
+                            </span>
+                            <span class="video-control-pause">
+                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt=""></span>
+                            </span>
+                        </button>
+                    {% endif %}
+                    {% if section.settings.video_img != blank %}
+                        <img src="{{ section.settings.video_img |  img_url: 'master' }}" alt="{{ section.settings.video_img.title }}" class="img ab">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="liwi-right">
+                <div class="lr-content">
+                    <div class="heading left half-width">
+                        <h2>{{ section.settings.heading }}</h2>
+                        <p>{{ section.settings.sub_heading }}</p>
+                    </div>
+                    <div class="lrcontent-points">
+                        {%- for block in section.blocks -%}
+                            <div class="lrcont-item">
+                                <div class="lrci-head">
+                                    {{ block.settings.head_text }}
+                                </div>
+                                <div class="lrci-para">
+                                    <p>{{ block.settings.para_text }}</p>
+                                </div>
+                            </div>
+                        {%- endfor -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const wraps = document.querySelectorAll(".vidimage-in");
+
+  wraps.forEach((wrap) => {
+    const video = wrap.querySelector("video");
+    const btn = wrap.querySelector("button.video-control");
+    if (!video || !btn) return;
+
+    const setState = (playing) => {
+      btn.classList.toggle("playing", playing);
+      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+    };
+
+    // Click to play/pause
+    btn.addEventListener("click", () => {
+      if (video.paused || video.ended) {
+        // Pause all other videos (optional)
+        document.querySelectorAll(".vidimage-in video").forEach((v) => {
+          if (v !== video && !v.paused) v.pause();
+        });
+        video.play().catch(() => {}); // avoid unhandled promise errors
+      } else {
+        video.pause();
+      }
+    });
+
+    // Keep button state in sync with native controls/autoplay/etc
+    video.addEventListener("play", () => setState(true));
+    video.addEventListener("pause", () => setState(false));
+    video.addEventListener("ended", () => setState(false));
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "left image with items",
+  "settings": [
+    {
+        "type": "image_picker",
+        "id": "video_img",
+        "label": "Upload Image"
+    },
+    {
+        "type": "video",
+        "id": "video_link",
+        "label": "Upload Video"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "block_item",
+      "type": "cards",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "head_text",
+          "label": "Block Top Content"
+        },
+        {
+          "type": "text",
+          "id": "para_text",
+          "label": "Block Bottom Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
