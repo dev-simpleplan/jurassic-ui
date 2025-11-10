@@ -39,10 +39,6 @@
             "payment_usp_text": "Secure Payment"
           }
         },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
         "variant_selector": {
           "type": "variant_selector",
           "settings": {}
@@ -62,23 +58,17 @@
         "description": {
           "type": "description",
           "settings": {}
-        },
-        "checkout_buttons": {
-          "type": "checkout_buttons",
-          "settings": {}
         }
       },
       "block_order": [
         "title",
         "product_info",
         "product_usp",
-        "store_usp",
-        "price",
         "variant_selector",
+        "store_usp",
         "delivery_info_WFVGrD",
         "quantity",
-        "description",
-        "checkout_buttons"
+        "description"
       ],
       "settings": {}
     },
@@ -235,11 +225,7 @@
           }
         }
       },
-      "block_order": [
-        "title_bLtX9r",
-        "title_CqVYTJ",
-        "title_zNyBLK"
-      ],
+      "block_order": ["title_bLtX9r", "title_CqVYTJ", "title_zNyBLK"],
       "name": "facts",
       "settings": {
         "heading": "want to learn some interesting facts about the fruit’s",

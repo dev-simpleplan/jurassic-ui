@@ -155,8 +155,6 @@
                     </div>
                   </div>
                 </div>
-              {% when 'price' %}
-
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
@@ -200,22 +198,36 @@
                                     {% endcase %}
                                   {% endfor %}
 
-                                  <li class="variant-value {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">
-                                    {{ value }}
-                                    {% if matched_variant.compare_at_price > matched_variant.price %}
-                                      {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
-                                      {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
-                                      <span class="variant-discount">{{ discount_percentage }}% OFF</span>
+                                  <li
+                                    class="variant-value {% if option.selected_value == value %}active{% endif %}"
+                                    data-value="{{ value | escape }}"
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                    data-best="bestseller"
+                                    {% endif %}>
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                      <div class="vv-bestseller">best seller</div>
                                     {% endif %}
-                                    {% if matched_variant.unit_price_measurement %}
-                                      <span class="variant-qty">
+                                    <div class="vv-value">
+                                      <div class="vvv-value">
+                                        {{ value }}
+                                      </div>
+                                      {% if matched_variant.compare_at_price > matched_variant.price %}
+                                        <div class="vvv-discount">
+                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
+                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
+                                          {{ discount_percentage }}% OFF
+                                        </div>
+                                      {% endif %}
+                                    </div>
+                                    <div class="vv-peices">
+                                      {% if matched_variant.unit_price_measurement %}
                                         {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
                                           {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
                                         {% else %}
                                           {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
                                         {% endif %}
-                                      </span>
-                                    {% endif %}
+                                      {% endif %}
+                                    </div>
                                   </li>
                                 {% endfor %}
                               </ul>
@@ -236,52 +248,41 @@
                         <span class="sell-price">
                           {{ selected_variant.price | money }}
                         </span>
-
-                        {% if selected_variant.price < selected_variant.compare_at_price %}
-                          <span>Sale</span>
-                        {% endif %}
+                        <span class="price-txt">
+                          Taxes, Excl. shipping
+                        </span>
+                      </div>
+                      <div class="submit">
+                        <button
+                          type="submit"
+                          name="add"
+                          class="custom-btn filled"
+                          id="add-to-cart"
+                          {% if selected_variant.available==false %}
+                          disabled
+                          {% endif %}>
+                          {% if selected_variant.available == false %}
+                            Sold Out
+                          {% else %}
+                            Add To Cart
+                          {% endif %}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="payment-options">
+                      <p>Guaranteed safe checkout with payment options</p>
+                      <div class="po-icon-wrap">
+                        {%- unless shop.enabled_payment_types == empty -%}
+                          {%- for type in shop.enabled_payment_types -%}
+                            {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                          {%- endfor -%}
+                        {%- endunless -%}
                       </div>
                     </div>
                   </div>
-
                 </div>
 
-
-              {% when 'quantity' %}
-                <div class="quantity">
-                  <label for="Quantity-{{ section.id }}">Quantity</label>
-
-                  <div class="quan-num">
-                    <input
-                      type="number"
-                      name="quantity"
-                      id="Quantity-{{ section.id }}"
-                      value="1"
-                      min="1">
-                  </div>
-                </div>
-              {% when 'description' %}
-                <div class="pro-desp">
-                  <p>{{ product.description }}</p>
-                </div>
-              {% when 'checkout_buttons' %}
-                <div class="submit">
-                  <button
-                    type="submit"
-                    name="add"
-                    id="add-to-cart"
-                    {% if selected_variant.available==false %}
-                    disabled
-                    {% endif %}>
-                    {% if selected_variant.available == false %}
-                      Sold Out
-                    {% else %}
-                      Add To Cart
-                    {% endif %}
-                  </button>
-                </div>
             {% else %}
-
               {% endcase %}
             {% endfor %}
           {% endform %}
@@ -291,6 +292,54 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
+  </div>
+
+  <div class="product-accordion">
+    <div class="container">
+      <div class="pa-wrapper">
+        {% comment %} How to Store {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_1 }}
+            </div>
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div class="pa-div">
+            <div class="pa-eat-store">
+              {% for item in product.metafields.custom.how_to_store_eat.value %}
+                <div class="paes-item">
+                  <div class="paes-icon">
+                    <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                  </div>
+                  <p>{{ item.body }}</p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
@@ -508,10 +557,6 @@
             }
           ]
         }, {
-          "type": "price",
-          "name": "Price",
-          "limit": 1
-        }, {
           "type": "variant_selector",
           "name": "Variant Selector",
           "limit": 1
@@ -543,10 +588,24 @@
           "type": "description",
           "name": "Description",
           "limit": 1
+        }
+      ],
+      "settings": [
+        {
+          "type": "text",
+          "id": "acc_1",
+          "label": "Accordion 1 Label",
+          "default": "How to eat & Store"
         }, {
-          "type": "checkout_buttons",
-          "name": "Checkout Buttons",
-          "limit": 1
+          "type": "text",
+          "id": "acc_2",
+          "label": "Accordion 2 Label",
+          "default": "Seasonal Calendar - fruit origin"
+        }, {
+          "type": "text",
+          "id": "acc_3",
+          "label": "Accordion 3 Label",
+          "default": "taste profile"
         }
       ]
     }
