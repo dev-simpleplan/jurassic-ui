@@ -1,0 +1,57 @@
+<div class="frequently-bought">
+  <div class="container">
+    <div class="freqIn">
+      <div class="heading">
+        <h2
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          class="aos-init aos-animate">{{ section.settings.head }} {{ product.title }}
+        </h2>
+      </div>
+      <div class="freq-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const productId = {{ product.id }};
+
+    fetch(`/recommendations/products.json?product_id=${productId}&limit=16`)
+        .then(res => res.json())
+        .then(data => {
+        const filteredProducts = data.products.filter(p => p.id !== productId).slice(0, 3);
+        const container = document.querySelector('.freq-wrap');
+        container.innerHTML = '';
+
+        filteredProducts.forEach(product => {
+            // Fetch rendered snippet from Shopify
+            fetch(`/products/${product.handle}?section_id=product-card-primary`)
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const card = doc.querySelector('.product-card-primary');
+                if (card) container.appendChild(card);
+            });
+        });
+        });
+    });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Frequently Bought",
+    "tag": "section",
+    "class": "frequentlyBought",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "head",
+        "label": "Heading before product title",
+        "default": "Frequently Bought<br>Together with"
+      }
+    ]
+  }
+{% endschema %}

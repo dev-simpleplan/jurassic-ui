@@ -79,6 +79,19 @@
         "spacer_height": 140
       }
     },
+    "frequently": {
+      "type": "frequently-bought",
+      "settings": {
+        "head": "Frequently Bought<br>Together with"
+      }
+    },
+    "spacer_Nh7Bj": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "jurassic-nature": {
       "type": "jurassic-by-nature",
       "settings": {
@@ -226,11 +239,7 @@
           }
         }
       },
-      "block_order": [
-        "title_bLtX9r",
-        "title_CqVYTJ",
-        "title_zNyBLK"
-      ],
+      "block_order": ["title_bLtX9r", "title_CqVYTJ", "title_zNyBLK"],
       "name": "facts",
       "settings": {
         "heading": "want to learn some interesting facts about the fruit’s",
@@ -269,11 +278,7 @@
           }
         }
       },
-      "block_order": [
-        "cards_P3Btyy",
-        "cards_47PU9w",
-        "cards_kb9bFP"
-      ],
+      "block_order": ["cards_P3Btyy", "cards_47PU9w", "cards_kb9bFP"],
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
@@ -370,6 +375,8 @@
   "order": [
     "template",
     "spacer0",
+    "frequently",
+    "spacer_Nh7Bj",
     "jurassic-nature",
     "spacer_Nh7Bjn",
     "usp-ticker",

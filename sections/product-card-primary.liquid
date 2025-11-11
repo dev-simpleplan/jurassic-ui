@@ -1,0 +1,211 @@
+<div class="product-card-primary">
+  <div class="fruits_card">
+    <a href="{{ product.url }}">
+      <div class="fc_top">
+        {% assign images = product.images %}
+
+        <div class="fc_image">
+          {% if images.size > 0 %}
+            <img
+              src="{{ images.first | img_url: 'master' }}"
+              alt="{{ product.title | escape }}"
+              class="img_sizing primary-img">
+
+            {% if images.size > 1 %}
+              <img
+                src="{{ images[1] | img_url: 'master' }}"
+                alt="{{ product.title | escape }}"
+                class="img_sizing hover-img">
+            {% endif %}
+          {% else %}
+            <img
+              src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' }}"
+              alt="No Image Available"
+              class="img_sizing primary-img">
+          {% endif %}
+        </div>
+
+
+        {% assign product_tags = product.tags | downcase %}
+        {% if product.tags.size > 0 %}
+          <div class="fc_category_tags">
+            {% for tag in product.tags %}
+              {% unless tag == 'Best Seller' %}
+                <span>{{ tag }}</span>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if product.tags contains 'Best Seller' %}
+          <div class="fc_bestsell_tags">
+            <span>Bestseller</span>
+          </div>
+        {% endif %}
+
+        {% if product.metafields.custom.certificate %}
+          {% assign certificate = product.metafields.custom.certificate.value %}
+          {% for item in product.metafields.custom.certificate.value %}
+            <div class="fc_organic_auth">
+              <img
+                src="{{ item.badge_image | img_url:'master' }}"
+                alt="{{ item.display_name }}"
+                class="img_sizing">
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </a>
+
+    <div class="fc_bottom_outer">
+      <div class="fc_bottom">
+
+        <div class="fc_bottom_top">
+          <div class="star_review">
+            <div class="star_rating">
+              <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
+            </div>
+            <div class="rating_info">
+              <p>4.9 (200)</p>
+              {% if product.metafields.custom.country_of_origin %}
+                <span class="dot_seperator"></span>
+                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+              {% endif %}
+            </div>
+          </div>
+          <p class="fc_product_title">
+            <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
+          </p>
+        </div>
+
+        <div class="fc_bottom_bottom">
+          <div class="fc_bottom_center">
+            <div class="fc_variant_outer">
+              <div class="fc_variant_wrap">
+                {% for variant in product.variants %}
+                  <div
+                    class="fc_variant_item {% if forloop.first %}active{% endif %}"
+                    data-id="{{ variant.id }}"
+                    data-price="{{ variant.price | money }}"
+                    data-compare="{{ variant.compare_at_price | money }}"
+                    data-inventory="{{ variant.inventory_quantity }}"
+                    data-image="{{ variant.image | img_url: 'master' }}">
+                    <p class="weight">
+                      {{ variant.title }}
+                      {% if variant.compare_at_price > variant.price %}
+                        <span>
+                          {{
+                            variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
+                          -}}
+                          % Off
+                        </span>
+                      {% endif %}
+                    </p>
+                    <p class="quantity">
+                      {% if variant.metafields.custom.pieces %}
+                        {{ variant.metafields.custom.pieces }} Piece
+                      {% else %}
+                        by weight
+                      {% endif %}
+                    </p>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="selected_variant_dropdown"></div>
+            </div>
+          </div>
+
+          <div class="fc_bottom_end">
+            <div class="fc_price_weight">
+              {% assign current_variant = product.selected_or_first_available_variant %}
+              {% if current_variant.compare_at_price > current_variant.price %}
+                <p>
+                  <strike id="compare_price">{{ current_variant.compare_at_price | money }}</strike>
+                  <span class="selling_price">{{ current_variant.price | money }}</span>
+                </p>
+              {% else %}
+                <p>
+                  <span class="selling_price">{{ current_variant.price | money }}</span>
+                </p>
+              {% endif %}
+              {% assign current_variant = product.selected_or_first_available_variant %}
+              <p class="fc_weight">
+                {{ product.metafields.custom.per_kg_price | times: 100 | money_with_currency | remove: '.00' }}/Kg
+              </p>
+            </div>
+            <div class="fc_add_to_cart_outer">
+              <form
+                action="/cart/add"
+                method="post"
+                enctype="multipart/form-data">
+                <input
+                  type="hidden"
+                  name="id"
+                  value="{{ current_variant.id }}">
+                <input
+                  type="hidden"
+                  name="quantity"
+                  value="1">
+                <div class="fc_add_to_cart">
+                  <span class="remove_product">
+                    <svg
+                      width="23"
+                      height="22"
+                      viewBox="0 0 23 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M5.09961 11.3408H17.8457"
+                        stroke="#151515"
+                        stroke-width="1.82087"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <button
+                    type="submit"
+                    id="add-to-cart"
+                    {% unless product.available %}
+                    disabled
+                    {% endunless %}>
+                    {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                  </button>
+                  <span class="add_product">
+                    <svg
+                      width="23"
+                      height="22"
+                      viewBox="0 0 23 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M11.5645 4.96582V17.7119"
+                        stroke="#151515"
+                        stroke-width="1.82087"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+                      <path
+                        d="M5.19727 11.3408H17.9434"
+                        stroke="#151515"
+                        stroke-width="1.82087"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+              </form>
+            </div>
+            <div class="fc_trust_text">
+              <p>Only {{ current_variant.inventory_quantity }} Left</p>
+              <span class="dot_seperator"></span>
+              <p>Ships in 24 hrs</p>
+              <span class="dot_seperator"></span>
+              <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

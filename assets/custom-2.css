@@ -1112,4 +1112,16 @@ p.tp-head.juiciness {
 .product-accordion {
   margin-top: 55px;
 }
+.app-block {
+  margin-top: 10px;
+}
+.freq-wrap {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: grid;
+  gap: 16px;
+  margin-top: 44px;
+}
+.modal-header button {
+  display: block !important;
+}
 /* Product Page Ends */
