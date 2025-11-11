@@ -8,25 +8,28 @@
         </div>
         <div class="faq-wrap">
             <div class="faq-accordian-wrapper">
-                {% for item in section.blocks %}
+                {% for item in product.metafields.custom.faqs.value %}
                     <div class="faq-item">
                         <div class="faq-question">
                             <div class="faq-question-left">
                                 <div class="f-question">
-                                <h6>{{ item.settings.question }}</h6>
+                                  <h3>{{ item.faq_label }}</h3>
                                 </div>
                             </div>
                             <div class="faq-question-right">
-                                {% render 'plus-icon' %}
+                                {% render 'plus' %}
                             </div>
                         </div>
                         <div class="faq-answer">
-                        <div class="f-answer aukera-desc">
-                            {{ item.settings.answer }}
-                        </div>
+                            <div class="f-answer">
+                                {{ item.faq_data | metafield_tag }}
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+            <div class="faq-image">
+                <img width="100%" height="100%" src="{{ section.settings.faq_image | img_url:'master' }}" alt="{{ section.settings.faq_image.alt }}">
             </div>
         </div>
     </div>
@@ -36,21 +39,27 @@
     // faq accordion
 
   $(document).ready(function () {
+    // open first FAQ by default
+    var $firstItem = $('.faq-item').first();
+    $firstItem.addClass('active');
+    $firstItem.find('.faq-answer').show(); // use show() to avoid animation on load
+
     $('.faq-question').click(function () {
         var $faqItem = $(this).parent('.faq-item');
         var $faqAnswer = $faqItem.find('.faq-answer');
 
         if ($faqItem.hasClass('active')) {
-        $faqItem.removeClass('active');
-        $faqAnswer.slideUp();
+            $faqItem.removeClass('active');
+            $faqAnswer.slideUp();
         } else {
-        $('.faq-item').removeClass('active');
-        $('.faq-answer').slideUp();
-        $faqItem.addClass('active');
-        $faqAnswer.slideDown();
+            $('.faq-item').removeClass('active');
+            $('.faq-answer').slideUp();
+            $faqItem.addClass('active');
+            $faqAnswer.slideDown();
         }
-    });               
-  });
+    });
+});
+
 
 </script>
 
@@ -74,26 +83,11 @@
         "id": "cta_text",
         "label": "CTA text",
         "default": "All FAQs"
-      }
-    ],
-    "blocks": [
+      },
       {
-        "type": "faq_item",
-        "name": "FAQ Item",
-        "settings": [
-          {
-            "type": "text",
-            "id": "question",
-            "label": "Question",
-            "default": "Frequently asked question"
-          }, 
-          {
-            "type": "richtext",
-            "id": "answer",
-            "label": "Answer",
-            "default": "<p>Answer to the frequently asked question goes here.</p>"
-          }
-        ]
+        "type": "image_picker",
+        "id": "faq_image",
+        "label": "FAQ Section Image"
       }
     ],
     "presets": [
