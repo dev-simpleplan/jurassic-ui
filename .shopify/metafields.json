@@ -390,6 +390,16 @@
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "how_to_store_eat",
+      "namespace": "custom",
+      "name": "How to Store & Eat",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "variant": [
@@ -508,6 +518,16 @@
       "namespace": "custom",
       "name": "Is Prior",
       "description": "Allows you to specify which option will be preselected.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "bestseller",
+      "namespace": "custom",
+      "name": "Bestseller",
+      "description": "",
       "type": {
         "name": "boolean",
         "category": "TRUE_FALSE"

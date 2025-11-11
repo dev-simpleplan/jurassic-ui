@@ -26,20 +26,22 @@
         <div class="jni-slider splide">
             <div class="splide__track">
                 <div class="splide__list">
-                    <div class="splide__slide">
-                        <div class="jbn-item">
-                            <div class="jbnitem-textbox">
-                                <div class="jbtb-top">70 million years ago</div>
-                                <div class="jbtb-bottom">
-                                    <p>Ancestors of the coconut tree appeared in the late Cretaceous when dinosaurs still roamed.</p>
+                    {% for item in product.metafields.custom.timeline_information.value %}
+                        <div class="splide__slide">
+                            <div class="jbn-item">
+                                <div class="jbnitem-textbox">
+                                    <div class="jbtb-top">{{ item.timeline_year }}</div>
+                                    <div class="jbtb-bottom">
+                                        <p>{{ item.timeline_body }}</p>
+                                    </div>
+                                </div>
+                                <div class="jbniitem-image">
+                                    {% comment %} <img src="{{ section.settings.item_image | img_url:'master' }}" alt="{{ section.settings.item_image.alt }}"> {% endcomment %}
                                 </div>
                             </div>
-                            <div class="jbniitem-image">
-                                <img src="{{ section.settings.item_image | img_url:'master' }}" alt="{{ section.settings.item_image.alt }}">
-                            </div>
                         </div>
-                    </div>
-                    <div class="splide__slide">
+                    {% endfor %}
+                    {% comment %} <div class="splide__slide">
                         <div class="jbn-item">
                             <div class="jbnitem-textbox">
                                 <div class="jbtb-top">70 million years ago</div>
@@ -90,7 +92,7 @@
                                 <img src="{{ section.settings.item_image4 | img_url:'master' }}" alt="{{ section.settings.item_image4.alt }}">
                             </div>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </div>
