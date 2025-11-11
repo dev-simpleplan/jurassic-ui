@@ -50,14 +50,6 @@
             "popup_button": "click here to get delivery information (cost, delay)",
             "page": "delivery-popup"
           }
-        },
-        "quantity": {
-          "type": "quantity",
-          "settings": {}
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
         }
       },
       "block_order": [
@@ -66,9 +58,7 @@
         "product_usp",
         "variant_selector",
         "store_usp",
-        "delivery_info_WFVGrD",
-        "quantity",
-        "description"
+        "delivery_info_WFVGrD"
       ],
       "settings": {}
     },
@@ -264,11 +254,7 @@
           }
         }
       },
-      "block_order": [
-        "cards_P3Btyy",
-        "cards_47PU9w",
-        "cards_kb9bFP"
-      ],
+      "block_order": ["cards_P3Btyy", "cards_47PU9w", "cards_kb9bFP"],
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
@@ -355,9 +341,7 @@
     "faq": {
       "type": "faq",
       "name": "faq",
-      "settings": {
-        
-      }
+      "settings": {}
     }
   },
   "order": [
