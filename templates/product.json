@@ -27,6 +27,10 @@
           "type": "product_usp",
           "settings": {}
         },
+        "variant_selector": {
+          "type": "variant_selector",
+          "settings": {}
+        },
         "store_usp": {
           "type": "store_usp",
           "settings": {
@@ -39,16 +43,18 @@
             "payment_usp_text": "Secure Payment"
           }
         },
-        "variant_selector": {
-          "type": "variant_selector",
-          "settings": {}
-        },
         "delivery_info_WFVGrD": {
           "type": "delivery-info",
           "settings": {
             "delivery_message": "Max. freshness, min. waste — we harvest after you order.",
             "popup_button": "click here to get delivery information (cost, delay)",
             "page": "delivery-popup"
+          }
+        },
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
+          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "settings": {
+            "page": ""
           }
         }
       },
@@ -58,9 +64,14 @@
         "product_usp",
         "variant_selector",
         "store_usp",
-        "delivery_info_WFVGrD"
+        "delivery_info_WFVGrD",
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ"
       ],
-      "settings": {}
+      "settings": {
+        "acc_1": "How to eat & Store",
+        "acc_2": "Seasonal Calendar - fruit origin",
+        "acc_3": "taste profile"
+      }
     },
     "spacer0": {
       "type": "Spacer",
@@ -215,7 +226,11 @@
           }
         }
       },
-      "block_order": ["title_bLtX9r", "title_CqVYTJ", "title_zNyBLK"],
+      "block_order": [
+        "title_bLtX9r",
+        "title_CqVYTJ",
+        "title_zNyBLK"
+      ],
       "name": "facts",
       "settings": {
         "heading": "want to learn some interesting facts about the fruit’s",
@@ -254,7 +269,11 @@
           }
         }
       },
-      "block_order": ["cards_P3Btyy", "cards_47PU9w", "cards_kb9bFP"],
+      "block_order": [
+        "cards_P3Btyy",
+        "cards_47PU9w",
+        "cards_kb9bFP"
+      ],
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
@@ -341,7 +360,11 @@
     "faq": {
       "type": "faq",
       "name": "faq",
-      "settings": {}
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "cta_url": "",
+        "cta_text": "All FAQs"
+      }
     }
   },
   "order": [
