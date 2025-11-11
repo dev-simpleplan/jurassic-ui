@@ -941,5 +941,67 @@ li.variant-value.active .vvv-value {
 .pa-div {
   padding-top: 24px;
 }
-
+.pas-month {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+.pas-month .month-in {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.pas-month .month-in p {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 110%;
+  color: #151515;
+  text-align: center;
+  text-transform: capitalize;
+}
+.pas-month .month-in .month-pill {
+  width: 36px;
+  height: 10px;
+  border: 1px solid #99bd0f;
+  border-radius: 48px;
+  background-color: transparent;
+}
+.pas-month .month-in.high-season .month-pill {
+  background-color: #99bd0f;
+}
+/* .pas-month .month-in.low-season .month-pill {
+  background-color: #ffc761;
+  border: 1px solid #ffc761;
+} */
+.pas-country {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pas-country p {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  letter-spacing: 0.01em;
+  color: #000;
+}
+.pas-country .pas-shipping {
+  font-size: 14px;
+  line-height: 100%;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: lowercase;
+}
+.pas-country svg {
+  width: 20px;
+  height: 20px;
+}
+.pa-seasons {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+}
 /* Product Page Ends */

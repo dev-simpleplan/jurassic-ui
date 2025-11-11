@@ -375,12 +375,94 @@
                 {%- for month in month_names -%}
                   {%- assign trimmed_month = month | strip -%}
                   <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
-                    <p>{{ trimmed_month }}</p>
+                    <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
                     <div class="month-pill"></div>
                   </div>
                 {%- endfor -%}
               </div>
-              <div class="pas-country"></div>
+              <div class="pas-country">
+                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+                <div class="pas-shipping">
+                  {% if product.metafields.custom.shipped_by == 'air' %}
+                    {% render 'air' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% elsif product.metafields.custom.shipped_by == 'sea' %}
+                    {% render 'sea' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% elsif product.metafields.custom.shipped_by == 'road' %}
+                    {% render 'road' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% comment %} Taste Profile {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_3 }}
+            </div>
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div class="pa-div">
+            <div class="pad-taste-profile">
+              {% comment %} Texture {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head">
+                  Texture
+                </p>
+                <div class="tp-wrap">
+                  {% for i in (0..4) %}
+                    <div class="{{ product.metafields.custom.taste_profile.value.texture }}"></div>
+                    {% comment %} {{ forloop.index }}
+                                                                {% assign increment_val = i | plus: 1 %}
+                                                            {{ increment_val }} {% endcomment %}
+                  {% endfor %}
+                </div>
+              </div>
+              {% comment %} Sweetness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head">
+                  Sweetness
+                </p>
+                <div class="tp-wrap"></div>
+              </div>
+              {% comment %} Sourness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head">
+                  Sourness
+                </p>
+                <div class="tp-wrap"></div>
+              </div>
+              {% comment %} Juiciness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head">
+                  Juiciness
+                </p>
+                <div class="tp-wrap"></div>
+              </div>
             </div>
           </div>
         </div>
