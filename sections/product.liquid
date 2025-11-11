@@ -504,7 +504,7 @@
   </div>
 </div>
 
-{% comment %} {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
+{% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
                 <div class="product_delivery_modal_container modal fade">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -542,7 +542,6 @@
                     </div>
                   </div>
               </div> 
-      {% endcomment %}
 
 <script defer>
       class VariantSelector extends HTMLElement {
