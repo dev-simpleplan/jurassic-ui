@@ -202,16 +202,6 @@
       }
     },
     {
-      "key": "shipped_by",
-      "namespace": "custom",
-      "name": "Shipped by",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "quality_label",
       "namespace": "custom",
       "name": "Quality label",
@@ -405,6 +395,36 @@
       "key": "timeline",
       "namespace": "custom",
       "name": "Timeline",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "shipped_by",
+      "namespace": "custom",
+      "name": "Shipped By",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "taste_profile",
+      "namespace": "custom",
+      "name": "Taste Profile",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "faqs",
+      "namespace": "custom",
+      "name": "Faqs",
       "description": "",
       "type": {
         "name": "list.metaobject_reference",
