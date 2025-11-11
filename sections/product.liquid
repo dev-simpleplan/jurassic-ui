@@ -430,38 +430,71 @@
             <div class="pad-taste-profile">
               {% comment %} Texture {% endcomment %}
               <div class="profile-in">
-                <p class="tp-head">
+                <p class="tp-head texture">
                   Texture
                 </p>
                 <div class="tp-wrap">
-                  {% for i in (0..4) %}
-                    <div class="{{ product.metafields.custom.taste_profile.value.texture }}"></div>
-                    {% comment %} {{ forloop.index }}
-                                                                {% assign increment_val = i | plus: 1 %}
-                                                            {{ increment_val }} {% endcomment %}
-                  {% endfor %}
+                  {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
+                  <p class="tp-profile">
+                    Silky
+                  </p>
+                  <div class="tp-pill-in texture">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= texture_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">
+                    Crunchy
+                  </p>
                 </div>
               </div>
               {% comment %} Sweetness {% endcomment %}
               <div class="profile-in">
-                <p class="tp-head">
+                <p class="tp-head sweetness">
                   Sweetness
                 </p>
-                <div class="tp-wrap"></div>
+                <div class="tp-wrap">
+                  {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
+                  <p class="tp-profile">Delicate</p>
+                  <div class="tp-pill-in sweetness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Syrupy</p>
+                </div>
               </div>
               {% comment %} Sourness {% endcomment %}
               <div class="profile-in">
-                <p class="tp-head">
+                <p class="tp-head sourness">
                   Sourness
                 </p>
-                <div class="tp-wrap"></div>
+                <div class="tp-wrap">
+                  {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
+                  <p class="tp-profile">Smooth</p>
+                  <div class="tp-pill-in sourness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Zesty</p>
+                </div>
               </div>
               {% comment %} Juiciness {% endcomment %}
               <div class="profile-in">
-                <p class="tp-head">
+                <p class="tp-head juiciness">
                   Juiciness
                 </p>
-                <div class="tp-wrap"></div>
+                <div class="tp-wrap">
+                  {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
+                  <p class="tp-profile">Firm</p>
+                  <div class="tp-pill-in juiciness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= juiciness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Bursty</p>
+                </div>
               </div>
             </div>
           </div>
@@ -613,6 +646,31 @@
       arrows: false,
     });
       });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $(document).on('click', '.pa-ques-wrap', function() {
+        const $clickedItem = $(this).closest('.pa-item');     // Find parent pa-item
+        const $clickedAnswer = $clickedItem.find('.pa-div');  // Find its sibling pa-div
+
+        // If already active, collapse it
+        if ($clickedItem.hasClass('active')) {
+          $clickedItem.removeClass('active');
+          $clickedAnswer.slideUp(300);
+          return;
+        }
+
+        // Otherwise, deactivate all others first
+        $('.pa-item').removeClass('active');
+        $('.pa-div').slideUp(300);
+
+        // Then activate the clicked one
+        $clickedItem.addClass('active');
+        $clickedAnswer.slideDown(300);
+      });
+    });
+
   </script>
 
   {% schema %}

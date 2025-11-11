@@ -914,10 +914,10 @@ li.variant-value.active .vvv-value {
   gap: 14px;
   max-width: 21ch;
 }
-.paes-item:first-child {
+.pa-item:first-child {
   padding-top: 0;
 }
-.paes-item:last-child {
+.pa-item:last-child {
   padding-bottom: 0;
   border-bottom: 0;
 }
@@ -940,6 +940,7 @@ li.variant-value.active .vvv-value {
 }
 .pa-div {
   padding-top: 24px;
+  display: none;
 }
 .pas-month {
   display: flex;
@@ -995,7 +996,7 @@ li.variant-value.active .vvv-value {
   gap: 4px;
   text-transform: lowercase;
 }
-.pas-country svg {
+.pas-country .pas-shipping svg {
   width: 20px;
   height: 20px;
 }
@@ -1003,5 +1004,111 @@ li.variant-value.active .vvv-value {
   display: flex;
   align-items: center;
   gap: 100px;
+}
+p.tp-head {
+  padding: 5px 10px;
+  padding-right: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--scale);
+  line-height: 100%;
+  text-transform: uppercase;
+  color: #fff;
+  display: inline-flex;
+  border-bottom-right-radius: 48px;
+  min-width: 115px;
+  letter-spacing: 0.03em;
+}
+p.tp-head.texture {
+  background-color: #a65424;
+}
+p.tp-head.sweetness {
+  background-color: #ff8fbf;
+}
+p.tp-head.sourness {
+  background-color: #ff8730;
+}
+p.tp-head.juiciness {
+  background-color: #31b99b;
+}
+.tp-profile {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 110%;
+  letter-spacing: 0.01em;
+  color: #000000;
+}
+.tp-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  padding-left: 18px;
+}
+.tp-pill-in {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 6px;
+}
+.taste-pill {
+  width: 65px;
+  height: 8px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.texture .taste-pill {
+  border-color: #a65424;
+}
+.sweetness .taste-pill {
+  border-color: #ff8fbf;
+}
+.sourness .taste-pill {
+  border-color: #ff8730;
+}
+.juiciness .taste-pill {
+  border-color: #31b99b;
+}
+.texture .taste-pill.active {
+  background-color: #a65424;
+}
+.sweetness .taste-pill.active {
+  background-color: #ff8fbf;
+}
+.sourness .taste-pill.active {
+  background-color: #ff8730;
+}
+.juiciness .taste-pill.active {
+  background-color: #31b99b;
+}
+.pad-taste-profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  padding-bottom: 20px;
+}
+.profile-in {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+.pa-item svg {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+.pa-item .pa-icon svg path {
+  transition: 0.4s all ease;
+}
+.pa-item .pa-icon {
+  width: 24px;
+  height: 24px;
+}
+.pa-item.active .pa-icon svg path.plus-horizontal {
+  opacity: 0;
+}
+.product-accordion {
+  margin-top: 55px;
 }
 /* Product Page Ends */
