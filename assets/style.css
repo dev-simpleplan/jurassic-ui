@@ -226,6 +226,9 @@ a:hover {
 .heading-link a:hover {
 
 }
+.show-mobile {
+    display: none;
+}
 /* Header CSS */
 header {
     background-color: var(--body-bg);
