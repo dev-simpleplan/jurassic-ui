@@ -904,10 +904,22 @@ li.variant-value.active .vvv-value {
   width: 20px;
   flex-shrink: 0;
 }
+.pa-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
 .paes-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
+  max-width: 21ch;
+}
+.paes-item:first-child {
+  padding-top: 0;
+}
+.paes-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 .pa-eat-store {
   display: flex;
@@ -920,4 +932,14 @@ li.variant-value.active .vvv-value {
   letter-spacing: 0px;
   color: #1a1a1a;
 }
+.pa-wrapper {
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  padding: 16px 24px;
+  border-radius: 20px;
+}
+.pa-div {
+  padding-top: 24px;
+}
+
 /* Product Page Ends */

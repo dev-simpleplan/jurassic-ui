@@ -338,6 +338,52 @@
             </div>
           </div>
         </div>
+        {% comment %} Seasonal Information {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_2 }}
+            </div>
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div class="pa-div">
+            <div class="pa-seasons">
+              <div class="pas-month">
+                {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
+                {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
+                {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
+                {%- for month in month_names -%}
+                  {%- assign trimmed_month = month | strip -%}
+                  <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
+                    <p>{{ trimmed_month }}</p>
+                    <div class="month-pill"></div>
+                  </div>
+                {%- endfor -%}
+              </div>
+              <div class="pas-country"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
