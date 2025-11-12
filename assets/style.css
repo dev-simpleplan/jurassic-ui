@@ -2739,6 +2739,9 @@ section.imagescroll {
     height: 100vh;
     overflow: hidden;
 }
+.facts .for-mobile {
+    display: none;
+}
 .facts .facts-bg {
     position: relative;
     width: 100%;
@@ -2757,6 +2760,7 @@ section.imagescroll {
     margin-left: auto;
     margin-right: auto;
     z-index: 1;
+    padding: 0 20px;
 }
 .facts-data .factsdata-item {
     position: absolute;

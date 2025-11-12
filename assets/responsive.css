@@ -603,6 +603,46 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .pro-grid {
     flex-direction: column;
   }
+  .facts .for-desktop {
+    display: none;
+  }
+  .facts .for-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+  }
+  .facts-data {
+    padding-bottom: 70px;
+  }
+  .facts-data .factsdata-item {
+    position: static;
+  }
+  .facts .facts-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .facts-item-in {
+    position: relative;
+  }
+  .factsdata-item .facts-hover-data {
+    opacity: 1!important;
+    width: 70%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: relative;
+  }
+  .factsdata-item .facts-hover {
+    display: none;
+  }
+  .facts-hover-data::before,
+  .facts-hover-data::after {
+    content: none;
+  }
 }
 
 @media (max-width: 767px) {
@@ -856,7 +896,8 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .jni-slider {
     padding-bottom: 50px;
   }
-  .jni-slider .splide__arrows {
+  .jni-slider .splide__arrows,
+  .facts-data .splide__arrows {
     position: absolute;
     bottom: 0;
     z-index: 9;
@@ -867,7 +908,8 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     justify-content: center;
     gap: 40px;
   }
-  .jni-slider .splide__arrow {
+  .jni-slider .splide__arrow,
+  .facts-data .splide__arrow {
     position: relative;
     transform: none;
     width: 38px;
@@ -879,10 +921,12 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     background-position: center;
     opacity: 1;
   }
-  .jni-slider .splide__arrow.splide__arrow--next {
+  .jni-slider .splide__arrow.splide__arrow--next,
+  .facts-data .splide__arrow.splide__arrow--next {
     transform: rotate(180deg);
   }
-  .jni-slider .splide__arrow svg {
+  .jni-slider .splide__arrow svg,
+  .facts-data .splide__arrow svg {
     display: none;
   }
   .scrollimg-wrap .gallery__grid {
