@@ -151,6 +151,12 @@
     gap: 8px;
     padding: 0 15px;
     padding-bottom: 10px;
+    will-change: transform;
+    user-select: none;
+}
+.fc_variant_wrap.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
 }
 
 .fc_variant_wrap {
