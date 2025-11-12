@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const inventory = variant.dataset.inventory;
         const variantId = variant.dataset.id;
         const image = variant.dataset.image;
-        const perKgfinal = variant.dataset.unit_price;
+        const perKgfinal = variant.dataset.unit;
 
         console.log("perkgfinal", perKgfinal);
 
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (image && mainImg) mainImg.src = image;
 
-        if (perKgfinal && perKg) perKg.innerText = perKgfinal.innerText;
+        if (perKgfinal && perKg) perKg.textContent = perKgfinal;
       });
     });
   });
