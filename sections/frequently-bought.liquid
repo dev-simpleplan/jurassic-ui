@@ -14,29 +14,101 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const productId = {{ product.id }};
+  document.addEventListener("DOMContentLoaded", function () {
+  const productId = {{ product.id }};
+  const container = document.querySelector(".freq-wrap");
 
-    fetch(`/recommendations/products.json?product_id=${productId}&limit=16`)
-        .then(res => res.json())
-        .then(data => {
-        const filteredProducts = data.products.filter(p => p.id !== productId).slice(0, 3);
-        const container = document.querySelector('.freq-wrap');
-        container.innerHTML = '';
+  if (!container) return;
 
-        filteredProducts.forEach(product => {
-            // Fetch rendered snippet from Shopify
-            fetch(`/products/${product.handle}?section_id=product-card-primary`)
-            .then(res => res.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const card = doc.querySelector('.product-card-primary');
-                if (card) container.appendChild(card);
-            });
-        });
-        });
+  // 🔹 Fetch recommended products
+  fetch(`/recommendations/products.json?product_id=${productId}&limit=16`)
+    .then((res) => res.json())
+    .then((data) => {
+      const filteredProducts = data.products
+        .filter((p) => p.id !== productId)
+        .slice(0, 3);
+
+      container.innerHTML = "";
+
+      filteredProducts.forEach((product) => {
+        fetch(`/products/${product.handle}?section_id=product-card-primary`)
+          .then((res) => res.text())
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const card = doc.querySelector(".product-card-primary");
+
+            // ✅ Append the card to the container
+            if (card) {
+              container.appendChild(card);
+
+              // ✅ Initialize variant logic for this card
+              initVariantLogic(card);
+
+              // ✅ Initialize Add-to-Cart & Cart Logic
+              if (window.initializeCartFunction) {
+                 window.initializeCartFunction();
+              }
+            }
+          })
+          .catch((err) => console.error("Error loading product card:", err));
+      });
+    })
+    .catch((err) => console.error("Error fetching recommendations:", err));
+  });
+
+  /* -------------------------------
+   * VARIANT LOGIC (Reusable Function)
+   * ------------------------------- */
+  function initVariantLogic(card) {
+  const variantItems = card.querySelectorAll(".fc_variant_item");
+  const sellingPrice = card.querySelector(".selling_price");
+  const comparePrice = card.querySelector("strike");
+  const addToCartInput = card.querySelector('input[name="id"]');
+  const trustText = card.querySelector(".fc_trust_text p");
+  const mainImg = card.querySelector(".fc_image .main_img");
+  const perKg = card.querySelector(".fc_weight");
+
+  variantItems.forEach((variant) => {
+    variant.addEventListener("click", () => {
+      // Remove active class from all siblings
+      variantItems.forEach((v) => v.classList.remove("active"));
+      variant.classList.add("active");
+
+      // Read data attributes
+      const price = variant.dataset.price;
+      const compare = variant.dataset.compare;
+      const inventory = variant.dataset.inventory;
+      const variantId = variant.dataset.id;
+      const image = variant.dataset.image;
+      const perKgfinal = variant.dataset.unit;
+
+      // ✅ Update prices
+      if (sellingPrice) sellingPrice.textContent = price;
+      if (comparePrice) {
+        if (compare && compare !== price) {
+          comparePrice.textContent = compare;
+          comparePrice.style.display = "inline";
+        } else {
+          comparePrice.style.display = "none";
+        }
+      }
+
+      // ✅ Update form variant ID
+      if (addToCartInput) addToCartInput.value = variantId;
+
+      // ✅ Update trust text
+      if (trustText && inventory)
+        trustText.textContent = `Only ${inventory} Left`;
+
+      // ✅ Update product image
+      if (image && mainImg) mainImg.src = image;
+
+      // ✅ Update per kg/unit
+      if (perKgfinal && perKg) perKg.textContent = perKgfinal;
     });
+  });
+  }
 </script>
 
 
