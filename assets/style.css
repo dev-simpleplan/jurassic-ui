@@ -2773,8 +2773,8 @@ section.imagescroll {
     left: 80%;
 }
 .factsdata-item .facts-hover {
-    width: 180px;
-    height: 100px;
+    width: 300px;
+    height: 150px;
     background-color: transparent;
     position: relative;
     z-index: 2;
@@ -2791,7 +2791,7 @@ section.imagescroll {
     position: absolute;
     top: 0;
     width: 350px;
-    left: -100px;
+    left: -25px;
 }
 .facts-hover-data::before {
     content: '';
