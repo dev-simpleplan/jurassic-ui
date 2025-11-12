@@ -89,7 +89,8 @@
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
                     data-inventory="{{ variant.inventory_quantity }}"
-                    data-image="{{ variant.image | img_url: 'master' }}">
+                    data-image="{{ variant.image | img_url: 'master' }}"
+                    data-unit_price="{{ variant.unit_price | money }}">
                     <p class="weight">
                       {{ variant.title }}
                       {% if variant.compare_at_price > variant.price %}
@@ -128,9 +129,13 @@
                   <span class="selling_price">{{ current_variant.price | money }}</span>
                 </p>
               {% endif %}
-              {% assign current_variant = product.selected_or_first_available_variant %}
               <p class="fc_weight">
-                {{ product.metafields.custom.per_kg_price | times: 100 | money_with_currency | remove: '.00' }}/Kg
+                {{ variant.unit_price | money }}
+                {% if variant.unit_price_measurement %}
+                  {{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}
+                {% else %}
+                  {{ variant.price | money }} / unit
+                {% endif %}
               </p>
             </div>
             <div class="fc_add_to_cart_outer">
