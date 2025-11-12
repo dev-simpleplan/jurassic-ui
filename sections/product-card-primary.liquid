@@ -83,14 +83,16 @@
             <div class="fc_variant_outer">
               <div class="fc_variant_wrap">
                 {% for variant in product.variants %}
-<pre>{{ variant | json }}</pre>
+                  <script type="application/JSON">
+                    {{ variant | json }}
+                  </script>
                   <div
                     class="fc_variant_item {% if forloop.first %}active{% endif %}"
                     data-id="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
                     data-inventory="{{ variant.inventory_quantity }}"
-                    data-unit="{{ variant.unit_price | money }}"
+                    data-unit="{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}"
                     data-image="{{ variant.image | img_url: 'master' }}">
                     <p class="weight">
                       {{ variant.title }}
@@ -104,10 +106,10 @@
                       {% endif %}
                     </p>
                     <p class="quantity">
-                      {% if variant.metafields.custom.pieces %}
-                        {{ variant.metafields.custom.pieces }} Piece
+                      {% if variant.unit_price_measurement.quantity_value == 1 %}
+                        {{ variant.unit_price_measurement.quantity_value | round }} Peice
                       {% else %}
-                        by weight
+                        {{ variant.unit_price_measurement.quantity_value | round }} Peices
                       {% endif %}
                     </p>
                   </div>
@@ -130,12 +132,12 @@
                   <span class="selling_price">{{ current_variant.price | money }}</span>
                 </p>
               {% endif %}
+              {% assign current_variant = product.selected_or_first_available_variant %}
               <p class="fc_weight">
-                {{ variant.unit_price | money }}
-                {% if variant.unit_price_measurement %}
-                  {{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}
+                {% if current_variant.unit_price_measurement %}
+                  {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
                 {% else %}
-                  {{ variant.price | money }} / unit
+                  {{ current_variant.price | money }} / unit
                 {% endif %}
               </p>
             </div>
@@ -209,6 +211,7 @@
             </div>
           </div>
         </div>
+
 
       </div>
     </div>

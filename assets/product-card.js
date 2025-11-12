@@ -97,8 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainImg = card.querySelector(".fc_image .main_img");
     const perKg = card.querySelector(".fc_weight");
 
-    console.log("perkg", perKg);
-
     variantItems.forEach((variant) => {
       variant.addEventListener("click", () => {
         // Remove existing active class
@@ -112,8 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const variantId = variant.dataset.id;
         const image = variant.dataset.image;
         const perKgfinal = variant.dataset.unit;
-
-        console.log("perkgfinal", perKgfinal);
 
         // Update prices
         if (sellingPrice) sellingPrice.textContent = price;

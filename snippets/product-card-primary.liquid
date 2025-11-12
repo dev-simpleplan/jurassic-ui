@@ -83,6 +83,9 @@
             <div class="fc_variant_outer">
               <div class="fc_variant_wrap">
                 {% for variant in product.variants %}
+                  <script type="application/JSON">
+                    {{ variant | json }}
+                  </script>
                   <div
                     class="fc_variant_item {% if forloop.first %}active{% endif %}"
                     data-id="{{ variant.id }}"
@@ -103,10 +106,10 @@
                       {% endif %}
                     </p>
                     <p class="quantity">
-                      {% if variant.metafields.custom.pieces %}
-                        {{ variant.metafields.custom.pieces }} Piece
+                      {% if variant.unit_price_measurement.quantity_value == 1 %}
+                        {{ variant.unit_price_measurement.quantity_value | round }} Peice
                       {% else %}
-                        by weight
+                        {{ variant.unit_price_measurement.quantity_value | round }} Peices
                       {% endif %}
                     </p>
                   </div>
