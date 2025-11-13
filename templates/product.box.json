@@ -1,0 +1,401 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "template": {
+      "type": "product-box",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_testimonial": true,
+            "title_testimonial": ""
+          }
+        },
+        "product_info": {
+          "type": "product_info",
+          "settings": {}
+        },
+        "product_usp": {
+          "type": "product_usp",
+          "settings": {}
+        },
+        "variant_selector": {
+          "type": "variant_selector",
+          "settings": {}
+        },
+        "store_usp": {
+          "type": "store_usp",
+          "settings": {
+            "shipping_usp_icon": "shopify://shop_images/truck.svg",
+            "shipping_usp_page": "",
+            "shipping_usp_text": "Free shipping from 89 €*",
+            "freshness_icon": "shopify://shop_images/box.svg",
+            "freshness_text": "24h freshness guarantee",
+            "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
+            "payment_usp_text": "Secure Payment"
+          }
+        },
+        "delivery_info_WFVGrD": {
+          "type": "delivery-info",
+          "settings": {
+            "delivery_message": "Max. freshness, min. waste — we harvest after you order.",
+            "popup_button": "click here to get delivery information (cost, delay)",
+            "page": "delivery-popup"
+          }
+        },
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
+          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "settings": {
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "product_info",
+        "product_usp",
+        "variant_selector",
+        "store_usp",
+        "delivery_info_WFVGrD",
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ"
+      ],
+      "settings": {
+        "acc_1": "How to eat & Store",
+        "acc_2": "Seasonal Calendar - fruit origin",
+        "acc_3": "taste profile"
+      }
+    },
+    "spacer0": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "frequently": {
+      "type": "frequently-bought",
+      "settings": {
+        "head": "Frequently Bought<br>Together with"
+      }
+    },
+    "spacer_Nh7Bj": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "jurassic-nature": {
+      "type": "jurassic-by-nature",
+      "settings": {
+        "section_heading": "Jurassic by Nature",
+        "section_subheading": "A Fruit Born With the Dinosaurs... and Still Intact",
+        "bg_image": "shopify://shop_images/f15cc9c03563da8897c4710661a87979e449a3f6.jpg",
+        "icon-outer": "shopify://shop_images/jj-rotating-text.svg",
+        "icon-inner": "shopify://shop_images/jk-mark-white.svg",
+        "item_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image1": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image2": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png",
+        "item_image3": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
+        "item_image4": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+        "item_image5": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png"
+      }
+    },
+    "spacer_Nh7Bjn": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "usp-ticker": {
+      "type": "usp-ticker",
+      "blocks": {
+        "cards_LUJjzq": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_f78J3x": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_4tRDRB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_YemYXY": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_xerDPJ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_EkaPMQ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_7MHNaB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_gKwDPP": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_PcKgVt": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        }
+      },
+      "block_order": [
+        "cards_LUJjzq",
+        "cards_f78J3x",
+        "cards_4tRDRB",
+        "cards_YemYXY",
+        "cards_xerDPJ",
+        "cards_EkaPMQ",
+        "cards_7MHNaB",
+        "cards_gKwDPP",
+        "cards_PcKgVt"
+      ],
+      "settings": {}
+    },
+    "spacer_BmkhaA": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "facts": {
+      "type": "facts",
+      "blocks": {
+        "title_bLtX9r": {
+          "type": "title",
+          "settings": {
+            "show_item": false,
+            "top_position": 36,
+            "left_position": 22,
+            "facts_top_data": "<p>Two ancient lineages:</p>",
+            "facts_bottom_data": "<p><strong>Indo-Atlantic (India, Sri Lanka)</strong> and <strong>Pacific (Indonesia, Philippines).</strong></p>",
+            "facts_heading": "Origin"
+          }
+        },
+        "title_CqVYTJ": {
+          "type": "title",
+          "settings": {
+            "show_item": false,
+            "top_position": 24,
+            "left_position": 38,
+            "facts_top_data": "",
+            "facts_bottom_data": "<p>Coconuts are still propagated naturally, often germinating where they fall. <strong>This nut remains untamed.</strong></p>",
+            "facts_heading": "Domestication"
+          }
+        },
+        "title_zNyBLK": {
+          "type": "title",
+          "settings": {
+            "show_item": false,
+            "top_position": 12,
+            "left_position": 81,
+            "facts_top_data": "",
+            "facts_bottom_data": "<p>A coconut can survive over <strong>3 months at sea</strong> and still germinate. It's a natural life capsule, built for oceanic exploration.</p>",
+            "facts_heading": "survival fact"
+          }
+        }
+      },
+      "block_order": ["title_bLtX9r", "title_CqVYTJ", "title_zNyBLK"],
+      "name": "facts",
+      "settings": {
+        "heading": "want to learn some interesting facts about the fruit’s",
+        "subheading": "Find coconuts to reveal fun facts!!!"
+      }
+    },
+    "spacer_LKTbj6": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "three-icon-sec": {
+      "type": "three-icon-sec",
+      "blocks": {
+        "cards_P3Btyy": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Vector_-_2025-11-10T162939.731.svg",
+            "text": "See exactly what you’re paying for — down to the gram. Fair pricing by box size and weight."
+          }
+        },
+        "cards_47PU9w": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Vector_-_2025-11-10T162944.693.svg",
+            "text": "We source rare fruits from remote regions. Each price reflects distance, seasonality, and what it takes to get them to you."
+          }
+        },
+        "cards_kb9bFP": {
+          "type": "cards",
+          "settings": {
+            "icon": "shopify://shop_images/Group_427322701.svg",
+            "text": "Know your delivery cost upfront. Clear timelines and options that work for you"
+          }
+        }
+      },
+      "block_order": ["cards_P3Btyy", "cards_47PU9w", "cards_kb9bFP"],
+      "name": "three-icon-sec",
+      "settings": {
+        "bg-image": "shopify://shop_images/counter-bg.jpg",
+        "heading": "The Honest Price Tag",
+        "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
+      }
+    },
+    "spacer_1": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "left-image-with-items": {
+      "type": "left-image-with-items",
+      "blocks": {
+        "cards_FEmMR3": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Guardians of the Land",
+            "para_text": "Our farmers grow with care, tending to wild groves and heritage orchards using age-old, chemical-free methods."
+          }
+        },
+        "cards_wxQ7xD": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Ripe with Intention",
+            "para_text": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
+          }
+        },
+        "cards_eGXAwz": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Guardians of the Land",
+            "para_text": "Our farmers grow with care, tending to wild groves and heritage orchards using age-old, chemical-free methods."
+          }
+        },
+        "cards_Mi37EN": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Ripe with Intention",
+            "para_text": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
+          }
+        },
+        "cards_rXQKrp": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Faces Behind the Flavor",
+            "para_text": "These are smallholders with big hearts. Their work is dignified, their stories real, their impact lasting."
+          }
+        },
+        "cards_ixEMk3": {
+          "type": "cards",
+          "settings": {
+            "head_text": "Connected by Care",
+            "para_text": "From their hands to your home, our direct partnerships ensure purity, fairness, and a shared love for food done right."
+          }
+        }
+      },
+      "block_order": [
+        "cards_FEmMR3",
+        "cards_wxQ7xD",
+        "cards_eGXAwz",
+        "cards_Mi37EN",
+        "cards_rXQKrp",
+        "cards_ixEMk3"
+      ],
+      "name": "left-image-with-items",
+      "settings": {
+        "video_img": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
+        "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4",
+        "heading": "​​The Hands That Harvest Paradise",
+        "sub_heading": "From sun-drenched mornings to mindful harvests—meet the growers behind your cravings."
+      }
+    },
+    "spacer_2": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "name": "faq",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "cta_url": "",
+        "cta_text": "All FAQs",
+        "faq_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg"
+      }
+    },
+    "spacer_awrgBz": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    }
+  },
+  "order": [
+    "template",
+    "spacer0",
+    "frequently",
+    "spacer_Nh7Bj",
+    "jurassic-nature",
+    "spacer_Nh7Bjn",
+    "usp-ticker",
+    "spacer_BmkhaA",
+    "facts",
+    "spacer_LKTbj6",
+    "three-icon-sec",
+    "spacer_1",
+    "left-image-with-items",
+    "spacer_2",
+    "faq",
+    "spacer_awrgBz"
+  ]
+}

@@ -1,0 +1,795 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<script
+  type="text/javascript"
+  src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+  defer></script>
+
+{% assign selected_variant = product.selected_or_first_available_variant %}
+<div class="product-info">
+  <div class="container">
+    <div class="pro-grid">
+      <div class="pro-img">
+        <div class="prod-main-image">
+          {% for media in product.media %}
+            <div class="item">
+              <div class="prod-main">
+                {% render 'product-media' | media: media %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="prod-thumb-image">
+          {% for media in product.media %}
+            <div class="item">
+              <div class="prod-thumb">
+                {% render 'product-media' | media: media %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="pro-desp">
+        {% form 'product'
+          , product
+          , id: 'product-form'
+          , novalidate: 'novalidate' %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ selected_variant.id }}">
+
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'title' %}
+                <div class="title">
+                  <div class="title-review">
+                    {% if block.settings.show_testimonial == true %}
+                      <div class="tr-testimonial">
+                        {% render 'testimonial-icon' %}
+                        {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                      </div>
+                    {% endif %}
+                    {% assign certificate = product.metafields.custom.certificate %}
+                    <div class="tr-review-certi">
+                      <div class="ts-certificate">
+                        {% if certificate != '' %}
+                          {% for item in certificate.value %}
+                            <div class="tsc-img">
+                              <img
+                                src="{{ item.badge_image |  img_url: 'master' }}"
+                                alt="{{ item.display_name }}"
+                                class="img">
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  <h1>{{ product.title }}</h1>
+                </div>
+              {% when 'product_info' %}
+                <div class="product-info-block">
+                  {% comment %} For Origin {% endcomment %}
+                  <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      <p>
+                        <strong>Origin:</strong>
+                        {{ product.metafields.custom.country_of_origin.value.country_name }}
+                      </p>
+                    </div>
+                  </div>
+                  {% comment %} Seasonality {% endcomment %}
+                  <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      <p>
+                        <strong>Seasonality:</strong>
+                        {{ product.metafields.custom.country_season.value.season.value.seasonality }}
+                      </p>
+                    </div>
+                  </div>
+
+                  {% comment %} Additional Information {% endcomment %}
+                  {% for item in product.metafields.custom.additional_information.value %}
+                    <div class="pi-item">
+                      {% render 'green-tick' %}
+                      <div class="pii-info">
+                        <p>
+                          <strong>{{ item.inforamation_title }}</strong>
+                          {{ item.information_paragraph }}
+                        </p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% when 'product_usp' %}
+                <div class="product-usp">
+                  {% for item in product.metafields.custom.product_usp.value %}
+                    <div class="pu-item">
+                      <div class="pui-icon">
+                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
+                      </div>
+                      <div class="pui-txt">
+                        <p>{{ item.usp_text }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% when 'store_usp' %}
+                <div class="store-usp">
+                  {% comment %} For Shipping USP {% endcomment %}
+                  <div class="su-item">
+                    <div class="sui-icon">
+                      <img src="{{ block.settings.shipping_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.shipping_usp_text }}">
+                    </div>
+                    <div class="sui-txt">
+                      <a href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
+                    </div>
+                  </div>
+
+                  {% comment %} For Freshness USP {% endcomment %}
+                  {% if product.metafields.custom.fresh_product != true %}
+
+                  {% else %}
+                    <div class="su-item">
+                      <div class="sui-icon">
+                        <img src="{{ block.settings.freshness_icon |  img_url: 'master' }}" alt="{{ block.settings.freshness_text }}">
+                      </div>
+                      <div class="sui-txt">
+                        <p id="delivered-fresh">{{ block.settings.freshness_text }}</p>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% comment %} For Payment USP {% endcomment %}
+                  <div class="su-item">
+                    <div class="sui-icon">
+                      <img src="{{ block.settings.payment_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.payment_usp_text }}">
+                    </div>
+                    <div class="sui-txt">
+                      <p id="delivered-fresh">{{ block.settings.payment_usp_text }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% when 'variant_selector' %}
+                <div class="variant">
+                  <div class="variant-wrapper">
+                    <div class="select_variant">
+                      {% unless product.has_only_default_variant %}
+                        <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                          <div class="sv-perKg">
+                            <p>Select variant</p>
+                            <div class="perKg">
+                              {% if selected_variant.unit_price_measurement %}
+                                {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                              {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                              {% else %}
+                                {{ selected_variant.price | money }} / unit
+                              {% endif %}
+                            </div>
+                          </div>
+                          {% for option in product.options_with_values %}
+                            <div class="variant-option" data-option="{{ option.name }}">
+                              <ul class="variant-values" data-index="{{ forloop.index0 }}">
+                                {% for value in option.values %}
+                                  {% assign matched_variant = nil %}
+
+                                  {% for variant in product.variants %}
+                                    {% case option.position %}
+                                      {% when 1 %}
+                                        {% if variant.option1 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 2 %}
+                                        {% if variant.option2 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 3 %}
+                                        {% if variant.option3 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                    {% endcase %}
+                                  {% endfor %}
+
+                                  <li
+                                    class="variant-value {% if option.selected_value == value %}active{% endif %}"
+                                    data-value="{{ value | escape }}"
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                    data-best="bestseller"
+                                    {% endif %}>
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                      <div class="vv-bestseller">best seller</div>
+                                    {% endif %}
+                                    <div class="vv-value">
+                                      <div class="vvv-value">
+                                        {{ value }}
+                                      </div>
+                                      {% if matched_variant.compare_at_price > matched_variant.price %}
+                                        <div class="vvv-discount">
+                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
+                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
+                                          {{ discount_percentage }}% OFF
+                                        </div>
+                                      {% endif %}
+                                    </div>
+                                    <div class="vv-peices">
+                                      {% if matched_variant.unit_price_measurement %}
+                                        {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
+                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
+                                        {% else %}
+                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
+                                        {% endif %}
+                                      {% endif %}
+                                    </div>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                          {% endfor %}
+
+                          <script type="application/json">
+                            {{ product.variants | json }}
+                          </script>
+                        </variant-selector>
+                      {% endunless %}
+                    </div>
+                    <div class="priceCheckout">
+                      <div class="price" id="price-{{ section.id }}">
+                        {% if selected_variant.price < selected_variant.compare_at_price %}
+                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
+                        {% endif %}
+                        <span class="sell-price">
+                          {{ selected_variant.price | money }}
+                        </span>
+                        <span class="price-txt">
+                          Taxes, Excl. shipping
+                        </span>
+                      </div>
+                      <div class="submit">
+                        <button
+                          type="submit"
+                          name="add"
+                          class="custom-btn filled"
+                          id="add-to-cart"
+                          {% if selected_variant.available==false %}
+                          disabled
+                          {% endif %}>
+                          {% if selected_variant.available == false %}
+                            Sold Out
+                          {% else %}
+                            Add To Cart
+                          {% endif %}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="payment-options">
+                      <p>Guaranteed safe checkout with payment options</p>
+                      <div class="po-icon-wrap">
+                        {%- unless shop.enabled_payment_types == empty -%}
+                          {%- for type in shop.enabled_payment_types -%}
+                            {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                          {%- endfor -%}
+                        {%- endunless -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% when '@app' %}
+                <div class="app-block">
+                  {% render block %}
+                </div>
+          {% else %}
+            {% endcase %}
+          {% endfor %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+  <script type="application/ld+json">
+    {{ product | structured_data }}
+  </script>
+</div>
+
+<div class="product-accordion">
+  <div class="container">
+    <div class="pa-wrapper">
+      {% comment %} How to Store {% endcomment %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ section.settings.acc_1 }}
+          </div>
+          <div class="pa-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M12 8V16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-horizontal"
+                stroke-linejoin="round" />
+              <path
+                d="M8 12H16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-vertical"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="pa-eat-store">
+            {% for item in product.metafields.custom.how_to_store_eat.value %}
+              <div class="paes-item">
+                <div class="paes-icon">
+                  <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                </div>
+                <p>{{ item.body }}</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% comment %} Seasonal Information {% endcomment %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ section.settings.acc_2 }}
+          </div>
+          <div class="pa-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M12 8V16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-horizontal"
+                stroke-linejoin="round" />
+              <path
+                d="M8 12H16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-vertical"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="pa-seasons">
+            <div class="pas-month">
+              {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
+              {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
+              {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
+              {%- for month in month_names -%}
+                {%- assign trimmed_month = month | strip -%}
+                <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
+                  <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
+                  <div class="month-pill"></div>
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="pas-country">
+              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+              <div class="pas-shipping">
+                {% if product.metafields.custom.shipped_by == 'air' %}
+                  {% render 'air' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% elsif product.metafields.custom.shipped_by == 'sea' %}
+                  {% render 'sea' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% elsif product.metafields.custom.shipped_by == 'road' %}
+                  {% render 'road' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% comment %} Taste Profile {% endcomment %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ section.settings.acc_3 }}
+          </div>
+          <div class="pa-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M12 8V16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-horizontal"
+                stroke-linejoin="round" />
+              <path
+                d="M8 12H16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-vertical"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="pad-taste-profile">
+            {% comment %} Texture {% endcomment %}
+            <div class="profile-in">
+              <p class="tp-head texture">
+                Texture
+              </p>
+              <div class="tp-wrap">
+                {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
+                <p class="tp-profile">
+                  Silky
+                </p>
+                <div class="tp-pill-in texture">
+                  {% for i in (1..5) %}
+                    <div class="taste-pill {% if i <= texture_limit %}active{% endif %}"></div>
+                  {% endfor %}
+                </div>
+                <p class="tp-profile">
+                  Crunchy
+                </p>
+              </div>
+            </div>
+            {% comment %} Sweetness {% endcomment %}
+            <div class="profile-in">
+              <p class="tp-head sweetness">
+                Sweetness
+              </p>
+              <div class="tp-wrap">
+                {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
+                <p class="tp-profile">Delicate</p>
+                <div class="tp-pill-in sweetness">
+                  {% for i in (1..5) %}
+                    <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                  {% endfor %}
+                </div>
+                <p class="tp-profile">Syrupy</p>
+              </div>
+            </div>
+            {% comment %} Sourness {% endcomment %}
+            <div class="profile-in">
+              <p class="tp-head sourness">
+                Sourness
+              </p>
+              <div class="tp-wrap">
+                {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
+                <p class="tp-profile">Smooth</p>
+                <div class="tp-pill-in sourness">
+                  {% for i in (1..5) %}
+                    <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                  {% endfor %}
+                </div>
+                <p class="tp-profile">Zesty</p>
+              </div>
+            </div>
+            {% comment %} Juiciness {% endcomment %}
+            <div class="profile-in">
+              <p class="tp-head juiciness">
+                Juiciness
+              </p>
+              <div class="tp-wrap">
+                {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
+                <p class="tp-profile">Firm</p>
+                <div class="tp-pill-in juiciness">
+                  {% for i in (1..5) %}
+                    <div class="taste-pill {% if i <= juiciness_limit %}active{% endif %}"></div>
+                  {% endfor %}
+                </div>
+                <p class="tp-profile">Bursty</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
+                <div class="product_delivery_modal_container modal fade">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="delivery-cost-title">How much does delivery cost and how long does it take?</h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close">
+                          <svg
+                            width="15px"
+                            height="15px"
+                            fill="none"
+                            class="icon icon-close"
+                            viewBox="0 0 18 17">
+                            <path fill="#000" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z" />
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="modal-body" data-load="/en/_faq/42/delivery-cost">
+                        <div>
+                          <p style='margin:0;'>
+                            <span class="product_delivery_modal_deliver_to">Deliver to</span>
+                            {{ localization.country }}:
+                            <span class="calculated-delivery-date-price">9,90 €</span>
+                          </p>
+                          <p style='margin:0;'>
+                            <span class="product_delivery_modal_order_today">Order today to get it from</span>
+                            <span class="calculated-delivery-date"></span>
+                          </p>
+                        </div>
+                        {{ deliveryBlock.settings.page.content }}
+                      </div>
+                    </div>
+                  </div>
+              </div> 
+
+<script defer>
+      class VariantSelector extends HTMLElement {
+    constructor() {
+      super();
+      this.addEventListener('click', this.onVariantClick.bind(this));
+    }
+
+    onVariantClick(e) {
+      const clickedLi = e.target.closest('.variant-value');
+      if (!clickedLi) return;
+
+      const parentUl = clickedLi.closest('.variant-values');
+      if (!parentUl) return;
+
+      // Remove active class from all siblings
+      parentUl.querySelectorAll('.variant-value').forEach((li) => li.classList.remove('active'));
+      clickedLi.classList.add('active');
+
+      // Proceed with variant logic
+      this.getSelectedOptions();
+      this.getSelectedVariant();
+
+      if (this.currentVariant) {
+        this.updateURL();
+        this.updateFormID();
+        this.updatePrice();
+      }
+    }
+
+    getSelectedOptions() {
+      this.options = Array.from(this.querySelectorAll('.variant-values'), (ul) => {
+        const activeLi = ul.querySelector('.variant-value.active');
+        return activeLi ? activeLi.dataset.value : null;
+      }).filter(Boolean);
+
+      console.log('Selected options:', this.options);
+    }
+
+    getVariantJSON() {
+      this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
+      return this.variantData;
+    }
+
+    getSelectedVariant() {
+      const variants = this.getVariantJSON();
+      this.currentVariant = variants.find((variant) =>
+        variant.options.every((opt, index) => opt === this.options[index])
+      );
+
+      console.log('Selected Variant:', this.currentVariant);
+    }
+
+    updateURL() {
+      if (!this.currentVariant) return;
+      window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
+    }
+
+    updateFormID() {
+      const formInput = document.querySelector('#product-form')?.querySelector('input[name="id"]');
+      if (formInput && this.currentVariant) {
+        formInput.value = this.currentVariant.id;
+      }
+    }
+
+    updatePrice() {
+      if (!this.currentVariant) return;
+      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+        .then((response) => response.text())
+        .then((responseText) => {
+          const html = new DOMParser().parseFromString(responseText, 'text/html');
+          const oldPrice = document.getElementById('price-{{ section.id }}');
+          const newPrice = html.getElementById('price-{{ section.id }}');
+
+          const oldPerkg = document.querySelector(".perKg");
+          const newPerkg = html.querySelector(".perKg");
+
+          if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
+          if (oldPerkg && newPerkg) oldPerkg.innerHTML = newPerkg.innerHTML;
+        });
+    }
+      }
+
+      customElements.define('variant-selector', VariantSelector);
+</script>
+
+<script>
+      $(document).ready(function () {
+    $('.prod-main-image').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.prod-thumb-image',
+    });
+    $('.prod-thumb-image').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      asNavFor: '.prod-main-image',
+      focusOnSelect: true,
+      centerMode: true,
+      vertical: true,
+      arrows: false,
+    });
+      });
+</script>
+
+<script>
+    $(document).ready(function(){
+      $(document).on('click', '.pa-ques-wrap', function() {
+        const $clickedItem = $(this).closest('.pa-item');     // Find parent pa-item
+        const $clickedAnswer = $clickedItem.find('.pa-div');  // Find its sibling pa-div
+
+        // If already active, collapse it
+        if ($clickedItem.hasClass('active')) {
+          $clickedItem.removeClass('active');
+          $clickedAnswer.slideUp(300);
+          return;
+        }
+
+        // Otherwise, deactivate all others first
+        $('.pa-item').removeClass('active');
+        $('.pa-div').slideUp(300);
+
+        // Then activate the clicked one
+        $clickedItem.addClass('active');
+        $clickedAnswer.slideDown(300);
+      });
+    });
+
+</script>
+
+{% schema %}
+  {
+    "name": "Product",
+    "blocks": [
+      {
+        "type": "title",
+        "name": "Title",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_testimonial",
+            "label": "Show Title Testimonial",
+            "default": true
+          }, {
+            "type": "richtext",
+            "id": "title_testimonial",
+            "label": "Testimonial Above Tilte"
+          }
+        ]
+      },
+      {
+        "type": "product_info",
+        "name": "Product Information",
+        "limit": 1
+      },
+      {
+        "type": "product_usp",
+        "name": "Product Usp",
+        "limit": 1
+      },
+      {
+        "type": "store_usp",
+        "name": "Store USP",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "shipping_usp_icon",
+            "label": "Shipping USP Icon"
+          },
+          {
+            "type": "page",
+            "id": "shipping_usp_page",
+            "label": "Shipping Page"
+          },
+          {
+            "type": "text",
+            "id": "shipping_usp_text",
+            "label": "Shipping USP Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "freshness_icon",
+            "label": "Freshness Icon"
+          }, {
+            "type": "text",
+            "id": "freshness_text",
+            "label": "Freshness Text"
+          }, {
+            "type": "image_picker",
+            "id": "payment_usp_icon",
+            "label": "Payment USP Icon"
+          }, {
+            "type": "text",
+            "id": "payment_usp_text",
+            "label": "Payment USP Text"
+          }
+        ]
+      }, {
+        "type": "variant_selector",
+        "name": "Variant Selector",
+        "limit": 1
+      }, {
+        "type": "delivery-info",
+        "name": "Delivery information",
+        "settings": [
+          {
+            "type": "text",
+            "id": "delivery_message",
+            "label": "Delivery message",
+            "default": "Max. freshness, min. waste — we harvest after you order."
+          }, {
+            "type": "text",
+            "id": "popup_button",
+            "label": "Popup button text",
+            "default": "click here to get delivery information (cost, delay)"
+          }, {
+            "type": "page",
+            "id": "page",
+            "label": "Modal content"
+          }
+        ]
+      }, {
+        "type": "@app"
+      }
+    ],
+    "settings": [
+      {
+        "type": "text",
+        "id": "acc_1",
+        "label": "Accordion 1 Label",
+        "default": "How to eat & Store"
+      }, {
+        "type": "text",
+        "id": "acc_2",
+        "label": "Accordion 2 Label",
+        "default": "Seasonal Calendar - fruit origin"
+      }, {
+        "type": "text",
+        "id": "acc_3",
+        "label": "Accordion 3 Label",
+        "default": "taste profile"
+      }
+    ]
+  }
+{% endschema %}
