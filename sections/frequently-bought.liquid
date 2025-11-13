@@ -38,17 +38,13 @@
             const doc = parser.parseFromString(html, "text/html");
             const card = doc.querySelector(".product-card-primary");
 
-            // ✅ Append the card to the container
             if (card) {
+              // ✅ Add data-product-id for cart script filtering
+              card.setAttribute("data-product-id", product.id);
               container.appendChild(card);
 
-              // ✅ Initialize variant logic for this card
               initVariantLogic(card);
-
-              // ✅ Initialize Add-to-Cart & Cart Logic
-              if (window.initializeCartFunction) {
-                 window.initializeCartFunction();
-              }
+              window.initializeCartFunction();
             }
           })
           .catch((err) => console.error("Error loading product card:", err));
@@ -71,11 +67,9 @@
 
   variantItems.forEach((variant) => {
     variant.addEventListener("click", () => {
-      // Remove active class from all siblings
       variantItems.forEach((v) => v.classList.remove("active"));
       variant.classList.add("active");
 
-      // Read data attributes
       const price = variant.dataset.price;
       const compare = variant.dataset.compare;
       const inventory = variant.dataset.inventory;
@@ -83,7 +77,6 @@
       const image = variant.dataset.image;
       const perKgfinal = variant.dataset.unit;
 
-      // ✅ Update prices
       if (sellingPrice) sellingPrice.textContent = price;
       if (comparePrice) {
         if (compare && compare !== price) {
@@ -94,17 +87,10 @@
         }
       }
 
-      // ✅ Update form variant ID
       if (addToCartInput) addToCartInput.value = variantId;
-
-      // ✅ Update trust text
       if (trustText && inventory)
         trustText.textContent = `Only ${inventory} Left`;
-
-      // ✅ Update product image
       if (image && mainImg) mainImg.src = image;
-
-      // ✅ Update per kg/unit
       if (perKgfinal && perKg) perKg.textContent = perKgfinal;
     });
   });
