@@ -1140,7 +1140,7 @@ li.variant-value {
   position: relative;
   gap: 4px;
   cursor: pointer;
-  min-width: 115px;
+  min-width: 130px;
 }
 li.variant-value::after {
   width: 100%;

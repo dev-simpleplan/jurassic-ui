@@ -72,52 +72,28 @@
                 </div>
               {% when 'product_info' %}
                 <div class="product-info-block">
-                  {% comment %} For Origin {% endcomment %}
-                  <div class="pi-item">
-                    {% render 'green-tick' %}
-                    <div class="pii-info">
-                      <p>
-                        <strong>Origin:</strong>
-                        {{ product.metafields.custom.country_of_origin.value.country_name }}
-                      </p>
-                    </div>
-                  </div>
-                  {% comment %} Seasonality {% endcomment %}
-                  <div class="pi-item">
-                    {% render 'green-tick' %}
-                    <div class="pii-info">
-                      <p>
-                        <strong>Seasonality:</strong>
-                        {{ product.metafields.custom.country_season.value.season.value.seasonality }}
-                      </p>
-                    </div>
-                  </div>
-
                   {% comment %} Additional Information {% endcomment %}
-                  {% for item in product.metafields.custom.additional_information.value %}
+                  {% for item in selected_variant.metafields.custom.box_information.value %}
                     <div class="pi-item">
                       {% render 'green-tick' %}
                       <div class="pii-info">
                         <p>
-                          <strong>{{ item.inforamation_title }}</strong>
-                          {{ item.information_paragraph }}
+                          {{ item }}
                         </p>
                       </div>
                     </div>
                   {% endfor %}
                 </div>
-              {% when 'product_usp' %}
-                <div class="product-usp">
-                  {% for item in product.metafields.custom.product_usp.value %}
-                    <div class="pu-item">
-                      <div class="pui-icon">
-                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
-                      </div>
-                      <div class="pui-txt">
-                        <p>{{ item.usp_text }}</p>
-                      </div>
-                    </div>
-                  {% endfor %}
+              {% when 'box_content' %}
+                <div class="box-content">
+                    <pre>{{ product.metafields.custom.main_box_item.value | json }}</pre>
+                    {% assign box_item = product.metafields.custom.main_box_item.main_box_item.value %}
+
+                      {% for product_ref in box_item.select_products %}
+                        <div class="pi-item">
+                          {{ product_ref.title }}
+                        </div>
+                      {% endfor %}
                 </div>
               {% when 'store_usp' %}
                 <div class="store-usp">
@@ -220,12 +196,9 @@
                                       {% endif %}
                                     </div>
                                     <div class="vv-peices">
-                                      {% if matched_variant.unit_price_measurement %}
-                                        {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
-                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
-                                        {% else %}
-                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
-                                        {% endif %}
+                                      {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
+                                      {% if matched_variant.metafields.custom.pieces %}
+                                        {{ matched_variant.metafields.custom.pieces }}
                                       {% endif %}
                                     </div>
                                   </li>
@@ -617,12 +590,16 @@
           const html = new DOMParser().parseFromString(responseText, 'text/html');
           const oldPrice = document.getElementById('price-{{ section.id }}');
           const newPrice = html.getElementById('price-{{ section.id }}');
+          const newData = html.querySelector(".product-info-block");
+
+          const oldData = document.querySelector(".product-info-block");
 
           const oldPerkg = document.querySelector(".perKg");
           const newPerkg = html.querySelector(".perKg");
 
           if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
           if (oldPerkg && newPerkg) oldPerkg.innerHTML = newPerkg.innerHTML;
+          if (oldData && newData) oldData.innerHTML = newData.innerHTML;
         });
     }
       }
@@ -703,8 +680,8 @@
         "limit": 1
       },
       {
-        "type": "product_usp",
-        "name": "Product Usp",
+        "type": "box_content",
+        "name": "Box Content",
         "limit": 1
       },
       {

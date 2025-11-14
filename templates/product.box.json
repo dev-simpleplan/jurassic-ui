@@ -23,8 +23,8 @@
           "type": "product_info",
           "settings": {}
         },
-        "product_usp": {
-          "type": "product_usp",
+        "box_content": {
+          "type": "box_content",
           "settings": {}
         },
         "variant_selector": {
@@ -61,7 +61,7 @@
       "block_order": [
         "title",
         "product_info",
-        "product_usp",
+        "box_content",
         "variant_selector",
         "store_usp",
         "delivery_info_WFVGrD",
