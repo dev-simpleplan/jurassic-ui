@@ -1154,7 +1154,8 @@ li.variant-value::after {
 li.variant-value.active::after {
   opacity: 0;
 }
-li.variant-value .vv-bestseller {
+li.variant-value .vv-bestseller,
+.fc_variant_item .vv-bestseller {
   position: absolute;
   top: -18px;
   left: 24px;
@@ -1170,6 +1171,9 @@ li.variant-value .vv-bestseller {
   background-color: #fff;
   border-radius: 6px;
   z-index: 1;
+}
+.fc_variant_item .vv-bestseller {
+  top: -21px;
 }
 li.variant-value.active {
   box-shadow: 0px -1.82px 6.37px 0px #ffa5001a inset;
