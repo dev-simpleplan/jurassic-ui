@@ -126,7 +126,8 @@
 }
 
 .fc_variant_item {
-    border: 1px solid #e5e3df;
+    border: 1px solid transparent;
+    outline: 1px solid #e5e3df;
     border-radius: 4px;
     min-width: 100px;
     text-align: center;
@@ -195,16 +196,22 @@
 
 .fc_variant_item p span {
     font-size: 10px;
+    line-height: 13px;
     color: #397e1b;
     padding: 0px 5px;
     margin-left: 5px;
     margin-bottom: 4px;
     font-weight: 600;
     display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background: transparent;
+    transition: .3s ease all;
 }
 
 .fc_variant_item p.quantity {
     font-size: 11px;
+    line-height: 13px;
 }
 
 .fc_variant_item.best_seller::before {
@@ -277,7 +284,8 @@
 }
 
 .fc_variant_item.active {
-    border: 2px solid #ffbb42;
+    border-color: #ffbb42;
+    outline-color: #ffbb42;
     background-color: #fff2db;
 }
 

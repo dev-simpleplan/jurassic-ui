@@ -87,13 +87,16 @@
                     {{ variant | json }}
                   </script>
                   <div
-                    class="fc_variant_item {% if forloop.first %}active{% endif %}"
+                    class="fc_variant_item {% if forloop.first %}active{% endif %} {% if variant.metafields.custom.bestseller == true %} bestseller{% endif %}"
                     data-id="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
                     data-inventory="{{ variant.inventory_quantity }}"
                     data-unit="{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}"
                     data-image="{{ variant.image | img_url: 'master' }}">
+                    {% if variant.metafields.custom.bestseller == true %}
+                      <div class="vv-bestseller">Bestseller</div>
+                    {% endif %}
                     <p class="weight">
                       {{ variant.title }}
                       {% if variant.compare_at_price > variant.price %}
