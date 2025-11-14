@@ -1556,4 +1556,47 @@ p.tp-head.juiciness {
 .prod-main-image.slick-initialized img {
   opacity: 1;
 }
+.boxIn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.box-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 10px;
+}
+.box-content .box-content-title {
+  font-family: var(--scale);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 1px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  color: #202322;
+  text-wrap-mode: nowrap;
+}
+.box-content-in {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+.box-content-in .cotent-item {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1a1a1a;
+  line-height: 100%;
+  letter-spacing: 0px;
+  padding: 16px 18px;
+  border-radius: 46px;
+  background-color: #ffffff;
+  border: 1px solid #e5e3df;
+  width: max-content;
+  text-wrap-mode: nowrap;
+}
 /* Product Page Ends */

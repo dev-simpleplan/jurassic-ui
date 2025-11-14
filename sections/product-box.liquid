@@ -85,15 +85,29 @@
                   {% endfor %}
                 </div>
               {% when 'box_content' %}
-                <div class="box-content">
-                    <pre>{{ product.metafields.custom.main_box_item.value | json }}</pre>
-                    {% assign box_item = product.metafields.custom.main_box_item.main_box_item.value %}
-
-                      {% for product_ref in box_item.select_products %}
-                        <div class="pi-item">
-                          {{ product_ref.title }}
-                        </div>
+                <div class="boxIn">
+                  {% comment %} Main Box Content {% endcomment %}
+                  <div class="box-content">
+                    <div class="box-content-title">
+                      Main Fruits
+                    </div>
+                    <div class="box-content-in">
+                      {% for item in product.metafields.custom.main_box_content.value %}
+                        <div class="cotent-item">{{ item.title }}</div>
                       {% endfor %}
+                    </div>
+                  </div>
+                  {% comment %} Additional Box Content {% endcomment %}
+                  <div class="box-content">
+                    <div class="box-content-title">
+                      Additional Fruits
+                    </div>
+                    <div class="box-content-in">
+                      {% for item in product.metafields.custom.additional_box_content.value %}
+                        <div class="cotent-item">{{ item.title }}</div>
+                      {% endfor %}
+                    </div>
+                  </div>
                 </div>
               {% when 'store_usp' %}
                 <div class="store-usp">
@@ -258,218 +272,219 @@
                 <div class="app-block">
                   {% render block %}
                 </div>
-          {% else %}
-            {% endcase %}
-          {% endfor %}
-        {% endform %}
-      </div>
-    </div>
-  </div>
-  <script type="application/ld+json">
-    {{ product | structured_data }}
-  </script>
-</div>
-
-<div class="product-accordion">
-  <div class="container">
-    <div class="pa-wrapper">
-      {% comment %} How to Store {% endcomment %}
-      <div class="pa-item">
-        <div class="pa-ques-wrap">
-          <div class="pa-ques">
-            {{ section.settings.acc_1 }}
-          </div>
-          <div class="pa-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none">
-              <path
-                d="M12 8V16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-horizontal"
-                stroke-linejoin="round" />
-              <path
-                d="M8 12H16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-vertical"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-        </div>
-        <div class="pa-div">
-          <div class="pa-eat-store">
-            {% for item in product.metafields.custom.how_to_store_eat.value %}
-              <div class="paes-item">
-                <div class="paes-icon">
-                  <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
-                </div>
-                <p>{{ item.body }}</p>
-              </div>
+            {% else %}
+              {% endcase %}
             {% endfor %}
-          </div>
+          {% endform %}
         </div>
       </div>
-      {% comment %} Seasonal Information {% endcomment %}
-      <div class="pa-item">
-        <div class="pa-ques-wrap">
-          <div class="pa-ques">
-            {{ section.settings.acc_2 }}
+    </div>
+    <script type="application/ld+json">
+      {{ product | structured_data }}
+    </script>
+  </div>
+
+  <div class="product-accordion">
+    <div class="container">
+      <div class="pa-wrapper">
+        {% comment %} How to Store {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_1 }}
+            </div>
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
           </div>
-          <div class="pa-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none">
-              <path
-                d="M12 8V16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-horizontal"
-                stroke-linejoin="round" />
-              <path
-                d="M8 12H16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-vertical"
-                stroke-linejoin="round" />
-            </svg>
+          <div class="pa-div">
+            <div class="pa-eat-store">
+              {% for item in product.metafields.custom.how_to_store_eat.value %}
+                <div class="paes-item">
+                  <div class="paes-icon">
+                    <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                  </div>
+                  <p>{{ item.body }}</p>
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
-        <div class="pa-div">
-          <div class="pa-seasons">
-            <div class="pas-month">
-              {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
-              {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
-              {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
-              {%- for month in month_names -%}
-                {%- assign trimmed_month = month | strip -%}
-                <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
-                  <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
-                  <div class="month-pill"></div>
-                </div>
-              {%- endfor -%}
+        {% comment %} Seasonal Information {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_2 }}
             </div>
-            <div class="pas-country">
-              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              <div class="pas-shipping">
-                {% if product.metafields.custom.shipped_by == 'air' %}
-                  {% render 'air' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'sea' %}
-                  {% render 'sea' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'road' %}
-                  {% render 'road' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% endif %}
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div class="pa-div">
+            <div class="pa-seasons">
+              <div class="pas-month">
+                {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
+                {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
+                {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
+                {%- for month in month_names -%}
+                  {%- assign trimmed_month = month | strip -%}
+                  <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
+                    <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
+                    <div class="month-pill"></div>
+                  </div>
+                {%- endfor -%}
+              </div>
+              <div class="pas-country">
+                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+                <div class="pas-shipping">
+                  {% if product.metafields.custom.shipped_by == 'air' %}
+                    {% render 'air' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% elsif product.metafields.custom.shipped_by == 'sea' %}
+                    {% render 'sea' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% elsif product.metafields.custom.shipped_by == 'road' %}
+                    {% render 'road' %}
+                    Shipped by {{ product.metafields.custom.shipped_by }}
+                  {% endif %}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {% comment %} Taste Profile {% endcomment %}
-      <div class="pa-item">
-        <div class="pa-ques-wrap">
-          <div class="pa-ques">
-            {{ section.settings.acc_3 }}
+        {% comment %} Taste Profile {% endcomment %}
+        <div class="pa-item">
+          <div class="pa-ques-wrap">
+            <div class="pa-ques">
+              {{ section.settings.acc_3 }}
+            </div>
+            <div class="pa-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none">
+                <path
+                  d="M12 8V16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-horizontal"
+                  stroke-linejoin="round" />
+                <path
+                  d="M8 12H16"
+                  stroke="#202322"
+                  stroke-width="2"
+                  class="plus-vertical"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
           </div>
-          <div class="pa-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none">
-              <path
-                d="M12 8V16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-horizontal"
-                stroke-linejoin="round" />
-              <path
-                d="M8 12H16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-vertical"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-        </div>
-        <div class="pa-div">
-          <div class="pad-taste-profile">
-            {% comment %} Texture {% endcomment %}
-            <div class="profile-in">
-              <p class="tp-head texture">
-                Texture
-              </p>
-              <div class="tp-wrap">
-                {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
-                <p class="tp-profile">
-                  Silky
+          <div class="pa-div">
+            <div class="pad-taste-profile">
+              {% comment %} Texture {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head texture">
+                  Texture
                 </p>
-                <div class="tp-pill-in texture">
-                  {% for i in (1..5) %}
-                    <div class="taste-pill {% if i <= texture_limit %}active{% endif %}"></div>
-                  {% endfor %}
+                <div class="tp-wrap">
+                  {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
+                  <p class="tp-profile">
+                    Silky
+                  </p>
+                  <div class="tp-pill-in texture">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= texture_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">
+                    Crunchy
+                  </p>
                 </div>
-                <p class="tp-profile">
-                  Crunchy
+              </div>
+              {% comment %} Sweetness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head sweetness">
+                  Sweetness
                 </p>
-              </div>
-            </div>
-            {% comment %} Sweetness {% endcomment %}
-            <div class="profile-in">
-              <p class="tp-head sweetness">
-                Sweetness
-              </p>
-              <div class="tp-wrap">
-                {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
-                <p class="tp-profile">Delicate</p>
-                <div class="tp-pill-in sweetness">
-                  {% for i in (1..5) %}
-                    <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
-                  {% endfor %}
+                <div class="tp-wrap">
+                  {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
+                  <p class="tp-profile">Delicate</p>
+                  <div class="tp-pill-in sweetness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Syrupy</p>
                 </div>
-                <p class="tp-profile">Syrupy</p>
               </div>
-            </div>
-            {% comment %} Sourness {% endcomment %}
-            <div class="profile-in">
-              <p class="tp-head sourness">
-                Sourness
-              </p>
-              <div class="tp-wrap">
-                {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
-                <p class="tp-profile">Smooth</p>
-                <div class="tp-pill-in sourness">
-                  {% for i in (1..5) %}
-                    <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
-                  {% endfor %}
+              {% comment %} Sourness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head sourness">
+                  Sourness
+                </p>
+                <div class="tp-wrap">
+                  {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
+                  <p class="tp-profile">Smooth</p>
+                  <div class="tp-pill-in sourness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Zesty</p>
                 </div>
-                <p class="tp-profile">Zesty</p>
               </div>
-            </div>
-            {% comment %} Juiciness {% endcomment %}
-            <div class="profile-in">
-              <p class="tp-head juiciness">
-                Juiciness
-              </p>
-              <div class="tp-wrap">
-                {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
-                <p class="tp-profile">Firm</p>
-                <div class="tp-pill-in juiciness">
-                  {% for i in (1..5) %}
-                    <div class="taste-pill {% if i <= juiciness_limit %}active{% endif %}"></div>
-                  {% endfor %}
+              {% comment %} Juiciness {% endcomment %}
+              <div class="profile-in">
+                <p class="tp-head juiciness">
+                  Juiciness
+                </p>
+                <div class="tp-wrap">
+                  {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
+                  <p class="tp-profile">Firm</p>
+                  <div class="tp-pill-in juiciness">
+                    {% for i in (1..5) %}
+                      <div class="taste-pill {% if i <= juiciness_limit %}active{% endif %}"></div>
+                    {% endfor %}
+                  </div>
+                  <p class="tp-profile">Bursty</p>
                 </div>
-                <p class="tp-profile">Bursty</p>
               </div>
             </div>
           </div>
@@ -477,48 +492,47 @@
       </div>
     </div>
   </div>
-</div>
 
-{% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
-                <div class="product_delivery_modal_container modal fade">
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="delivery-cost-title">How much does delivery cost and how long does it take?</h5>
-                        <button
-                          type="button"
-                          class="close"
-                          data-dismiss="modal"
-                          aria-label="Close">
-                          <svg
-                            width="15px"
-                            height="15px"
-                            fill="none"
-                            class="icon icon-close"
-                            viewBox="0 0 18 17">
-                            <path fill="#000" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z" />
-                          </svg>
-                        </button>
-                      </div>
-                      <div class="modal-body" data-load="/en/_faq/42/delivery-cost">
-                        <div>
-                          <p style='margin:0;'>
-                            <span class="product_delivery_modal_deliver_to">Deliver to</span>
-                            {{ localization.country }}:
-                            <span class="calculated-delivery-date-price">9,90 €</span>
-                          </p>
-                          <p style='margin:0;'>
-                            <span class="product_delivery_modal_order_today">Order today to get it from</span>
-                            <span class="calculated-delivery-date"></span>
-                          </p>
-                        </div>
-                        {{ deliveryBlock.settings.page.content }}
-                      </div>
-                    </div>
-                  </div>
-              </div> 
+  {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
+  <div class="product_delivery_modal_container modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delivery-cost-title">How much does delivery cost and how long does it take?</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <svg
+              width="15px"
+              height="15px"
+              fill="none"
+              class="icon icon-close"
+              viewBox="0 0 18 17">
+              <path fill="#000" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" data-load="/en/_faq/42/delivery-cost">
+          <div>
+            <p style='margin:0;'>
+              <span class="product_delivery_modal_deliver_to">Deliver to</span>
+              {{ localization.country }}:
+              <span class="calculated-delivery-date-price">9,90 €</span>
+            </p>
+            <p style='margin:0;'>
+              <span class="product_delivery_modal_order_today">Order today to get it from</span>
+              <span class="calculated-delivery-date"></span>
+            </p>
+          </div>
+          {{ deliveryBlock.settings.page.content }}
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script defer>
+  <script defer>
       class VariantSelector extends HTMLElement {
     constructor() {
       super();
@@ -605,9 +619,9 @@
       }
 
       customElements.define('variant-selector', VariantSelector);
-</script>
+  </script>
 
-<script>
+  <script>
       $(document).ready(function () {
     $('.prod-main-image').slick({
       slidesToShow: 1,
@@ -626,9 +640,9 @@
       arrows: false,
     });
       });
-</script>
+  </script>
 
-<script>
+  <script>
     $(document).ready(function(){
       $(document).on('click', '.pa-ques-wrap', function() {
         const $clickedItem = $(this).closest('.pa-item');     // Find parent pa-item
@@ -651,122 +665,122 @@
       });
     });
 
-</script>
+  </script>
 
-{% schema %}
-  {
-    "name": "Product",
-    "blocks": [
-      {
-        "type": "title",
-        "name": "Title",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "checkbox",
-            "id": "show_testimonial",
-            "label": "Show Title Testimonial",
-            "default": true
-          }, {
-            "type": "richtext",
-            "id": "title_testimonial",
-            "label": "Testimonial Above Tilte"
-          }
-        ]
-      },
-      {
-        "type": "product_info",
-        "name": "Product Information",
-        "limit": 1
-      },
-      {
-        "type": "box_content",
-        "name": "Box Content",
-        "limit": 1
-      },
-      {
-        "type": "store_usp",
-        "name": "Store USP",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "shipping_usp_icon",
-            "label": "Shipping USP Icon"
-          },
-          {
-            "type": "page",
-            "id": "shipping_usp_page",
-            "label": "Shipping Page"
-          },
-          {
-            "type": "text",
-            "id": "shipping_usp_text",
-            "label": "Shipping USP Text"
-          },
-          {
-            "type": "image_picker",
-            "id": "freshness_icon",
-            "label": "Freshness Icon"
-          }, {
-            "type": "text",
-            "id": "freshness_text",
-            "label": "Freshness Text"
-          }, {
-            "type": "image_picker",
-            "id": "payment_usp_icon",
-            "label": "Payment USP Icon"
-          }, {
-            "type": "text",
-            "id": "payment_usp_text",
-            "label": "Payment USP Text"
-          }
-        ]
-      }, {
-        "type": "variant_selector",
-        "name": "Variant Selector",
-        "limit": 1
-      }, {
-        "type": "delivery-info",
-        "name": "Delivery information",
-        "settings": [
-          {
-            "type": "text",
-            "id": "delivery_message",
-            "label": "Delivery message",
-            "default": "Max. freshness, min. waste — we harvest after you order."
-          }, {
-            "type": "text",
-            "id": "popup_button",
-            "label": "Popup button text",
-            "default": "click here to get delivery information (cost, delay)"
-          }, {
-            "type": "page",
-            "id": "page",
-            "label": "Modal content"
-          }
-        ]
-      }, {
-        "type": "@app"
-      }
-    ],
-    "settings": [
-      {
-        "type": "text",
-        "id": "acc_1",
-        "label": "Accordion 1 Label",
-        "default": "How to eat & Store"
-      }, {
-        "type": "text",
-        "id": "acc_2",
-        "label": "Accordion 2 Label",
-        "default": "Seasonal Calendar - fruit origin"
-      }, {
-        "type": "text",
-        "id": "acc_3",
-        "label": "Accordion 3 Label",
-        "default": "taste profile"
-      }
-    ]
-  }
-{% endschema %}
+  {% schema %}
+    {
+      "name": "Product",
+      "blocks": [
+        {
+          "type": "title",
+          "name": "Title",
+          "limit": 1,
+          "settings": [
+            {
+              "type": "checkbox",
+              "id": "show_testimonial",
+              "label": "Show Title Testimonial",
+              "default": true
+            }, {
+              "type": "richtext",
+              "id": "title_testimonial",
+              "label": "Testimonial Above Tilte"
+            }
+          ]
+        },
+        {
+          "type": "product_info",
+          "name": "Product Information",
+          "limit": 1
+        },
+        {
+          "type": "box_content",
+          "name": "Box Content",
+          "limit": 1
+        },
+        {
+          "type": "store_usp",
+          "name": "Store USP",
+          "limit": 1,
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "shipping_usp_icon",
+              "label": "Shipping USP Icon"
+            },
+            {
+              "type": "page",
+              "id": "shipping_usp_page",
+              "label": "Shipping Page"
+            },
+            {
+              "type": "text",
+              "id": "shipping_usp_text",
+              "label": "Shipping USP Text"
+            },
+            {
+              "type": "image_picker",
+              "id": "freshness_icon",
+              "label": "Freshness Icon"
+            }, {
+              "type": "text",
+              "id": "freshness_text",
+              "label": "Freshness Text"
+            }, {
+              "type": "image_picker",
+              "id": "payment_usp_icon",
+              "label": "Payment USP Icon"
+            }, {
+              "type": "text",
+              "id": "payment_usp_text",
+              "label": "Payment USP Text"
+            }
+          ]
+        }, {
+          "type": "variant_selector",
+          "name": "Variant Selector",
+          "limit": 1
+        }, {
+          "type": "delivery-info",
+          "name": "Delivery information",
+          "settings": [
+            {
+              "type": "text",
+              "id": "delivery_message",
+              "label": "Delivery message",
+              "default": "Max. freshness, min. waste — we harvest after you order."
+            }, {
+              "type": "text",
+              "id": "popup_button",
+              "label": "Popup button text",
+              "default": "click here to get delivery information (cost, delay)"
+            }, {
+              "type": "page",
+              "id": "page",
+              "label": "Modal content"
+            }
+          ]
+        }, {
+          "type": "@app"
+        }
+      ],
+      "settings": [
+        {
+          "type": "text",
+          "id": "acc_1",
+          "label": "Accordion 1 Label",
+          "default": "How to eat & Store"
+        }, {
+          "type": "text",
+          "id": "acc_2",
+          "label": "Accordion 2 Label",
+          "default": "Seasonal Calendar - fruit origin"
+        }, {
+          "type": "text",
+          "id": "acc_3",
+          "label": "Accordion 3 Label",
+          "default": "taste profile"
+        }
+      ]
+    }
+  {% endschema %}
