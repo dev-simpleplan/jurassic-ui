@@ -430,6 +430,36 @@
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "main_box_content",
+      "namespace": "custom",
+      "name": "Main Box Content",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "additional_box_content",
+      "namespace": "custom",
+      "name": "Additional Box Content",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "box_paired_product",
+      "namespace": "custom",
+      "name": "Box Paired Product",
+      "description": "",
+      "type": {
+        "name": "product_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "variant": [
@@ -561,6 +591,16 @@
       "type": {
         "name": "boolean",
         "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "box_information",
+      "namespace": "custom",
+      "name": "Box Information",
+      "description": "",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
