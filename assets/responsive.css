@@ -152,6 +152,20 @@
   .f-answer {
     padding: 0px 0 20px 0;
   }
+  .sc-in .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .sc-in {
+    margin: 20px 0;
+  }
+  .cart-qty {
+    align-self: flex-start;
+  }
+  .cart-item-left {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 991px) {
