@@ -98,6 +98,8 @@
     const cartItemsWrapper = document.querySelector('.side-cart-with-items');
     const cartIn = document.querySelector('.sc-wrapper');
     const cartFooter = document.querySelector('.sc-footer');
+    const body = document.querySelector('body');
+    const html = document.querySelector('html');
 
 
 
@@ -110,11 +112,15 @@
 
     document.querySelector('.cart-open')?.addEventListener('click', function () {
       sideCart.classList.add('active');
+      body.classList.add('stay');
+      html.classList.add('stay');
       loadCartItems();
     });
 
     document.querySelector('.sc-close')?.addEventListener('click', function () {
       sideCart.classList.remove('active');
+      body.classList.remove('stay')
+      html.classList.remove('stay')
     });
 
     const loader = document.querySelector('.cart-loader');

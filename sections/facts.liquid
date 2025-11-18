@@ -16,7 +16,7 @@
     <div class="for-desktop">
         <div class="facts-data">
         {% for block in section.blocks %}
-            <div class="factsdata-item" style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%">
+            <div class="factsdata-item">
                 <div class="facts-item-in">
                     <div class="facts-hover"></div>
                     <div class="facts-hover-data" style="opacity: {% if block.settings.show_item %}1{% else %}0{% endif %};">
@@ -154,26 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
               "id": "show_item",
               "label": "Show Item On Screen (Uncheck after adding content)",
               "default": false
-            },
-            {
-                "type": "range",
-                "id": "top_position",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "%",
-                "label": "Top Position",
-                "default": 0
-            },
-            {
-                "type": "range",
-                "id": "left_position",
-                "min": 0,
-                "max": 100,
-                "step": 1,
-                "unit": "%",
-                "label": "Left Position",
-                "default": 0
             },
             {
               "type": "richtext",

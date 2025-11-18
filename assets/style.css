@@ -26,6 +26,9 @@ body {
 body[data-lenis-prevent] {
     overflow: hidden;
 }
+body.stay, html.stay {
+    overflow: hidden;
+}
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
     overflow: hidden;
 }
@@ -2764,9 +2767,17 @@ section.imagescroll {
 }
 .facts-data .factsdata-item {
     position: absolute;
-    top: 44%;
-    left: 27%;
+    top: 28vh;
+    left: 19vw;
     z-index: 2;
+}
+.facts-data .factsdata-item:nth-child(2) {
+    top: 17vh;
+    left: 35vw;
+}
+.facts-data .factsdata-item:nth-child(3) {
+    top: 6vh;
+    left: 75vw;
 }
 .facts-data .factsdata-item.sec {
     top: 28%;
@@ -2778,7 +2789,7 @@ section.imagescroll {
 }
 .factsdata-item .facts-hover {
     width: 300px;
-    height: 150px;
+    height: 200px;
     background-color: transparent;
     position: relative;
     z-index: 2;
@@ -2811,6 +2822,7 @@ section.imagescroll {
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     filter: blur(25px);
+    transition: .3s ease all;
 }
 .facts-hover-data::after {
     content: '';
@@ -2823,10 +2835,11 @@ section.imagescroll {
     height: 50px;border-radius: 50%;
     background: linear-gradient(90deg, #FFC761 0%, #F7A816 138.78%);
     box-shadow: 0px 0px 9px 0px #7A4F0099 inset;
+    filter: blur(25);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    filter: blur(25);
     z-index: 1;
+    transition: .3s ease all;
 }
 .factsdata-item .facts-hover:hover ~ .facts-hover-data {
     opacity: 1!important;
