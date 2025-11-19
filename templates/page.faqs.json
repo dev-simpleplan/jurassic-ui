@@ -9,12 +9,14 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "page",
-      "settings": {}
+    "faqs-page": {
+      "type": "faqs-page",
+      "settings": {
+        "head":"hello"
+      }
     }
   },
   "order": [
-    "main"
+    "faqs-page"
   ]
 }
