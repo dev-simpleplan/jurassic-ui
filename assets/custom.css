@@ -614,10 +614,11 @@ section.faq-page .faq-head h1 {
 
 .faq-category-wrapper {
   position: sticky;
-  background-color: var(--body-color);
+  background-color: var(--body-bg);
   top: 0px;
   padding: 16px 0px;
   transition: 0.4s all ease;
+  z-index: 1;
 }
 
 .faq-category-wrapper.backdrop {
@@ -634,27 +635,28 @@ section.faq-page .faq-head h1 {
 
 .faq-category-wrapper ul li a {
   display: inline-flex;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 4px;
-  font-family: var(--pp);
-  font-weight: 200;
-  font-size: clamp(20px, 3vw, 32px);
+  background-color: #DBD7C8;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 10px;
   line-height: 130%;
-  letter-spacing: 0em;
+  letter-spacing: 3px;
+  text-transform: uppercase;
   vertical-align: middle;
-  color: #747373;
+  color: #1A1A1A;
   transition: 0.4s all ease;
   cursor: pointer;
+  padding: 12px 20px;
 }
 
 .faq-category-wrapper ul li a:hover {
-  border-color: #747373;
+  color: #DBD7C8;
+  background-color: #1A1A1A;
 }
 
 .faq-category-wrapper ul li a.active {
-  color: #000000;
-  border-color: #000000;
-  font-style: italic;
+  color: #DBD7C8;
+  background-color: #1A1A1A;
 }
 
 .faq-head {
@@ -673,7 +675,12 @@ section.faq-page .faq-head h1 {
 }
 
 .faq-item .faq-question h6 {
-  font-size: clamp(14px, 4vw, 18px);
+font-family: 'Inter';
+font-size: 14px;
+letter-spacing: 0.02em;
+font-weight: 500;
+line-height: 150%;
+color: #202322;
 }
 
 .faq-item.active .faq-question {
@@ -681,10 +688,13 @@ section.faq-page .faq-head h1 {
 }
 
 .faq-cat-head h4 {
-  font-style: italic;
-  color: #000000;
-  line-height: 130%;
-  letter-spacing: 0em;
+  color: #1A1A1A;
+  line-height: 150%;
+  letter-spacing: 3px;
+  font-weight: 500;
+  font-size: 10px;
+  font-family: 'Inter';
+  text-transform: uppercase;
 }
 
 .faq-wrapper {
@@ -709,15 +719,22 @@ section.faq-page .faq-head h1 {
 
 .faq-answer p {
   font-size: 12px;
-  line-height: 130%;
-  color: #606060;
+  line-height: 140%;
+  color: #1A1A1A;
   max-width: 65ch;
+  font-weight: 400;
+  font-family: 'Inter';
+  letter-spacing: 0;
 }
 
 .faq-answer p a {
-  font-size: 12px;
-  line-height: 130%;
-  color: #606060;
+font-size: 12px;
+  line-height: 140%;
+  color: #1A1A1A;
+  max-width: 65ch;
+  font-weight: 400;
+  font-family: 'Inter';
+  letter-spacing: 0;
   text-decoration: underline;
 }
 
