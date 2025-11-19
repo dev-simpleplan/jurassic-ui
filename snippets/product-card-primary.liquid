@@ -87,7 +87,7 @@
                     {{ variant | json }}
                   </script>
                   <div
-                    class="fc_variant_item {% if forloop.first %}active{% endif %} {% if variant.metafields.custom.bestseller == true %} bestseller{% endif %}"
+                    class="fc_variant_item {% if variant.metafields.custom.is_prior == true %} active {% endif %} {% if variant.metafields.custom.bestseller == true %} bestseller{% endif %}"
                     data-id="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
@@ -124,7 +124,17 @@
 
           <div class="fc_bottom_end">
             <div class="fc_price_weight">
-              {% assign current_variant = product.selected_or_first_available_variant %}
+              {% assign current_variant = nil %}
+              {% for variant in product.variants %}
+                {% if variant.metafields.custom.is_prior == true and variant.available %}
+                  {% assign current_variant = variant %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+              {% if current_variant == nil %}
+                {% assign current_variant = product.selected_or_first_available_variant %}
+              {% endif %}
+
               {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
                   <strike id="compare_price">{{ current_variant.compare_at_price | money }}</strike>
@@ -135,7 +145,7 @@
                   <span class="selling_price">{{ current_variant.price | money }}</span>
                 </p>
               {% endif %}
-              {% assign current_variant = product.selected_or_first_available_variant %}
+
               <p class="fc_weight">
                 {% if current_variant.unit_price_measurement %}
                   {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
