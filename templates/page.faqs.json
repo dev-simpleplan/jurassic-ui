@@ -11,7 +11,9 @@
   "sections": {
     "faqs-page": {
       "type": "faqs-page",
-      "settings": {}
+      "settings": {
+        "head":"hello"
+      }
     }
   },
   "order": [
