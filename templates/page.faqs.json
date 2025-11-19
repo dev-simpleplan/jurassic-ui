@@ -11,8 +11,33 @@
   "sections": {
     "faqs-page": {
       "type": "faqs-page",
+      "blocks": {
+        "faq_category_r9dyJK": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "Category 1"
+          }
+        },
+        "faq_category_JCyg4Q": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "Category 2"
+          }
+        },
+        "faq_category_zM8QB3": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "Category 3"
+          }
+        }
+      },
+      "block_order": [
+        "faq_category_r9dyJK",
+        "faq_category_JCyg4Q",
+        "faq_category_zM8QB3"
+      ],
       "settings": {
-        "head":"hello"
+        "head": "hello"
       }
     }
   },
