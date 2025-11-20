@@ -1,0 +1,40 @@
+<a href="{{ article.url }}">
+    <div class="blog-card">
+    <div class="bc-image">
+        <div class="bf-image">
+            {% if article.image %}
+            <img src="{{ article.image | img_url: '900x' }}" alt="{{ article.title }}" class="img">
+            {% else %}
+            <img src="{{ 'placeholder.jpg' | asset_url }}" class="img">
+            {% endif %}
+        </div>
+
+        {% assign raw_text = article.content | default: article.excerpt | strip_html %}
+        {% assign words = raw_text | split: " " | size %}
+        {% assign read_time = words | divided_by: 200 | ceil %}
+        <p class="read-time-tag">{{ read_time }} Min Read</p>
+    </div>
+
+    <div class="bc-content">
+        <p class="bc-ct-tags">
+            <span>{{ article.blog.title }}</span>
+        </p>
+        <p class="bc-ct-tags">
+            <span>{{ blog.title }}</span>
+
+            {% if article.tags.size > 0 %}
+            {% for tag in article.tags %}
+            <span> • {{ tag | upcase }}</span>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <p class="bc-ct-title">
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        </p>
+
+        <p class="bc-ct-para">
+            {{ article.excerpt_or_content | strip_html | truncate: 120 }}
+        </p>
+    </div>
+</div>
+</a>
