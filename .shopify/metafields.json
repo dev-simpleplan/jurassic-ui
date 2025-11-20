@@ -460,6 +460,16 @@
         "name": "product_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "box_products",
+      "namespace": "custom",
+      "name": "Box Products",
+      "description": "Add Products for the box (Meet Wild Ones)",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
     }
   ],
   "variant": [

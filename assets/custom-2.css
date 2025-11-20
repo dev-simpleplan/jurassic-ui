@@ -933,8 +933,31 @@ span.cart-compare-price {
 .pro-desp {
   width: 38%;
 }
-.prod-main-image {
+.pro-right-side {
   width: 80%;
+  position: relative;
+}
+.pro-right-side .fc_category_tags {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 150px;
+    z-index: 2;
+}
+.pro-right-side .fc_bestsell_tags {
+    position: absolute;
+    right: 0;
+    top: 15px;
+    z-index: 2;
+}
+.pro-right-side .fc_organic_auth {
+  z-index: 2;
+}
+.prod-main-image {
+  width: 100%;
 }
 .prod-thumb-image {
   width: 20%;

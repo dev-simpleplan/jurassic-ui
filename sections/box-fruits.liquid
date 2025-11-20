@@ -9,20 +9,22 @@
                 <div class="bcontent-grid">
                     {% for item in product.metafields.custom.box_products.value %}
                         <div class="bcg-item">
-                            <div class="bcgitem-front">
-                                <div class="bcgfront-head">{{ item.product_name }}</div>
-                                <div class="bcgfront-image">
-                                    <img src="{{ item.product_image | img_url: 'master' }}" alt="{{ item.product_name }}">
+                            <div class="bcg-item-inner">
+                                <div class="bcgitem-front">
+                                    <div class="bcgfront-head">{{ item.product_name }}</div>
+                                    <div class="bcgfront-image">
+                                        <img src="{{ item.product_image | img_url: 'master' }}" alt="{{ item.product_name }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="bcgitem-back">
-                                <div class="bcgback-top">
-                                    <p>Era</p>
-                                    <span>{{ item.era }}</span>
-                                </div>
-                                <div class="bcgback-bottom">
-                                    <h6>{{ item.escription_heading }}</h6>
-                                    <div>{{ item.description_pointers }}</div>
+                                <div class="bcgitem-back">
+                                    <div class="bcgback-top">
+                                        <p>Era</p>
+                                        <span>{{ item.era }}</span>
+                                    </div>
+                                    <div class="bcgback-bottom">
+                                        <h6>{{ item.description_heading }}</h6>
+                                        <div>{{ item.description_pointers | metafield_tag }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
