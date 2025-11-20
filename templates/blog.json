@@ -9,12 +9,15 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "blog",
-      "settings": {}
+    "featured-blogs": {
+      "type": "featured-blogs",
+      "settings": {
+        "head":"Featured Blogs",
+        "blog_source": "news"
+      }
     }
   },
   "order": [
-    "main"
+    "featured-blogs"
   ]
 }
