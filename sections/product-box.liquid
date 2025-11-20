@@ -20,6 +20,35 @@
               </div>
             </div>
           {% endfor %}
+          {% assign product_tags = product.tags | downcase %}
+          {% if product.tags.size > 0 %}
+          <div class="fc_category_tags">
+            {% for tag in product.tags %}
+              {% unless tag == 'Best Seller' %}
+                <span>{{ tag }}</span>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if product.tags contains 'Best Seller' %}
+          <div class="fc_bestsell_tags">
+            <span>Bestseller</span>
+          </div>
+        {% endif %}
+
+        {% if product.metafields.custom.certificate %}
+          {% assign certificate = product.metafields.custom.certificate.value %}
+          {% for item in product.metafields.custom.certificate.value %}
+            <div class="fc_organic_auth">
+              <img
+                src="{{ item.badge_image | img_url:'master' }}"
+                alt="{{ item.display_name }}"
+                class="img_sizing">
+            </div>
+          {% endfor %}
+        {% endif %}
+
         </div>
         <div class="prod-thumb-image">
           {% for media in product.media %}

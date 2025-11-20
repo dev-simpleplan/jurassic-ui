@@ -12,7 +12,25 @@
   <div class="container">
     <div class="pro-grid">
       <div class="pro-img">
-        <div class="prod-main-image">
+        <div class="pro-right-side">
+          <div class="prs-data">
+            {% if product.tags.size > 0 %}
+                <div class="fc_category_tags">
+                  {% for tag in product.tags %}
+                    {% unless tag == 'Best Seller' %}
+                      <span>{{ tag }}</span>
+                    {% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% if product.tags contains 'Best Seller' %}
+                <div class="fc_bestsell_tags">
+                  <span>Bestseller</span>
+                </div>
+              {% endif %}
+          </div>
+          <div class="prod-main-image">
           {% for media in product.media %}
             <div class="item">
               <div class="prod-main">
@@ -20,6 +38,7 @@
               </div>
             </div>
           {% endfor %}
+        </div>
         </div>
         <div class="prod-thumb-image">
           {% for media in product.media %}
