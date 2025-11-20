@@ -31,14 +31,22 @@
               {% endif %}
           </div>
           <div class="prod-main-image">
-          {% for media in product.media %}
-            <div class="item">
-              <div class="prod-main">
-                {% render 'product-media' | media: media %}
+            {% for media in product.media %}
+              <div class="item">
+                <div class="prod-main">
+                  {% render 'product-media' | media: media %}
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
+            {% endfor %}
+          </div>
+          <div class="btn-wrap">
+            <button class="custom-prev">
+              {%- render 'arrow-prev' -%}
+            </button>
+            <button class="custom-next">
+              {%- render 'arrow-next' -%}
+            </button>
+          </div>
         </div>
         <div class="prod-thumb-image">
           {% for media in product.media %}
@@ -651,22 +659,42 @@
 
 <script>
       $(document).ready(function () {
-    $('.prod-main-image').slick({
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
-      fade: true,
-      asNavFor: '.prod-thumb-image',
-    });
-    $('.prod-thumb-image').slick({
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      asNavFor: '.prod-main-image',
-      focusOnSelect: true,
-      centerMode: true,
-      vertical: true,
-      arrows: false,
-    });
+        $('.prod-main-image').slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          fade: true,
+          asNavFor: '.prod-thumb-image',
+        });
+        $('.prod-thumb-image').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          asNavFor: '.prod-main-image',
+          focusOnSelect: true,
+          centerMode: true,
+          vertical: true,
+          arrows: false,
+        });
+        $(".custom-prev").click(function () {
+          $(".prod-main-image").slick("slickPrev");
+        });
+
+        $(".custom-next").click(function () {
+          $(".prod-main-image").slick("slickNext");
+        });
+        $(".custom-prev").addClass("slick-disabled");
+        $(".prod-main-image").on("afterChange", function () {
+          if ($(".slick-prev").hasClass("slick-disabled")) {
+            $(".custom-prev").addClass("slick-disabled");
+          } else {
+            $(".custom-prev").removeClass("slick-disabled");
+          }
+          if ($(".slick-next").hasClass("slick-disabled")) {
+            $(".custom-next").addClass("slick-disabled");
+          } else {
+            $(".custom-next").removeClass("slick-disabled");
+          }
+        });
       });
 </script>
 

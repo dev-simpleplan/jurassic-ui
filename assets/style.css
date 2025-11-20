@@ -2817,14 +2817,17 @@ section.imagescroll {
     margin: auto;
     width: 120px;
     height: 120px;
-    border-radius: 50%;
+    /* border-radius: 50%;
     background-color: rgba(34, 101, 0, 0.5);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    filter: blur(25px);
+    filter: blur(25px); */
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Group_427322658.svg?v=1763649556);
+    background-repeat: no-repeat;
+    background-size: 100%;
     transition: .3s ease all;
 }
-.facts-hover-data::after {
+/* .facts-hover-data::after {
     content: '';
     position: absolute;
     bottom: -64px;
@@ -2840,7 +2843,7 @@ section.imagescroll {
     -webkit-backdrop-filter: blur(25px);
     z-index: 1;
     transition: .3s ease all;
-}
+} */
 .factsdata-item .facts-hover:hover ~ .facts-hover-data {
     opacity: 1!important;
 }
