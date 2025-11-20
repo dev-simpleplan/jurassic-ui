@@ -347,7 +347,14 @@
       ],
       "name": "Reviews Section",
       "settings": {
-        "heading": ""
+        "heading": "What Explorers Are Saying"
+      }
+    },
+    "spacer_wXMU4V": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
       }
     },
     "three-icon-sec": {
@@ -512,6 +519,7 @@
     "facts",
     "spacer_LKTbj6",
     "reviews_FNV7Gf",
+    "spacer_wXMU4V",
     "three-icon-sec",
     "image_text_scroll_qVRxF4",
     "spacer_1",
