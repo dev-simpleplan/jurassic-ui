@@ -1,0 +1,59 @@
+<div class="lalabox-content">
+    <div class="container-fluid">
+        <div class="lalabox-content-in">
+            <div class="sec-with-space">
+                <div class="heading">
+                    <h2 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.heading }}</h2>
+                    <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">{{ section.settings.subheading }}</p>
+                </div>
+                <div class="bcontent-grid">
+                    {% for item in product.metafields.custom.box_products.value %}
+                        <div class="bcg-item">
+                            <div class="bcgitem-front">
+                                <div class="bcgfront-head">{{ item.product_name }}</div>
+                                <div class="bcgfront-image">
+                                    <img src="{{ item.product_image | img_url: 'master' }}" alt="{{ item.product_name }}">
+                                </div>
+                            </div>
+                            <div class="bcgitem-back">
+                                <div class="bcgback-top">
+                                    <p>Era</p>
+                                    <span>{{ item.era }}</span>
+                                </div>
+                                <div class="bcgback-bottom">
+                                    <h6>{{ item.escription_heading }}</h6>
+                                    <div>{{ item.description_pointers }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Box Fruits",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Meet the Wild Ones of the Lala Box"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub Heading",
+        "default": "These aren’t just fruits — they’re invitations to explore. Here's what makes each one extraordinary."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Box Fruits"
+      }
+    ]
+  }
+{% endschema %}

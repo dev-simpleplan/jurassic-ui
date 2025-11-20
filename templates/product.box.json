@@ -79,10 +79,9 @@
         "spacer_height": 140
       }
     },
-    "frequently": {
-      "type": "frequently-bought",
+    "box-fruits": {
+      "type": "box-fruits",
       "settings": {
-        "head": "Frequently Bought<br>Together with"
       }
     },
     "spacer_Nh7Bj": {
@@ -383,7 +382,7 @@
   "order": [
     "template",
     "spacer0",
-    "frequently",
+    "box-fruits",
     "spacer_Nh7Bj",
     "jurassic-nature",
     "spacer_Nh7Bjn",
