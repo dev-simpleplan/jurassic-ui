@@ -387,6 +387,25 @@
         "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
       }
     },
+    "image_text_scroll_qVRxF4": {
+      "type": "image-text-scroll",
+      "name": "Durian Shape",
+      "settings": {
+        "heading": "Our story started with a durian",
+        "para": "And 3 simple principles",
+        "img1": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
+        "head1": "Raw.",
+        "para1": "As untouched as it gets — grown naturally, picked ripe. Nothing added, nothing rushed — just nature in its purest form.",
+        "img2": "shopify://shop_images/real_1.jpg",
+        "head2": "Real.",
+        "para2": "Flavors you can feel — straight from the source. Grown with care, never compromised, and always full of soul.",
+        "img3": "shopify://shop_images/roar.jpg",
+        "head3": "Roar!",
+        "para3": "The joy is wild — and made to be shared. Every bite connects you to something honest, rare, and alive.",
+        "cta_link": "",
+        "cta_txt": "discover our story"
+      }
+    },
     "spacer_1": {
       "type": "spacer",
       "name": "Spacer",
@@ -494,6 +513,7 @@
     "spacer_LKTbj6",
     "reviews_FNV7Gf",
     "three-icon-sec",
+    "image_text_scroll_qVRxF4",
     "spacer_1",
     "left-image-with-items",
     "spacer_2",
