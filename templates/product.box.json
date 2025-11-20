@@ -81,8 +81,7 @@
     },
     "box-fruits": {
       "type": "box-fruits",
-      "settings": {
-      }
+      "settings": {}
     },
     "spacer_Nh7Bj": {
       "type": "spacer",
@@ -208,8 +207,6 @@
           "type": "title",
           "settings": {
             "show_item": false,
-            "top_position": 36,
-            "left_position": 22,
             "facts_top_data": "<p>Two ancient lineages:</p>",
             "facts_bottom_data": "<p><strong>Indo-Atlantic (India, Sri Lanka)</strong> and <strong>Pacific (Indonesia, Philippines).</strong></p>",
             "facts_heading": "Origin"
@@ -219,8 +216,6 @@
           "type": "title",
           "settings": {
             "show_item": false,
-            "top_position": 24,
-            "left_position": 38,
             "facts_top_data": "",
             "facts_bottom_data": "<p>Coconuts are still propagated naturally, often germinating where they fall. <strong>This nut remains untamed.</strong></p>",
             "facts_heading": "Domestication"
@@ -230,15 +225,17 @@
           "type": "title",
           "settings": {
             "show_item": false,
-            "top_position": 12,
-            "left_position": 81,
             "facts_top_data": "",
             "facts_bottom_data": "<p>A coconut can survive over <strong>3 months at sea</strong> and still germinate. It's a natural life capsule, built for oceanic exploration.</p>",
             "facts_heading": "survival fact"
           }
         }
       },
-      "block_order": ["title_bLtX9r", "title_CqVYTJ", "title_zNyBLK"],
+      "block_order": [
+        "title_bLtX9r",
+        "title_CqVYTJ",
+        "title_zNyBLK"
+      ],
       "name": "facts",
       "settings": {
         "heading": "want to learn some interesting facts about the fruit’s",
@@ -277,7 +274,11 @@
           }
         }
       },
-      "block_order": ["cards_P3Btyy", "cards_47PU9w", "cards_kb9bFP"],
+      "block_order": [
+        "cards_P3Btyy",
+        "cards_47PU9w",
+        "cards_kb9bFP"
+      ],
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
