@@ -3225,6 +3225,11 @@ section.imagescroll {
     font-size: 12px;
     letter-spacing: 0.32px;
 }
+.fruits_card_section.full-width {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
 /* Product Page CSS */
 
 @media (max-width: 1500px) {
