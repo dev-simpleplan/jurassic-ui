@@ -3137,8 +3137,9 @@ section.imagescroll {
     text-align: center;
 }
 .bcgitem-front .bcgfront-image {
-    max-height: 220px;
-    max-width: 120px;
+    max-height: 100%;
+    max-width: 100%;
+    aspect-ratio: 1/1;
 }
 .bcgfront-image img {
     width: 100%;
@@ -3201,6 +3202,28 @@ section.imagescroll {
     font-weight: 400;
     color: #1A1A1A;
     line-height: 140%;
+}
+.pro-breadcrumbs {
+    margin-top: 30px;
+    padding: 24px 0;
+}
+.bcrum-in ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+.bcrum-in ul li a {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.32px;
+    color: var(--grey-black);
+}
+.bcrum-in ul li:last-child span {
+    color: #6B6B6B;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.32px;
 }
 /* Product Page CSS */
 
