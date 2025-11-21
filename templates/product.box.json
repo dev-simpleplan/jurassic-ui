@@ -156,22 +156,6 @@
         "background_color": "#1a1a1a"
       }
     },
-    "jurassic-nature": {
-      "type": "jurassic-by-nature",
-      "settings": {
-        "section_heading": "Jurassic by Nature",
-        "section_subheading": "A Fruit Born With the Dinosaurs... and Still Intact",
-        "bg_image": "shopify://shop_images/f15cc9c03563da8897c4710661a87979e449a3f6.jpg",
-        "icon-outer": "shopify://shop_images/jj-rotating-text.svg",
-        "icon-inner": "shopify://shop_images/jk-mark-white.svg",
-        "item_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
-        "item_image1": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
-        "item_image2": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png",
-        "item_image3": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_3.png",
-        "item_image4": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
-        "item_image5": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_2.png"
-      }
-    },
     "spacer_Nh7Bjn": {
       "type": "spacer",
       "name": "Spacer",
@@ -266,46 +250,81 @@
         "spacer_height": 140
       }
     },
-    "facts": {
-      "type": "facts",
+    "reviews_dwN4k7": {
+      "type": "reviews",
       "blocks": {
-        "title_bLtX9r": {
-          "type": "title",
+        "review_item_eeDVM9": {
+          "type": "review_item",
           "settings": {
-            "show_item": false,
-            "facts_top_data": "<p>Two ancient lineages:</p>",
-            "facts_bottom_data": "<p><strong>Indo-Atlantic (India, Sri Lanka)</strong> and <strong>Pacific (Indonesia, Philippines).</strong></p>",
-            "facts_heading": "Origin"
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
           }
         },
-        "title_CqVYTJ": {
-          "type": "title",
+        "review_item_tnqTU4": {
+          "type": "review_item",
           "settings": {
-            "show_item": false,
-            "facts_top_data": "",
-            "facts_bottom_data": "<p>Coconuts are still propagated naturally, often germinating where they fall. <strong>This nut remains untamed.</strong></p>",
-            "facts_heading": "Domestication"
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
           }
         },
-        "title_zNyBLK": {
-          "type": "title",
+        "review_item_4Jhy7W": {
+          "type": "review_item",
           "settings": {
-            "show_item": false,
-            "facts_top_data": "",
-            "facts_bottom_data": "<p>A coconut can survive over <strong>3 months at sea</strong> and still germinate. It's a natural life capsule, built for oceanic exploration.</p>",
-            "facts_heading": "survival fact"
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
+          }
+        },
+        "review_item_t6NH4D": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
+          }
+        },
+        "review_item_WciDXg": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
+          }
+        },
+        "review_item_hmEGFf": {
+          "type": "review_item",
+          "settings": {
+            "user_image": "shopify://shop_images/952ea62b328def55e572140d3b90a0750a2d3bbd.jpg",
+            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
+            "review_star": 4.7,
+            "user_name": "Denny Silver",
+            "user_desig": "Father of 3"
           }
         }
       },
       "block_order": [
-        "title_bLtX9r",
-        "title_CqVYTJ",
-        "title_zNyBLK"
+        "review_item_eeDVM9",
+        "review_item_tnqTU4",
+        "review_item_4Jhy7W",
+        "review_item_t6NH4D",
+        "review_item_WciDXg",
+        "review_item_hmEGFf"
       ],
-      "name": "facts",
+      "name": "Reviews Section",
       "settings": {
-        "heading": "want to learn some interesting facts about the fruit’s",
-        "subheading": "Find coconuts to reveal fun facts!!!"
+        "heading": "What Explorers Are Saying"
       }
     },
     "spacer_LKTbj6": {
@@ -452,11 +471,10 @@
     "box-fruits",
     "spacer_Nh7Bj",
     "video_carousel_YJxU7F",
-    "jurassic-nature",
     "spacer_Nh7Bjn",
     "usp-ticker",
     "spacer_BmkhaA",
-    "facts",
+    "reviews_dwN4k7",
     "spacer_LKTbj6",
     "three-icon-sec",
     "spacer_1",
