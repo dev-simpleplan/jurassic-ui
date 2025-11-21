@@ -81,13 +81,79 @@
     },
     "box-fruits": {
       "type": "box-fruits",
-      "settings": {}
+      "settings": {
+        "heading": "Meet the Wild Ones of the Lala Box",
+        "subheading": "These aren’t just fruits — they’re invitations to explore. Here's what makes each one extraordinary."
+      }
     },
     "spacer_Nh7Bj": {
       "type": "spacer",
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
+      }
+    },
+    "video_carousel_YJxU7F": {
+      "type": "video-carousel",
+      "blocks": {
+        "ugc_videos_zR8mng": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_eDAaYP": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_hiVjVf": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_p34at3": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_3t9tyg": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_R3WRXz": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        },
+        "ugc_videos_QhrUaJ": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "ugc_videos_zR8mng",
+        "ugc_videos_eDAaYP",
+        "ugc_videos_hiVjVf",
+        "ugc_videos_p34at3",
+        "ugc_videos_3t9tyg",
+        "ugc_videos_R3WRXz",
+        "ugc_videos_QhrUaJ"
+      ],
+      "name": "Video-Section",
+      "settings": {
+        "heading_top": "Bite into the",
+        "heading_bottom": "Wild with us",
+        "heading_color": "#dbd7c8",
+        "background_color": "#1a1a1a"
       }
     },
     "jurassic-nature": {
@@ -385,6 +451,7 @@
     "spacer0",
     "box-fruits",
     "spacer_Nh7Bj",
+    "video_carousel_YJxU7F",
     "jurassic-nature",
     "spacer_Nh7Bjn",
     "usp-ticker",
