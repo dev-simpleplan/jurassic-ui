@@ -166,6 +166,9 @@
   .cart-item-left {
     align-items: flex-start;
   }
+  .bcontent-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
 }
 
 @media (max-width: 991px) {
@@ -656,6 +659,25 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .facts-hover-data::before,
   .facts-hover-data::after {
     content: none;
+  }
+  .bcontent-grid .bcg-item {
+    aspect-ratio: inherit;
+  }
+  .bcg-item-inner {
+    transform-style: initial;
+    height: auto;
+  }
+  .bcontent-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+  .bcgitem-front, .bcgitem-back {
+    position: relative;
+    backface-visibility: inherit;
+    height: auto;
+  }
+  .bcgitem-back {
+    transform: none;
+    height: 100%;
   }
 }
 

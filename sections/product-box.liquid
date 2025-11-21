@@ -7,49 +7,69 @@
   src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
   defer></script>
 
+<div class="pro-breadcrumbs">
+  <div class="container">
+      <div class="bcrum-in">
+        <ul>
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="/collections/all">Shop All</a></li>
+          {% assign current_collection = collection | default: product.collections.first %}
+          {% if current_collection %}
+            <li>
+              <a href="{{ current_collection.url }}">
+                {{ current_collection.title }}
+              </a>
+            </li>
+          {% endif %}
+          <li><span>{{ product.title }}</span></li>
+        </ul>
+      </div>
+  </div>
+</div>
+
+
 {% assign selected_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
   <div class="container">
     <div class="pro-grid">
       <div class="pro-img">
-        <div class="prod-main-image">
-          {% for media in product.media %}
-            <div class="item">
-              <div class="prod-main">
-                {% render 'product-media' | media: media %}
+          <div class="pro-right-side">
+          <div class="prs-data">
+            {% if product.tags.size > 0 %}
+                <div class="fc_category_tags">
+                  {% for tag in product.tags %}
+                    {% unless tag == 'Best Seller' %}
+                      <span>{{ tag }}</span>
+                    {% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% if product.tags contains 'Best Seller' %}
+                <div class="fc_bestsell_tags">
+                  <span>Bestseller</span>
+                </div>
+              {% endif %}
+          </div>
+          <div class="prod-main-image">
+            {% for media in product.media %}
+              <div class="item">
+                <div class="prod-main">
+                  {% render 'product-media' | media: media %}
+                </div>
               </div>
-            </div>
-          {% endfor %}
-          {% assign product_tags = product.tags | downcase %}
-          {% if product.tags.size > 0 %}
-          <div class="fc_category_tags">
-            {% for tag in product.tags %}
-              {% unless tag == 'Best Seller' %}
-                <span>{{ tag }}</span>
-              {% endunless %}
             {% endfor %}
           </div>
-        {% endif %}
-
-        {% if product.tags contains 'Best Seller' %}
-          <div class="fc_bestsell_tags">
-            <span>Bestseller</span>
+          <div class="btn-wrap">
+            <button class="custom-prev">
+              {%- render 'arrow-prev' -%}
+            </button>
+            <button class="custom-next">
+              {%- render 'arrow-next' -%}
+            </button>
           </div>
-        {% endif %}
-
-        {% if product.metafields.custom.certificate %}
-          {% assign certificate = product.metafields.custom.certificate.value %}
-          {% for item in product.metafields.custom.certificate.value %}
-            <div class="fc_organic_auth">
-              <img
-                src="{{ item.badge_image | img_url:'master' }}"
-                alt="{{ item.display_name }}"
-                class="img_sizing">
-            </div>
-          {% endfor %}
-        {% endif %}
-
         </div>
+      
         <div class="prod-thumb-image">
           {% for media in product.media %}
             <div class="item">
@@ -668,6 +688,26 @@
       vertical: true,
       arrows: false,
     });
+    $(".custom-prev").click(function () {
+          $(".prod-main-image").slick("slickPrev");
+        });
+
+        $(".custom-next").click(function () {
+          $(".prod-main-image").slick("slickNext");
+        });
+        $(".custom-prev").addClass("slick-disabled");
+        $(".prod-main-image").on("afterChange", function () {
+          if ($(".slick-prev").hasClass("slick-disabled")) {
+            $(".custom-prev").addClass("slick-disabled");
+          } else {
+            $(".custom-prev").removeClass("slick-disabled");
+          }
+          if ($(".slick-next").hasClass("slick-disabled")) {
+            $(".custom-next").addClass("slick-disabled");
+          } else {
+            $(".custom-next").removeClass("slick-disabled");
+          }
+        });
       });
   </script>
 

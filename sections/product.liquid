@@ -7,6 +7,27 @@
   src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
   defer></script>
 
+
+<div class="pro-breadcrumbs">
+  <div class="container">
+      <div class="bcrum-in">
+        <ul>
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="/collections/all">Shop All</a></li>
+          {% assign current_collection = collection | default: product.collections.first %}
+          {% if current_collection %}
+            <li>
+              <a href="{{ current_collection.url }}">
+                {{ current_collection.title }}
+              </a>
+            </li>
+          {% endif %}
+          <li><span>{{ product.title }}</span></li>
+        </ul>
+      </div>
+  </div>
+</div>
+
 {% assign selected_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
   <div class="container">

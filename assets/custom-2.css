@@ -928,15 +928,17 @@ span.cart-compare-price {
   flex-direction: row-reverse;
   width: 60%;
   justify-content: space-between;
+  gap: 11px;
   align-items: stretch;
   max-height: 700px;
   overflow: hidden;
+  position: relative;
 }
 .pro-desp {
   width: 38%;
 }
 .pro-right-side {
-  width: 80%;
+  width: calc(100% - 129px);
   position: relative;
 }
 .pro-right-side .fc_category_tags {
@@ -997,6 +999,10 @@ span.cart-compare-price {
 .prod-thumb-image {
   width: 20%;
   max-width: 118px;
+  position: absolute!important;
+  left: 0;
+  top: 0;
+  height: 100%;
 }
 .prod-main-image img,
 .prod-thumb-image img {
@@ -1041,6 +1047,9 @@ span.cart-compare-price {
 .prod-main-image .slick-list,
 .prod-main-image .slick-track {
   height: 100%;
+}
+.prod-thumb-image .slick-list {
+  height: 100%!important;
 }
 
 /* Product Information Block */
@@ -1119,7 +1128,7 @@ span.cart-compare-price {
   gap: 8px;
 }
 .product-info-block .pi-item p {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
   line-height: 140%;
   letter-spacing: -0.01em;
