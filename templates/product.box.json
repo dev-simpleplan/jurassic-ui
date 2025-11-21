@@ -464,17 +464,21 @@
         "spacer_height": 140
       }
     },
-    "bestseller_EfFxUF": {
-      "type": "bestseller",
-      "name": "Bestseller",
+    "bestsellercarousel": {
+      "type": "bestseller-carousel",
+      "name": "BestsellerCarousel",
       "settings": {
         "collection": "fruit",
-        "heading": "This Week’s Bestsellers",
-        "subheading": "",
-        "cta_url": "shopify://collections",
-        "cta_text": ""
+        "heading": "This Week’s Bestsellers"
       }
-    }
+    },
+    "spacer_awrgBa": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
   },
   "order": [
     "template",
@@ -494,6 +498,7 @@
     "spacer_2",
     "faq",
     "spacer_awrgBz",
-    "bestseller_EfFxUF"
+    "bestsellercarousel",
+    "spacer_awrgBa"
   ]
 }

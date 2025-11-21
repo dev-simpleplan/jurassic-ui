@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+
+<section class="fruits_card_section full-width">
+  
+<div class="heading center">
+    <h2 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="fruits_cards_slider slider_container">
+    <div class="owl-carousel">
+      {%- assign collection = section.settings.collection -%}
+      {%- if collection == blank or collection.products_count == 0 -%}
+        <p>There are no products inside of this collection.</p>
+      {%- else -%}
+        {% for product in collection.products %}
+          {% render 'product-card-primary'
+            , product: product
+            , collection: collection %}
+        {% endfor %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "BestsellerCarousel",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Select collection"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Section heading",
+        "default": "Fresh Picks"
+      }
+    ],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "BestsellerCarousel",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}
+
+
+<script>
+  $(document).ready(function () {
+    $('.fruits_cards_slider .owl-carousel').owlCarousel({
+      loop: true,
+      center: true,
+      margin: 20,
+      nav: true,
+      autoplayTimeout: 3000,
+      navText: [
+        '<button class="custom-prev"><svg height="18px" width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185.343 185.343" style="transform: rotate(180deg);"><g><path style="fill:#fff;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/></g></svg></button>',
+        '<button class="custom-next"><svg height="18px" width="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 185.343 185.343"><g><path style="fill:#fff;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/></g></svg></button>',
+      ],
+      responsive: {
+        0: {
+          items: 2,
+        },
+        991: {
+          items: 3,
+        },
+        1100: {
+          items: 5,
+        }
+      },
+    });
+  });
+</script>
