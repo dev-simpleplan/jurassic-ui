@@ -156,93 +156,6 @@
         "background_color": "#1a1a1a"
       }
     },
-    "spacer_Nh7Bjn": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
-    "usp-ticker": {
-      "type": "usp-ticker",
-      "blocks": {
-        "cards_LUJjzq": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
-            "ticker_text": "800 Farmers Supported"
-          }
-        },
-        "cards_f78J3x": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
-            "ticker_text": "1000+ 5-Star Reviews"
-          }
-        },
-        "cards_4tRDRB": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
-            "ticker_text": "Free Shipping above 89 €"
-          }
-        },
-        "cards_YemYXY": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
-            "ticker_text": "800 Farmers Supported"
-          }
-        },
-        "cards_xerDPJ": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
-            "ticker_text": "1000+ 5-Star Reviews"
-          }
-        },
-        "cards_EkaPMQ": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
-            "ticker_text": "Free Shipping above 89 €"
-          }
-        },
-        "cards_7MHNaB": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
-            "ticker_text": "800 Farmers Supported"
-          }
-        },
-        "cards_gKwDPP": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
-            "ticker_text": "1000+ 5-Star Reviews"
-          }
-        },
-        "cards_PcKgVt": {
-          "type": "cards",
-          "settings": {
-            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
-            "ticker_text": "Free Shipping above 89 €"
-          }
-        }
-      },
-      "block_order": [
-        "cards_LUJjzq",
-        "cards_f78J3x",
-        "cards_4tRDRB",
-        "cards_YemYXY",
-        "cards_xerDPJ",
-        "cards_EkaPMQ",
-        "cards_7MHNaB",
-        "cards_gKwDPP",
-        "cards_PcKgVt"
-      ],
-      "settings": {}
-    },
     "spacer_BmkhaA": {
       "type": "spacer",
       "name": "Spacer",
@@ -371,7 +284,110 @@
         "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
       }
     },
+    "image_text_scroll_zrKkRq": {
+      "type": "image-text-scroll",
+      "name": "Durian Shape",
+      "settings": {
+        "heading": "Our story started with a durian",
+        "para": "And 3 simple principles",
+        "head1": "Raw.",
+        "para1": "As untouched as it gets — grown naturally, picked ripe. Nothing added, nothing rushed — just nature in its purest form.",
+        "head2": "Real.",
+        "para2": "Flavors you can feel — straight from the source. Grown with care, never compromised, and always full of soul.",
+        "head3": "Roar!",
+        "para3": "The joy is wild — and made to be shared. Every bite connects you to something honest, rare, and alive.",
+        "cta_link": "",
+        "cta_txt": "discover our story"
+      }
+    },
     "spacer_1": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "usp-ticker": {
+      "type": "usp-ticker",
+      "blocks": {
+        "cards_LUJjzq": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_f78J3x": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_4tRDRB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_YemYXY": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_xerDPJ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_EkaPMQ": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        },
+        "cards_7MHNaB": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Group_427322776.svg",
+            "ticker_text": "800 Farmers Supported"
+          }
+        },
+        "cards_gKwDPP": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163138.290.svg",
+            "ticker_text": "1000+ 5-Star Reviews"
+          }
+        },
+        "cards_PcKgVt": {
+          "type": "cards",
+          "settings": {
+            "ticker_icon": "shopify://shop_images/Vector_-_2025-11-05T163144.506.svg",
+            "ticker_text": "Free Shipping above 89 €"
+          }
+        }
+      },
+      "block_order": [
+        "cards_LUJjzq",
+        "cards_f78J3x",
+        "cards_4tRDRB",
+        "cards_YemYXY",
+        "cards_xerDPJ",
+        "cards_EkaPMQ",
+        "cards_7MHNaB",
+        "cards_gKwDPP",
+        "cards_PcKgVt"
+      ],
+      "settings": {}
+    },
+    "spacer_Nh7Bjn": {
       "type": "spacer",
       "name": "Spacer",
       "settings": {
@@ -408,29 +424,13 @@
             "head_text": "Ripe with Intention",
             "para_text": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
           }
-        },
-        "cards_rXQKrp": {
-          "type": "cards",
-          "settings": {
-            "head_text": "Faces Behind the Flavor",
-            "para_text": "These are smallholders with big hearts. Their work is dignified, their stories real, their impact lasting."
-          }
-        },
-        "cards_ixEMk3": {
-          "type": "cards",
-          "settings": {
-            "head_text": "Connected by Care",
-            "para_text": "From their hands to your home, our direct partnerships ensure purity, fairness, and a shared love for food done right."
-          }
         }
       },
       "block_order": [
         "cards_FEmMR3",
         "cards_wxQ7xD",
         "cards_eGXAwz",
-        "cards_Mi37EN",
-        "cards_rXQKrp",
-        "cards_ixEMk3"
+        "cards_Mi37EN"
       ],
       "name": "left-image-with-items",
       "settings": {
@@ -463,6 +463,17 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "bestseller_EfFxUF": {
+      "type": "bestseller",
+      "name": "Bestseller",
+      "settings": {
+        "collection": "fruit",
+        "heading": "This Week’s Bestsellers",
+        "subheading": "",
+        "cta_url": "shopify://collections",
+        "cta_text": ""
+      }
     }
   },
   "order": [
@@ -471,16 +482,18 @@
     "box-fruits",
     "spacer_Nh7Bj",
     "video_carousel_YJxU7F",
-    "spacer_Nh7Bjn",
-    "usp-ticker",
     "spacer_BmkhaA",
     "reviews_dwN4k7",
     "spacer_LKTbj6",
     "three-icon-sec",
+    "image_text_scroll_zrKkRq",
     "spacer_1",
+    "usp-ticker",
+    "spacer_Nh7Bjn",
     "left-image-with-items",
     "spacer_2",
     "faq",
-    "spacer_awrgBz"
+    "spacer_awrgBz",
+    "bestseller_EfFxUF"
   ]
 }
