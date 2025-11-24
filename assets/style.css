@@ -3235,6 +3235,82 @@ section.imagescroll {
     flex-direction: column;
     gap: 50px;
 }
+.threeimages-in {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    gap: 40px;
+}
+.threeimages-in .tii-left {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+.tii-pointers {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+.tii-pointers .tiip-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.tiip-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+}
+.tiip-item-top .tit-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #DBD7C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tit-icon img {
+    max-width: 19px;
+    max-height: 19px;
+}
+.tii-heading {
+    color: #1A1A1A;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+.tii-item-bottom p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: 0;
+    color: var(--grey-black);
+    max-width: 49ch;
+}
+.tii-right .tii-image-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.tii-image-left {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.til-top , .til-bottom {
+    aspect-ratio: 8/7;
+    width: 100%;
+}
+.til-top img , .til-bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.tii-image-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 /* Product Page CSS */
 
 @media (max-width: 1500px) {

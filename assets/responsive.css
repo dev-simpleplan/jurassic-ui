@@ -1,3 +1,9 @@
+@media(max-width:1600px){
+  .container-fluid.custom-right {
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
 @media (max-width: 1500px) {
   .missionin-content .mic-data {
     margin-top: 100px;
