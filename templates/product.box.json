@@ -163,6 +163,47 @@
         "spacer_height": 140
       }
     },
+    "three_image_box_menw3P": {
+      "type": "three-image-box",
+      "blocks": {
+        "cards_9mrgbe": {
+          "type": "cards",
+          "settings": {
+            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154602.594.svg",
+            "pointer_heading": "Smart, Minimal Packaging",
+            "pointer_description": "We use just enough to protect your fruit. Our materials are recyclable, compostable, or reusable whenever possible."
+          }
+        },
+        "cards_qnVCYU": {
+          "type": "cards",
+          "settings": {
+            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154608.626.svg",
+            "pointer_heading": "Shipped Straight from the Source",
+            "pointer_description": "No middlemen. No warehouses. Your box is packed at the farm and delivered fresh — usually within 4–7 days of harvest."
+          }
+        },
+        "cards_YbG9xH": {
+          "type": "cards",
+          "settings": {
+            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154616.145.svg",
+            "pointer_heading": "Designed to Do Good",
+            "pointer_description": "Our packaging and delivery choices are made with the planet in mind. From low-waste sourcing to smart logistics, we keep things light on impact and full of purpose."
+          }
+        }
+      },
+      "block_order": [
+        "cards_9mrgbe",
+        "cards_qnVCYU",
+        "cards_YbG9xH"
+      ],
+      "name": "three-images-box",
+      "settings": {
+        "heading": "How Your Box Gets to You",
+        "first_image": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
+        "second_image": "shopify://shop_images/real_1.jpg",
+        "third_image": "shopify://shop_images/Group_427321151.jpg"
+      }
+    },
     "reviews_dwN4k7": {
       "type": "reviews",
       "blocks": {
@@ -521,6 +562,7 @@
     "spacer_Nh7Bj",
     "video_carousel_YJxU7F",
     "spacer_BmkhaA",
+    "three_image_box_menw3P",
     "reviews_dwN4k7",
     "spacer_LKTbj6",
     "three-icon-sec",
