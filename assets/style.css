@@ -229,6 +229,9 @@ a:hover {
 .heading-link a:hover {
 
 }
+.heading .heading-btn {
+    margin-top: 30px;
+}
 .show-mobile {
     display: none;
 }
@@ -3310,6 +3313,26 @@ section.imagescroll {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.order-smaple {
+    position: relative;
+    padding: 70px 0;
+    background-color: #DBD7C8;
+}
+.order-smaple .os-left-image {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 20vw;
+}
+.os-left-image img, .os-right-image img {
+    width: 100%;
+}
+.order-smaple .os-right-image {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20vw;
 }
 /* Product Page CSS */
 
