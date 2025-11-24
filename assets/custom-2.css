@@ -1298,13 +1298,16 @@ span.cart-compare-price {
   color: #6b6b6b;
 }
 .variant-option {
-  margin-top: 28px;
+  margin-top: 18px;
 }
 .variant-option ul {
   display: flex;
   align-items: stretch;
   gap: 8px;
   justify-content: flex-start;
+  padding-top: 16px;
+  overflow: hidden;
+  overflow-x: auto;
 }
 li.variant-value {
   padding: 12px 16px;

@@ -3221,6 +3221,24 @@ section.imagescroll {
     justify-content: flex-start;
     gap: 20px;
 }
+.bcrum-in ul li {
+    position: relative;
+}
+.bcrum-in ul li::after {
+    content: '>';
+    position: absolute;
+    right: -17px;
+    color: #6B6B6B;
+    font-size: 12px;
+    display: flex;
+    top: 1px;
+    width: 10px;
+    height: 100%;
+    align-items: center;
+}
+.bcrum-in ul li:last-child::after {
+    content: none;
+}
 .bcrum-in ul li a {
     font-weight: 400;
     font-size: 12px;
@@ -3238,6 +3256,9 @@ section.imagescroll {
     flex-direction: column;
     gap: 50px;
 }
+.fruits_card_section.full-width .for_responsive {
+    display: block;
+}
 .threeimages-in {
     display: grid;
     grid-template-columns: 4fr 6fr;
@@ -3248,6 +3269,9 @@ section.imagescroll {
     display: flex;
     flex-direction: column;
     gap: 80px;
+}
+.threeimages .for-mob {
+    display: none;
 }
 .tii-pointers {
     display: flex;
@@ -3324,6 +3348,7 @@ section.imagescroll {
     left: 0;
     bottom: 0;
     width: 20vw;
+    z-index: 0;
 }
 .os-left-image img, .os-right-image img {
     width: 100%;
@@ -3333,6 +3358,11 @@ section.imagescroll {
     right: 0;
     top: 0;
     width: 20vw;
+    z-index: 0;
+}
+.order-smaple .os-in {
+    position: relative;
+    z-index: 1;
 }
 /* Product Page CSS */
 

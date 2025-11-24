@@ -699,6 +699,9 @@ font-size: 12px;
         padding: 0px;
         padding-left: 40px;
     }
+    .fruits_card_section.full-width .slider_container {
+        padding: 0;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -743,7 +746,6 @@ font-size: 12px;
         border-top: 1px solid #919191;
         background-color: #F5EBC6;
     }
-
     .fruits_card p.weight span {
         margin-bottom: 0;
     }
@@ -782,6 +784,25 @@ padding: 0px 20px;
 .selected_product_variant p.weight,
 .selected_product_variant p.quantity {
     font-weight: 500;
+}
+.selected_variant_dropdown .selected_product_variant {
+    position: relative;
+}
+.selected_variant_dropdown .selected_product_variant::before {
+    content: '';
+    position: absolute;
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pc-cheveron.svg?v=1763993253);
+    background-repeat: no-repeat;
+    background-size: 10px;
+    background-position: 95% 54%;
+    width: 10px;
+    height: 10px;
+    top: 17px;
+    right: 12px;
+    transition: .3s ease all;
+}
+.selected_variant_dropdown .selected_product_variant.open::before {
+    transform: rotate(180deg);
 }
 
 .bc-image{
