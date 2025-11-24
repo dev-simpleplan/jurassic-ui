@@ -333,7 +333,7 @@
     </script>
   </div>
 
-  <div class="product-accordion">
+  {% comment %} <div class="product-accordion">
     <div class="container">
       <div class="pa-wrapper">
         {% comment %} How to Store {% endcomment %}
@@ -540,7 +540,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> {% endcomment %}
 
   {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
   <div class="product_delivery_modal_container modal fade">
