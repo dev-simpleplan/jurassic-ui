@@ -163,6 +163,25 @@
         "spacer_height": 140
       }
     },
+    "order_sample_4EfCUL": {
+      "type": "order-sample",
+      "name": "order-sample",
+      "settings": {
+        "heading": "Your First Bite of the Wild",
+        "para": "Not sure where to begin? This sampler box brings four handpicked fruits to help you discover the untamed side of flavor.",
+        "cta_url": "#!",
+        "cta_text": "Order Sampler",
+        "first_image": "shopify://shop_images/image_71.png",
+        "second_image": "shopify://shop_images/image_72.png"
+      }
+    },
+    "spacer_tVjKyf": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "three_image_box_menw3P": {
       "type": "three-image-box",
       "blocks": {
@@ -562,6 +581,8 @@
     "spacer_Nh7Bj",
     "video_carousel_YJxU7F",
     "spacer_BmkhaA",
+    "order_sample_4EfCUL",
+    "spacer_tVjKyf",
     "three_image_box_menw3P",
     "reviews_dwN4k7",
     "spacer_LKTbj6",
