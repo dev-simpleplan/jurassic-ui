@@ -223,6 +223,13 @@
         "third_image": "shopify://shop_images/Group_427321151.jpg"
       }
     },
+    "spacer_D4C9kF": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
     "reviews_dwN4k7": {
       "type": "reviews",
       "blocks": {
@@ -350,10 +357,13 @@
       "settings": {
         "heading": "Our story started with a durian",
         "para": "And 3 simple principles",
+        "img1": "shopify://shop_images/raw_1.jpg",
         "head1": "Raw.",
         "para1": "As untouched as it gets — grown naturally, picked ripe. Nothing added, nothing rushed — just nature in its purest form.",
+        "img2": "shopify://shop_images/real.jpg",
         "head2": "Real.",
         "para2": "Flavors you can feel — straight from the source. Grown with care, never compromised, and always full of soul.",
+        "img3": "shopify://shop_images/roar.jpg",
         "head3": "Roar!",
         "para3": "The joy is wild — and made to be shared. Every bite connects you to something honest, rare, and alive.",
         "cta_link": "",
@@ -584,6 +594,7 @@
     "order_sample_4EfCUL",
     "spacer_tVjKyf",
     "three_image_box_menw3P",
+    "spacer_D4C9kF",
     "reviews_dwN4k7",
     "spacer_LKTbj6",
     "three-icon-sec",
