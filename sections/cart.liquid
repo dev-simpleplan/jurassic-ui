@@ -24,7 +24,8 @@
         <form action="{{ routes.cart_url }}" method="post">
           <table>
             {% for item in cart.items %}
-              {% comment %} <tr>
+              {% comment %} 
+                <tr>
                 <td>{% render 'image', image: item.image, url: item.url %}</td>
                 <td><p>{{ item.product.title }}</p>{{ 'cart.remove' | t | link_to: item.url_to_remove }}
                 </td>

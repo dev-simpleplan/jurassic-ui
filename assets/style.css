@@ -2963,8 +2963,11 @@ section.imagescroll {
 }
 .liwi-wrap {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 5fr 6fr;
     gap: 36px;
+}
+.liwi-left {
+    aspect-ratio: 7/8;
 }
 .liwi-left .ll-image {
     position: relative;
@@ -2994,10 +2997,12 @@ section.imagescroll {
     height: 22px;
 }
 .liwi-right .lr-content {
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 50px;
     padding-bottom: 30px;
+    justify-content: space-between;
 }
 .lr-content .heading h2 {
     max-width: 14ch;
