@@ -806,6 +806,12 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .freq-wrap {
       grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .cart-recommendation-wrapper {
+    display: none!important;
+  }
+  .side-cart {
+    width: 60%;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1161,6 +1167,10 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
       padding-right: 20px;
   }
   .freq-wrap {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .side-cart {
+      width: 100%;
+      padding: 28px 20px 24px 20px;
+  }
 }
