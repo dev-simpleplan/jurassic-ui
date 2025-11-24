@@ -505,6 +505,55 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "bestseller_carousel_QwPdDB": {
+      "type": "bestseller-carousel",
+      "name": "BestsellerCarousel",
+      "settings": {
+        "collection": "fruit",
+        "heading": "This Week’s Bestsellers"
+      }
+    },
+    "spacer_NWncz3": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "17639905082e7548ae": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_3b6EQf": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Social Media Presence",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_3b6EQf"
+      ],
+      "settings": {}
+    },
+    "spacer_8i3aQR": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
@@ -526,6 +575,10 @@
     "left-image-with-items",
     "spacer_2",
     "faq",
-    "spacer_awrgBz"
+    "spacer_awrgBz",
+    "bestseller_carousel_QwPdDB",
+    "spacer_NWncz3",
+    "17639905082e7548ae",
+    "spacer_8i3aQR"
   ]
 }
