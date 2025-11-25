@@ -131,7 +131,9 @@
       ],
       "settings": {
         "heading_top": "Bite into the",
-        "heading_bottom": "wild with us"
+        "heading_bottom": "wild with us",
+        "heading_color": "#1a1a1a",
+        "background_color": "#dbd7c8"
       }
     },
     "spacer8": {
@@ -244,6 +246,8 @@
             "side_content": "When you place your order before Thursday at 8:00 PM, your fruits are still soaking in the sun, ripening on the tree. Only after your click do our farmers begin to harvest. That’s how we deliver fruit that’s fresher, fuller, and bursting with flavor.",
             "main_image": "shopify://shop_images/b88d572ac22b81ad198a96eb7840035457ddb3ec.jpg",
             "image_label": "Harvested only after you order",
+            "image_heading": "Harvested at Full Maturity",
+            "image_content": "Unlike supermarket fruit, ours are harvested at physiological maturity—when nutrients and flavor are fully developed. Some fruits (like avocados or bananas) ripen post-harvest, so we ship them slightly firm. This ensures they arrive safe and natural, needing just 2–3 days at room temperature to reach perfect ripeness—no chemicals, no shortcuts.",
             "scroll_image": "shopify://shop_images/scroll-image-jf.png",
             "side_image": "shopify://shop_images/346270bb3e5776562c5acbf15ebd1c06f29d763b.jpg",
             "main_image_label": "Picked at peak natural ripeness"
@@ -492,8 +496,31 @@
         "spacer_height": 140
       }
     },
-    "headingsec": {
-      "type": "headingsec",
+    "17640536864cbd5f05": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_ah3Dgf": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Follow Our Flavor Journey",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_ah3Dgf"
+      ],
       "settings": {}
     },
     "spacer10": {
@@ -537,9 +564,9 @@
     "spacer3",
     "reviews",
     "spacer6",
-    "headingsec",
+    "17640536864cbd5f05",
     "spacer10",
     "video",
-    "spacer4",
+    "spacer4"
   ]
 }
