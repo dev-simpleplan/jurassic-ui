@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Target all product cards inside .fruits_cards_slider.for_responsive
     const productCards = document.querySelectorAll(
-      ".fruits_cards_slider.for_responsive .product-card-primary"
+      ".product-card-primary"
     );
 
     productCards.forEach((card) => {

@@ -52,7 +52,7 @@
                   {%- if needs_dropdown -%}
                     <li class="nav-item has-mega-menu">
                       <div class="arrow">
-                        <a href="{{ selected_menu.url | default: '#' }}" class="nav-link">
+                        <a href="{{ selected_menu.url | default: 'javascript:void()' }}" class="nav-link">
                           {{ selected_menu.title | default: 'Menu' }}
                         </a>
                         <span class="nav_arrow_down">{% render 'icon-arrow_down' %}</span>
@@ -171,7 +171,40 @@
 
         <div class="h-right">
           <div class="header-icons-wrap flex">
-            <a href="#" class="search">{% render 'icon-search' %}</a>
+            {% comment %} <a href="#" class="search">{% render 'icon-search' %}</a> {% endcomment %}
+             <div class="hiw-search">
+              <predictive-search>
+                <form
+                  action="{{ routes.search_url }}"
+                  method="get"
+                  role="search">
+                  <div class="search-input-bar">
+                    {% render 'icon-search' %}
+                    <input
+                      id="Search"
+                      type="search"
+                      name="q"
+                      value="{{ search.terms | escape }}"
+                      placeholder="Search for fruits"
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-owns="predictive-search-results"
+                      aria-controls="predictive-search-results"
+                      aria-haspopup="listbox"
+                      aria-autocomplete="list">
+                  </div>
+                  <input
+                    name="options[prefix]"
+                    type="hidden"
+                    value="last">
+
+                  <div
+                    id="predictive-search"
+                    tabindex="-1"
+                    style="display: none;"></div>
+                </form>
+              </predictive-search>
+             </div>
             {% if customer %}
               <a href="{{ routes.account_url }}" class="cust-login">{% render 'icon-profile' %}</a>
             {% else %}
