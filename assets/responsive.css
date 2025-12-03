@@ -804,13 +804,14 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     font-size: 12px;
   }
   .freq-wrap {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .cart-recommendation-wrapper {
     display: none!important;
   }
   .side-cart {
     width: 60%;
+    padding-left: 20px;
   }
 }
 

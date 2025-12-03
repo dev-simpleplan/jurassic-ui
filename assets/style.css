@@ -238,7 +238,14 @@ a:hover {
 /* Header CSS */
 header {
     background-color: var(--body-bg);
-    /* padding: 24px 0; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+}
+header.backdrop {
+    box-shadow: 0 1px 6px #0003;
 }
 .brand-logo img {
     width: 180px;
@@ -451,11 +458,35 @@ li.nav-item a.nav-link:hover::before {
     font-weight: 500;
     font-size: 12px;
 }
+.hiw-search .search-input-bar {
+    position: relative;
+}
+.hiw-search .search-input-bar svg {
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+} 
+.hiw-search .search-input-bar input {
+    border: 1px solid #1A1A1A;
+    border-radius: 35px;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 11px;
+    color: #6B6B6B;
+    letter-spacing: .32px;
+    padding: 7px 10px 7px 28px;
+}
+.hiw-search .search-input-bar input:hover,
+.hiw-search .search-input-bar input:focus {
+    outline: none;
+}
 /* Header CSS */
 /* Homepage CSS */
 .home-banner {
     position: relative;
-    height: calc(100vh - 20px);
+    height: calc(100vh - 0px);
     min-height: 800px;
 }
 .home-banner::before {
@@ -507,7 +538,7 @@ li.nav-item a.nav-link:hover::before {
     gap: 100px;
     justify-content: space-between;
     height: calc(100% - 60px);
-    padding: 100px 0;
+    padding: 160px 0 100px 0
 }
 .banner-content .bc-top {}
 .bc-top .bct-heading {
@@ -1581,13 +1612,13 @@ footer::before {
     background-size: 100%;
     width: 100%;
     height: 110px;
-    background-position: bottom left;
-    top: 0;
+    background-position: top left;
+    top: 1px;
     left: 0;
     z-index: 2;
 }
 .footer-top {
-    padding: 50px 0;
+    padding: 80px 0 50px 0;
     background-color: var(--grey-black);
 }
 .fti-logo {
@@ -3365,6 +3396,130 @@ section.imagescroll {
     z-index: 1;
 }
 /* Product Page CSS */
+
+/* Search Page CSS */
+.searchpage-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.searchpage-form form {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+.searchpage-form form input {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+.searchpage-form form input:hover,
+.searchpage-form form input:focus {
+    outline: none;
+}
+.searchpage-form .search-results p {
+    text-align: center;
+    font-size: 16px;
+}
+.searchPage .sr-in {
+    padding-bottom: 50px;
+}
+/* Search Page CSS */
+
+.top-wrap {
+    margin-top: 100px;
+}
+
+/* Cart Page CSS */
+.cardp-details {
+    padding-bottom: 100px;
+}
+.cart-page-data {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 40px;
+}
+.cart-page-items-wrapper .cart-page-items {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    position: relative;
+}
+.cart-page-items .cart-page-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+.cart-page-item::before {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    height: 1px;
+    width: 100%;
+    background-color: #E0E0E0;
+}
+.cart-page-item .cart-page-item-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+.cart-page-item-image {
+    width: 150px;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 6px;
+}
+.cart-page .cart-page-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: inherit;
+}
+.cart-page-item-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100% - 176px);
+    gap: 30px;
+}
+.other-cart-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+.other-cart-info .oci-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.oci-item .oci-label {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: capitalize;
+}
+.oci-item .cart-price {
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: -0.32px;
+    text-transform: capitalize;
+}
 
 @media (max-width: 1500px) {
     .swrt-image .swrt-scroll {

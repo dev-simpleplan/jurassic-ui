@@ -1,89 +1,197 @@
 {% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
+  Cart page section for /cart
 {% endcomment %}
 
-<section class="cart-page">
-  <div class="container-fluid">
-    <div class="cardp-details">
-      <div class="cart-header">
-        <div class="carthead-left">
-          <h1>{{ 'cart.title' | t }}</h1>
-        </div>
-        <div class="carthead-right">
+<section id="cart-page-{{ section.id }}" class="top-wrap cart-page-section">
+  <div class="cart-page">
+    <div class="container-fluid">
+      <div class="cardp-details">
+        <div class="cart-header">
+          <div class="carthead-left">
+            <h1>My {{ 'cart.title' | t }}</h1>
+          </div>
+          <div class="carthead-right">
             <div class="sch-left">
-                <p>
-                    <span id="cart_item_count">({{ cart.item_count }} items)</span>
-                </p>
+              <p>
+                <span id="cart_item_count">({{ cart.item_count }} items)</span>
+              </p>
             </div>
+          </div>
         </div>
-      </div>
-      <div class="cart-data">
-        <form action="{{ routes.cart_url }}" method="post">
-          <table>
-            {% for item in cart.items %}
-              {% comment %} 
-                <tr>
-                <td>{% render 'image', image: item.image, url: item.url %}</td>
-                <td><p>{{ item.product.title }}</p>{{ 'cart.remove' | t | link_to: item.url_to_remove }}
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    name="updates[]"
-                    value="{{ item.quantity }}">
-                  <input type="submit" value="{{ 'cart.update' | t }}">
-                </td>
-              </tr> {% endcomment %}
-              <div class="recommended-item">
-              <div class="ri-img">
-                <img src="item.image" alt="${product.title}" class="product-card__image">
-              </div>
-              <div class="ri-txt">
-                <p class="rit-title">{{item.product.title}}</p>
-              </div>
-              <div class="ri-form">
-                <form action="/cart/add" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="${varId}">
-                        <input type="hidden" name="quantity" value="1">
-                        <div class="fc_add_to_cart">
-                            <span class="remove_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                            <button type="submit" id="add-to-cart" {% unless product.available %} {% endunless %}>
-                                {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
-                            </button>
-                            <span class="add_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </div>
-                    </form>
-              </div>
-        </div>
-            {% endfor %}
-          </table>
 
-          <input
-            type="submit"
-            name="checkout"
-            value="{{ 'cart.checkout' | t }}">
-        </form>
+        <div class="cart-page-data" data-cart-page>
+          <div class="cart-page-items-wrapper">
+            <div class="cart-page-items" data-cart-page-items></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // 🔒 Scope everything to THIS section only
+    const cartSection = document.getElementById('cart-page-{{ section.id }}');
+    if (!cartSection) {
+      console.warn('Cart page section not found');
+      return;
+    }
+
+    const itemsWrapper = cartSection.querySelector('[data-cart-page-items]');
+    const cartCountSpan = cartSection.querySelector('#cart_item_count');
+
+    if (!itemsWrapper) {
+      console.warn('Cart page items wrapper not found');
+      return;
+    }
+
+    function formatMoney(cents) {
+      if (typeof cents !== 'number') cents = Number(cents) || 0;
+      const value = (cents / 100).toFixed(2);
+      const symbol = window.currencySymbol || '';
+      const code = window.activeCurrency || '';
+      return `${symbol}${value} ${code}`;
+    }
+
+    // 🚚 Load & render cart items (cart PAGE only)
+    const loadCartPageItems = async () => {
+      try {
+        console.log('🛒 [CartPage] Loading cart items...');
+        const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart.js');
+        const cart = await res.json();
+        console.log('🛒 [CartPage] Cart Data:', cart);
+
+        if (!cart.items.length) {
+          itemsWrapper.innerHTML = `
+            <div class="cart-page-empty">
+              <h3>Your cart is empty</h3>
+              <p>Add some products to see them here.</p>
+            </div>
+          `;
+          if (cartCountSpan) cartCountSpan.textContent = '(0 items)';
+          return;
+        }
+
+        const itemsHTML = cart.items.map((item, index) => {
+          const line = index + 1;
+          const priceEach = item.final_line_price / item.quantity;
+
+          return `
+            <div class="cart-page-item" data-line="${line}">
+              <div class="cart-page-item-left">
+                <div class="cart-page-item-image">
+                  <img src="${item.image}" alt="${item.title}" class="cart-image" />
+                </div>
+                <div class="cart-page-item-info">
+                  <p class="cart-item-title">${item.title}</p>
+                  <div class="other-cart-info">
+                    <div class="oci-item">
+                        <div class="oci-label">Unit price</div>
+                        <div class="oci-data">
+                            <p class="cart-price">
+                                ${formatMoney(priceEach)}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="oci-item">
+                        <div class="oci-label">Unit</div>
+                        <div class="oci-data">
+                            <div class="cart-page-qty">
+                                <button class="cart-page-qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">
+                                ${item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`}
+                                </button>
+                                <span class="cart-page-qty-count">${item.quantity}</span>
+                                <button class="cart-page-qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">
+                                {% render 'plus-icon' %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oci-item">
+                        <div class="oci-label">Total price</div>
+                        <div class="oci-data">
+                            <p class="cart-price">
+                                ${formatMoney(item.final_line_price)}
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+            </div>
+          `;
+        }).join('');
+
+        itemsWrapper.innerHTML = itemsHTML;
+
+        // Update item count text
+        if (cartCountSpan) {
+          cartCountSpan.textContent =
+            cart.item_count === 1 ? '(1 item)' : `(${cart.item_count} items)`;
+        }
+
+        attachCartPageQtyHandlers();
+      } catch (error) {
+        console.error('❌ [CartPage] Error loading cart items:', error);
+        itemsWrapper.innerHTML = '<p>Could not load cart items.</p>';
+      }
+    };
+
+    // 🔄 Update a cart line (cart PAGE only)
+    const updateCartPageItem = async (line, quantity) => {
+      try {
+        console.log('🔄 [CartPage] Updating line', line, '→ qty', quantity);
+        const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ line, quantity })
+        });
+        const cart = await res.json();
+        console.log('✅ [CartPage] Cart updated:', cart);
+        await loadCartPageItems();
+      } catch (error) {
+        console.error('❌ [CartPage] Error updating cart item:', error);
+      }
+    };
+
+    // ➕➖ Qty handlers (cart PAGE only)
+    const attachCartPageQtyHandlers = () => {
+      const plusBtns = cartSection.querySelectorAll('.cart-page-qty-btn.plus');
+      const minusBtns = cartSection.querySelectorAll('.cart-page-qty-btn.minus');
+
+      plusBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const line = Number(btn.dataset.line);
+          const itemEl = btn.closest('.cart-page-item');
+          const qtyEl = itemEl.querySelector('.cart-page-qty-count');
+          const currentQty = Number(qtyEl.textContent);
+          updateCartPageItem(line, currentQty + 1);
+        });
+      });
+
+      minusBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const line = Number(btn.dataset.line);
+          const itemEl = btn.closest('.cart-page-item');
+          const qtyEl = itemEl.querySelector('.cart-page-qty-count');
+          const currentQty = Number(qtyEl.textContent);
+          const newQty = currentQty > 1 ? currentQty - 1 : 0;
+          updateCartPageItem(line, newQty);
+        });
+      });
+    };
+
+    // 🟢 Init (cart page only; side cart script will **not** be touched)
+    loadCartPageItems();
+  });
+</script>
 
 {% schema %}
-  {
-    "name": "t:general.cart",
-    "settings": []
-  }
+{
+  "name": "t:general.cart",
+  "settings": []
+}
 {% endschema %}
