@@ -170,6 +170,17 @@ a:hover {
     background-color: transparent;
     color: #fcf9f5;
 }
+.custom-btn.line {
+    border: 1px solid #2A2A2A;
+    color: #2A2A2A;
+}
+.custom-btn.rounded {
+    border-radius: 35px;
+}
+.custom-btn.line:hover {
+    background-color: #2A2A2A;
+    color: #fff;
+}
 .sec-with-space {
     display: flex;
     flex-direction: column;
@@ -3445,10 +3456,25 @@ section.imagescroll {
 .cardp-details {
     padding-bottom: 100px;
 }
+.cardp-details .cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.carthead-left {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.carthead-left h1 {
+    font-size: clamp(38px, 2.543px + 4.623vw, 46px);
+}
 .cart-page-data {
     display: grid;
     grid-template-columns: 8fr 4fr;
     gap: 40px;
+    position: relative;
 }
 .cart-page-items-wrapper .cart-page-items {
     display: flex;
@@ -3500,7 +3526,7 @@ section.imagescroll {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
+    width: 84%;
 }
 .other-cart-info .oci-item {
     display: flex;
@@ -3519,6 +3545,49 @@ section.imagescroll {
     font-size: 12px;
     letter-spacing: -0.32px;
     text-transform: capitalize;
+}
+.oci-item .cart-discount-label {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    display: inline-flex;
+    text-transform: capitalize;
+    color: #397e1b;
+    padding: 4px 8px;
+    border: 1px solid #397e1b;
+    border-radius: 16px;
+    align-items: center;
+    justify-content: center;
+}
+.cart-page-details .cpd-footer {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+    padding: 40px 22px;
+    position: sticky;
+    top: 90px;
+}
+.cpd-coupon .coupon-toggle-text {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: #1A1A1A;
+    cursor: pointer;
+}
+.cpd-footer .cart-totals {
+    padding: 10px 8px;
+}
+.cart-totals .cart-total {
+    padding-top: 14px;
+    margin-top: 10px;
+    border-top: 1px solid #FCF9F5;
+}
+.cpd-footer form {
+    width: calc(100% - 8px);
+    margin: 0 auto;
 }
 
 @media (max-width: 1500px) {
