@@ -470,6 +470,16 @@
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "product_description",
+      "namespace": "custom",
+      "name": "Product Description",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [
