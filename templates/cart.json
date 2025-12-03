@@ -12,9 +12,29 @@
     "main": {
       "type": "cart",
       "settings": {}
+    },
+    "bestseller_ibqLhV": {
+      "type": "bestseller",
+      "name": "Bestseller",
+      "settings": {
+        "collection": "all-fruits",
+        "heading": "save on your shipping cost!",
+        "subheading": "Each season brings a new treasure. Dive into our curated selection of rare, seasonal fruits—available only while nature allows.",
+        "cta_url": "",
+        "cta_text": ""
+      }
+    },
+    "spacer_JE3wC4": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 100
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "bestseller_ibqLhV",
+    "spacer_JE3wC4"
   ]
 }
