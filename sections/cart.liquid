@@ -9,19 +9,62 @@
         <div class="cart-header">
           <div class="carthead-left">
             <h1>My {{ 'cart.title' | t }}</h1>
-          </div>
-          <div class="carthead-right">
             <div class="sch-left">
               <p>
                 <span id="cart_item_count">({{ cart.item_count }} items)</span>
               </p>
             </div>
           </div>
+          <div class="carthead-right">
+            <a href="{{ routes.collections_url }}" class="custom-btn line rounded">continue shopping</a>
+          </div>
         </div>
 
         <div class="cart-page-data" data-cart-page>
           <div class="cart-page-items-wrapper">
             <div class="cart-page-items" data-cart-page-items></div>
+          </div>
+          <div class="cart-page-details">
+                <div class="cpd-footer">
+                    <div class="cpd-coupon">
+                        <p class="coupon-toggle-text">Have a coupon code?</p>
+                        <div class="coupon-field-container" style="display:none;">
+                            {% render 'discount-code-field' %}
+                        </div>
+                    </div>
+                    <div class="cart-totals">
+                        <div class="cart-subtotal">
+                        <p class="cs-title">Subtotal</p>
+                        <p class="subtotal-amount cs-res">0.00</p>
+                        </div>
+                        <div class="cart-shipping">
+                        <p class="cs-title">shipping
+                            <span>(calc. at the checkout)</span>
+                        </p>
+                        <p class="shipping-amount cs-res">Calculated at checkout</p>
+                        </div>
+                        <div class="cart-total">
+                        <p class="cs-title">Total
+                            <span>incl. VAT</span>
+                        </p>
+                        <p class="total-amount cs-res">0.00</p>
+                        </div>
+                    </div>
+                    <form action="/checkout" method="post">
+                        <button
+                        name="checkout"
+                        type="submit"
+                        class="checkout-btn custom-btn filled"
+                        style="width: 100%;">
+                        <span class="checkout-txt">Checkout</span>
+                        <span class="checkout-total">0.00</span>
+                        </button>
+                    </form>
+
+                    <div class="cpd-fields-sec">
+
+                    </div>
+                </div>
           </div>
         </div>
       </div>
@@ -40,6 +83,9 @@
 
     const itemsWrapper = cartSection.querySelector('[data-cart-page-items]');
     const cartCountSpan = cartSection.querySelector('#cart_item_count');
+    const subtotalDiv = cartSection.querySelector('.subtotal-amount');
+    const shippingAmountDiv = cartSection.querySelector('.shipping-amount');
+    const totalAmountDivs = cartSection.querySelectorAll('.total-amount, .checkout-total');
 
     if (!itemsWrapper) {
       console.warn('Cart page items wrapper not found');
@@ -62,6 +108,17 @@
         const cart = await res.json();
         console.log('🛒 [CartPage] Cart Data:', cart);
 
+        // 🧮 Update subtotal & total
+        if (subtotalDiv) {
+        subtotalDiv.textContent = formatMoney(cart.items_subtotal_price);
+        }
+
+        if (totalAmountDivs && totalAmountDivs.length) {
+        totalAmountDivs.forEach(el => {
+            el.textContent = formatMoney(cart.total_price);
+        });
+        }
+
         if (!cart.items.length) {
           itemsWrapper.innerHTML = `
             <div class="cart-page-empty">
@@ -70,12 +127,44 @@
             </div>
           `;
           if (cartCountSpan) cartCountSpan.textContent = '(0 items)';
+          if (subtotalDiv) subtotalDiv.textContent = formatMoney(0);
+            if (totalAmountDivs && totalAmountDivs.length) {
+                totalAmountDivs.forEach(el => (el.textContent = formatMoney(0)));
+            }
           return;
         }
 
-        const itemsHTML = cart.items.map((item, index) => {
-          const line = index + 1;
-          const priceEach = item.final_line_price / item.quantity;
+        // 🔥 ONLY CHANGE: now async per item so we can get compare_at_price
+        const itemsHTML = await Promise.all(
+          cart.items.map(async (item, index) => {
+            const line = index + 1;
+            const priceEach = item.final_line_price / item.quantity;
+
+            // --- Get compare_at_price from product JSON ---
+            let compareAtPrice = null;
+
+            try {
+              const productRes = await fetch(`/products/${item.handle}.js`);
+              const productData = await productRes.json();
+
+              const variantData = productData.variants.find(v => v.id === item.variant_id);
+              if (variantData && variantData.compare_at_price) {
+                compareAtPrice = Number(variantData.compare_at_price); // cents
+              }
+            } catch (err) {
+              console.warn('Unable to load product JSON for discount:', err);
+            }
+
+            const hasDiscount =
+              compareAtPrice &&
+              compareAtPrice > Number(item.final_line_price);
+
+            let discountPercent = 0;
+            if (hasDiscount) {
+              discountPercent = Math.round(
+                ((compareAtPrice - item.final_line_price) / compareAtPrice) * 100
+              );
+            }
 
           return `
             <div class="cart-page-item" data-line="${line}">
@@ -109,6 +198,18 @@
                         </div>
                     </div>
                     <div class="oci-item">
+                        <div class="oci-label">Discount</div>
+                        <div class="oci-data">
+                            <p class="cart-price">
+                                ${
+                              hasDiscount
+                                ? `<span class="cart-discount-label">${discountPercent}% Off</span>`
+                                : ''
+                            }
+                            </p>
+                        </div>
+                    </div>
+                    <div class="oci-item">
                         <div class="oci-label">Total price</div>
                         <div class="oci-data">
                             <p class="cart-price">
@@ -123,9 +224,10 @@
               
             </div>
           `;
-        }).join('');
+       })
+        );
 
-        itemsWrapper.innerHTML = itemsHTML;
+        itemsWrapper.innerHTML = itemsHTML.join('');
 
         // Update item count text
         if (cartCountSpan) {
@@ -186,7 +288,21 @@
 
     // 🟢 Init (cart page only; side cart script will **not** be touched)
     loadCartPageItems();
+
+      // Coupon toggle logic (cart page only)
+        const couponToggleText = cartSection.querySelector('.coupon-toggle-text');
+        const couponFieldContainer = cartSection.querySelector('.coupon-field-container');
+
+        if (couponToggleText && couponFieldContainer) {
+        couponToggleText.addEventListener('click', function () {
+            couponToggleText.style.display = 'none';
+            couponFieldContainer.style.display = 'block';
+        });
+        }
   });
+
+
+
 </script>
 
 {% schema %}
