@@ -74,6 +74,11 @@ h1,
     line-height: 97%;
     letter-spacing: -0.32px;
 }
+h1.small {
+    font-size: clamp(28px, 2.543px + 4.623vw, 32px);
+    line-height: 97%;
+    letter-spacing: -0.32px;
+}
 h2 {
     font-size: clamp(28px, 2.543px + 4.623vw, 52px);
     line-height: 97%;
@@ -246,6 +251,36 @@ a:hover {
 .show-mobile {
     display: none;
 }
+.heading-search-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.heading-search-wrap .blog-search {
+    position: relative;
+    width: 25%;
+}
+.blog-search input {
+    border: 1px solid #1A1A1A;
+    padding: 10px 20px 10px 40px;
+    background-color: transparent;
+    color: #5A5A5A;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 35px;
+    width: 100%;
+}
+.blog-search input:focus {
+    outline: none;
+}
+.blog-search svg {
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    width: 15px;
+}
+
 /* Header CSS */
 header {
     background-color: var(--body-bg);
@@ -254,6 +289,9 @@ header {
     left: 0;
     width: 100%;
     z-index: 99999;
+}
+header.header-bg {
+    background-color: #DBD7C8;
 }
 header.backdrop {
     box-shadow: 0 1px 6px #0003;
@@ -488,6 +526,9 @@ li.nav-item a.nav-link:hover::before {
     color: #6B6B6B;
     letter-spacing: .32px;
     padding: 7px 10px 7px 28px;
+}
+.header-bg .hiw-search .search-input-bar input {
+    background-color: #fff;
 }
 .hiw-search .search-input-bar input:hover,
 .hiw-search .search-input-bar input:focus {
@@ -3452,7 +3493,7 @@ section.imagescroll {
     margin-top: 100px;
 }
 
-/* Cart Page CSS */
+/* Cart Page CSS Starts */
 .cardp-details {
     padding-bottom: 100px;
 }
@@ -3589,6 +3630,160 @@ section.imagescroll {
     width: calc(100% - 8px);
     margin: 0 auto;
 }
+/* Cart Page CSS Ends */
+
+/* Blog Page CSS Starts */
+.featured-blog {
+    padding-top: 50px;
+    /* padding-bottom: 70px; */
+}
+.featured-blog .fb-in {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.blog-banner-card-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    row-gap: 40px;
+}
+.blog-card-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.bc-image{
+    position: relative;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+}
+.bf-image{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.bc-image img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: .4s ease all;
+}
+.read-time-tag{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: #FFFFFF;
+    color: #151515;
+    letter-spacing: 0.02em;
+    font-size: 11px;
+    border-radius: 25px;
+    padding: 2px 8px;
+    font-weight: 400;
+    font-family: 'Inter';
+}
+.bc-ct-tags {
+    line-height: 100%;
+}
+.bc-ct-tags span {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    letter-spacing: 1px;
+    line-height: 150%;
+    font-weight: 500;
+}
+.bc-content{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.bc-ct-title {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 140%;
+    color: #151515;
+    max-width: 32ch;
+}
+.bc-ct-para{
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0em;
+    font-weight: 400;
+    color: #151515;
+    padding-top: 8px;
+    max-width: 40ch;
+}
+.blog-card:hover{
+    cursor: pointer;
+}
+.blog-card:hover .bf-image img{
+    transform: scale(1.1);
+}
+.blogs-in {
+    display: flex;
+    flex-direction: column;
+}
+.blogs-in .filter .tab {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 40px;
+    flex-wrap: wrap;
+}
+.filter .tab .tablinks {
+    padding: 10px 20px;
+    background: #dbd7c8;
+    cursor: pointer;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #151515;
+    transition: .3s ease all;
+    border: none;
+}
+.filter .tab .tablinks:hover,
+.filter .tab .tablinks.active {
+    background-color: #1A1A1A;
+    color: #DBD7C8;
+}
+.blogs-in .filter .sort-div {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.filter .sort-div select {
+    background: transparent;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    padding-right: 20px;
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/down-arrow.svg?v=1762171493);
+    background-position: right 35%;
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 1px;
+    text-align: right;
+    text-transform: uppercase;
+    border-radius: 0;
+}
+.blog-blocks {
+    margin-top: 50px;
+}
+
+/* Blog Page CSS Ends */
 
 @media (max-width: 1500px) {
     .swrt-image .swrt-scroll {
