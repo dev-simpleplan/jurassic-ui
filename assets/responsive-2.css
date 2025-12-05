@@ -70,7 +70,7 @@
     left: 0;
     height: 100dvh;
     background: #ffffff;
-    z-index: 999;
+    z-index: 99999999;
     padding: 40px 20px;
     width: 100%;
     transition: 0.2s all ease;

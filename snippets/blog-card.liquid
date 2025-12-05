@@ -1,4 +1,5 @@
-<div class="blog-card">
+<div class="blog-card" data-title="{{ article.title | downcase }}" 
+     data-tags="{{ article.tags | join: ',' | downcase }}">
    <a href="{{ article.url }}">
     <div class="blog-card-wrap">
          <div class="bc-image">
@@ -17,22 +18,26 @@
     </div>
 
     <div class="bc-content">
-        <p class="bc-ct-tags">
-            <span>{{ blog.title }}</span>
+        <div class="bcc-top">
+            <p class="bc-ct-tags">
+                <span>{{ blog.title }}</span>
 
-            {% if article.tags.size > 0 %}
-            {% for tag in article.tags %}
-            <span> • {{ tag | upcase }}</span>
-            {% endfor %}
-            {% endif %}
-        </p>
-        <p class="bc-ct-title">
-        {{ article.title }}
-        </p>
+                {% if article.tags.size > 0 %}
+                {% for tag in article.tags %}
+                <span> • {{ tag | upcase }}</span>
+                {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+        <div class="bcc-bottom">
+            <p class="bc-ct-title">
+            {{ article.title }}
+            </p>
 
-        <p class="bc-ct-para">
-            {{ article.excerpt_or_content | strip_html | truncate: 120 }}
-        </p>
+            <p class="bc-ct-para">
+                {{ article.excerpt_or_content | strip_html | truncate: 120 }}
+            </p>
+        </div>
     </div>
     </div>
    </a>

@@ -15,9 +15,30 @@
         "head":"Featured Blogs",
         "blog_source": "news"
       }
+    },
+    "spacer1": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    },
+    "blog": {
+      "type": "blog",
+      "settings": {
+        "number_of_blog_posts": 9
+      }
+    },
+    "spacer2": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
-    "featured-blogs"
+    "featured-blogs",
+    "spacer1",
+    "blog",
+    "spacer2",
   ]
 }
