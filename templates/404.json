@@ -7,14 +7,14 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
-    "main": {
-      "type": "404",
+    "page": {
+      "type": "template-404",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "page"
   ]
 }

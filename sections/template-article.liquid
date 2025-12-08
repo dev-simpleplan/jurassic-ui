@@ -1,0 +1,150 @@
+
+<section class="blog-details-page top-wrap">
+    <div class="container">
+        <div class="bdp-in">
+            {% for block in section.blocks %}
+                <div class="bdp-head">
+                    {% case block.type %}
+                        {% when 'heading' %}
+                        <div class="bdp-heading-wrap">
+                            <h1 class="">{{ article.title }}</h1>
+                            <div class="other-details">
+                                {% assign date = article.published_at | time_tag: format: 'date' %}
+                                <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+                                <p>{{ article.metafields.custom.read_time }} min. reads</p>
+                            </div>
+                        </div>
+                        {% when 'img_block' %}
+                        <div class="bdp-banner">
+                            {% if article.image %}
+                                {{ article.image | image_url: width: 1000 | image_tag }}
+                            {% endif %}
+                        </div>
+                    {% endcase %}
+                </div>
+            
+                {% case block.type %}
+                    {% when 'content_block' %}
+                    <div class="bdp-content-wrap">
+                        <div class="bcw-left">
+                            <div class="bcw-content">
+                                {{ article.content }}
+                            </div>
+                            <div class="bcw-share">
+                                <div class="article-share">
+                                    <p>Share</p>
+                                    <div class="share-wrap">
+                                        <a href="javascript:void(0)" class="share-copy">
+                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="">
+                                        </a>
+                                        <a target="_blank" href="//www.facebook.com/sharer.php?u={{ shop.url | append: article.url}}">
+                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="">
+                                        </a>
+                                        <a
+                                            target="_blank"
+                                            href="#!"
+                                            id="whatsapp-share">
+                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bcw-right">
+
+                        </div>
+                    </div>
+
+                    {% when 'subscribe_block' %}
+                    <div class="bdp-subscribe">
+                        <div class="bdps-in">
+                            
+                        </div>
+                    </div>
+                {% endcase %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Article",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Heading Block",
+        "type": "heading"
+      }, {
+        "name": "Image Block",
+        "type": "img_block"
+      }, {
+        "name": "Content Block",
+        "type": "content_block"
+      }
+    ]
+  }
+{% endschema %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+        "image" : [{{ article.image | img_url: "medium" | prepend: 'https:' | json }}],
+        {% endif %}
+        "datePublished": {{ article.published_at | date: format: "default" | json }},
+        "dateCreated": {{ article.created_at | date: format: "default" | json }},
+        "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+        }
+      }
+</script>
+
+<script>
+  document.getElementById('whatsapp-share').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    const pageUrl = encodeURIComponent(window.location.href); // Encode the page URL
+    const shareText = encodeURIComponent("Check out this page: "); // Your custom message
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${pageUrl}`;
+    window.open(whatsappUrl, '_blank'); // Open WhatsApp share link in a new tab
+  });
+  document.getElementById('whatsapp-share1').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    const pageUrl = encodeURIComponent(window.location.href); // Encode the page URL
+    const shareText = encodeURIComponent("Check out this page: "); // Your custom message
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${pageUrl}`;
+    window.open(whatsappUrl, '_blank'); // Open WhatsApp share link in a new tab
+  });
+
+  // Select all buttons with the “share-btn” class
+  const shareButtons = document.querySelectorAll(".share-copy");
+
+  // Loop over each button and attach a click handler
+  shareButtons.forEach(button => {
+  button.addEventListener("click", async () => {
+    // Always grab the current page URL:
+    const shareData = {
+      url:   window.location.href
+    };
+
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+  });
+
+
+</script>

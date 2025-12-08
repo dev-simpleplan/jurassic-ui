@@ -1,4 +1,4 @@
-<div class="featured-blog top-wrap">
+<div class="featured-blog related-blogs">
   <div class="container">
     <div class="fb-in">
       {% comment %} {% if section.setting.head != blank %} {% endcomment %}
@@ -7,16 +7,12 @@
         </div>
       {% comment %} {% endif %} {% endcomment %}
       <div class="blog-banner-card-wrap">
-        {% assign blog_handle = section.settings.blog_source %}
-        {% assign selected_blog = blogs[blog_handle] %}
-
-        {% if selected_blog and selected_blog.articles_count and selected_blog.articles_count > 0 %}
-        {% for article in selected_blog.articles limit: 3 %}
-        {% render "blog-card", article: article %}
+        {% assign current_article_handle = article.handle %}
+        {% for related in blog.articles %}
+        {% unless related.handle == current_article_handle %}
+            {% render "blog-card", article: related %}
+          {% endunless %}
         {% endfor %}
-        {% else %}
-        <p>No blog articles found.</p>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -24,13 +20,9 @@
 
 {% schema %}
 {
-  "name": "Blog Banner",
+  "name": "Related blogs",
   "settings": [
-    {
-      "type": "blog",
-      "id": "blog_source",
-      "label": "Select Blog"
-    },
+    
     {
       "type": "text",
       "id": "head",
@@ -40,7 +32,7 @@
   ],
   "presets": [
       {
-          "name": "Blog Banner",
+          "name": "Related blogs",
           "settings": {
           }
       }
