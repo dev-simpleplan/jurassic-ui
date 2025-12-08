@@ -3490,7 +3490,7 @@ section.imagescroll {
 /* Search Page CSS */
 
 .top-wrap {
-    margin-top: 100px;
+    margin-top: 140px;
 }
 
 /* Cart Page CSS Starts */
@@ -3783,7 +3783,92 @@ section.imagescroll {
     margin-top: 50px;
 }
 
+.bdp-in {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.bdp-in .bdp-head {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.bdp-head .bdp-heading-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.bdp-heading-wrap h1 {
+    max-width: 30ch;
+    font-size: clamp(28px, 2.543px + 4.623vw, 46px);
+}
+.other-details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+}
+.other-details p {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1A1A1A;
+    position: relative;
+}
+.other-details p time {
+    margin-right: 13px;
+    position: relative;
+    display: inline-block;
+}
+.other-details p time::before, .other-details p::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 1px;
+    width: 1px;
+    height: 16px;
+    background-color: #1A1A1A;
+}
+.other-details p:last-child::before {
+    content: none;
+}
+.bdp-banner {
+    width: 100%;
+    aspect-ratio: 13/7;
+    overflow: hidden;
+}
+.bdp-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.bdp-content-wrap {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 200px;
+}
+.bcw-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.bcw-content h4 {
+    font-weight: 300;
+}
+.bcw-content p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #1A1A1A;
+}
+.bcw-content p span img {
+    width: 100%;
+    height: auto;
+}
+
 /* Blog Page CSS Ends */
+
 
 @media (max-width: 1500px) {
     .swrt-image .swrt-scroll {

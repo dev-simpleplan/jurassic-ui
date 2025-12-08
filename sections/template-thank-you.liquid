@@ -1,0 +1,42 @@
+<section class="thank-you">
+  <div class="container-fluid">
+    <div class="ty-wrapper">
+      <div class="head">
+        <h1>{{ section.settings.head }}</h1>
+      </div>
+      {{ section.settings.text }}
+      <a href="{{ section.settings.cta-url.url }}" class="custom-btn dark">{{ section.settings.cta-txt }}</a>
+      <div class="ty-img pos-rel">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/d098b51c35c2135517e1b67abb34b34aefc37564.png?v=1748957218"
+          alt=""
+          class="icon">
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Thank You",
+    "settings": [
+      {
+        "type": "text",
+        "id": "head",
+        "label": "Heading"
+      }, {
+        "type": "richtext",
+        "id": "text",
+        "label": "Sub Heading"
+      }, {
+        "type": "text",
+        "id": "cta-txt",
+        "label": "Button Text"
+      }, {
+        "type": "page",
+        "id": "cta-url",
+        "label": "Select Page"
+      }
+    ]
+  }
+{% endschema %}

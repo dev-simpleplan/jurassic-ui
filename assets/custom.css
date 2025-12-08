@@ -654,6 +654,23 @@ section.faq-page .faq-head h1 {
   letter-spacing: 0;
   text-decoration: underline;
 }
+.faq-answer ul {
+  padding-top: 20px;
+  padding-left: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: disc;
+}
+.faq-answer ul li {
+  font-size: 12px;
+  line-height: 140%;
+  color: #1a1a1a;
+  max-width: 65ch;
+  font-weight: 400;
+  font-family: "Inter";
+  letter-spacing: 0;
+ }
 
 .faq-all-in {
   width: 80%;

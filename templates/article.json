@@ -9,12 +9,31 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "article",
+    "article": {
+      "type": "template-article",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {}
+        },
+        "image": {
+          "type": "img_block",
+          "settings": {}
+        },
+        "content": {
+          "type": "content_block",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "image",
+        "content"
+      ],
       "settings": {}
-    }
+    },
   },
   "order": [
-    "main"
+    "article"
   ]
 }
