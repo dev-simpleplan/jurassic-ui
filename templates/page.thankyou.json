@@ -8,24 +8,26 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-        "template": {
-            "type": "template-thank-you",
-            "settings": {
-                "head":"Thank you",
-                "text":"<p>We have received your request and will get back to you soon. Meanwhile you can follow us on <a href=#!>@Instagram</a> for updates.</p>",
-                "cta-txt":"Go back to homepage"
-            }
-        },
-        "spacer": {
-            "type": "spacer",
-            "settings": {
-                "spacer_height": 140
-            }
-        }
+  "sections": {
+    "template": {
+      "type": "template-thank-you",
+      "settings": {
+        "head": "Thank you",
+        "subhead": "your form is successfully submitted.",
+        "text": "<p>Lorem ipsum dolor sit amet consectetur. Nulla morbi blandit quis scelerisque elementum enim a pulvinar elit. Ante arcu feugiat sit turpis commodo faucibus non rhoncus potenti. Nunc posuere tempus sagittis nisl pulvinar aliquam sit commodo. Egestas vestibulum laoreet odio duis nisi.</p>",
+        "cta-txt": "Go back to homepage",
+        "cta-url": ""
+      }
     },
-    "order": [
-        "template",
-        "spacer"
-    ]
+    "spacer": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    }
+  },
+  "order": [
+    "template",
+    "spacer"
+  ]
 }
