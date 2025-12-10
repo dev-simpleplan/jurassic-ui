@@ -1,6 +1,28 @@
 {
-  "article": [],
-  "blog": [],
+  "article": [
+    {
+      "key": "read_time",
+      "namespace": "custom",
+      "name": "read time",
+      "description": "Add blog read time",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    }
+  ],
+  "blog": [
+    {
+      "key": "read_time",
+      "namespace": "custom",
+      "name": "read time",
+      "description": "Add the read time in minutes",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    }
+  ],
   "collection": [
     {
       "key": "short_description",
