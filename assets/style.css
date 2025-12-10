@@ -186,6 +186,28 @@ a:hover {
     background-color: #2A2A2A;
     color: #fff;
 }
+.line-btn {
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+    letter-spacing: -0.16px;
+    transition: .3s ease all;
+    position: relative;
+}
+.line-btn.dark {
+    color: #1A1A1A;
+}
+.line-btn::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    left: 0;
+}
+.line-btn.dark::before {
+    background-color: #1A1A1A;
+}
 .sec-with-space {
     display: flex;
     flex-direction: column;
@@ -3868,6 +3890,71 @@ section.imagescroll {
 }
 
 /* Blog Page CSS Ends */
+
+/* Error Page CSS */
+.error-template {
+    height: 100vh;
+    min-height: 800px;
+    position: relative;
+    background-color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 70px; */
+}
+.error-template .et-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.et-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.error-template .et-data {
+    position: relative;
+    z-index: 2;
+    max-width: 69ch;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 30px;
+    padding-top: 70px;
+}
+.et-data .etd-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.etd-heading h1 {
+    font-size: 100px;
+}
+.etd-heading p {
+    font-family: var(--scale);
+    font-size: 28px;
+    font-weight: 400;
+    text-transform: capitalize;
+    color: #202322;
+}
+.etd-desc p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0;
+}
+.etd-button {
+    margin-top: 20px;
+}
+.etd-logo {
+    margin-top: 50px;
+}
+/* Error Page CSS */
 
 
 @media (max-width: 1500px) {
