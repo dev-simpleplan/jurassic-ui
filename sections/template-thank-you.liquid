@@ -12,7 +12,15 @@
             {{ section.settings.text }}
         </div>
         <div class="etd-button">
-            <a href="{{ section.settings.cta-url.url }}" class="line-btn dark">{{ section.settings.cta-txt }}</a>
+            {% if section.settings.cta-url.url != blank and section.settings.cta-txt != blank %}
+            <a href="{{ section.settings.cta-url.url }}" class="line-btn dark">
+                {{ section.settings.cta-txt }}
+            </a>
+            {% else %}
+            <a href="{{ shop.url }}" class="line-btn dark">
+                go back to homepage
+            </a>
+            {% endif %}
         </div>
         <div class="etd-logo">
             <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Group_66.svg?v=1765202267" alt="">
