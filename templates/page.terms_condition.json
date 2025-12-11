@@ -11,12 +11,6 @@
   "sections": {
     "terms": {
       "type": "template-static-page",
-      "blocks": {
-        
-      },
-      "block_order": [
-        
-      ],
       "settings": {}
     }
   },
