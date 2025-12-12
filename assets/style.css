@@ -4054,6 +4054,119 @@ section.imagescroll {
     grid-template-columns: 1fr 1fr;
     gap: 100px;
 }
+.cpi-grid-wrap .cgw-left {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+.cgwl-top {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+.cgwlt-top h1 {
+    color: #FCF9F5;
+}
+.cgwlt-top p {
+    color: #FCF9F5;
+}
+.cgwlt-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 34px;
+}
+.cgwlt-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cgwlt-item .cgwlt-item-label {
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #FCF9F5;
+}
+.cgwlt-item-data a, .cgwlt-item-data p {
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #FCF9F5;
+    max-width: 32ch;
+}
+.cgwlt-item-data a.line {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+.cgwlt-item-label.with-link a {
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #FCF9F5;
+}
+.cgwlt-item-social {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.cgwlt-item-social img {
+    max-width: 18px;
+    max-height: 18px;
+}
+.cgwl-bottom .bcb-reviews-wrap {
+    justify-content: flex-start;
+}
+.cgw-right {
+    height: calc(100% - 70px);
+}
+.cgw-right .cgwr-form {
+    background-color: #DBD7C8;
+    padding: 40px 56px 60px 56px;
+}
+.cgwr-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.cgwr-form form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.cgwr-form form .form-group label {
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1A1A1A;
+}
+.cgwr-form form .form-group input, 
+.cgwr-form form .form-group select,
+.cgwr-form form .form-group input::placeholder {
+    border: none;
+    border-bottom: 1px solid #CBC6B3;
+    padding: 12px 4px 8px 4px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #5A5A5A;
+    background-color: transparent;
+    width: 100%;
+    border-radius: 0;
+}
+.cgwr-form form .form-group input:focus,
+.cgwr-form form .form-group select:focus {
+    outline: none;
+}
+.contact-form-btn {
+    margin-top: 20px;
+}
+.contact-form-btn .custom-btn {
+    width: 100%;
+    border-radius: 0;
+}
 
 
 
