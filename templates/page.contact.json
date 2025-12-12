@@ -11,12 +11,84 @@
   "sections": {
     "contactPage": {
       "type": "contact",
+      "blocks": {
+        "reviews_y8VHGQ": {
+          "type": "reviews",
+          "settings": {
+            "review-top": "Google",
+            "review_star": 4.7
+          }
+        },
+        "reviews_eeiaVe": {
+          "type": "reviews",
+          "settings": {
+            "review-top": "Facebook",
+            "review_star": 4.7
+          }
+        },
+        "reviews_zCY67B": {
+          "type": "reviews",
+          "settings": {
+            "review-top": "Trustpilot",
+            "review_star": 4.7
+          }
+        },
+        "reviews_Cx8ijB": {
+          "type": "reviews",
+          "settings": {
+            "review-top": "Okendo",
+            "review_star": 4.1
+          }
+        },
+        "social_icon_RTUtHg": {
+          "type": "social_icon",
+          "settings": {
+            "social_link": "https://facebook.com",
+            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+          }
+        },
+        "social_icon_kT8M8K": {
+          "type": "social_icon",
+          "settings": {
+            "social_link": "https://facebook.com",
+            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+          }
+        },
+        "social_icon_dfcMVD": {
+          "type": "social_icon",
+          "settings": {
+            "social_link": "https://facebook.com",
+            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+          }
+        },
+        "social_icon_EkCfVK": {
+          "type": "social_icon",
+          "settings": {
+            "social_link": "https://facebook.com",
+            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+          }
+        }
+      },
+      "block_order": [
+        "reviews_y8VHGQ",
+        "reviews_eeiaVe",
+        "reviews_zCY67B",
+        "reviews_Cx8ijB",
+        "social_icon_RTUtHg",
+        "social_icon_kT8M8K",
+        "social_icon_dfcMVD",
+        "social_icon_EkCfVK"
+      ],
       "settings": {
-        "heading": "get in touch",
-        "body": "We’re here to help with any of your questions. Please fill out the contact form and our team of experts will be in contact with you shortly. ",
-        "heading1": "Request a Free Ring Sizer",
-        "body1": "Unsure about your ring size? We are happy to send you a complimentary ring sizer so you can easily measure it at home. ",
-        "ctaText": "request ring sizer"
+        "banner-bg": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+        "head": "Get In Touch",
+        "para": "Whether it’s feedback, a question, or a fruit story—we’re here to hear it.",
+        "email": "support@jurassicfruit.com",
+        "phone": "+49 201 75899650",
+        "phone_data": "(9-13 and 14-18 ; Mon-Fri)",
+        "address": "Frischezentrum Essen, Lützowstraße 28 a, Essen, NRW 04155, DE",
+        "social_link": "https://web.telegram.org/",
+        "social_link_text": "join us on telegram"
       }
     }
   },
