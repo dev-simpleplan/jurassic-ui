@@ -104,8 +104,9 @@
                     <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
                     <div class="tr-okendo">
                       {% for app_block in section.blocks %}
-                        {% if app_block.type == '@app' and app_block.app.name contains 'Okendo' %}
+                        {% if app_block.type == '@app' %}
                           {% render app_block %}
+                          {% break %}
                         {% endif %}
                       {% endfor %}
                     </div>
