@@ -28,7 +28,10 @@
           "type": "nav_menu_right",
           "settings": {
             "nav_items_right": "shop-all",
-            "product_list": []
+            "product_list": [
+              "mango-osteen",
+              "mangosteen"
+            ]
           }
         },
         "nav_menu_right_krGBVm": {
