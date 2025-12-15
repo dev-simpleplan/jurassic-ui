@@ -17,31 +17,39 @@
         "nav_menu_right_cRfWq3": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "new-arrival"
+            "nav_items_right": "new-arrival",
+            "product_list": [
+              "mangosteen",
+              "mango-osteen"
+            ]
           }
         },
         "nav_menu_right_g6gmcL": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "shop-all"
+            "nav_items_right": "shop-all",
+            "product_list": []
           }
         },
         "nav_menu_right_krGBVm": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "boxes"
+            "nav_items_right": "boxes",
+            "product_list": []
           }
         },
         "nav_menu_right_EMiXFk": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "buy-again"
+            "nav_items_right": "buy-again",
+            "product_list": []
           }
         },
         "nav_menu_right_tATRCL": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "learn-more"
+            "nav_items_right": "learn-more",
+            "product_list": []
           }
         }
       },
