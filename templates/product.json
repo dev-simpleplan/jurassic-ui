@@ -12,6 +12,12 @@
     "template": {
       "type": "product",
       "blocks": {
+        "okendo_star_rating_4MrX8z": {
+          "type": "shopify://apps/okendo/blocks/star-rating/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
         "title": {
           "type": "title",
           "settings": {
@@ -59,6 +65,7 @@
         }
       },
       "block_order": [
+        "okendo_star_rating_4MrX8z",
         "title",
         "product_info",
         "product_usp",
