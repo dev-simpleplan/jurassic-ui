@@ -148,12 +148,14 @@
                             
 
                             {%- comment -%} RIGHT: optional promo image from block setting {%- endcomment -%}
-                            {%- if block.settings.product_list != '' -%}
-                            {% for item in block.settings.product_list %}
+                            {%- if block.settings.product_list != blank -%}
                               <div class="mms-right">
-                                {{ item.title }}
+                                {% for item in block.settings.product_list %}
+                                  <div class="mms-right-item">
+                                    {%- render 'product-card-header', variable: value -%}
+                                  </div>
+                                {% endfor %}
                               </div>
-                            {% endfor %}
                             {%- endif -%}
                           </div>
                         </div>
@@ -291,13 +293,13 @@
     $('.close').hide();
     $('.open').on('click', function() {
       $('.h-nav').addClass('active');
-      $('body').addClass('stay');
+      $('body').attr('data-lenis-prevent', 'true'); // add attribute
       $('.close').show();
       $('.open').hide();
     });
     $('.close').on('click', function() {
       $('.h-nav').removeClass('active');
-      $('body').removeClass('stay');
+      $('body').removeAttr('data-lenis-prevent'); // remove attribute
       $('.close').hide();
       $('.open').show();
     });

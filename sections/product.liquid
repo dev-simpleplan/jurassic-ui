@@ -100,6 +100,16 @@
                         {{ product.metafields.custom.title_testimonial | metafield_tag }}
                       </div>
                     {% endif %}
+
+                    <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
+                    <div class="tr-okendo">
+                      {% for app_block in section.blocks %}
+                        {% if app_block.type == '@app' and app_block.app.name contains 'Okendo' %}
+                          {% render app_block %}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+
                     {% assign certificate = product.metafields.custom.certificate %}
                     <div class="tr-review-certi">
                       <div class="ts-certificate">
