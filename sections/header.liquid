@@ -7,9 +7,14 @@
     <div class="desktop-header">
       <div class="header-in">
         <div class="h-left">
-          <div class=" cd-nav-trigger js-cd-nav-trigger text-replace" onclick="openNav()">
-              <div class="navbar_toggler"></div>
+          <div class="hamburger">
+          <div class="open">
+            {% render 'icon-menu' %}
           </div>
+          <div class="close" style="display: none;">
+            {% render 'icon-close' %}
+          </div>
+        </div>
           <div class="brand-logo mob-none flex">
             <a href="{{ shop.url }}">
               {% if section.settings.select_logo %}
@@ -197,6 +202,9 @@
                       aria-haspopup="listbox"
                       aria-autocomplete="list">
                   </div>
+                  <div class="for-mobile">
+                    {% render 'icon-search' %}
+                  </div>
                   <input
                     name="options[prefix]"
                     type="hidden"
@@ -282,12 +290,14 @@
     // mobile drawer toggles (if you use them)
     $('.close').hide();
     $('.open').on('click', function() {
-      $('.nav_menu').addClass('active');
+      $('.h-nav').addClass('active');
+      $('body').addClass('stay');
       $('.close').show();
       $('.open').hide();
     });
     $('.close').on('click', function() {
-      $('.nav_menu').removeClass('active');
+      $('.h-nav').removeClass('active');
+      $('body').removeClass('stay');
       $('.close').hide();
       $('.open').show();
     });
@@ -317,4 +327,24 @@
       $('main').removeClass('backdrop_bg');
     });
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchBar = document.querySelector(".search-input-bar");
+    const icon = document.querySelector(".hiw-search .for-mobile"); 
+
+    // When clicking the icon → activate input
+    icon.addEventListener("click", (e) => {
+      e.stopPropagation(); // prevent document click from firing
+      searchBar.classList.add("active");
+      input.focus(); // optional
+    });
+
+    // When clicking anywhere outside → remove active
+    document.addEventListener("click", (e) => {
+      if (!searchBar.contains(e.target)) {
+        searchBar.classList.remove("active");
+      }
+    });
+  });
+
 </script>

@@ -333,6 +333,9 @@ header.backdrop {
     gap: 16px;
     flex-direction: row-reverse;
 }
+.header-in .h-left .hamburger {
+    display: none;
+}
 .hnav-menu>ul {
     display: flex;
     align-items: center;
@@ -556,7 +559,11 @@ li.nav-item a.nav-link:hover::before {
 .hiw-search .search-input-bar input:focus {
     outline: none;
 }
+.hiw-search .for-mobile {
+    display: none;
+}
 /* Header CSS */
+
 /* Homepage CSS */
 .home-banner {
     position: relative;
@@ -4032,6 +4039,7 @@ section.imagescroll {
     position: relative;
     padding-top: 150px;
     min-height: 100vh;
+    padding-bottom: 80px;
 }
 .contact-page .banner-bg {
     position: absolute;

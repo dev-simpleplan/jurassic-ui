@@ -243,6 +243,9 @@
   header {
     padding: 20px 0;
   }
+  .header-in .h-left .hamburger {
+    display: block;
+  }
   .header-in .h-nav {
     position: fixed;
     width: 90%;
@@ -325,6 +328,7 @@
   .hnav-menu > ul {
     flex-direction: column;
     align-items: flex-start;
+    gap: 40px;
   }
   li.nav-item {
     flex-direction: column;
@@ -336,13 +340,13 @@
     content: "";
     position: absolute;
     left: 0;
-    bottom: -10px;
+    bottom: -20px;
     width: 100%;
     height: 1px;
     background-color: #e1d8cc;
   }
   li.nav-item a.nav-link {
-    font-size: 15px;
+    font-size: 12px;
   }
   .mega-menu {
     position: relative;
@@ -940,19 +944,30 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .footer-bottom-in .footer-links .blocks {
     gap: 10px;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
   }
   .hnav-menu {
     padding: 30px 20px;
   }
   .mega-menu-split {
-    padding: 20px 0 10px 10px;
+    padding: 30px 0 20px 10px;
   }
   .mega-menu-split .mms-left {
     gap: 20px;
   }
   li.nav-item .arrow {
     justify-content: space-between;
+  }
+  li.nav-item .arrow .nav_arrow_down {
+    transform: rotate(-90deg);
+    transition: .3s ease all;
+  }
+  li.nav-item .arrow.active .nav_arrow_down {
+    transform: rotate(-180deg);
+  }
+  body.stay {
+    overflow: hidden;
   }
   .lost-taste .custom-heading .logo-icon {
     top: -60px;
@@ -1181,4 +1196,36 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .heading-search-wrap .blog-search {
     width: 100%;
   }
+  .hiw-search .for-mobile {
+    display: block;
+  }
+  .hiw-search .search-input-bar {
+    position: fixed;
+    width: 100%;
+    opacity: 0;
+    left: 0px;
+    top: -100px;
+    visibility: hidden;
+    transition: .3s ease all;
+    padding: 16px 20px;
+    background-color: #FCF9F5;
+    z-index: 2;
+  }
+  .hiw-search .search-input-bar input {
+    background-color: #fff;
+    padding-left: 20px;
+    width: 100%;
+  }
+  .hiw-search .search-input-bar svg {
+    right: 35px;
+    top: 22px;
+    left: auto;
+  }
+  .hiw-search .search-input-bar.active {
+    width: 100%;
+    opacity: 1;
+    top: 0;
+    visibility: visible;
+  }
+  
 }
