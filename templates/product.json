@@ -345,10 +345,29 @@
         "review_item_A6AUXi",
         "review_item_CY7H7F"
       ],
+      "disabled": true,
       "name": "Reviews Section",
       "settings": {
         "heading": "What Explorers Are Saying"
       }
+    },
+    "1765873593de6c460a": {
+      "type": "apps",
+      "blocks": {
+        "okendo_reviews_carousel_DFkkVF": {
+          "type": "shopify://apps/okendo/blocks/reviews-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "show_heading": true,
+            "heading": "What Explorers Are Saying",
+            "badge_link": "",
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_carousel_DFkkVF"
+      ],
+      "settings": {}
     },
     "spacer_wXMU4V": {
       "type": "spacer",
@@ -568,6 +587,7 @@
     "facts",
     "spacer_LKTbj6",
     "reviews_FNV7Gf",
+    "1765873593de6c460a",
     "spacer_wXMU4V",
     "three-icon-sec",
     "image_text_scroll_qVRxF4",
