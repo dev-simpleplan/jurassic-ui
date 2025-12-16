@@ -19,12 +19,6 @@
             "title_testimonial": ""
           }
         },
-        "okendo_star_rating_XqyNpT": {
-          "type": "shopify://apps/okendo/blocks/star-rating/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": "{{product}}"
-          }
-        },
         "product_info": {
           "type": "product_info",
           "settings": {}
@@ -66,7 +60,6 @@
       },
       "block_order": [
         "title",
-        "okendo_star_rating_XqyNpT",
         "product_info",
         "product_usp",
         "variant_selector",
