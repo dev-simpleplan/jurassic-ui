@@ -122,7 +122,7 @@
 .star_review .star_rating > p {
   display: flex;
 }
-.star_review .star_rating > p div {
+.star_review .star_rating > p div.okeReviews > div:nth-child(1) {
   display: flex;
 }
 .star_review .star_rating > p div.oke-sr-rating {
@@ -135,6 +135,7 @@
   font-size: 11px;
   line-height: 12px;
   color: #747474;
+  line-height: 15px;
 }
 .star_review .oke-sr-count span {
   display: flex;
