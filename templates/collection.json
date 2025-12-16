@@ -24,7 +24,7 @@
           "settings": {
             "col": "farmer-box",
             "col_name": "",
-            "col_img": "shopify://shop_images/Farmer_Box.jpg?v=1762245895"
+            "col_img": "shopify://shop_images/Farmer_Box.jpg"
           }
         },
         "collection_PpEayN": {
@@ -69,7 +69,17 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "17658703763bf5fc11": {
+      "type": "apps",
+      "settings": {}
     }
   },
-  "order": ["main", "spacer0", "seo", "spacer1"]
+  "order": [
+    "main",
+    "spacer0",
+    "seo",
+    "spacer1",
+    "17658703763bf5fc11"
+  ]
 }
