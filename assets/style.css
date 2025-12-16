@@ -391,7 +391,7 @@ li.nav-item a.nav-link:hover::before {
     transition-delay: 0.2s;
 }
 .mega-menu-split {
-    padding: 0px 0 60px 0;
+    padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100%;
@@ -402,6 +402,8 @@ li.nav-item a.nav-link:hover::before {
     align-items: flex-start;
     justify-content: space-between;
     gap: 40px;
+    padding-top: 20px;
+    padding-bottom: 60px;
 }
 .mms-left .child-block,
 .mms-left .child-block-straight {
@@ -499,6 +501,71 @@ li.nav-item a.nav-link:hover::before {
 }
 .child-block-onlylink ul li a:hover::before {
     transform: scale(1);
+}
+.mega-menu-split .mms-right {
+    padding: 20px 25px;
+    background-color: #fff;
+}
+.mms-right .mmsr-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.mmsr-top {
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 18px;
+    color: #1A1A1A;
+    text-transform: capitalize;
+}
+.mmsr-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+}
+.mmsr-bottom .mms-right-item .recommended-item {
+    border: 1px solid #000000;
+    border-radius: 16px;
+    position: relative;
+}
+.mms-right-item .fc_top {
+    position: relative;
+}
+.mms-right-item .recommended-item .ri-img {
+    position: relative;
+}
+.mms-right-item .ri-image-items {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.ri-image-items .ri-image-items-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ri-image-items .ri-image-items-top > div {
+    position: relative;
+    inset: 0;
+}
+.ri-image-items-top .fc_organic_auth {
+    margin-left: 10px;
+}
+.recommended-item .ri-image-items-bottom .ri-txt {
+    position: relative;
+    inset: 0;
+}
+.ri-image-items-bottom .oke-stars svg {
+    height: 11px;
+}
+.ri-image-items-bottom .oke-sr-count {
+    font-weight: 500;
+    font-size: 10px;
+    color: #FFFFFF;
 }
 .header-icons-wrap {
     display: flex;

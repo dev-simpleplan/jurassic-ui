@@ -157,7 +157,7 @@
                                     <div class="mmsr-bottom">
                                       {% for item in block.settings.product_list %}
                                         <div class="mms-right-item">
-                                          {%- render 'product-card-header', variable: value -%}
+                                          {%- render 'product-card-header', product: item -%}
                                         </div>
                                       {% endfor %}
                                     </div>
