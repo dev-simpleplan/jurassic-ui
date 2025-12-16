@@ -373,6 +373,20 @@ li.nav-item a.nav-link::before {
 li.nav-item a.nav-link:hover::before {
     transform: scale(1);
 }
+li.nav-item.has-mega-menu {
+    
+}
+li.nav-item.has-mega-menu::before {
+    content: '';
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 100px;
+    transition: .3s ease all;
+    clip-path: inset(0 0 100% 0);
+}
 .mega-menu {
     top: 71px;
     left: 0;
@@ -385,7 +399,15 @@ li.nav-item a.nav-link:hover::before {
     border-top: 1px solid #E1D8CC;
     /* min-height: 440px; */
 }
+.mega-menu::before {
+    
+}
 .header-in ul>li:hover .mega-menu {
+    clip-path: inset(0 0 0 0);
+    transition: 1s ease all;
+    transition-delay: 0.2s;
+}
+.header-in ul>li:hover::before {
     clip-path: inset(0 0 0 0);
     transition: 1s ease all;
     transition-delay: 0.2s;
