@@ -150,11 +150,19 @@
                             {%- comment -%} RIGHT: optional promo image from block setting {%- endcomment -%}
                             {%- if block.settings.product_list != blank -%}
                               <div class="mms-right">
-                                {% for item in block.settings.product_list %}
-                                  <div class="mms-right-item">
-                                    {%- render 'product-card-header', variable: value -%}
+                                <div class="mmsr-wrap">
+                                    <div class="mmsr-top">
+                                      Favourites
+                                    </div>
+                                    <div class="mmsr-bottom">
+                                      {% for item in block.settings.product_list %}
+                                        <div class="mms-right-item">
+                                          {%- render 'product-card-header', variable: value -%}
+                                        </div>
+                                      {% endfor %}
+                                    </div>
                                   </div>
-                                {% endfor %}
+                                
                               </div>
                             {%- endif -%}
                           </div>

@@ -374,7 +374,7 @@ li.nav-item a.nav-link:hover::before {
     transform: scale(1);
 }
 .mega-menu {
-    top: 60px;
+    top: 71px;
     left: 0;
     position: fixed;
     width: 100%;
@@ -382,6 +382,7 @@ li.nav-item a.nav-link:hover::before {
     background-color: var(--body-bg);
     clip-path: inset(0 0 100% 0);
     transition: 0.2s ease all;
+    border-top: 1px solid #E1D8CC;
     /* min-height: 440px; */
 }
 .header-in ul>li:hover .mega-menu {
@@ -390,7 +391,7 @@ li.nav-item a.nav-link:hover::before {
     transition-delay: 0.2s;
 }
 .mega-menu-split {
-    padding: 20px 0 60px 0;
+    padding: 0px 0 60px 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100%;

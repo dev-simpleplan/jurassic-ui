@@ -1143,6 +1143,14 @@ span.cart-compare-price {
   height: auto;
   max-height: 100%;
 }
+.tr-okendo .oke-sr-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+.tr-okendo .oke-stars svg {
+  height: 14px;
+}
 .tr-review-certi {
   display: flex;
   align-items: flex-end;

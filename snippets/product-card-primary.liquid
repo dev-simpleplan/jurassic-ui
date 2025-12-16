@@ -63,10 +63,9 @@
         <div class="fc_bottom_top">
           <div class="star_review">
             <div class="star_rating">
-              <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
+              <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
             </div>
             <div class="rating_info">
-              <p>4.9 (200)</p>
               {% if product.metafields.custom.country_of_origin %}
                 <span class="dot_seperator"></span>
                 <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
@@ -76,6 +75,7 @@
           <p class="fc_product_title">
             <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
           </p>
+          
         </div>
 
         <div class="fc_bottom_bottom">

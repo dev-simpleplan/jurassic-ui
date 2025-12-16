@@ -119,13 +119,31 @@
   gap: 5px;
   align-items: center;
 }
-
+.star_review .star_rating > p {
+  display: flex;
+}
+.star_review .star_rating > p div {
+  display: flex;
+}
+.star_review .star_rating > p div.oke-sr-rating {
+  display: none;
+}
+.star_review .oke-sr-stars svg {
+  height: 11px;
+}
+.star_review .oke-sr-count {
+  font-size: 11px;
+  line-height: 12px;
+  color: #747474;
+}
+.star_review .oke-sr-count span {
+  display: flex;
+}
 .rating_info {
   display: flex;
   gap: 5px;
   align-items: center;
 }
-
 .rating_info p {
   font-size: 11px;
   color: #747474;

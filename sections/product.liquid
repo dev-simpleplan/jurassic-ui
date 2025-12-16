@@ -102,13 +102,9 @@
                     {% endif %}
 
                     <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
+
                     <div class="tr-okendo">
-                      {% for app_block in section.blocks %}
-                        {% if app_block.type == '@app' %}
-                          {% render app_block %}
-                          {% break %}
-                        {% endif %}
-                      {% endfor %}
+                      <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
                     </div>
 
                     {% assign certificate = product.metafields.custom.certificate %}
@@ -341,10 +337,12 @@
                   </div>
                 </div>
               {% when '@app' %}
+              {% unless forloop.first %}
                 <div class="app-block">
                   {% render block %}
                 </div>
-          {% else %}
+              {% endunless %}
+              {% else %}
             {% endcase %}
           {% endfor %}
         {% endform %}
