@@ -2,36 +2,22 @@
     <div class="container">
         <div class="top-bar-in">
             {% if localization.available_languages.size > 1 %}
-                <form
-                    method="post"
-                    action="{{ routes.localization_url }}"
-                    id="LanguageSwitcher"
-                    class="language-switcher"
-                >
-                    <input
-  type="hidden"
-  name="return_to"
-  value="{% if request.path == '' %}/{% else %}{{ request.path }}{% endif %}"
->
+  <form method="post" action="{{ routes.localization_url }}">
+    <input type="hidden" name="return_to" value="/">
 
-                    <select
-                    name="locale_code"
-                    aria-label="Select language"
-                    onchange="this.form.submit()"
-                    >
-                    {% for language in localization.available_languages %}
-                        <option
-                        value="{{ language.iso_code }}"
-                        {% if language.iso_code == localization.language.iso_code %}
-                            selected
-                        {% endif %}
-                        >
-                        {{ language.endonym_name }}
-                        </option>
-                    {% endfor %}
-                    </select>
-                </form>
-                {% endif %}
+    <select name="locale_code" onchange="this.form.submit()">
+      {% for language in localization.available_languages %}
+        <option
+          value="{{ language.iso_code }}"
+          {% if language.iso_code == localization.language.iso_code %}selected{% endif %}
+        >
+          {{ language.endonym_name }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+{% endif %}
+
 
         </div>
     </div>
