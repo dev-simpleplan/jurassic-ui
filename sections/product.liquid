@@ -210,6 +210,42 @@
                     </div>
                   </div>
                 </div>
+
+              {% assign has_offers = false %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'offer' %}
+                    {% assign has_offers = true %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if has_offers %}
+                <div class="product-offers">
+                  <div class="offers-head">Offers</div>
+
+                  <div class="offers-list">
+                    {% for block in section.blocks %}
+                      {% if block.type == 'offer' %}
+                        <div class="offer-card" {{ block.shopify_attributes }}>
+                          <div class="offer-left">
+                            <span class="offer-icon">%</span>
+                            <div>
+                              <p class="offer-code">{{ block.settings.code }}</p>
+                              <p class="offer-text">{{ block.settings.text }}</p>
+                            </div>
+                          </div>
+
+                          <button
+                            class="offer-copy-btn"
+                            data-code="{{ block.settings.code }}">
+                            Copy
+                          </button>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+                {% endif %}
+
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
@@ -753,6 +789,25 @@
 
 </script>
 
+<script>
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.offer-copy-btn');
+  if (!btn) return;
+
+  const code = btn.dataset.code;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.innerText = 'Copied';
+    btn.classList.add('copied');
+
+    setTimeout(() => {
+      btn.innerText = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+});
+</script>
+
+
 {% schema %}
   {
     "name": "Product",
@@ -846,7 +901,26 @@
             "label": "Modal content"
           }
         ]
-      }, {
+      },
+      {
+      "type": "offer",
+      "name": "Offer / Coupon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Coupon Code",
+          "default": "JURASSIC222"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Offer Text",
+          "default": "Buy 3 @ $350 + Free Gifts"
+        }
+      ]
+    },
+       {
         "type": "@app"
       }
     ],

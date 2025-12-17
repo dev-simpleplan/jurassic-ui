@@ -303,11 +303,22 @@ a:hover {
     width: 15px;
 }
 
+/* Top Bar CSS */
+.top-bar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #151515;
+    z-index: 9999;
+}
+/* Top Bar CSS */
+
 /* Header CSS */
 header {
     background-color: var(--body-bg);
     position: fixed;
-    top: 0;
+    top: 24px;
     left: 0;
     width: 100%;
     z-index: 99999;
@@ -4265,6 +4276,72 @@ section.imagescroll {
     width: 100%;
     border-radius: 0;
 }
+
+/* Delivery Info Box CSS */
+
+
+.product-offers {
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.offers-head {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.offer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.offer-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.offer-icon {
+  background: #f5f5f5;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.offer-code {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.offer-text {
+  font-size: 13px;
+  color: #666;
+}
+
+.offer-copy-btn {
+  border: 1px dashed #ccc;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.offer-copy-btn.copied {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
 
 
 
