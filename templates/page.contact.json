@@ -43,29 +43,36 @@
         "social_icon_RTUtHg": {
           "type": "social_icon",
           "settings": {
-            "social_link": "https://facebook.com",
+            "social_icon_link": "",
             "social_icon": "shopify://shop_images/facebook-white-logo.svg"
           }
         },
         "social_icon_kT8M8K": {
           "type": "social_icon",
           "settings": {
-            "social_link": "https://facebook.com",
-            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+            "social_icon_link": "",
+            "social_icon": "shopify://shop_images/twitter-white-logo.svg"
           }
         },
         "social_icon_dfcMVD": {
           "type": "social_icon",
           "settings": {
-            "social_link": "https://facebook.com",
-            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+            "social_icon_link": "",
+            "social_icon": "shopify://shop_images/instagram-white-logo.svg"
           }
         },
         "social_icon_EkCfVK": {
           "type": "social_icon",
           "settings": {
-            "social_link": "https://facebook.com",
-            "social_icon": "shopify://shop_images/facebook-white-logo.svg"
+            "social_icon_link": "",
+            "social_icon": "shopify://shop_images/tiktock-white-logo.svg"
+          }
+        },
+        "social_icon_KNBJAU": {
+          "type": "social_icon",
+          "settings": {
+            "social_icon_link": "",
+            "social_icon": "shopify://shop_images/telegram-white-logo.svg"
           }
         }
       },
@@ -77,7 +84,8 @@
         "social_icon_RTUtHg",
         "social_icon_kT8M8K",
         "social_icon_dfcMVD",
-        "social_icon_EkCfVK"
+        "social_icon_EkCfVK",
+        "social_icon_KNBJAU"
       ],
       "settings": {
         "banner-bg": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
