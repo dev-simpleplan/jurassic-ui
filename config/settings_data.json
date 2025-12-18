@@ -22,6 +22,14 @@
           "heading": "Join the expedition",
           "text": "Your inbox deserves better flavors—stories, picks, and perks from the wild side."
         }
+      },
+      "top-bar": {
+        "type": "top-bar",
+        "settings": {
+          "rating_image": "shopify://shop_images/image_306.png",
+          "rating_text": "(4.7/5) “excellent”",
+          "tbtext_text": "free shipping on orders above $450"
+        }
       }
     },
     "content_for_index": [],
