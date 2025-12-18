@@ -97,37 +97,51 @@
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
           setTimeout(() => {
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      });
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+  });
 
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
 
-        // Header Scroll Backdrop
-        let removeTimer;
-        let allowHover = true;
-        const header = document.querySelector('header');
+  const header = document.querySelector('header');
 
-        lenis.on('scroll', ({ scroll, limit }) => {
-          const scrollPercentage = (scroll / limit) * 100;
-          allowHover = scrollPercentage <= 5;
+  let lastScroll = 0;
+  const BACKDROP_TRIGGER = 80; // px from top
 
-          // header backdrop logic
-          if (scrollPercentage > 5) {
-            header.classList.add('backdrop');
-            // force-close menu if you scrolled past 5%
-            clearTimeout(removeTimer);
-          } else {
-            header.classList.remove('backdrop');
-          }
-        });
+  lenis.on('scroll', ({ scroll }) => {
 
-      }, 0);
+    /* ===============================
+       BACKDROP — position based
+       =============================== */
+    if (scroll > BACKDROP_TRIGGER) {
+      header.classList.add('backdrop');
+    } else {
+      // only remove when fully back to top
+      header.classList.remove('backdrop');
+    }
+
+    /* ===============================
+       ACTIVE — direction based
+       =============================== */
+    if (scroll > lastScroll && scroll > BACKDROP_TRIGGER) {
+      // scrolling down
+      header.classList.add('active');
+    } else {
+      // scrolling up OR near top
+      header.classList.remove('active');
+    }
+
+    lastScroll = scroll;
+  });
+
+}, 0);
+
+
 
       if (window.gsap && window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);

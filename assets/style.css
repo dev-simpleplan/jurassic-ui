@@ -413,16 +413,21 @@ a:hover {
 header {
     background-color: var(--body-bg);
     position: fixed;
-    top: 24px;
+    top: 35px;
     left: 0;
     width: 100%;
     z-index: 99999;
+    transition: .5s ease all;
 }
 header.header-bg {
     background-color: #DBD7C8;
 }
 header.backdrop {
     box-shadow: 0 1px 6px #0003;
+}
+header.active {
+    top: 0;
+    z-index: 999999999;
 }
 .brand-logo img {
     width: 180px;
@@ -815,7 +820,7 @@ li.nav-item.has-mega-menu::before {
     gap: 100px;
     justify-content: space-between;
     height: calc(100% - 60px);
-    padding: 160px 0 100px 0
+    padding: 200px 0 100px 0
 }
 .banner-content .bc-top {}
 .bc-top .bct-heading {
