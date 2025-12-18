@@ -1298,8 +1298,11 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .hiw-search .search-input-bar.active {
     width: 100%;
     opacity: 1;
-    top: 0;
+    top: 66px;
     visibility: visible;
+  }
+  header.active .hiw-search .search-input-bar.active {
+    top: 0;
   }
   
 }
