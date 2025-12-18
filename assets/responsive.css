@@ -897,6 +897,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     flex-direction: column;
     gap: 6px;
   }
+  .header-in .h-nav {
+    top: 128px;
+  }
   .bcb-reviews-wrap {
     flex-wrap: wrap;
   }
