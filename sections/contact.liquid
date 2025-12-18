@@ -137,6 +137,25 @@
                             </div>
                             {% endform %}
                         </div>
+                        <div class="cgwl-bottom">
+                            {% assign review_blocks = section.blocks | where: "type", "reviews" %}
+                            {% if review_blocks.size > 0 %}
+                            <div class="bcb-reviews-wrap">
+                                {% for block in review_blocks %}
+                                <div class="bcbr-item" {{ block.shopify_attributes }}>
+                                    <div class="bcbri-top">{{ block.settings['review-top'] }}</div>
+                                    <div class="bcbri-bottom">
+                                    {% render 'rating-stars-fa', rating: block.settings.review_star %}
+                                    <div class="rating-text" aria-hidden="true">
+                                        {{ block.settings.review_star }}
+                                    </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                        </div>
                     </div>
                 </div>
             </div>

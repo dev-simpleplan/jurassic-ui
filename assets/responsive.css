@@ -28,7 +28,7 @@
     font-size: 16px;
   }
   .bcbr-item .bcbri-top {
-    font-size: 20px;
+    font-size: 16px;
   }
   .vcheading-in h2 {
     font-size: 100px;
@@ -236,6 +236,21 @@
   }
   .liwi-left {
     aspect-ratio: inherit;
+  }
+  .contact-page {
+    padding-top: 90px;
+  }
+  .cpi-in .cpi-grid-wrap {
+    gap: 40px;
+  }
+  .cgwl-bottom .bcb-reviews-wrap {
+    gap: 20px;
+  }
+  .score {
+    font-size: 14px;
+  }
+  .cgw-right .cgwr-form {
+    padding: 40px 30px;
   }
 }
 
@@ -833,6 +848,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .mega-menu-split .mms-right {
     display: none;
+  }
+  .cpi-in .cpi-grid-wrap {
+    grid-template-columns: 1fr;
+  }
+  .cgw-left .cgwl-bottom {
+    display: none;
+  }
+  .cgw-right .cgwl-bottom {
+    display: block;
+    margin-top: 30px;
+  }
+  .cgwl-top {
+    gap: 50px;
   }
 }
 

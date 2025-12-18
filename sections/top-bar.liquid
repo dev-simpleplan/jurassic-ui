@@ -1,27 +1,119 @@
 <div class="top-bar">
     <div class="container">
         <div class="top-bar-in">
-            {% if localization.available_languages.size > 1 %}
-  <form method="post" action="{{ routes.localization_url }}">
-    <input type="hidden" name="return_to" value="/">
+            <div class="tb-rating">
+                <div class="tbr-icon">
+                    {% comment %} <img class="icon" src="{{ section.settings.rating_image | img_url: 'master' }}" alt="{{ section.settings.rating_image }}"> {% endcomment %}
+                </div>
+                <div class="tbr-text">{{ section.settings.rating_text }}</div>
+            </div>
+            <div class="tb-text">
+                <p>{{ section.settings.tbtext_text }}</p>
+            </div>
+            <div class="tb-lang-wrap">
+                {% if localization.available_countries.size > 1 %}
+                <div class="dropdown country-dropdown">
+                    <button class="dropdown-trigger" type="button">
+                    <span class="flag">
+                        <img
+                        src="https://flagcdn.com/w20/{{ localization.country.iso_code | downcase }}.png"
+                        alt="{{ localization.country.name }}"
+                        width="20"
+                        height="14"
+                        >
+                    </span>
+                    <span class="label">
+                        {{ localization.country.name }}
+                        ({{ localization.country.currency.iso_code }})
+                    </span>
+                    </button>
 
-    <select name="locale_code" onchange="this.form.submit()">
-      {% for language in localization.available_languages %}
-        <option
-          value="{{ language.iso_code }}"
-          {% if language.iso_code == localization.language.iso_code %}selected{% endif %}
-        >
-          {{ language.endonym_name }}
-        </option>
-      {% endfor %}
-    </select>
-  </form>
-{% endif %}
+                    <ul class="dropdown-menu">
+                    {% for country in localization.available_countries %}
+                        <li>
+                        <a href="{{ routes.root_url }}?country={{ country.iso_code }}">
+                            <img
+                            src="https://flagcdn.com/w20/{{ country.iso_code | downcase }}.png"
+                            alt="{{ country.name }}"
+                            width="20"
+                            height="14"
+                            >
+                            <span>
+                            {{ country.name }}
+                            ({{ country.currency.iso_code }})
+                            </span>
+                        </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
 
+                {% if localization.available_languages.size > 1 %}
+                {% assign lang_flags = 'en:gb,fr:fr,de:de' | split: ',' %}
 
+                <div class="dropdown language-dropdown">
+                    <button class="dropdown-trigger" type="button">
+                    {% for map in lang_flags %}
+                        {% assign pair = map | split: ':' %}
+                        {% if pair[0] == localization.language.iso_code %}
+                        <img
+                            src="https://flagcdn.com/w20/{{ pair[1] }}.png"
+                            alt="{{ localization.language.endonym_name }}"
+                            width="20"
+                            height="14"
+                        >
+                        {% endif %}
+                    {% endfor %}
+                    <span class="label">
+                        {{ localization.language.endonym_name }}
+                    </span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                    {% for language in localization.available_languages %}
+                        <li>
+                        <a href="{{ language.root_url }}">
+                            {% for map in lang_flags %}
+                            {% assign pair = map | split: ':' %}
+                            {% if pair[0] == language.iso_code %}
+                                <img
+                                src="https://flagcdn.com/w20/{{ pair[1] }}.png"
+                                alt="{{ language.endonym_name }}"
+                                width="20"
+                                height="14"
+                                >
+                            {% endif %}
+                            {% endfor %}
+                            <span>{{ language.endonym_name }}</span>
+                        </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('click', function (e) {
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+    const button = dropdown.querySelector('.dropdown-trigger');
+
+    if (button.contains(e.target)) {
+      dropdown.classList.toggle('open');
+    } else {
+      dropdown.classList.remove('open');
+    }
+  });
+});
+</script>
+
+
+
+
 
 {% schema %}
   {

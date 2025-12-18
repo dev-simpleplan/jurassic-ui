@@ -310,8 +310,103 @@ a:hover {
     top: 0;
     left: 0;
     background-color: #151515;
-    z-index: 9999;
+    z-index: 999999;
+    padding: 4px 0;
 }
+.top-bar-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.top-bar-in .tb-rating {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.tbr-icon {
+    width: 22px;
+}
+.tbr-icon img {
+    width: 100%;
+}
+.tbr-text {
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 1px;
+}
+.top-bar-in .tb-text p {
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.tb-lang-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 30px;
+}
+.tb-lang-wrap .dropdown {
+  position: relative;
+}
+
+.tb-lang-wrap .dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 6px 0px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #fff;
+}
+
+.tb-lang-wrap .dropdown-menu {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  background: #fff;
+  border: none;
+  min-width: 200px;
+  z-index: 50;
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition: .3s ease all;
+}
+
+.tb-lang-wrap .dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #c7c7c7;
+}
+.tb-lang-wrap .dropdown-menu li a span {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--grey-black);
+    white-space: nowrap;
+}
+
+.tb-lang-wrap .dropdown-menu li a:hover {
+  background: #f5f5f5;
+}
+
+.tb-lang-wrap .dropdown.open .dropdown-menu {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+}
+
+
+
 /* Top Bar CSS */
 
 /* Header CSS */
@@ -4268,6 +4363,9 @@ section.imagescroll {
 .cgwr-form form .form-group input:focus,
 .cgwr-form form .form-group select:focus {
     outline: none;
+}
+.cgw-right .cgwl-bottom {
+    display: none;
 }
 .contact-form-btn {
     margin-top: 20px;
