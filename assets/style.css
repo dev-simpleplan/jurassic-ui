@@ -4394,10 +4394,11 @@ section.imagescroll {
 
 
 .product-offers {
-  border-radius: 16px;
-  background: #fff;
-  padding: 16px;
-  margin-top: 16px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e3df;
+    border-radius: 20px;
+    margin-top: 16px;
 }
 
 .offers-head {
@@ -4415,14 +4416,14 @@ section.imagescroll {
   margin-bottom: 10px;
 }
 
-.offer-left {
+.offer-card .offer-left {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.offer-icon {
-  background: #f5f5f5;
+.offer-card .offer-icon {
+  /* background: #f5f5f5; */
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -4431,30 +4432,72 @@ section.imagescroll {
   justify-content: center;
   font-weight: 600;
 }
+.offer-card .offer-icon svg {
+    width: 100%;
+}
 
-.offer-code {
-  font-weight: 600;
+.offer-card .offer-code {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
   text-transform: uppercase;
+  color: #1A1A1A;
 }
 
-.offer-text {
-  font-size: 13px;
-  color: #666;
+.offer-card .offer-text {
+  font-size: 11px;
+  font-weight: 400;
+  color: #717171;
 }
 
-.offer-copy-btn {
-  border: 1px dashed #ccc;
+.offer-card .offer-copy-btn {
+  border: 1px dashed #C4C4C4;
   background: transparent;
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-width: 110px;
+  font-weight: 400;
+  font-size: 11px;
+  color: #717171;
+  text-transform: uppercase;
 }
 
-.offer-copy-btn.copied {
+.offer-card .offer-copy-btn.copied {
   border-color: #4CAF50;
   color: #4CAF50;
 }
 
+#delivery-info {
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e3df;
+    border-radius: 20px;
+    margin-top: 16px;
+    box-shadow: none;
+}
+#delivery-info > p,
+#delivery-info > small {
+    text-align: center;
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    color: #1A1A1A;
+}
+#delivery-info > small {
+    font-size: 12px;
+    color: #717171;
+    margin: 4px 0;
+}
+#delivery-info p.product_delivery_modal_opener {
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
 
 
 

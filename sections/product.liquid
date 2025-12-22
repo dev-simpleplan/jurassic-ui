@@ -228,7 +228,9 @@
                       {% if block.type == 'offer' %}
                         <div class="offer-card" {{ block.shopify_attributes }}>
                           <div class="offer-left">
-                            <span class="offer-icon">%</span>
+                            <span class="offer-icon">
+                              {%  render 'icon-offer' %}
+                            </span>
                             <div>
                               <p class="offer-code">{{ block.settings.code }}</p>
                               <p class="offer-text">{{ block.settings.text }}</p>
@@ -236,10 +238,7 @@
                           </div>
 
                           <button
-                            class="offer-copy-btn"
-                            data-code="{{ block.settings.code }}">
-                            Copy
-                          </button>
+                            class="offer-copy-btn" data-code="{{ block.settings.code }}">{{ block.settings.code }}{%  render 'icon-copy' %}</button>
                         </div>
                       {% endif %}
                     {% endfor %}
