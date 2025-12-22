@@ -540,6 +540,7 @@
 section.faq-page {
   padding: 80px 0;
   position: relative;
+  padding-top: 160px;
 }
 
 section.faq-page .faq-head h1 {

@@ -94,15 +94,16 @@
               {% when 'title' %}
                 <div class="title">
                   <div class="title-review">
-                    {% if block.settings.show_testimonial == true %}
+                    {% if block.settings.show_testimonial 
+                      and product.metafields.custom.title_testimonial != blank %}
                       <div class="tr-testimonial">
                         {% render 'testimonial-icon' %}
                         {{ product.metafields.custom.title_testimonial | metafield_tag }}
                       </div>
                     {% endif %}
 
-                    <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
 
+                    <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
                     <div class="tr-okendo">
                       <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
                     </div>

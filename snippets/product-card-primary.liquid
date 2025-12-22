@@ -167,52 +167,25 @@
                   type="hidden"
                   name="quantity"
                   value="1">
-                <div class="fc_add_to_cart">
-                  <span class="remove_product">
-                    <svg
-                      width="23"
-                      height="22"
-                      viewBox="0 0 23 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M5.09961 11.3408H17.8457"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    </svg>
-                  </span>
+                <div class="fc_add_to_cart"
+                    data-variant-id="{{ current_variant.id }}"
+                    data-available="{{ current_variant.available }}"
+                    data-inventory="{{ current_variant.inventory_quantity }}">
+
                   <button
-                    type="submit"
-                    class="add-to-cart"
-                    {% unless product.available %}
-                    disabled
-                    {% endunless %}>
-                    {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                    class="add-to-cart-btn"
+                    {% unless current_variant.available %}disabled{% endunless %}>
+                    {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
-                  <span class="add_product">
-                    <svg
-                      width="23"
-                      height="22"
-                      viewBox="0 0 23 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M11.5645 4.96582V17.7119"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path
-                        d="M5.19727 11.3408H17.9434"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    </svg>
-                  </span>
+
+                  <div class="qty-controls">
+                    <span class="remove_product">–</span>
+                    <span class="qty-value">1</span>
+                    <span class="add_product">+</span>
+                  </div>
                 </div>
+
+
               </form>
             </div>
             <div class="fc_trust_text">
@@ -230,3 +203,127 @@
     </div>
   </div>
 </div>
+
+
+<style>
+
+  .fc_add_to_cart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fc_add_to_cart .remove_product,
+.fc_add_to_cart .add_product,
+.fc_add_to_cart .qty-value {
+  display: none;
+}
+
+.fc_add_to_cart.active .remove_product,
+.fc_add_to_cart.active .add_product,
+.fc_add_to_cart.active .qty-value {
+  display: inline-flex;
+}
+
+.fc_add_to_cart.active .add-to-cart-btn {
+  display: none;
+}
+.fc_add_to_cart {
+  display: flex;
+  justify-content: center;
+}
+
+.fc_add_to_cart .qty-controls {
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.fc_add_to_cart.active .qty-controls {
+  display: flex;
+}
+
+.fc_add_to_cart.active .add-to-cart-btn {
+  display: none;
+}
+
+.qty-controls span {
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+</style>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  async function addToCart(id, qty) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, quantity: qty })
+    }).then(r => r.json());
+  }
+
+  async function changeCart(key, qty) {
+    return fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    });
+  }
+
+  async function getCart() {
+    return fetch('/cart.js').then(r => r.json());
+  }
+
+  document.querySelectorAll('.fc_add_to_cart').forEach(card => {
+
+    if (card.dataset.available !== 'true') return;
+
+    const variantId = card.dataset.variantId;
+    const maxQty = parseInt(card.dataset.inventory, 10) || Infinity;
+
+    const addBtn = card.querySelector('.add-to-cart-btn');
+    const plus = card.querySelector('.add_product');
+    const minus = card.querySelector('.remove_product');
+    const qtyEl = card.querySelector('.qty-value');
+
+    let qty = 0;
+    let lineKey = null;
+
+    addBtn.addEventListener('click', async () => {
+      await addToCart(variantId, 1);
+      qty = 1;
+      qtyEl.textContent = qty;
+      card.classList.add('active');
+
+      const cart = await getCart();
+      const item = cart.items.find(i => i.variant_id == variantId);
+      if (item) lineKey = item.key;
+    });
+
+    plus.addEventListener('click', async () => {
+      if (qty >= maxQty) return;
+      qty++;
+      qtyEl.textContent = qty;
+      await changeCart(lineKey, qty);
+    });
+
+    minus.addEventListener('click', async () => {
+      qty--;
+      if (qty <= 0) {
+        await changeCart(lineKey, 0);
+        card.classList.remove('active');
+        qty = 0;
+        return;
+      }
+      qtyEl.textContent = qty;
+      await changeCart(lineKey, qty);
+    });
+  });
+});
+</script>
