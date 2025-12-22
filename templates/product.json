@@ -12,6 +12,20 @@
     "template": {
       "type": "product",
       "blocks": {
+        "offer_MKP99r": {
+          "type": "offer",
+          "settings": {
+            "code": "Test 2",
+            "text": "30% off | One Time Purchase"
+          }
+        },
+        "offer_MHYyhK": {
+          "type": "offer",
+          "settings": {
+            "code": "Order 1",
+            "text": "20% off | One Time Purchase"
+          }
+        },
         "title": {
           "type": "title",
           "settings": {
@@ -59,6 +73,8 @@
         }
       },
       "block_order": [
+        "offer_MKP99r",
+        "offer_MHYyhK",
         "title",
         "product_info",
         "product_usp",
