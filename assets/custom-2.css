@@ -572,7 +572,7 @@ span.cart-compare-price {
 /* Collection Page */
 
 .collection-main {
-  padding-top: 40px;
+  padding-top: 120px;
 }
 .collection-main .breadcrumbs {
   display: flex;
@@ -1078,6 +1078,7 @@ span.cart-compare-price {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
+  border: 2px solid transparent;
 }
 .prod-thumb::before {
   content: '';
@@ -1090,11 +1091,14 @@ span.cart-compare-price {
   z-index: 1;
   transition: .3s ease all;
 }
+.slick-current .prod-thumb {
+  border-color: #ffc761;
+}
 .slick-current .prod-thumb::before {
   background: transparent;
 }
 .prod-thumb-image .slick-slide {
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 .prod-main-image .slick-list,
 .prod-main-image .slick-track {

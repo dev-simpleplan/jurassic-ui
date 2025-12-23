@@ -15,9 +15,9 @@
         <p>There are no products inside of this collection.</p>
       {%- else -%}
         {% for product in collection.products %}
-          {% render 'product-card-primary'
-            , product: product
-            , collection: collection %}
+          <div class="item">
+            {% render 'product-card-primary', product: product, collection: collection %}
+          </div>
         {% endfor %}
       {%- endif -%}
     </div>
