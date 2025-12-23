@@ -405,7 +405,103 @@ a:hover {
   visibility: visible;
 }
 
+.locale-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 6px 0px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #fff;
+}
 
+.locale-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  clip-path: inset(0 0 100% 0);
+  transition: 1s ease all;
+}
+.locale-modal.is-open {
+    clip-path: inset(0 0 0 0);
+    transition: 1s ease all;
+    transition-delay: 0.2s;
+}
+
+.locale-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.locale-panel {
+  position: relative;
+  background: #fff;
+  max-width: 800px;
+  width: calc(100% - 32px);
+  margin: 150px auto 60px auto;
+  padding: 40px 20px;
+  border-radius: 6px;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.locale-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+.is-selected {
+  background: #FFF2DB;
+  font-weight: 600;
+}
+
+.locale-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 24px;
+  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0px 30px;
+}
+
+.locale-list li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: #111;
+  transition: .2s ease all;
+}
+.locale-list li a span {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.locale-list li a:hover {
+  background: #FFF2DB;
+}
+
+.lang-code {
+  /* width: 36px; */
+  font-weight: 600;
+}
+.language-btn {
+    text-align: center;
+}
+.language-btn button {
+    border: none;
+    min-width: 200px;
+}
 
 /* Top Bar CSS */
 
@@ -495,8 +591,10 @@ li.nav-item.has-mega-menu::before {
     background-color: rgba(0, 0, 0, 0.8);
     left: 0;
     top: 100px;
-    transition: .3s ease all;
-    clip-path: inset(0 0 100% 0);
+    transition: .1s ease all;
+    /* clip-path: inset(0 0 100% 0); */
+    opacity: 0;
+    visibility: hidden;
 }
 .mega-menu {
     top: 100px;
@@ -522,8 +620,10 @@ header.active .mega-menu {
     transition-delay: 0.2s;
 }
 .header-in ul>li:hover::before {
-    clip-path: inset(0 0 0 0);
-    transition: 1s ease all;
+    /* clip-path: inset(0 0 0 0); */
+    opacity: 1;
+    visibility: visible;
+    transition: 0.3s ease all;
     transition-delay: 0.2s;
 }
 .mega-menu-split {

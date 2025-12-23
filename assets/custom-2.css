@@ -1078,7 +1078,7 @@ span.cart-compare-price {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
 }
 .prod-thumb::before {
   content: '';
@@ -1092,7 +1092,7 @@ span.cart-compare-price {
   transition: .3s ease all;
 }
 .slick-current .prod-thumb {
-  border-color: #ffc761;
+  border-color: #ffbb42;
 }
 .slick-current .prod-thumb::before {
   background: transparent;

@@ -10,7 +10,7 @@
             <div class="tb-text">
                 <p>{{ section.settings.tbtext_text }}</p>
             </div>
-            <div class="tb-lang-wrap">
+            {% comment %} <div class="tb-lang-wrap">
                 {% if localization.available_countries.size > 1 %}
                 <div class="dropdown country-dropdown">
                     <button class="dropdown-trigger" type="button">
@@ -92,12 +92,93 @@
                     </ul>
                 </div>
                 {% endif %}
+            </div> {% endcomment %}
+            <div class="tb-lang-wrap">
+                <button class="locale-trigger" type="button" data-locale-open>
+                    <img
+                    src="https://flagcdn.com/w20/{{ localization.country.iso_code | downcase }}.png"
+                    alt="{{ localization.country.name }}"
+                    width="20"
+                    height="14"
+                    >
+                    <span>
+                    {{ localization.country.name }} |
+                    {{ localization.language.iso_code | upcase }}
+                    </span>
+                </button>
             </div>
+
         </div>
     </div>
 </div>
 
-<script>
+<div
+  class="locale-modal"
+  data-locale-modal
+  data-current-country="{{ localization.country.iso_code }}"
+  data-current-language="{{ localization.language.iso_code }}"
+  data-lenis-prevent
+>
+  <div class="locale-backdrop" data-locale-close></div>
+
+  <div class="locale-panel" data-lenis-prevent>
+    <button class="locale-close" type="button" data-locale-close>×</button>
+
+    <!-- COUNTRIES -->
+    <div class="countries-select">
+        {% if localization.available_countries.size > 1 %}
+        <h3>Select country</h3>
+        <ul class="locale-list">
+            {% for country in localization.available_countries %}
+            <li>
+                <a href="#" data-country="{{ country.iso_code }}">
+                <img
+                    src="https://flagcdn.com/w20/{{ country.iso_code | downcase }}.png"
+                    alt="{{ country.name }}"
+                    width="20"
+                    height="14"
+                >
+                <span>
+                    {{ country.name }}
+                    ({{ country.currency.iso_code }})
+                </span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <!-- LANGUAGES -->
+    <div class="language-select">
+        {% if localization.available_languages.size > 1 %}
+        <h3>Select language</h3>
+        <ul class="locale-list">
+            {% for language in localization.available_languages %}
+            <li>
+                <a
+                    href="#"
+                    data-language="{{ language.iso_code }}"
+                    data-language-url="{{ language.root_url }}"
+                >
+                <span class="lang-code">
+                    {{ language.iso_code | upcase }}
+                </span>
+                <span>{{ language.endonym_name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="language-btn">
+        <button class="locale-apply custom-btn filled rounded" type="button" data-locale-apply>Apply</button>
+    </div>
+  </div>
+</div>
+
+
+{% comment %} <script>
 document.addEventListener('click', function (e) {
   document.querySelectorAll('.dropdown').forEach(dropdown => {
     const button = dropdown.querySelector('.dropdown-trigger');
@@ -109,7 +190,107 @@ document.addEventListener('click', function (e) {
     }
   });
 });
+</script> {% endcomment %}
+
+<script>
+document.addEventListener('click', function (e) {
+  const modal = document.querySelector('[data-locale-modal]');
+  if (!modal) return;
+
+  /* ----------------------------
+     OPEN MODAL
+  ----------------------------- */
+  if (e.target.closest('[data-locale-open]')) {
+    modal.classList.add('is-open');
+
+    const currentCountry = modal.dataset.currentCountry;
+    const currentLanguage = modal.dataset.currentLanguage;
+
+    // Store defaults
+    modal.dataset.selectedCountry = currentCountry;
+    modal.dataset.selectedLanguage = currentLanguage;
+
+    // Highlight current country
+    modal.querySelectorAll('[data-country]').forEach(el => {
+      el.classList.toggle(
+        'is-selected',
+        el.dataset.country === currentCountry
+      );
+    });
+
+    // Highlight current language
+    modal.querySelectorAll('[data-language]').forEach(el => {
+      el.classList.toggle(
+        'is-selected',
+        el.dataset.language === currentLanguage
+      );
+    });
+
+    return;
+  }
+
+  /* ----------------------------
+     CLOSE MODAL
+  ----------------------------- */
+  if (e.target.closest('[data-locale-close]')) {
+    modal.classList.remove('is-open');
+    return;
+  }
+
+  /* ----------------------------
+     SELECT COUNTRY
+  ----------------------------- */
+  const countryEl = e.target.closest('[data-country]');
+  if (countryEl) {
+    e.preventDefault();
+    modal.dataset.selectedCountry = countryEl.dataset.country;
+
+    modal.querySelectorAll('[data-country]').forEach(el =>
+      el.classList.remove('is-selected')
+    );
+    countryEl.classList.add('is-selected');
+    return;
+  }
+
+  /* ----------------------------
+     SELECT LANGUAGE
+  ----------------------------- */
+  const languageEl = e.target.closest('[data-language]');
+  if (languageEl) {
+    e.preventDefault();
+    modal.dataset.selectedLanguage = languageEl.dataset.language;
+    modal.dataset.selectedLanguageUrl = languageEl.dataset.languageUrl;
+
+    modal.querySelectorAll('[data-language]').forEach(el =>
+      el.classList.remove('is-selected')
+    );
+    languageEl.classList.add('is-selected');
+    return;
+  }
+
+  /* ----------------------------
+     APPLY
+  ----------------------------- */
+  if (e.target.closest('[data-locale-apply]')) {
+    const country = modal.dataset.selectedCountry;
+    const languageUrl = modal.dataset.selectedLanguageUrl;
+
+    let targetUrl = languageUrl || window.location.origin;
+
+    if (country) {
+      const url = new URL(targetUrl, window.location.origin);
+      url.searchParams.set('country', country);
+      window.location.href = url.toString();
+    } else if (languageUrl) {
+      window.location.href = languageUrl;
+    }
+  }
+});
 </script>
+
+
+
+
 
 
 

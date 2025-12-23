@@ -9,19 +9,19 @@
             <img
               src="{{ images.first | img_url: 'master' }}"
               alt="{{ product.title | escape }}"
-              class="img_sizing primary-img">
+              class="img_sizing primary-img" loading="lazy">
 
             {% if images.size > 1 %}
               <img
                 src="{{ images[1] | img_url: 'master' }}"
                 alt="{{ product.title | escape }}"
-                class="img_sizing hover-img">
+                class="img_sizing hover-img" loading="lazy">
             {% endif %}
           {% else %}
             <img
               src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' }}"
               alt="No Image Available"
-              class="img_sizing primary-img">
+              class="img_sizing primary-img" loading="lazy">
           {% endif %}
         </div>
 
