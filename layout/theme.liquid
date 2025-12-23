@@ -145,39 +145,7 @@
 
 
 
-      if (window.gsap && window.ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-        const mm = gsap.matchMedia();
-
-        mm.add("(min-width: 993px)", () => {
-          const sideScrollSection = document.querySelector(".scroll-sec");
-          const container = document.querySelector(".scrollsec-wrapper");
-          if (!sideScrollSection || !container) return;
-
-          const getLen = () => container.scrollWidth - sideScrollSection.clientWidth;
-
-          const tween = gsap.to(container, {
-            x: () => -getLen(),
-            ease: "none",
-            scrollTrigger: {
-              trigger: sideScrollSection,
-              start: "top top",
-              end: () => `+=${getLen()}`,
-              scrub: true,
-              pin: true,
-              pinSpacer: false,
-              anticipatePin: 1
-            }
-          });
-
-          window.addEventListener("resize", ScrollTrigger.refresh);
-
-          return () => {
-            window.removeEventListener("resize", ScrollTrigger.refresh);
-            tween.kill();
-          };
-        });
-      }
+      
 
       if (window.gsap && window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);

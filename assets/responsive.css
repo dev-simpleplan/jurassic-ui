@@ -449,6 +449,7 @@
   .scrollsec-slider {
     position: relative;
     padding: 30px 0;
+    display: block;
   }
   .scrollsec-slider::before {
     content: "";

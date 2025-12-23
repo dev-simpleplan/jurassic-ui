@@ -1515,18 +1515,21 @@ header.active .mega-menu {
 section.scroll-sec {
     display: flex;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
     overflow: hidden;
 }
 .scrollsec-wrapper {
     display: flex;
-    width: 400vw;
-    height: 100%;
-    align-items: center;
+    /* width: 400vw;
+    height: 100%; */
+    /* align-items: center; */
+    align-items: stretch;
+    overflow: hidden;
+    overflow-x: auto;
 }
 .scrollsec-slide {
     flex: 0 0 100vw;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     align-items: stretch;
     padding: 60px 0;
@@ -1886,6 +1889,9 @@ section.scroll-sec {
     right: 160px;
     max-width: 100%;
     bottom: 50px;
+}
+.scrollsec-slider {
+    display: none;
 }
 /* Image Text Scroll */
 /* Footer CSS */
