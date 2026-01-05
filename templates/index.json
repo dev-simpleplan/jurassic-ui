@@ -78,7 +78,7 @@
     "discovery-box": {
       "type": "discovery-box",
       "settings": {
-        "collection": "fruit-sets-gifts",
+        "product": "mango-osteen",
         "bg-image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
         "heading": "Embark on a Flavor Adventure with Discovery Box",
         "para": "New to Jurassic? This Discovery Box is your perfect start.",
