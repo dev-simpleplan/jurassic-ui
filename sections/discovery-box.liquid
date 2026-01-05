@@ -32,14 +32,12 @@
             <div class="bdi-right">
                 <div class="dbir-box-wrap">
                     <div class="dbir-box">
-                        {%- assign collection = section.settings.collection -%}
-                        {%- if collection == blank or collection.products_count == 0 -%}
-                            <p class="noproducts">There are no products inside of this collection.</p>
-                        {%- else -%}
-                            {% for product in collection.products limit: 1 %}
-                                {% render 'product-card-primary', product: product, collection: collection %}
-                            {% endfor %}
-                        {%- endif -%}
+                        {% assign product = section.settings.product %}
+                        {% if product == blank %}
+                            <p class="noproducts">No product selected.</p>
+                        {% else %}
+                            {% render 'product-card-primary', product: product %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -54,9 +52,9 @@
   "class": "discovery-box",
   "settings": [
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Select collection"
+      "type": "product",
+      "id": "product",
+      "label": "Select product"
     },
     {
       "type": "image_picker",
@@ -96,7 +94,7 @@
         "type": "text",
         "id": "user_comment",
         "label": "Testimonial Content"
-    },
+    }
   ]
 }
 {% endschema %}
