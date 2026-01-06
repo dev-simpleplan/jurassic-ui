@@ -984,7 +984,8 @@ span.cart-compare-price {
   align-items: stretch;
   max-height: 700px;
   overflow: hidden;
-  position: relative;
+  position: sticky;
+  top: 110px;
 }
 .pro-desp {
   width: 38%;
