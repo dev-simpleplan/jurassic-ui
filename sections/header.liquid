@@ -1,7 +1,7 @@
 {% if blog and blog.handle == 'news' %}
-  <header class="site-header header-bg">
+  <header class="site-header header-bg" data-ajax-cart-section>
 {% else %}
-  <header class="site-header">
+  <header class="site-header" data-ajax-cart-section>
 {% endif %}
   <div class="container">
     <div class="desktop-header">
@@ -220,10 +220,28 @@
                     type="hidden"
                     value="last">
 
-                  <div
-                    id="predictive-search"
-                    tabindex="-1"
-                    style="display: none;"></div>
+                  <div id="predictive-search" class="predictive-search" hidden>
+                    <div class="ps-grid">
+                      <div class="ps-suggestions">
+                        <p class="ps-title">Suggestions</p>
+                        <ul class="ps-list ps-suggestions-list" data-lenis-prevent></ul>
+                      </div>
+
+                      <div class="ps-products">
+                        <p class="ps-title">Products</p>
+                        <ul class="ps-list ps-products-list" data-lenis-prevent></ul>
+                      </div>
+                    </div>
+
+                    <div class="ps-empty-state" hidden>
+                      <p>No results found</p>
+                    </div>
+
+                    <a href="#" class="ps-view-all">
+                      Search for "<span></span>" →
+                    </a>
+                  </div>
+
                 </form>
               </predictive-search>
              </div>
@@ -232,13 +250,15 @@
             {% else %}
               <a href="{{ routes.account_login_url }}" class="profile">{% render 'icon-profile' %}</a>
             {% endif %}
-            <div class="cart">
+            <div class="cart" data-ajax-cart-section>
               <a href="javascript:void(0)" class="cart-open">
                 {% render 'icon-cart' %}
               </a>
-              {% if cart.item_count > 0 %}
-                <span data-ajax-cart-bind="item_count" class="header__cart-quantity">{{ cart.item_count }}</span>
-              {% endif %}
+              <span
+                data-ajax-cart-bind="item_count"
+                class="header__cart-quantity{% if cart.item_count == 0 %} is-hidden{% endif %}">
+                {{ cart.item_count }}
+              </span>
             </div>
           </div>
         </div>
@@ -358,3 +378,137 @@
   });
 
 </script>
+
+<script>
+  function highlightMatch(text, query) {
+    if (!query) return text;
+
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'ig');
+
+    return text.replace(regex, '<mark>$1</mark>');
+  }
+
+class PredictiveSearch {
+  constructor() {
+    this.input = document.getElementById('Search');
+    this.container = document.getElementById('predictive-search');
+    this.suggestionsList = this.container.querySelector('.ps-suggestions-list');
+    this.productsList = this.container.querySelector('.ps-products-list');
+    this.viewAll = this.container.querySelector('.ps-view-all');
+    this.abortController = null;
+
+    this.input.addEventListener('input', this.onChange.bind(this));
+    document.addEventListener('click', this.onOutsideClick.bind(this));
+  }
+
+  onChange() {
+    const query = this.input.value.trim();
+
+    if (query.length < 2) {
+      this.close();
+      return;
+    }
+
+    this.fetchResults(query);
+  }
+
+  fetchResults(query) {
+    if (this.abortController) this.abortController.abort();
+    this.abortController = new AbortController();
+
+    fetch(
+      `/search/suggest.json?q=${encodeURIComponent(query)}`
+      + `&resources[type]=query,product`
+      + `&resources[query][limit]=6`
+      + `&resources[product][limit]=6`,
+      { signal: this.abortController.signal }
+    )
+
+      .then(res => res.json())
+      .then(data => this.render(data, query))
+      .catch(() => {});
+  }
+
+  render(data, query) {
+  const suggestions = data.resources.results.queries || [];
+  const products = data.resources.results.products || [];
+  const emptyState = this.container.querySelector('.ps-empty-state');
+
+  // Clear first
+  this.suggestionsList.innerHTML = '';
+  this.productsList.innerHTML = '';
+
+  // Fallback: use product titles as suggestions if queries are empty
+  const finalSuggestions = suggestions.length
+  ? suggestions
+  : products.map(p => ({
+      text: p.title,
+      url: p.url
+    }));
+
+  // Render suggestions (always show left column)
+  this.suggestionsList.innerHTML = finalSuggestions
+    .slice(0, 6)
+    .map(item => `
+      <li>
+        <a href="${item.url}">
+          ${highlightMatch(item.text, query)}
+        </a>
+      </li>
+    `)
+    .join('');
+
+
+  // Render products (right column)
+  if (products.length) {
+    this.productsList.innerHTML = products
+      .map(product => `
+        <li class="ps-product-item">
+          <a href="${product.url}">
+            <img src="${product.image}" alt="${product.title}">
+            <span>${highlightMatch(product.title, query)}</span>
+
+          </a>
+        </li>
+      `)
+      .join('');
+  }
+
+  // Empty state logic
+  const hasResults = suggestions.length || products.length;
+
+  emptyState.hidden = hasResults;
+  this.container.querySelector('.ps-grid').style.display = hasResults ? 'grid' : 'none';
+  this.viewAll.style.display = hasResults ? 'flex' : 'none';
+
+  // View all link
+  this.viewAll.href = `/search?q=${encodeURIComponent(query)}`;
+  this.viewAll.querySelector('span').textContent = query;
+
+  this.open();
+}
+
+
+  open() {
+    this.container.hidden = false;
+    this.input.setAttribute('aria-expanded', 'true');
+  }
+
+  close() {
+    this.container.hidden = true;
+    this.input.setAttribute('aria-expanded', 'false');
+  }
+
+  onOutsideClick(e) {
+    if (!e.target.closest('.hiw-search')) {
+      this.close();
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new PredictiveSearch();
+});
+</script>
+

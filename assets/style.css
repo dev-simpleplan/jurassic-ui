@@ -836,6 +836,17 @@ header.active .mega-menu {
     font-weight: 500;
     font-size: 12px;
 }
+.header__cart-quantity {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease;
+}
+
+.header__cart-quantity.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 .hiw-search .search-input-bar {
     position: relative;
 }
@@ -866,6 +877,97 @@ header.active .mega-menu {
 .hiw-search .for-mobile {
     display: none;
 }
+/* .hiw-search {
+    position: relative;
+} */
+#predictive-search {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--body-bg);
+  border: 1px solid #ddd;
+  z-index: 100;
+}
+
+.ps-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  padding: 24px;
+}
+
+.ps-title {
+  border-bottom: 1px solid #e1d8cc;
+    padding-bottom: 10px;
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.16px;
+    text-transform: capitalize;
+}
+
+.ps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.ps-suggestions-list li a {
+  display: block;
+  /* padding: 6px 0; */
+  color: #000;
+  text-decoration: none;
+}
+
+.ps-suggestions-list li a:hover {
+  text-decoration: underline;
+}
+
+.ps-product-item a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* padding: 10px 0; */
+  text-decoration: none;
+  color: #000;
+}
+
+.ps-product-item img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.ps-view-all {
+  display: flex;
+  justify-content: flex-start;
+  padding: 16px 24px;
+  border-top: 1px solid #eee;
+  font-weight: 500;
+  text-decoration: none;
+  color: #000;
+}
+.ps-empty-state {
+  padding: 32px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+.predictive-search mark {
+  background: transparent;
+  font-weight: 600;
+  /* border-bottom: 2px solid currentColor; */
+}
+
+
 /* Header CSS */
 
 /* Homepage CSS */
@@ -1614,8 +1716,9 @@ header.active .mega-menu {
 /* Scrolling Section */
 section.scroll-sec {
     display: flex;
-    align-items: center;
-    /* height: 100vh; */
+    /* align-items: center; */
+    align-items: stretch;
+    height: 90vh;
     overflow: hidden;
 }
 .scrollsec-wrapper {
@@ -1631,7 +1734,7 @@ section.scroll-sec {
     flex: 0 0 100vw;
     /* height: 100%; */
     display: flex;
-    align-items: stretch;
+    /* align-items: stretch; */
     padding: 60px 0;
 }
 .scrollsec-slide.slide_1 .scrollsecslide-in {}
@@ -1702,7 +1805,7 @@ section.scroll-sec {
 .swright-top .swrt-image {
     aspect-ratio: 3/4;
     width: 100%;
-    max-width: 20vw;
+    max-width: 15vw;
     position: relative;
 }
 .swrt-image img {
@@ -1714,7 +1817,7 @@ section.scroll-sec {
     position: absolute;
     top: -70px;
     right: -70px;
-    width: 150px;
+    width: 120px;
 }
 .swrt-scroll img {
     width: 100%;
@@ -1761,9 +1864,9 @@ section.scroll-sec {
     gap: 20px;
 }
 .sw-second-left .sws-image {
-    height: 80vh;
-    width: 100%;
-    max-width: 30vw;
+    height: 80%;
+    width: auto;
+    max-width: 26vw;
     margin-left: auto;
     aspect-ratio: 5/7;
 }
@@ -1826,17 +1929,17 @@ section.scroll-sec {
     top: 15%;
 }
 .swsfruits-item.fruit3 {
-    right: 30%;
-    bottom: 30%;
+    right: 20%;
+    bottom: 35%;
 }
 .swsfruits-item.fruit4 {
-    right: 60%;
-    bottom: 10%;
+    right: 40%;
+    bottom: 20%;
 }
 .swsfruits-item img {
     width: auto;
     height: auto;
-    max-width: 120px;
+    max-width: 130px;
     max-height: 320px;
 }
 .scrollsec-slide.slide_3 {
@@ -1898,7 +2001,8 @@ section.scroll-sec {
     display: flex;
 }
 .slide3-wrap .swrt-image {
-    width: 100%;
+    width: auto;
+    height: 80%;
 }
 .slide3-wrap .swrt-image .swrt-scroll {
     bottom: -5%;
@@ -2276,10 +2380,10 @@ footer::before {
     color: var(--mud-color);
 }
 /* Footer CSS */
-.fc_add_to_cart span.remove_product,
+/* .fc_add_to_cart span.remove_product,
 .fc_add_to_cart span.add_product {
     display: none !important;
-}
+} */
 .fc_add_to_cart {
     justify-content: center;
 }
@@ -4603,6 +4707,10 @@ section.imagescroll {
     font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 4px;
+}
+.add-to-cart-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 

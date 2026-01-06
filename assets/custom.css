@@ -24,6 +24,11 @@
   position: relative;
   cursor: pointer;
 }
+.fc_top .card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 .fruits_card .fc_top::before {
   content: "";
   position: absolute;
@@ -354,9 +359,9 @@
   padding-left: 6px;
 }
 
-.fc_add_to_cart {
+/* .fc_add_to_cart {
   padding-right: 15px;
-}
+} */
 
 .fc_add_to_cart {
   width: 100%;
@@ -365,7 +370,7 @@
   border-radius: 25px;
   color: #2c2c2c;
   align-items: center;
-  padding: 12px 20px;
+  /* padding: 12px 20px; */
   transition: 0.4s ease all;
   cursor: pointer;
 }
@@ -384,9 +389,10 @@
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 2px;
+  padding: 12px 20px;
   font-weight: 500;
   font-family: "Inter";
-  width: 70%;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -424,9 +430,9 @@
   color: #747474;
 }
 
-.fc_add_to_cart_outer {
+/* .fc_add_to_cart_outer {
   padding-right: 15px;
-}
+} */
 
 .fruits_card_section_in .head {
   margin-bottom: 60px;

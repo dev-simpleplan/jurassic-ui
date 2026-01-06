@@ -1,7 +1,29 @@
+{% assign default_variant = nil %}
+
+{% for variant in product.variants %}
+  {% if variant.metafields.custom.is_prior == true and variant.available %}
+    {% assign default_variant = variant %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if default_variant == nil %}
+  {% for variant in product.variants %}
+    {% if variant.available %}
+      {% assign default_variant = variant %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if default_variant == nil %}
+  {% assign default_variant = product.variants.first %}
+{% endif %}
+
 <div class="product-card-primary">
   <div class="fruits_card">
-    <a href="{{ product.url }}">
       <div class="fc_top">
+        <a href="{{ product.url }}" class="card-link"></a>
         {% assign images = product.images %}
 
         <div class="fc_image">
@@ -55,7 +77,6 @@
           {% endfor %}
         {% endif %}
       </div>
-    </a>
 
     <div class="fc_bottom_outer">
       <div class="fc_bottom">
@@ -87,7 +108,9 @@
                     {{ variant | json }}
                   </script>
                   <div
-                    class="fc_variant_item {% if variant.metafields.custom.is_prior == true %} active {% endif %} {% if variant.metafields.custom.bestseller == true %} bestseller{% endif %}"
+                    class="fc_variant_item
+                    {% if variant.id == default_variant.id %}active{% endif %}
+                    {% if variant.metafields.custom.bestseller == true %}bestseller{% endif %}"
                     data-id="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
@@ -155,24 +178,14 @@
               </p>
             </div>
             <div class="fc_add_to_cart_outer">
-              <form
-                action="/cart/add"
-                method="post"
-                enctype="multipart/form-data">
-                <input
-                  type="hidden"
-                  name="id"
-                  value="{{ current_variant.id }}">
-                <input
-                  type="hidden"
-                  name="quantity"
-                  value="1">
+              <div class="fc_add_to_cart_outer">
                 <div class="fc_add_to_cart"
-                    data-variant-id="{{ current_variant.id }}"
-                    data-available="{{ current_variant.available }}"
-                    data-inventory="{{ current_variant.inventory_quantity }}">
+                  data-variant-id="{{ current_variant.id }}"
+                  data-available="{{ current_variant.available }}"
+                  data-inventory="{{ current_variant.inventory_quantity }}">
 
                   <button
+                    type="button"
                     class="add-to-cart-btn"
                     {% unless current_variant.available %}disabled{% endunless %}>
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
@@ -184,9 +197,8 @@
                     <span class="add_product">+</span>
                   </div>
                 </div>
+              </div>
 
-
-              </form>
             </div>
             <div class="fc_trust_text">
               <p>Only {{ current_variant.inventory_quantity }} Left</p>
@@ -223,6 +235,7 @@
 .fc_add_to_cart.active .add_product,
 .fc_add_to_cart.active .qty-value {
   display: inline-flex;
+  justify-content: center;
 }
 
 .fc_add_to_cart.active .add-to-cart-btn {
@@ -236,7 +249,9 @@
 .fc_add_to_cart .qty-controls {
   display: none;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+  width: 100%;
 }
 
 .fc_add_to_cart.active .qty-controls {
@@ -258,6 +273,7 @@
 </style>
 
   <script>
+
 document.addEventListener('DOMContentLoaded', () => {
 
   async function addToCart(id, qty) {
@@ -280,50 +296,165 @@ document.addEventListener('DOMContentLoaded', () => {
     return fetch('/cart.js').then(r => r.json());
   }
 
+  // ---------------- SAFE SIDE CART OPEN (NO SCROLL JUMP) ----------------
+  function openSideCartDirectly() {
+    const sideCart = document.querySelector('.sideCart');
+    if (!sideCart) return;
+
+    sideCart.classList.add('active');
+    document.body.classList.add('stay');
+    document.documentElement.classList.add('stay');
+
+    // ✅ THIS ACTUALLY WORKS
+    window.initializeCartFunction?.();
+  }
+
+
+
+
+
+
+
+  // ---------------- HEADER CART COUNT SYNC ----------------
+  async function updateHeaderCartCount() {
+    const res = await fetch('/cart.js');
+    const cart = await res.json();
+
+    const el = document.querySelector('.header__cart-quantity');
+    if (!el) return;
+
+    el.textContent = cart.item_count;
+
+    if (cart.item_count > 0) {
+      el.classList.remove('is-hidden');
+    } else {
+      el.classList.add('is-hidden');
+    }
+  }
+
+
   document.querySelectorAll('.fc_add_to_cart').forEach(card => {
 
-    if (card.dataset.available !== 'true') return;
+  // 🔒 Prevent duplicate bindings
+  if (card.dataset.bound === 'true') return;
+  card.dataset.bound = 'true';
 
-    const variantId = card.dataset.variantId;
-    const maxQty = parseInt(card.dataset.inventory, 10) || Infinity;
+  if (card.dataset.available !== 'true') return;
 
-    const addBtn = card.querySelector('.add-to-cart-btn');
-    const plus = card.querySelector('.add_product');
-    const minus = card.querySelector('.remove_product');
-    const qtyEl = card.querySelector('.qty-value');
+  const variantId = Number(card.dataset.variantId);
+  const maxQty = parseInt(card.dataset.inventory, 10) || Infinity;
 
-    let qty = 0;
-    let lineKey = null;
+  const addBtn = card.querySelector('.add-to-cart-btn');
+  const plus = card.querySelector('.add_product');
+  const minus = card.querySelector('.remove_product');
+  const qtyEl = card.querySelector('.qty-value');
 
-    addBtn.addEventListener('click', async () => {
+  let qty = 0;
+  let lineKey = null;
+  let isLoading = false;
+
+  /* ---------------- ADD TO CART ---------------- */
+  addBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (isLoading) return;
+  isLoading = true;
+
+  addBtn.disabled = true;
+  addBtn.textContent = 'Adding…';
+
+  try {
+    const cartBefore = await getCart();
+    const existing = cartBefore.items.find(
+      i => i.variant_id === variantId
+    );
+
+    if (existing) {
+      await changeCart(existing.key, existing.quantity + 1);
+    } else {
       await addToCart(variantId, 1);
-      qty = 1;
-      qtyEl.textContent = qty;
+    }
+
+    const cartAfter = await getCart();
+    const item = cartAfter.items.find(
+      i => i.variant_id === variantId
+    );
+
+    qty = item.quantity;
+    lineKey = item.key;
+    qtyEl.textContent = qty;
+
+    requestAnimationFrame(() => {
       card.classList.add('active');
+    });
+
+    await updateHeaderCartCount();
+    openSideCartDirectly();
+
+  } catch (err) {
+    console.error(err);
+  } finally {
+    isLoading = false;
+  }
+});
+
+
+
+  /* ---------------- PLUS ---------------- */
+  plus.addEventListener('click', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isLoading || qty >= maxQty) return;
+    isLoading = true;
+
+    qty++;
+    qtyEl.textContent = qty;
+
+    await changeCart(lineKey, qty);
+
+    const cart = await getCart();
+    await updateHeaderCartCount();
+
+    isLoading = false;
+  });
+
+  /* ---------------- MINUS ---------------- */
+  minus.addEventListener('click', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isLoading) return;
+    isLoading = true;
+
+    qty--;
+
+    if (qty <= 0) {
+      await changeCart(lineKey, 0);
+
+      requestAnimationFrame(() => {
+        card.classList.remove('active');
+      });
+
+      qty = 0;
+      isLoading = false;
 
       const cart = await getCart();
-      const item = cart.items.find(i => i.variant_id == variantId);
-      if (item) lineKey = item.key;
-    });
+      await updateHeaderCartCount();
+      return;
+    }
 
-    plus.addEventListener('click', async () => {
-      if (qty >= maxQty) return;
-      qty++;
-      qtyEl.textContent = qty;
-      await changeCart(lineKey, qty);
-    });
+    qtyEl.textContent = qty;
+    await changeCart(lineKey, qty);
 
-    minus.addEventListener('click', async () => {
-      qty--;
-      if (qty <= 0) {
-        await changeCart(lineKey, 0);
-        card.classList.remove('active');
-        qty = 0;
-        return;
-      }
-      qtyEl.textContent = qty;
-      await changeCart(lineKey, qty);
-    });
+    const cart = await getCart();
+    await updateHeaderCartCount();
+
+    isLoading = false;
   });
+
+});
+
 });
 </script>
