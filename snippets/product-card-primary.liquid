@@ -107,6 +107,14 @@
                   <script type="application/JSON">
                     {{ variant | json }}
                   </script>
+
+                  {% assign pieces = 0 %}
+                  {% if variant.unit_price_measurement
+                    and variant.unit_price_measurement.quantity_value != blank %}
+                    {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
+                  {% endif %}
+
+                  {% assign pieces = 0 %}                  
                   <div
                     class="fc_variant_item
                     {% if variant.id == default_variant.id %}active{% endif %}
@@ -132,12 +140,19 @@
                       {% endif %}
                     </p>
                     <p class="quantity">
-                      {% if variant.unit_price_measurement.quantity_value == 1 %}
-                        {{ variant.unit_price_measurement.quantity_value | round }} Peice
+                      {% if variant.unit_price_measurement
+                        and variant.unit_price_measurement.quantity_value != blank %}
+                        
+                        {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
+                        
+                        {{ pieces }}
+                        {% if pieces == 1 %} Peice{% else %} Peices{% endif %}
+                        
                       {% else %}
-                        {{ variant.unit_price_measurement.quantity_value | round }} Peices
+                        0 Peices
                       {% endif %}
                     </p>
+
                   </div>
                 {% endfor %}
               </div>
@@ -169,16 +184,17 @@
                 </p>
               {% endif %}
 
-              <p class="fc_weight">
+              <p class="fc_weight" data-variant-id="{{ current_variant.id }}">
                 {% if current_variant.unit_price_measurement %}
-                  {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
+                  {{ current_variant.unit_price | money }} /
+                  {{ current_variant.unit_price_measurement.reference_unit }}
                 {% else %}
                   {{ current_variant.price | money }} / unit
                 {% endif %}
               </p>
+
             </div>
             <div class="fc_add_to_cart_outer">
-              <div class="fc_add_to_cart_outer">
                 <div class="fc_add_to_cart"
                   data-variant-id="{{ current_variant.id }}"
                   data-available="{{ current_variant.available }}"
@@ -198,8 +214,6 @@
                   </div>
                 </div>
               </div>
-
-            </div>
             <div class="fc_trust_text">
               <p>Only {{ current_variant.inventory_quantity }} Left</p>
               <span class="dot_seperator"></span>

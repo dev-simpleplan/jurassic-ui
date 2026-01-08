@@ -28,7 +28,30 @@
   </div>
 </div>
 
-{% assign selected_variant = product.selected_or_first_available_variant %}
+{% assign default_variant = nil %}
+
+{% for variant in product.variants %}
+  {% if variant.metafields.custom.is_prior == true and variant.available %}
+    {% assign default_variant = variant %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if default_variant == nil %}
+  {% for variant in product.variants %}
+    {% if variant.available %}
+      {% assign default_variant = variant %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if default_variant == nil %}
+  {% assign default_variant = product.variants.first %}
+{% endif %}
+
+{% assign selected_variant = default_variant %}
+
 <div class="product-info">
   <div class="container">
     <div class="pro-grid">
@@ -246,12 +269,19 @@
                 </div>
                 {% endif %}
 
+                
+
+
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
                     <div class="select_variant">
                       {% unless product.has_only_default_variant %}
-                        <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                        <variant-selector
+                          data-url="{{ product.url }}"
+                          data-section="{{ section.id }}"
+                          data-initial-variant="{{ default_variant.id }}">
+
                           <div class="sv-perKg">
                             <p>Select variant</p>
                             <div class="perKg">
@@ -263,67 +293,97 @@
                               {% endif %}
                             </div>
                           </div>
+
+                          
+
+
                           {% for option in product.options_with_values %}
-                            <div class="variant-option" data-option="{{ option.name }}">
-                              <ul class="variant-values" data-index="{{ forloop.index0 }}">
-                                {% for value in option.values %}
-                                  {% assign matched_variant = nil %}
+  <div class="variant-option" data-option="{{ option.name }}">
+    <ul class="variant-values" data-index="{{ forloop.index0 }}">
 
-                                  {% for variant in product.variants %}
-                                    {% case option.position %}
-                                      {% when 1 %}
-                                        {% if variant.option1 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
-                                        {% endif %}
-                                      {% when 2 %}
-                                        {% if variant.option2 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
-                                        {% endif %}
-                                      {% when 3 %}
-                                        {% if variant.option3 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
-                                        {% endif %}
-                                    {% endcase %}
-                                  {% endfor %}
+      {% for value in option.values %}
+        {% assign matched_variant = nil %}
 
-                                  <li
-                                    class="variant-value {% if option.selected_value == value %}active{% endif %}"
-                                    data-value="{{ value | escape }}"
-                                    {% if matched_variant.metafields.custom.bestseller == true %}
-                                    data-best="bestseller"
-                                    {% endif %}>
-                                    {% if matched_variant.metafields.custom.bestseller == true %}
-                                      <div class="vv-bestseller">best seller</div>
-                                    {% endif %}
-                                    <div class="vv-value">
-                                      <div class="vvv-value">
-                                        {{ value }}
-                                      </div>
-                                      {% if matched_variant.compare_at_price > matched_variant.price %}
-                                        <div class="vvv-discount">
-                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
-                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
-                                          {{ discount_percentage }}% OFF
-                                        </div>
-                                      {% endif %}
-                                    </div>
-                                    <div class="vv-peices">
-                                      {% if matched_variant.unit_price_measurement %}
-                                        {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
-                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
-                                        {% else %}
-                                          {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
-                                        {% endif %}
-                                      {% endif %}
-                                    </div>
-                                  </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
-                          {% endfor %}
+        {% for variant in product.variants %}
+          {% case option.position %}
+            {% when 1 %}
+              {% if variant.option1 == value %}
+                {% assign matched_variant = variant %}
+                {% break %}
+              {% endif %}
+            {% when 2 %}
+              {% if variant.option2 == value %}
+                {% assign matched_variant = variant %}
+                {% break %}
+              {% endif %}
+            {% when 3 %}
+              {% if variant.option3 == value %}
+                {% assign matched_variant = variant %}
+                {% break %}
+              {% endif %}
+          {% endcase %}
+        {% endfor %}
+
+        {% assign is_active = false %}
+
+        {% case option.position %}
+          {% when 1 %}
+            {% if default_variant.option1 == value %}
+              {% assign is_active = true %}
+            {% endif %}
+          {% when 2 %}
+            {% if default_variant.option2 == value %}
+              {% assign is_active = true %}
+            {% endif %}
+          {% when 3 %}
+            {% if default_variant.option3 == value %}
+              {% assign is_active = true %}
+            {% endif %}
+        {% endcase %}
+
+        <li
+          class="variant-value {% if is_active %}active{% endif %}"
+          data-value="{{ value | escape }}"
+          {% if matched_variant.metafields.custom.bestseller == true %}
+            data-best="bestseller"
+          {% endif %}
+        >
+
+          {% if matched_variant.metafields.custom.bestseller == true %}
+            <div class="vv-bestseller">best seller</div>
+          {% endif %}
+
+          <div class="vv-value">
+            <div class="vvv-value">
+              {{ value }}
+            </div>
+
+            {% if matched_variant.compare_at_price > matched_variant.price %}
+              <div class="vvv-discount">
+                {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
+                {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
+                {{ discount_percentage }}% OFF
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="vv-peices">
+            {% if matched_variant.unit_price_measurement %}
+              {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
+                {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
+              {% else %}
+                {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
+              {% endif %}
+            {% endif %}
+          </div>
+
+        </li>
+      {% endfor %}
+
+    </ul>
+  </div>
+{% endfor %}
+
 
                           <script type="application/json">
                             {{ product.variants | json }}
@@ -332,34 +392,42 @@
                       {% endunless %}
                     </div>
                     <div class="priceCheckout">
-                      <div class="price" id="price-{{ section.id }}">
-                        {% if selected_variant.price < selected_variant.compare_at_price %}
-                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
-                        {% endif %}
-                        <span class="sell-price">
-                          {{ selected_variant.price | money }}
-                        </span>
-                        <span class="price-txt">
-                          Taxes, Excl. shipping
-                        </span>
-                      </div>
-                      <div class="submit">
-                        <button
-                          type="submit"
-                          name="add"
-                          class="custom-btn filled"
-                          id="add-to-cart"
-                          {% if selected_variant.available==false %}
-                          disabled
-                          {% endif %}>
-                          {% if selected_variant.available == false %}
-                            Sold Out
-                          {% else %}
-                            Add To Cart
-                          {% endif %}
-                        </button>
-                      </div>
-                    </div>
+  <div class="price" id="price-{{ section.id }}">
+
+    {% if selected_variant.compare_at_price > selected_variant.price %}
+      <strike class="real-price">
+        {{ selected_variant.compare_at_price | money }}
+      </strike>
+    {% endif %}
+
+    <span class="sell-price">
+      {{ selected_variant.price | money }}
+    </span>
+
+
+    <span class="price-txt">
+      Taxes, Excl. shipping
+    </span>
+  </div>
+
+  <div class="submit">
+    <button
+      type="submit"
+      name="add"
+      class="custom-btn filled"
+      id="add-to-cart"
+      data-variant-id="{{ selected_variant.id }}"
+      {% unless selected_variant.available %}disabled{% endunless %}
+    >
+      {% if default_variant.available %}
+        Add To Cart
+      {% else %}
+        Sold Out
+      {% endif %}
+    </button>
+  </div>
+</div>
+
                     <div class="payment-options">
                       <p>Guaranteed safe checkout with payment options</p>
                       <div class="po-icon-wrap">
@@ -638,90 +706,175 @@
                   </div>
               </div> 
 
-<script defer>
-      class VariantSelector extends HTMLElement {
-    constructor() {
-      super();
-      this.addEventListener('click', this.onVariantClick.bind(this));
+
+<script>
+window.formatMoneySafe = function (cents) {
+  if (typeof cents !== 'number') return '';
+
+  return new Intl.NumberFormat(
+    'en-US', // Change this line to force US English format
+    {
+      style: 'currency',
+      currency: Shopify?.currency?.active || '{{ shop.currency }}',
+      minimumFractionDigits: 2
     }
+  ).format(cents / 100);
+};
 
-    onVariantClick(e) {
-      const clickedLi = e.target.closest('.variant-value');
-      if (!clickedLi) return;
-
-      const parentUl = clickedLi.closest('.variant-values');
-      if (!parentUl) return;
-
-      // Remove active class from all siblings
-      parentUl.querySelectorAll('.variant-value').forEach((li) => li.classList.remove('active'));
-      clickedLi.classList.add('active');
-
-      // Proceed with variant logic
-      this.getSelectedOptions();
-      this.getSelectedVariant();
-
-      if (this.currentVariant) {
-        this.updateURL();
-        this.updateFormID();
-        this.updatePrice();
-      }
-    }
-
-    getSelectedOptions() {
-      this.options = Array.from(this.querySelectorAll('.variant-values'), (ul) => {
-        const activeLi = ul.querySelector('.variant-value.active');
-        return activeLi ? activeLi.dataset.value : null;
-      }).filter(Boolean);
-
-      console.log('Selected options:', this.options);
-    }
-
-    getVariantJSON() {
-      this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
-      return this.variantData;
-    }
-
-    getSelectedVariant() {
-      const variants = this.getVariantJSON();
-      this.currentVariant = variants.find((variant) =>
-        variant.options.every((opt, index) => opt === this.options[index])
-      );
-
-      console.log('Selected Variant:', this.currentVariant);
-    }
-
-    updateURL() {
-      if (!this.currentVariant) return;
-      window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
-    }
-
-    updateFormID() {
-      const formInput = document.querySelector('#product-form')?.querySelector('input[name="id"]');
-      if (formInput && this.currentVariant) {
-        formInput.value = this.currentVariant.id;
-      }
-    }
-
-    updatePrice() {
-      if (!this.currentVariant) return;
-      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const oldPrice = document.getElementById('price-{{ section.id }}');
-          const newPrice = html.getElementById('price-{{ section.id }}');
-
-          const oldPerkg = document.querySelector(".perKg");
-          const newPerkg = html.querySelector(".perKg");
-
-          if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
-          if (oldPerkg && newPerkg) oldPerkg.innerHTML = newPerkg.innerHTML;
-        });
-    }
-      }
-
-      customElements.define('variant-selector', VariantSelector);
 </script>
+
+
+<script defer>
+class VariantSelector extends HTMLElement {
+  constructor() {
+    super();
+    this.addEventListener('click', this.onVariantClick.bind(this));
+  }
+
+  connectedCallback() {
+  const initialVariantId = Number(this.dataset.initialVariant);
+
+  const variants = this.getVariantJSON();
+  this.currentVariant = variants.find(v => v.id === initialVariantId);
+
+  if (!this.currentVariant) return;
+
+  // Sync active UI
+  this.currentVariant.options.forEach((value, index) => {
+    const ul = this.querySelectorAll('.variant-values')[index];
+    if (!ul) return;
+
+    ul.querySelectorAll('.variant-value').forEach(li => {
+      li.classList.toggle('active', li.dataset.value === value);
+    });
+  });
+
+  this.updateFormID();
+  this.updatePriceInstant(); // 👈 money-safe version
+}
+
+
+
+  onVariantClick(e) {
+    const clickedLi = e.target.closest('.variant-value');
+    if (!clickedLi) return;
+
+    const parentUl = clickedLi.closest('.variant-values');
+    if (!parentUl) return;
+
+    parentUl.querySelectorAll('.variant-value').forEach(li =>
+      li.classList.remove('active')
+    );
+    clickedLi.classList.add('active');
+
+    this.getSelectedOptions();
+    this.getSelectedVariant();
+
+    if (this.currentVariant) {
+      this.updateURL();
+      this.updateFormID();
+      this.updatePriceInstant();
+    }
+
+  }
+
+  getSelectedOptions() {
+    this.options = Array.from(this.querySelectorAll('.variant-values'))
+      .map(ul => ul.querySelector('.variant-value.active')?.dataset.value)
+      .filter(Boolean);
+  }
+
+  getVariantJSON() {
+    this.variantData =
+      this.variantData ||
+      JSON.parse(this.querySelector('[type="application/json"]').textContent);
+    return this.variantData;
+  }
+
+  getSelectedVariant() {
+    const variants = this.getVariantJSON();
+
+    if (this.options.length !== variants[0].options.length) {
+      this.currentVariant = null;
+      return;
+    }
+
+    this.currentVariant = variants.find(variant =>
+      variant.options.every((opt, i) => opt === this.options[i])
+    );
+  }
+
+
+  updateURL() {
+    window.history.replaceState(
+      {},
+      '',
+      `${this.dataset.url}?variant=${this.currentVariant.id}`
+    );
+  }
+
+  updateFormID() {
+    const input = document
+      .querySelector('#product-form')
+      ?.querySelector('input[name="id"]');
+
+    if (input) input.value = this.currentVariant.id;
+  }
+
+  updatePriceInstant() {
+  if (!this.currentVariant) return;
+
+  const priceWrap = document.getElementById('price-{{ section.id }}');
+  if (!priceWrap) return;
+
+  const price = this.currentVariant.price;
+  const compare = this.currentVariant.compare_at_price;
+
+  let html = '';
+
+  if (compare && compare > price) {
+    html += `<strike class="real-price">${formatMoneySafe(compare)}</strike>`;
+  }
+
+  html += `<span class="sell-price">${formatMoneySafe(price)}</span>`;
+  html += `<span class="price-txt">Taxes, Excl. shipping</span>`;
+
+  priceWrap.innerHTML = html;
+
+  // perKg update
+  const perKg = document.querySelector('.perKg');
+  if (perKg) {
+    if (this.currentVariant.unit_price_measurement) {
+      perKg.textContent =
+        formatMoneySafe(this.currentVariant.unit_price) +
+        ' / ' +
+        this.currentVariant.unit_price_measurement.reference_unit;
+    } else {
+      perKg.textContent =
+        formatMoneySafe(this.currentVariant.price) + ' / unit';
+    }
+  }
+}
+
+
+}
+
+customElements.define('variant-selector', VariantSelector);
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const hasVariant = new URLSearchParams(window.location.search).has('variant');
+  const defaultVariantId = {{ default_variant.id }};
+
+  if (!hasVariant) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('variant', defaultVariantId);
+    window.history.replaceState({}, '', url.toString());
+  }
+});
+</script>
+
 
 <script>
       $(document).ready(function () {
