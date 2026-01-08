@@ -4,7 +4,10 @@
     <form class="discount-field__form">
         <input type="text" name="discount" autocomplete="off" placeholder="Enter discount code"
             class="discount-field__input">
-        <button type="submit" class="discount-field__submit-btn">Apply</button>
+        <button type="submit" class="discount-field__submit-btn">
+            <span class="btn-text">Apply</span>
+            <span class="btn-loader" aria-hidden="true"></span>
+        </button>
     </form>
 
     <div class="discount-field__discounts-list">
@@ -140,6 +143,7 @@
                         console.log('🛒 Updated cart:', updatedCart);
 
                         // 7️⃣ Re-render your side cart
+                        await new Promise(resolve => setTimeout(resolve, 600));
                         await this.reRenderCart();
 
                         // 8️⃣ Reinitialize functions if needed

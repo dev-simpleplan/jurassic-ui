@@ -135,53 +135,38 @@
     }
 
     const recommendedCart = async () => {
-      const recommendationWrapper = document.querySelector('.cart-recommendation');
-      const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
-      if (!recommendationIn) return;
+    const recommendationWrapper = document.querySelector('.cart-recommendation');
+    const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
+    if (!recommendationIn) return;
 
-      try {
-        showLoader();
+    try {
+      showLoader();
 
-        // ✅ Step 1: Get the current cart
-        const cartRes = await fetch('/cart.js');
-        const cart = await cartRes.json();
-        if (!cart.items.length) {
+      const cartRes = await fetch('/cart.js');
+      const cart = await cartRes.json();
+
+      // helper to render products array
+      const renderProducts = (products) => {
+        if (!products || !products.length) {
           recommendationIn.style.display = 'none';
-          hideLoader();
           return;
         }
 
-        // ✅ Step 2: Get the first product ID from the cart
-        const firstProductId = cart.items[0].product_id;
-        if (!firstProductId) {
-          recommendationIn.style.display = 'none';
-          hideLoader();
-          return;
-        }
-
-        // ✅ Step 3: Fetch recommended products
-        const response = await fetch(`/recommendations/products.json?product_id=${firstProductId}&limit=8`);
-        const data = await response.json();
-        console.log(data);
-
-        if (!data.products || !data.products.length) {
-          recommendationIn.style.display = 'none';
-          hideLoader();
-          return;
-        }
-
-        // ✅ Step 4: Render recommended products
         recommendationIn.style.display = 'flex';
         let recommendationsHtml = '';
 
-        data.products.forEach((product) => {
-          const imageSrc = product.featured_image || (product.images.length ? product.images[0] : '');
+        products.forEach((product) => {
+          const imageSrc =
+            typeof product.featured_image === 'string'
+              ? product.featured_image
+              : product.featured_image?.src
+                ? product.featured_image.src
+                : product.images?.[0]?.src || product.images?.[0] || '';
           const price = formatMoney(product.price);
           const varId = product.variants && product.variants.length ? product.variants[0].id : '';
 
-
           recommendationsHtml += `
-        <div class="recommended-item">
+            <div class="recommended-item">
               <div class="ri-img">
                 <img src="${imageSrc}" alt="${product.title}" class="product-card__image">
               </div>
@@ -190,41 +175,55 @@
               </div>
               <div class="ri-form">
                 <form action="/cart/add" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="${varId}">
-                        <input type="hidden" name="quantity" value="1">
-                        <div class="fc_add_to_cart">
-                            <span class="remove_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                            <button type="submit" class="add-to-cart" {% unless product.available %} {% endunless %}>
-                                {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
-                            </button>
-                            <span class="add_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </div>
-                    </form>
+                  <input type="hidden" name="id" value="${varId}">
+                  <input type="hidden" name="quantity" value="1">
+                  <div class="fc_add_to_cart">
+                    <span class="remove_product">-</span>
+                    <button type="submit" class="add-to-cart">
+                      Add to Cart
+                    </button>
+                    <span class="add_product">+</span>
+                  </div>
+                </form>
               </div>
-        </div>
-      `;
+            </div>
+          `;
         });
 
         recommendationWrapper.innerHTML = recommendationsHtml;
-      attachAddToCartListeners();
+        attachAddToCartListeners(recommendationWrapper);
+      };
 
-      } catch (error) {
-        console.error('❌ Error fetching product recommendations:', error);
-        const recommendationWrapper = document.querySelector('.cart-recommendation');
-        if (recommendationWrapper) recommendationWrapper.style.display = 'none';
-      } finally {
-        hideLoader();
+      // ✅ CASE 1: Cart has items → use product recommendations API
+      if (cart.items.length > 0) {
+        const firstProductId = cart.items[0].product_id;
+        if (!firstProductId) {
+          recommendationIn.style.display = 'none';
+          return;
+        }
+
+        const response = await fetch(`/recommendations/products.json?product_id=${firstProductId}&limit=8`);
+        const data = await response.json();
+        renderProducts(data.products || []);
+        return;
       }
-    };
+
+      // ✅ CASE 2: Cart empty → show fallback collection
+      const fallbackHandle = 'fruit'; // change this to your collection handle
+      const fallbackRes = await fetch(`/collections/${fallbackHandle}/products.json?limit=8`);
+      const fallbackData = await fallbackRes.json();
+      // some themes return { products: [...] }, some return array directly – adjust if needed
+      const fallbackProducts = fallbackData.products || fallbackData;
+      renderProducts(fallbackProducts);
+
+    } catch (error) {
+      console.error('❌ Error fetching product recommendations:', error);
+      if (recommendationWrapper) recommendationWrapper.style.display = 'none';
+    } finally {
+      hideLoader();
+    }
+  };
+
 
 
     function attachAddToCartListeners(scope = document) {
@@ -339,11 +338,15 @@
 
           if (cartItemsWrapper) cartItemsWrapper.style.display = 'none';
           if (cartFooter) cartFooter.style.display = 'none';
-          const cartRec = document.querySelector('.cart-recommendation');
-          if (cartRec) cartRec.style.display = 'none'
 
+          // keep recommendation wrapper visible, content is handled by recommendedCart()
+          const cartRecWrapper = document.querySelector('.cart-recommendation-wrapper');
+          if (cartRecWrapper) cartRecWrapper.style.display = 'flex';
           if (cartCountSpan) cartCountSpan.textContent = `(0 item)`;
           if (headCount) headCount.textContent = '0';
+
+          // ensure fallback recommendations for empty cart
+          recommendedCart();
           return;
         }
 
