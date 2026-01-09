@@ -379,6 +379,8 @@
             console.warn(`Could not fetch product data for ${item.title}:`, err);
           }
 
+          compareAtPrice = item.original_price;
+
           const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
           let discountPercent = 0;
           if (hasDiscount) {

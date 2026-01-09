@@ -179,7 +179,7 @@
                         <div class="oci-label">Unit price</div>
                         <div class="oci-data">
                             <p class="cart-price">
-                                ${formatMoney(priceEach)}
+                                ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''} ${formatMoney(priceEach)}
                             </p>
                         </div>
                     </div>

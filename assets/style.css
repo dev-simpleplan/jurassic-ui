@@ -1062,7 +1062,7 @@ header.active .mega-menu {
 }
 .bcbri-bottom {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
 }
 .bcbri-bottom .rating-text {
@@ -1070,6 +1070,7 @@ header.active .mega-menu {
     font-size: 11px;
     letter-spacing: 0.7px;
     color: #fff;
+    padding-top: 1px;
 }
 .score {
     display: inline-block;
