@@ -82,7 +82,7 @@
           <p class="total-amount cs-res">0.00</p>
         </div>
       </div>
-      <form action="/checkout" method="get" class="checkout-form">
+      <form action="/checkout" method="post">
         <button
           name="checkout"
           type="submit"
@@ -311,6 +311,30 @@
     })();
 
 
+    function getDiscountCodesFromCart(cart) {
+  const codes = [];
+
+  // Cart-level discounts
+  if (cart.cart_level_discount_applications?.length) {
+    cart.cart_level_discount_applications.forEach(d => {
+      if (d.type === 'discount_code') {
+        codes.push(d.title);
+      }
+    });
+  }
+
+  // Line-level discounts
+  cart.items.forEach(item => {
+    item.line_level_discount_allocations.forEach(allocation => {
+      if (allocation.discount_application.type === 'discount_code') {
+        codes.push(allocation.discount_application.title);
+      }
+    });
+  });
+
+  return [...new Set(codes)];
+}
+
 
 
     // Load and Render Cart Items
@@ -444,32 +468,20 @@
           subtotalDiv.innerHTML = formatMoney(originalSubtotal);
         }
 
-        // Discount row (only if discount applied)
-        if (discountAmount > 0) {
+        // Horizon-style discount detection
+        const discountCodes = getDiscountCodesFromCart(cart);
+
+        if (discountCodes.length > 0 && discountAmount > 0) {
           discountRow.style.display = 'flex';
           discountDiv.innerHTML = `- ${formatMoney(discountAmount)}`;
         } else {
           discountRow.style.display = 'none';
-        }
+        } 
+
 
         // Total (final payable)
         document.querySelectorAll('.total-amount, .checkout-total')
           .forEach(el => el.innerHTML = formatMoney(total));
-
-        // ✅ Ensure checkout carries applied discount code
-        const checkoutForm = document.querySelector('.checkout-form');
-        const discountField = document.querySelector('discount-field');
-
-        if (checkoutForm && discountField) {
-          const appliedCode = discountField.dataset.discount?.trim();
-
-          if (appliedCode) {
-            checkoutForm.action = `/checkout?discount=${encodeURIComponent(appliedCode)}`;
-          } else {
-            checkoutForm.action = '/checkout';
-          }
-        }
-
 
         if (headCount) headCount.textContent = cart.item_count;
         if (cartCountSpan) {
@@ -630,11 +642,16 @@
     loadCartItems();
     attachAddToCartListeners();
     // ✅ Expose reinitialization function globally
-    window.initializeCartFunction = function () {
-      console.log('♻️ Reinitializing cart functions...');
+    window.initializeCartFunction = async function (cartData) {
+      const cart = cartData || await fetch('/cart.js').then(r => r.json());
+
       loadCartItems();
       attachAddToCartListeners();
+
+      document.querySelectorAll('discount-field')
+        .forEach(df => df.updateFromCart(cart));
     };
+
   });
 </script>
 

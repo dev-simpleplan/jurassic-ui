@@ -1,122 +1,110 @@
-<discount-field class="discount-field"
-  data-discount="{%- for discount in cart.discount_applications -%}
-    {%- if discount.type == 'discount_code' -%}{{ discount.title }}{%- endif -%}
-    {%- unless forloop.last -%},{%- endunless -%}
-  {%- endfor -%}">
-
+<discount-field class="discount-field">
   <form class="discount-field__form">
     <input
       type="text"
       name="discount"
-      autocomplete="off"
-      placeholder="Enter discount code"
-      class="discount-field__input">
-
+      placeholder="Discount code"
+      class="discount-field__input"
+      required
+    >
     <button type="submit" class="discount-field__submit-btn">
-      <span class="btn-text">Apply</span>
-      <span class="btn-loader" aria-hidden="true"></span>
+      Apply
     </button>
   </form>
 
-  <!-- ✅ Applied discount display -->
-  <div class="discount-applied" hidden>
-    <div class="discount-applied__label"><span><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/discount-icon.svg?v=1768204649" alt=""></span>Discount:</div>
-    <div class="discount-applied__code">
-      <strong class="discount-applied__code"></strong>
-    </div>
-  </div>
-
-  <p class="discount-helper-text">
-    Discount codes can be changed at checkout.
-  </p>
+  <ul class="discount-pills" hidden></ul>
 </discount-field>
 
 
 
 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-  setTimeout(() => {
-    class DiscountField extends HTMLElement {
-      constructor() {
-        super();
+document.addEventListener('DOMContentLoaded', () => {
+  class DiscountField extends HTMLElement {
+    constructor() {
+      super();
 
-        this.form = this.querySelector('.discount-field__form');
-        this.input = this.querySelector('input[name="discount"]');
-        this.submitButton = this.querySelector('.discount-field__submit-btn');
+      this.form = this.querySelector('.discount-field__form');
+      this.input = this.querySelector('.discount-field__input');
+      this.pills = this.querySelector('.discount-pills');
 
-        this.appliedBox = this.querySelector('.discount-applied');
-        this.appliedCodeEl = this.querySelector('.discount-applied__code');
-
-        this.form.addEventListener('submit', this.handleApplyDiscount.bind(this));
-
-        this.syncAppliedState();
-      }
-
-      syncAppliedState() {
-        const appliedCode = this.dataset.discount?.trim();
-
-        if (appliedCode) {
-            // Show applied code
-            this.appliedBox.hidden = false;
-            this.appliedCodeEl.textContent = appliedCode;
-        } else {
-            // No discount applied
-            this.appliedBox.hidden = true;
-            this.appliedCodeEl.textContent = '';
-        }
-      }
-
-      handleApplyDiscount(e) {
+      this.form.addEventListener('submit', e => {
         e.preventDefault();
+        const code = this.input.value.trim();
+        if (code) this.applyDiscount(code);
+      });
+    }
 
-        const discountCode = this.input.value.trim();
-        if (!discountCode) return;
+    async applyDiscount(code) {
+      try {
+        const res = await fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ discount: code || '' })
+        });
 
-        this.applyDiscountInBackground(discountCode);
-      }
+        const cart = await res.json();
 
-      async applyDiscountInBackground(discountCode) {
-        this.setLoading(true);
-
-        try {
-          console.log(`🎟 Applying discount: ${discountCode}`);
-
-          // Apply discount (Shopify-supported)
-          await fetch(
-            `/discount/${encodeURIComponent(discountCode)}?redirect=/checkout`,
-            { method: 'GET', credentials: 'include' }
-          );
-
-          // Give Shopify a moment
-          await new Promise(resolve => setTimeout(resolve, 800));
-
-          // Refresh cart (totals, loader, checkout amount)
-          if (typeof window.initializeCartFunction === 'function') {
-            window.initializeCartFunction();
-          }
-
-          this.syncAppliedState();
-
-          this.input.value = '';
-          console.log('✅ Discount applied');
-
-        } catch (error) {
-          console.error('❌ Error applying discount:', error);
-        } finally {
-          this.setLoading(false);
+        // 🔁 Refresh side cart
+        if (window.initializeCartFunction) {
+          window.initializeCartFunction(cart);
         }
-      }
 
-      setLoading(isLoading) {
-        this.classList.toggle('discount-field__loading', isLoading);
-        this.submitButton.disabled = isLoading;
-        this.input.disabled = isLoading;
+        // 🔁 Sync discount UI
+        this.updateFromCart(cart);
+
+        this.input.value = '';
+      } catch (err) {
+        console.error('Discount error', err);
       }
     }
 
-    customElements.define('discount-field', DiscountField);
-  }, 1000);
-});
+    updateFromCart(cart) {
+      const codes = new Set();
 
+      cart.cart_level_discount_applications?.forEach(d => {
+        if (d.type === 'discount_code') codes.add(d.title);
+      });
+
+      cart.items.forEach(item => {
+        item.line_level_discount_allocations?.forEach(a => {
+          if (a.discount_application.type === 'discount_code') {
+            codes.add(a.discount_application.title);
+          }
+        });
+      });
+
+      this.renderPills([...codes]);
+    }
+
+    renderPills(codes) {
+      this.pills.innerHTML = '';
+
+      if (!codes.length) {
+        this.pills.hidden = true;
+        return;
+      }
+
+      this.pills.hidden = false;
+
+      codes.forEach(code => {
+        const li = document.createElement('li');
+        li.className = 'discount-pill';
+        li.innerHTML = `
+          <span>${code}</span>
+          <button type="button" aria-label="Remove">×</button>
+        `;
+
+        li.querySelector('button').addEventListener('click', () => {
+          this.applyDiscount('');
+        });
+
+        this.pills.appendChild(li);
+      });
+    }
+  }
+
+  customElements.define('discount-field', DiscountField);
+});
 </script>
