@@ -12,6 +12,10 @@
     </button>
   </form>
 
+  <p class="discount-error" hidden>
+    Invalid or expired discount code
+  </p>
+
   <ul class="discount-pills" hidden></ul>
 </discount-field>
 
@@ -28,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       this.form = this.querySelector('.discount-field__form');
       this.input = this.querySelector('.discount-field__input');
       this.pills = this.querySelector('.discount-pills');
+
+      this.input.addEventListener('input', () => this.hideError());
 
       this.form.addEventListener('submit', e => {
         e.preventDefault();
@@ -46,19 +52,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cart = await res.json();
 
-        // 🔁 Refresh side cart
+        // ✅ Horizon-style VALIDATION (SAFE)
+        // ⛔️ If code is empty → NEVER show error
+        if (!code) {
+          this.hideError();
+        } else {
+          const isValid =
+            cart.discount_codes?.some(d => d.applicable === true);
+
+          if (!isValid) {
+            this.showError();   // wrong code
+          } else {
+            this.hideError();   // valid code
+          }
+        }
+
+
+        // 🔁 existing logic — NEVER STOP THIS
         if (window.initializeCartFunction) {
           window.initializeCartFunction(cart);
         }
 
-        // 🔁 Sync discount UI
         this.updateFromCart(cart);
-
         this.input.value = '';
+
       } catch (err) {
         console.error('Discount error', err);
+        this.showError();
       }
     }
+
 
     updateFromCart(cart) {
       const codes = new Set();
@@ -76,6 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       this.renderPills([...codes]);
+    }
+
+    showError() {
+      this.querySelector('.discount-error')?.removeAttribute('hidden');
+    }
+
+    hideError() {
+      this.querySelector('.discount-error')?.setAttribute('hidden', '');
     }
 
     renderPills(codes) {
