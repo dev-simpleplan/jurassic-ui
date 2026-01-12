@@ -123,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.className = 'discount-pill';
         li.innerHTML = `
-          <span>${code}</span>
-          <button type="button" aria-label="Remove">×</button>
+          <div class="discount-text"><span><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/discount-icon.svg?v=1768204649"/></span>Discount: ${code}</div>
+          <button type="button" aria-label="Remove">Remove</button>
         `;
 
         li.querySelector('button').addEventListener('click', () => {

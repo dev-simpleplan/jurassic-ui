@@ -173,12 +173,12 @@
 }
 
 .sc-in .cart-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   align-items: stretch;
   justify-content: space-between;
   gap: 8px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
 }
 
 .sc-in .cart-item:first-child {
@@ -395,29 +395,43 @@ span.cart-compare-price {
   background-color: #151515;
   border-color: #151515;
 }
-.discount-field__error {
+.discount-error {
   color: #d60000;
   font-size: 13px;
   margin-top: 6px;
 }
-.discount-applied {
+.discount-pills {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 14px;
 }
-.discount-applied__label {
+.discount-pill {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: -0.48px;
   color: #397E1B;
 }
-.discount-applied__label img {
-  width: 15px;
+.discount-pill .discount-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.discount-pill button {
+  color: #d60000;
+  font-weight: 400;
+  text-decoration: underline;
+  font-size: 12px;
+  padding: 0;
+  padding-top: 2px;
+  border: none;
+  background: transparent;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 /* Button loader */

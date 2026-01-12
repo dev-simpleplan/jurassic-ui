@@ -418,13 +418,14 @@
           }
 
           return `
+          
             <div class="cart-item" data-line="${index + 1}">
               <div class="cart-item-left">
                 <div class="cart-item-image">
-                  <img src="${item.image}" alt="${item.title}" class="cart-image" />
+                  <a href="${item.url}"><img src="${item.image}" alt="${item.title}" class="cart-image" /></a>
                 </div>
                 <div class="cart-item-info ${hasDiscount ? 'hasDiscount' : ''}">
-                  <p class="cart-item-title">${item.title}</p>
+                  <a href="${item.url}"><p class="cart-item-title">${item.title}</p></a>
                   ${hasDiscount ? `<p class="cart-discount-percent">${discountPercent}% Off</p>` : ''}
                   <p class="cart-price">
                     ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''}
