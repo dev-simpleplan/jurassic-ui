@@ -400,6 +400,25 @@ span.cart-compare-price {
   font-size: 13px;
   margin-top: 6px;
 }
+.discount-applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+.discount-applied__label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.48px;
+  color: #397E1B;
+}
+.discount-applied__label img {
+  width: 15px;
+}
 
 /* Button loader */
 .discount-field__submit-btn {

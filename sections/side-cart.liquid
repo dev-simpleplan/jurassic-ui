@@ -63,20 +63,26 @@
           <p class="cs-title">Subtotal</p>
           <p class="subtotal-amount cs-res">0.00</p>
         </div>
+
+        <!-- ✅ NEW -->
+        <div class="cart-discount" style="display:none;">
+          <p class="cs-title">Discount:</p>
+          <p class="discount-amount cs-res">-0.00</p>
+        </div>
+
         <div class="cart-shipping">
-          <p class="cs-title">shipping
+          <p class="cs-title">Shipping
             <span>(calc. at the checkout)</span>
           </p>
           <p class="shipping-amount cs-res">Calculated at checkout</p>
         </div>
+
         <div class="cart-total">
-          <p class="cs-title">Total
-            <span>incl. VAT</span>
-          </p>
+          <p class="cs-title">Total <span>incl. VAT</span></p>
           <p class="total-amount cs-res">0.00</p>
         </div>
       </div>
-      <form action="/checkout" method="post">
+      <form action="/checkout" method="get" class="checkout-form">
         <button
           name="checkout"
           type="submit"
@@ -379,7 +385,7 @@
             console.warn(`Could not fetch product data for ${item.title}:`, err);
           }
 
-          compareAtPrice = item.original_price;
+          // compareAtPrice = item.original_price;
 
           const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
           let discountPercent = 0;
@@ -419,10 +425,51 @@
         if (cartItemsWrapper) cartItemsWrapper.innerHTML = allItemsHTML.join('');
 
         // 🧾 Update totals and counts
-        const subtotal = cart.items_subtotal_price;
+        let originalSubtotal = 0;
+
+        cart.items.forEach(item => {
+          originalSubtotal += item.original_line_price;
+        });
+
+        const discountedSubtotal = cart.items_subtotal_price;
         const total = cart.total_price;
-        if (subtotalDiv) subtotalDiv.innerHTML = formatMoney(subtotal);
-        totalDivs.forEach(div => div.innerHTML = formatMoney(total));
+        const discountAmount = originalSubtotal - discountedSubtotal;
+
+        const discountRow = document.querySelector('.cart-discount');
+        const discountDiv = document.querySelector('.discount-amount');
+
+
+        // Subtotal (always original)
+        if (subtotalDiv) {
+          subtotalDiv.innerHTML = formatMoney(originalSubtotal);
+        }
+
+        // Discount row (only if discount applied)
+        if (discountAmount > 0) {
+          discountRow.style.display = 'flex';
+          discountDiv.innerHTML = `- ${formatMoney(discountAmount)}`;
+        } else {
+          discountRow.style.display = 'none';
+        }
+
+        // Total (final payable)
+        document.querySelectorAll('.total-amount, .checkout-total')
+          .forEach(el => el.innerHTML = formatMoney(total));
+
+        // ✅ Ensure checkout carries applied discount code
+        const checkoutForm = document.querySelector('.checkout-form');
+        const discountField = document.querySelector('discount-field');
+
+        if (checkoutForm && discountField) {
+          const appliedCode = discountField.dataset.discount?.trim();
+
+          if (appliedCode) {
+            checkoutForm.action = `/checkout?discount=${encodeURIComponent(appliedCode)}`;
+          } else {
+            checkoutForm.action = '/checkout';
+          }
+        }
+
 
         if (headCount) headCount.textContent = cart.item_count;
         if (cartCountSpan) {

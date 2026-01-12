@@ -114,7 +114,6 @@
                     {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
                   {% endif %}
 
-                  {% assign pieces = 0 %}                  
                   <div
                     class="fc_variant_item
                     {% if variant.id == default_variant.id %}active{% endif %}
@@ -123,7 +122,11 @@
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
                     data-inventory="{{ variant.inventory_quantity }}"
-                    data-unit="{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}"
+                    data-unit="{% if variant.unit_price_measurement %}
+                      {{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}
+                    {% else %}
+                      {{ variant.price | money }} / unit
+                    {% endif %}"
                     data-image="{{ variant.image | img_url: 'master' }}">
                     {% if variant.metafields.custom.bestseller == true %}
                       <div class="vv-bestseller">Bestseller</div>
@@ -163,15 +166,7 @@
           <div class="fc_bottom_end">
             <div class="fc_price_weight">
               {% assign current_variant = nil %}
-              {% for variant in product.variants %}
-                {% if variant.metafields.custom.is_prior == true and variant.available %}
-                  {% assign current_variant = variant %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
-              {% if current_variant == nil %}
-                {% assign current_variant = product.selected_or_first_available_variant %}
-              {% endif %}
+              {% assign current_variant = default_variant %}
 
               {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
@@ -184,14 +179,24 @@
                 </p>
               {% endif %}
 
-              <p class="fc_weight" data-variant-id="{{ current_variant.id }}">
-                {% if current_variant.unit_price_measurement %}
+              <p class="fc_weight">
+                {% if current_variant.unit_price_measurement
+                  and current_variant.unit_price_measurement.reference_unit != 'kg' %}
+                  
                   {{ current_variant.unit_price | money }} /
                   {{ current_variant.unit_price_measurement.reference_unit }}
+
+                {% elsif current_variant.unit_price_measurement == blank %}
+                  
+                  {{ current_variant.price | money }} / piece
+
                 {% else %}
-                  {{ current_variant.price | money }} / unit
+                  
+                  {{ current_variant.price | money }} / piece
+
                 {% endif %}
               </p>
+
 
             </div>
             <div class="fc_add_to_cart_outer">
@@ -356,14 +361,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (card.dataset.available !== 'true') return;
 
   const variantId = Number(card.dataset.variantId);
-  const maxQty = parseInt(card.dataset.inventory, 10) || Infinity;
+  const inv = parseInt(card.dataset.inventory, 10);
+  const maxQty = Number.isFinite(inv) && inv > 0 ? inv : 0;
+  if (maxQty === 0) return;
 
   const addBtn = card.querySelector('.add-to-cart-btn');
   const plus = card.querySelector('.add_product');
   const minus = card.querySelector('.remove_product');
   const qtyEl = card.querySelector('.qty-value');
 
-  let qty = 0;
+  let qty = parseInt(qtyEl.textContent, 10) || 1;
   let lineKey = null;
   let isLoading = false;
 
