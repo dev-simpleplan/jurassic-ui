@@ -404,11 +404,17 @@
 .fc_add_to_cart span.remove_product {
   display: flex;
   justify-content: start;
+  height: 100%;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 
 .fc_add_to_cart span.add_product {
   display: flex;
   justify-content: end;
+  height: 100%;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 .fc_add_to_cart {
   display: flex;
@@ -444,6 +450,7 @@
   gap: 12px;
   width: 100%;
   position: absolute;
+  height: 100%;
 }
 
 .fc_add_to_cart.active .qty-controls {
