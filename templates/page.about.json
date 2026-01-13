@@ -50,7 +50,7 @@
           "type": "slide1",
           "settings": {
             "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
-            "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
+            "icon_image": "shopify://shop_images/Group_427323211.svg",
             "slide_heading": "Our Vision",
             "slide_content": "To be the world’s most trusted curator of rare and exotic fruits—sharing nature’s best-kept secrets from remote corners of the world with conscious consumers everywhere."
           }
@@ -59,13 +59,17 @@
           "type": "slide1",
           "settings": {
             "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
-            "icon_image": "shopify://shop_images/Vector_-_2025-10-29T180744.832.svg",
+            "icon_image": "shopify://shop_images/Vector_-_2026-01-13T155820.129.svg",
             "slide_heading": "Our Mission",
             "slide_content": "To deliver on-demand, nutrient-rich produce—harvested at peak ripeness and traceable to its source—for a truly fresh, meaningful, and sensory journey from soil to soul."
           }
         }
       },
-      "block_order": ["slide1_AAABL9", "slide1_4MizB3", "slide1_qfYyyf"],
+      "block_order": [
+        "slide1_AAABL9",
+        "slide1_4MizB3",
+        "slide1_qfYyyf"
+      ],
       "settings": {}
     },
     "spacer1": {
@@ -172,7 +176,11 @@
           }
         }
       },
-      "block_order": ["cards_qfWgHX", "cards_qDA8cP", "cards_RcaCY4"],
+      "block_order": [
+        "cards_qfWgHX",
+        "cards_qDA8cP",
+        "cards_RcaCY4"
+      ],
       "settings": {
         "heading": "Where Sustainability Bears Real Fruit",
         "content": "Every fruit you enjoy supports healthy soils, empowered farmers, and a planet that can keep on giving.",
@@ -208,7 +216,10 @@
           }
         }
       },
-      "block_order": ["collection_block_EQmLfF", "collection_block_Q4AKGg"],
+      "block_order": [
+        "collection_block_EQmLfF",
+        "collection_block_Q4AKGg"
+      ],
       "settings": {
         "heading": "A World of Flavor in Your Hands",
         "subheading": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
@@ -243,7 +254,11 @@
           }
         }
       },
-      "block_order": ["slide_dX3XYx", "slide_YtG3Xe", "slide_Jmw733"],
+      "block_order": [
+        "slide_dX3XYx",
+        "slide_YtG3Xe",
+        "slide_Jmw733"
+      ],
       "name": "imagesscroll",
       "settings": {
         "heading": "The Crew Behind Your Journey to Wild Taste",
