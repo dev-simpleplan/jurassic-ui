@@ -1510,10 +1510,14 @@ li.variant-value .vv-bestseller,
 .fc_variant_item .vv-bestseller {
   top: -21px;
 }
+li.variant-value:hover,
 li.variant-value.active {
   box-shadow: 0px -1.82px 6.37px 0px #ffa5001a inset;
   background: #fff2db;
   border-color: #ffbb42;
+}
+li.variant-value:hover::after {
+  border-color: transparent;
 }
 li.variant-value .vv-value {
   display: flex;

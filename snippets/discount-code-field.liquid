@@ -43,44 +43,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async applyDiscount(code) {
-      try {
-        const res = await fetch('/cart/update.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ discount: code || '' })
-        });
+  try {
+    const res = await fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ discount: code || '' })
+    });
 
-        const cart = await res.json();
+    const cart = await res.json();
 
-        // ✅ Horizon-style VALIDATION (SAFE)
-        // ⛔️ If code is empty → NEVER show error
-        if (!code) {
-          this.hideError();
-        } else {
-          const isValid =
-            cart.discount_codes?.some(d => d.applicable === true);
+    /* ===============================
+       ✅ Horizon-style VALIDATION
+       =============================== */
 
-          if (!isValid) {
-            this.showError();   // wrong code
-          } else {
-            this.hideError();   // valid code
-          }
-        }
+    // ⛔️ If code is empty → NEVER show error
+    if (!code) {
+      this.hideError();
+    } else {
+      const isValid =
+        cart.discount_codes?.some(d => d.applicable === true);
 
-
-        // 🔁 existing logic — NEVER STOP THIS
-        if (window.initializeCartFunction) {
-          window.initializeCartFunction(cart);
-        }
-
-        this.updateFromCart(cart);
-        this.input.value = '';
-
-      } catch (err) {
-        console.error('Discount error', err);
-        this.showError();
+      if (!isValid) {
+        this.showError();   // ❌ invalid / expired code
+      } else {
+        this.hideError();   // ✅ valid code
       }
     }
+
+    /* ===============================
+       🔁 UI updates (LOCAL)
+       =============================== */
+
+    this.updateFromCart(cart);
+    this.input.value = '';
+
+    /* ===============================
+       🔔 GLOBAL CART SYNC (NEW)
+       =============================== */
+
+    document.dispatchEvent(
+      new CustomEvent('cart:updated', { detail: cart })
+    );
+
+  } catch (err) {
+    console.error('Discount error', err);
+    this.showError();
+  }
+}
+
 
 
     updateFromCart(cart) {

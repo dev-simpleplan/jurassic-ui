@@ -1,7 +1,29 @@
+{% assign default_variant = nil %}
+
+{% for variant in product.variants %}
+  {% if variant.metafields.custom.is_prior == true and variant.available %}
+    {% assign default_variant = variant %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if default_variant == nil %}
+  {% for variant in product.variants %}
+    {% if variant.available %}
+      {% assign default_variant = variant %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if default_variant == nil %}
+  {% assign default_variant = product.variants.first %}
+{% endif %}
+
 <div class="product-card-primary">
   <div class="fruits_card">
-    <a href="{{ product.url }}">
       <div class="fc_top">
+        <a href="{{ product.url }}" class="card-link"></a>
         {% assign images = product.images %}
 
         <div class="fc_image">
@@ -9,19 +31,19 @@
             <img
               src="{{ images.first | img_url: 'master' }}"
               alt="{{ product.title | escape }}"
-              class="img_sizing primary-img" loading="lazy">
+              class="img_sizing primary-img">
 
             {% if images.size > 1 %}
               <img
                 src="{{ images[1] | img_url: 'master' }}"
                 alt="{{ product.title | escape }}"
-                class="img_sizing hover-img" loading="lazy">
+                class="img_sizing hover-img">
             {% endif %}
           {% else %}
             <img
               src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' }}"
               alt="No Image Available"
-              class="img_sizing primary-img" loading="lazy">
+              class="img_sizing primary-img">
           {% endif %}
         </div>
 
@@ -55,7 +77,6 @@
           {% endfor %}
         {% endif %}
       </div>
-    </a>
 
     <div class="fc_bottom_outer">
       <div class="fc_bottom">
@@ -63,10 +84,9 @@
         <div class="fc_bottom_top">
           <div class="star_review">
             <div class="star_rating">
-              <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
+              <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
             </div>
             <div class="rating_info">
-              <p>4.9 (200)</p>
               {% if product.metafields.custom.country_of_origin %}
                 <span class="dot_seperator"></span>
                 <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
@@ -76,6 +96,7 @@
           <p class="fc_product_title">
             <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
           </p>
+          
         </div>
 
         <div class="fc_bottom_bottom">
@@ -86,17 +107,29 @@
                   <script type="application/JSON">
                     {{ variant | json }}
                   </script>
+
+                  {% assign pieces = 0 %}
+                  {% if variant.unit_price_measurement
+                    and variant.unit_price_measurement.quantity_value != blank %}
+                    {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
+                  {% endif %}
+
                   <div
-                    class="fc_variant_item {% if forloop.first %}active{% endif %}
-                    {% if variant.metafields.custom.bestseller == true %} bestseller{% endif %}"
+                    class="fc_variant_item
+                    {% if variant.id == default_variant.id %}active{% endif %}
+                    {% if variant.metafields.custom.bestseller == true %}bestseller{% endif %}"
                     data-id="{{ variant.id }}"
                     data-price="{{ variant.price | money }}"
                     data-compare="{{ variant.compare_at_price | money }}"
                     data-inventory="{{ variant.inventory_quantity }}"
-                    data-unit="{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}"
+                    data-unit="{% if variant.unit_price_measurement %}
+                      {{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}
+                    {% else %}
+                      {{ variant.price | money }} / unit
+                    {% endif %}"
                     data-image="{{ variant.image | img_url: 'master' }}">
                     {% if variant.metafields.custom.bestseller == true %}
-                      <div class="bestseller-badge">Bestseller</div>
+                      <div class="vv-bestseller">Bestseller</div>
                     {% endif %}
                     <p class="weight">
                       {{ variant.title }}
@@ -110,12 +143,19 @@
                       {% endif %}
                     </p>
                     <p class="quantity">
-                      {% if variant.unit_price_measurement.quantity_value == 1 %}
-                        {{ variant.unit_price_measurement.quantity_value | round }} Peice
+                      {% if variant.unit_price_measurement
+                        and variant.unit_price_measurement.quantity_value != blank %}
+                        
+                        {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
+                        
+                        {{ pieces }}
+                        {% if pieces == 1 %} Peice{% else %} Peices{% endif %}
+                        
                       {% else %}
-                        {{ variant.unit_price_measurement.quantity_value | round }} Peices
+                        0 Peices
                       {% endif %}
                     </p>
+
                   </div>
                 {% endfor %}
               </div>
@@ -125,7 +165,9 @@
 
           <div class="fc_bottom_end">
             <div class="fc_price_weight">
-              {% assign current_variant = product.selected_or_first_available_variant %}
+              {% assign current_variant = nil %}
+              {% assign current_variant = default_variant %}
+
               {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
                   <strike id="compare_price">{{ current_variant.compare_at_price | money }}</strike>
@@ -136,76 +178,47 @@
                   <span class="selling_price">{{ current_variant.price | money }}</span>
                 </p>
               {% endif %}
-              {% assign current_variant = product.selected_or_first_available_variant %}
+
               <p class="fc_weight">
-                {% if current_variant.unit_price_measurement %}
-                  {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
+                {% if current_variant.unit_price_measurement
+                  and current_variant.unit_price_measurement.reference_unit != 'kg' %}
+                  
+                  {{ current_variant.unit_price | money }} /
+                  {{ current_variant.unit_price_measurement.reference_unit }}
+
+                {% elsif current_variant.unit_price_measurement == blank %}
+                  
+                  {{ current_variant.price | money }} / piece
+
                 {% else %}
-                  {{ current_variant.price | money }} / unit
+                  
+                  {{ current_variant.price | money }} / piece
+
                 {% endif %}
               </p>
+
+
             </div>
             <div class="fc_add_to_cart_outer">
-              <form
-                action="/cart/add"
-                method="post"
-                enctype="multipart/form-data">
-                <input
-                  type="hidden"
-                  name="id"
-                  value="{{ current_variant.id }}">
-                <input
-                  type="hidden"
-                  name="quantity"
-                  value="1">
-                <div class="fc_add_to_cart">
-                  <span class="remove_product">
-                    <svg
-                      width="23"
-                      height="22"
-                      viewBox="0 0 23 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M5.09961 11.3408H17.8457"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    </svg>
-                  </span>
+                <div class="fc_add_to_cart"
+                  data-variant-id="{{ current_variant.id }}"
+                  data-available="{{ current_variant.available }}"
+                  data-inventory="{{ current_variant.inventory_quantity }}">
+
                   <button
-                    type="submit"
-                    id="add-to-cart"
-                    {% unless product.available %}
-                    disabled
-                    {% endunless %}>
-                    {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+                    type="button"
+                    class="add-to-cart-btn"
+                    {% unless current_variant.available %}disabled{% endunless %}>
+                    {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
-                  <span class="add_product">
-                    <svg
-                      width="23"
-                      height="22"
-                      viewBox="0 0 23 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M11.5645 4.96582V17.7119"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path
-                        d="M5.19727 11.3408H17.9434"
-                        stroke="#151515"
-                        stroke-width="1.82087"
-                        stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    </svg>
-                  </span>
+
+                  <div class="qty-controls">
+                    <span class="remove_product">–</span>
+                    <span class="qty-value">1</span>
+                    <span class="add_product">+</span>
+                  </div>
                 </div>
-              </form>
-            </div>
+              </div>
             <div class="fc_trust_text">
               <p>Only {{ current_variant.inventory_quantity }} Left</p>
               <span class="dot_seperator"></span>
@@ -221,3 +234,11 @@
     </div>
   </div>
 </div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.product-card-primary').forEach(card => {
+    window.initCardCartLogic(card);
+  });
+});
+</script>

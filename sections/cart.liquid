@@ -34,20 +34,25 @@
                     </div>
                     <div class="cart-totals">
                         <div class="cart-subtotal">
-                        <p class="cs-title">Subtotal</p>
-                        <p class="subtotal-amount cs-res">0.00</p>
+                          <p class="cs-title">Subtotal</p>
+                          <p class="subtotal-amount cs-res">0.00</p>
                         </div>
+                        <div class="cart-discount" style="display:none;">
+                          <p class="cs-title">Discount:</p>
+                          <p class="discount-amount cs-res">-0.00</p>
+                        </div>
+
                         <div class="cart-shipping">
-                        <p class="cs-title">shipping
-                            <span>(calc. at the checkout)</span>
-                        </p>
-                        <p class="shipping-amount cs-res">Calculated at checkout</p>
+                          <p class="cs-title">shipping
+                              <span>(calc. at the checkout)</span>
+                          </p>
+                          <p class="shipping-amount cs-res">Calculated at checkout</p>
                         </div>
                         <div class="cart-total">
-                        <p class="cs-title">Total
-                            <span>incl. VAT</span>
-                        </p>
-                        <p class="total-amount cs-res">0.00</p>
+                          <p class="cs-title">Total
+                              <span>incl. VAT</span>
+                          </p>
+                          <p class="total-amount cs-res">0.00</p>
                         </div>
                     </div>
                     <form action="/checkout" method="post">
@@ -74,6 +79,43 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+
+    function hydrateDiscountFields(cart) {
+      cartSection
+        .querySelectorAll('discount-field')
+        .forEach(df => {
+          if (typeof df.updateFromCart === 'function') {
+            df.updateFromCart(cart);
+          }
+        });
+    }
+
+
+    function getDiscountCodesFromCart(cart) {
+      const codes = [];
+
+      // Cart-level discounts
+      if (cart.cart_level_discount_applications?.length) {
+        cart.cart_level_discount_applications.forEach(d => {
+          if (d.type === 'discount_code') {
+            codes.push(d.title);
+          }
+        });
+      }
+
+      // Line-level discounts
+      cart.items.forEach(item => {
+        item.line_level_discount_allocations?.forEach(allocation => {
+          if (allocation.discount_application.type === 'discount_code') {
+            codes.push(allocation.discount_application.title);
+          }
+        });
+      });
+
+      return [...new Set(codes)];
+    }
+
+
     // 🔒 Scope everything to THIS section only
     const cartSection = document.getElementById('cart-page-{{ section.id }}');
     if (!cartSection) {
@@ -106,12 +148,36 @@
         console.log('🛒 [CartPage] Loading cart items...');
         const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart.js');
         const cart = await res.json();
+        hydrateDiscountFields(cart);
         console.log('🛒 [CartPage] Cart Data:', cart);
 
         // 🧮 Update subtotal & total
         if (subtotalDiv) {
         subtotalDiv.textContent = formatMoney(cart.items_subtotal_price);
         }
+
+        // ✅ DISCOUNT ROW (same logic as side cart)
+        const discountRow = cartSection.querySelector('.cart-discount');
+        const discountAmountEl = cartSection.querySelector('.discount-amount');
+
+        let originalSubtotal = 0;
+        cart.items.forEach(item => {
+          originalSubtotal += item.original_line_price;
+        });
+
+        const discountedSubtotal = cart.items_subtotal_price;
+        const discountAmount = originalSubtotal - discountedSubtotal;
+
+        // Reuse SAME discount detection logic
+        const discountCodes = getDiscountCodesFromCart(cart);
+
+        if (discountCodes.length > 0 && discountAmount > 0) {
+          discountRow.style.display = 'flex';
+          discountAmountEl.textContent = `- ${formatMoney(discountAmount)}`;
+        } else {
+          discountRow.style.display = 'none';
+        }
+
 
         if (totalAmountDivs && totalAmountDivs.length) {
         totalAmountDivs.forEach(el => {
@@ -242,6 +308,19 @@
       }
     };
 
+    // 🔁 Sync cart page when discount is applied/removed anywhere
+    document.addEventListener('cart:updated', (e) => {
+      const cart = e.detail;
+
+      // Re-render cart page totals & discount row
+      loadCartPageItems();
+
+      // Sync discount pills on cart page too
+      document.querySelectorAll('discount-field')
+        .forEach(df => df.updateFromCart(cart));
+    });
+
+
     // 🔄 Update a cart line (cart PAGE only)
     const updateCartPageItem = async (line, quantity) => {
       try {
@@ -299,6 +378,25 @@
             couponFieldContainer.style.display = 'block';
         });
         }
+
+        window.initializeCartFunction = async function (cartData) {
+          const cart =
+            cartData ||
+            (await fetch('/cart.js').then(r => r.json()));
+
+          // 🔁 Re-render everything
+          await loadCartPageItems();
+
+          // 🔁 Re-sync discount pills
+          cartSection
+            .querySelectorAll('discount-field')
+            .forEach(df => {
+              if (typeof df.updateFromCart === 'function') {
+                df.updateFromCart(cart);
+              }
+            });
+        };
+
   });
 
 

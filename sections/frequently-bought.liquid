@@ -14,87 +14,215 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+/* 1. GLOBAL SCOPE UTILITIES */
+// Moving these to the top level ensures they are available to both static and dynamic cards
+async function addToCart(id, qty) {
+  return fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id, quantity: qty })
+  }).then(r => r.json());
+}
+
+async function changeCart(key, qty) {
+  return fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: key, quantity: qty })
+  });
+}
+
+async function getCart() {
+  return fetch('/cart.js').then(r => r.json());
+}
+
+async function updateHeaderCartCount() {
+  const res = await fetch('/cart.js');
+  const cart = await res.json();
+  const el = document.querySelector('.header__cart-quantity');
+  if (el) {
+    el.textContent = cart.item_count;
+    cart.item_count > 0 ? el.classList.remove('is-hidden') : el.classList.add('is-hidden');
+  }
+}
+
+function openSideCartDirectly() {
+  const sideCart = document.querySelector('.sideCart');
+  if (sideCart) {
+    sideCart.classList.add('active');
+    document.body.classList.add('stay');
+    window.initializeCartFunction?.();
+  }
+}
+
+/* 2. REUSABLE INITIALIZER FOR ALL CARDS */
+window.initCardFullLogic = function(card) {
+  const cartWrapper = card.querySelector('.fc_add_to_cart');
+  if (!cartWrapper || cartWrapper.dataset.bound === 'true') return;
+  cartWrapper.dataset.bound = 'true';
+
+  const addBtn = cartWrapper.querySelector('.add-to-cart-btn');
+  const plus = cartWrapper.querySelector('.add_product');
+  const minus = cartWrapper.querySelector('.remove_product');
+  const qtyEl = cartWrapper.querySelector('.qty-value');
+
+  let isLoading = false;
+  let lineKey = null;
+
+  // Add to Cart Click
+  addBtn?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (isLoading) return;
+    isLoading = true;
+
+    const variantId = cartWrapper.getAttribute('data-variant-id');
+    addBtn.textContent = 'Adding...';
+
+    try {
+      const cartData = await addToCart(variantId, 1);
+      const item = cartData; // /add.js returns the added item
+      lineKey = item.key;
+      
+      if(qtyEl) qtyEl.textContent = 1;
+      cartWrapper.classList.add('active');
+      
+      await updateHeaderCartCount();
+      openSideCartDirectly();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      isLoading = false;
+      addBtn.textContent = 'Add to Cart';
+    }
+  });
+
+  // Plus Button
+  plus?.addEventListener('click', async () => {
+    if (isLoading) return;
+    isLoading = true;
+    let currentQty = parseInt(qtyEl.textContent);
+    currentQty++;
+    qtyEl.textContent = currentQty;
+    
+    const variantId = cartWrapper.getAttribute('data-variant-id');
+    await addToCart(variantId, 1);
+    await updateHeaderCartCount();
+    isLoading = false;
+  });
+
+  // Minus Button
+  minus?.addEventListener('click', async () => {
+    if (isLoading) return;
+    isLoading = true;
+    let currentQty = parseInt(qtyEl.textContent);
+    currentQty--;
+
+    const variantId = cartWrapper.getAttribute('data-variant-id');
+    if (currentQty <= 0) {
+      // Logic to remove item could go here using changeCart
+      cartWrapper.classList.remove('active');
+      qtyEl.textContent = 1; 
+    } else {
+      qtyEl.textContent = currentQty;
+      // Subtracting by adding -1 or using change.js
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: -1 })
+      });
+    }
+    await updateHeaderCartCount();
+    isLoading = false;
+  });
+};
+
+/* 3. FETCH AND RENDER RECOMMENDATIONS */
+document.addEventListener("DOMContentLoaded", function () {
   const productId = {{ product.id }};
   const container = document.querySelector(".freq-wrap");
-
   if (!container) return;
 
-  // 🔹 Fetch recommended products
-  fetch(`/recommendations/products.json?product_id=${productId}&limit=16`)
-    .then((res) => res.json())
-    .then((data) => {
-      const filteredProducts = data.products
-        .filter((p) => p.id !== productId)
-        .slice(0, 3);
+  fetch(`/recommendations/products.json?product_id=${productId}&limit=5`)
+    .then(res => res.json())
+    .then(data => {
+      const filtered = data.products.filter(p => p.id !== productId).slice(0, 3);
+      container.innerHTML = ""; // Clear loader if any
 
-      container.innerHTML = "";
-
-      filteredProducts.forEach((product) => {
+      filtered.forEach(product => {
         fetch(`/products/${product.handle}?section_id=product-card-primary`)
-          .then((res) => res.text())
-          .then((html) => {
+          .then(res => res.text())
+          .then(html => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, "text/html");
             const card = doc.querySelector(".product-card-primary");
 
             if (card) {
-              // ✅ Add data-product-id for cart script filtering
-              card.setAttribute("data-product-id", product.id);
               container.appendChild(card);
-
-              initVariantLogic(card);
-              window.initializeCartFunction();
+              
+              // 1. Initialize Variant Switching Logic
+              initVariantLogic(card); 
+              
+              // 2. Initialize Cart logic (Add/Plus/Minus)
+              window.initCardFullLogic(card);
             }
           })
-          .catch((err) => console.error("Error loading product card:", err));
+          .catch(err => console.error("Error loading product card:", err));
       });
-    })
-    .catch((err) => console.error("Error fetching recommendations:", err));
-  });
+    });
+});
 
-  /* -------------------------------
-   * VARIANT LOGIC (Reusable Function)
-   * ------------------------------- */
-  function initVariantLogic(card) {
+function initVariantLogic(card) {
   const variantItems = card.querySelectorAll(".fc_variant_item");
+  const cartWrapper = card.querySelector('.fc_add_to_cart');
+  
+  // Select the display elements
   const sellingPrice = card.querySelector(".selling_price");
-  const comparePrice = card.querySelector("strike");
-  const addToCartInput = card.querySelector('input[name="id"]');
-  const trustText = card.querySelector(".fc_trust_text p");
-  const mainImg = card.querySelector(".fc_image .main_img");
-  const perKg = card.querySelector(".fc_weight");
+  const comparePrice = card.querySelector("#compare_price") || card.querySelector("strike");
+  const weightText = card.querySelector(".fc_weight");
+  const inventoryText = card.querySelector(".fc_trust_text p:first-child");
+  const primaryImg = card.querySelector(".primary-img");
 
   variantItems.forEach((variant) => {
     variant.addEventListener("click", () => {
+      // 1. Toggle Active Class
       variantItems.forEach((v) => v.classList.remove("active"));
       variant.classList.add("active");
 
-      const price = variant.dataset.price;
-      const compare = variant.dataset.compare;
-      const inventory = variant.dataset.inventory;
-      const variantId = variant.dataset.id;
-      const image = variant.dataset.image;
-      const perKgfinal = variant.dataset.unit;
-
-      if (sellingPrice) sellingPrice.textContent = price;
+      // 2. Update the hidden Variant ID for the Cart
+      if (cartWrapper) {
+        cartWrapper.setAttribute('data-variant-id', variant.dataset.id);
+      }
+      
+      // 3. Update Price and Compare Price
+      if (sellingPrice) sellingPrice.textContent = variant.dataset.price;
+      
       if (comparePrice) {
-        if (compare && compare !== price) {
-          comparePrice.textContent = compare;
-          comparePrice.style.display = "inline";
+        const hasDiscount = variant.dataset.compare && variant.dataset.compare !== variant.dataset.price;
+        if (hasDiscount) {
+          comparePrice.textContent = variant.dataset.compare;
+          comparePrice.style.display = 'inline';
         } else {
-          comparePrice.style.display = "none";
+          comparePrice.style.display = 'none';
         }
       }
 
-      if (addToCartInput) addToCartInput.value = variantId;
-      if (trustText && inventory)
-        trustText.textContent = `Only ${inventory} Left`;
-      if (image && mainImg) mainImg.src = image;
-      if (perKgfinal && perKg) perKg.textContent = perKgfinal;
+      // 4. Update Weight / Unit Price Info
+      if (weightText && variant.dataset.unit) {
+        weightText.textContent = variant.dataset.unit;
+      }
+
+      // 5. Update Inventory (Trust Text)
+      if (inventoryText && variant.dataset.inventory) {
+        inventoryText.textContent = `Only ${variant.dataset.inventory} Left`;
+      }
+
+      // 6. Update Image (if variant has a specific image)
+      if (primaryImg && variant.dataset.image && variant.dataset.image.indexOf('no-image') === -1) {
+        primaryImg.src = variant.dataset.image;
+      }
     });
   });
-  }
+}
 </script>
 
 

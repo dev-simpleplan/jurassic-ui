@@ -287,6 +287,16 @@
       });
     }
 
+        document.addEventListener('cart:updated', async (e) => {
+  const cart = e.detail;
+
+  // 🔁 Always re-render totals from ONE place
+  await loadCartItems();
+
+  // 🔁 Sync all discount pills everywhere
+  document.querySelectorAll('discount-field')
+    .forEach(df => df.updateFromCart(cart));
+});
 
   
     (function () {
@@ -343,6 +353,9 @@
       try {
         const res = await fetch(window.Shopify.routes.root + 'cart.js');
         const cart = await res.json();
+        // 🔁 Sync discount pills whenever cart loads
+        document.querySelectorAll('discount-field')
+          .forEach(df => df.updateFromCart(cart));
         console.log('Cart Data:', cart);
 
         if (!cartItemsContainer) return;
@@ -642,6 +655,8 @@
 
     loadCartItems();
     attachAddToCartListeners();
+    
+    
     // ✅ Expose reinitialization function globally
     window.initializeCartFunction = async function (cartData) {
       const cart = cartData || await fetch('/cart.js').then(r => r.json());
@@ -652,6 +667,8 @@
       document.querySelectorAll('discount-field')
         .forEach(df => df.updateFromCart(cart));
     };
+
+    window.initializeCartFunction();
 
   });
 </script>

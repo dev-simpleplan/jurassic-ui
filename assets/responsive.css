@@ -688,17 +688,17 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     left: 0;
     right: 0;
     margin: auto;
-    background-color: #cbc69e;
+    background-color: #FCF9F5;
   }
   .jw-carousel .slick-prev {
     margin-left: calc(50% - 64px);
     margin-right: auto;
-    transform: rotate(-90deg);
+    transform: rotate(-180deg);
   }
   .jw-carousel .slick-next {
     margin-right: calc(50% - 64px);
     margin-left: auto;
-    transform: rotate(90deg);
+    transform: rotate(0deg);
   }
   .jurassic-way {
     padding-top: 0;
@@ -877,6 +877,10 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .top-bar-in .tb-rating {
     display: none;
+  }
+  .pro-img {
+    position: relative;
+    top: 0;
   }
 }
 
@@ -1310,5 +1314,43 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     max-height: 260px;
     overflow: hidden;
     overflow-y: auto;
+  }
+  .title-review .tr-testimonial {
+    display: none;
+  }
+  .pro-desp form.shopify-product-form {
+    display: flex;
+    flex-direction: column;
+  }
+  form.shopify-product-form .product-info-block {
+    order: 1;
+  }
+  form.shopify-product-form .product-offers {
+    order: 2;
+  }
+  .product-accordion {
+      margin-top: 35px;
+  }
+  .pa-seasons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  .pa-seasons .pas-month {
+    flex-wrap: wrap;
+    gap: 10px 4px;
+  }
+  .tp-wrap {
+    padding-left: 0;
+  }
+  .taste-pill {
+    width: 30px;
+  }
+  .facts-data .factsdata-item {
+    width: 85%;
+    margin: 0 auto;
+  }
+  .wpl-wrap .wplw-bottom {
+    width: 100%;
   }
 }
