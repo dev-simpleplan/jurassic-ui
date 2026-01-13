@@ -32,8 +32,32 @@
       ],
       "settings": {}
     },
+    "spacer_EEDMUx": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 80
+      }
+    },
+    "related_blogs_NCriJP": {
+      "type": "related-blogs",
+      "name": "Related blogs",
+      "settings": {
+        "head": "Featured Blogs"
+      }
+    },
+    "spacer_iAatwR": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
+    }
   },
   "order": [
-    "article"
+    "article",
+    "spacer_EEDMUx",
+    "related_blogs_NCriJP",
+    "spacer_iAatwR"
   ]
 }
