@@ -30,7 +30,15 @@
         "image",
         "content"
       ],
-      "settings": {}
+      "settings": {
+        "subscribe_heading": "Untamed. Exotic. Organic",
+        "subscribe_subheading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum ultrices quis malesuada aliquam ac at.",
+        "form_heading": "stay updated!",
+        "form_subheading": "Subscribe to our newsletter for the latest updates, insights, and exclusive content.",
+        "productbox_heading": "Cocnut is a part of our discovery box",
+        "productbox_para": "New to Jurassic? This Discovery Box is your perfect start.",
+        "product": "lala-box-test-product"
+      }
     },
     "spacer_EEDMUx": {
       "type": "spacer",
