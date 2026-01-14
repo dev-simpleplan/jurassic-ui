@@ -11,7 +11,9 @@
                             <div class="other-details">
                                 {% assign date = article.published_at | time_tag: format: 'date' %}
                                 <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-                                <p>{{ article.metafields.custom.read_time }} min. reads</p>
+                                {% if article.metafields.custom.read_time != blank %}
+                                    <p>{{ article.metafields.custom.read_time }} Min Read</p>
+                                {% endif %}
                             </div>
                         </div>
                         {% when 'img_block' %}
@@ -32,26 +34,96 @@
                             </div>
                             <div class="bcw-share">
                                 <div class="article-share">
-                                    <p>Share</p>
-                                    <div class="share-wrap">
-                                        <a href="javascript:void(0)" class="share-copy">
-                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="">
-                                        </a>
-                                        <a target="_blank" href="//www.facebook.com/sharer.php?u={{ shop.url | append: article.url}}">
-                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="">
-                                        </a>
-                                        <a
-                                            target="_blank"
-                                            href="#!"
-                                            id="whatsapp-share">
-                                            <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="">
-                                        </a>
-                                    </div>
+                                  <p>Share</p>
+                                  <div class="share-wrap">
+                                    {% comment %} Added 'share-copy' class and a data attribute for fallback {% endcomment %}
+                                    <a href="javascript:void(0)" class="share-copy" data-url="{{ shop.url | append: article.url }}">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="Copy Link">
+                                    </a>
+                                    
+                                    {% comment %} Improved Facebook Link {% endcomment %}
+                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url | url_encode }}">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="Facebook">
+                                    </a>
+
+                                    {% comment %} Changed ID to a CLASS 'whatsapp-share' {% endcomment %}
+                                    <a target="_blank" href="#!" class="whatsapp-share">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="WhatsApp">
+                                    </a>
+                                  </div>
                                 </div>
                             </div>
                         </div>
                         <div class="bcw-right">
+                            <div class="bcw-subscribe-box">
+                                <div class="bsb-subs-wrap">
+                                    <div class="bsbsubs-top">
+                                        <div class="bsb-logo">
+                                            <img src="{{ section.settings.subscribe_logo |  img_url: 'master'  }}" alt="">
+                                        </div>
+                                        <div class="bsb-data">
+                                            <h3>{{ section.settings.subscribe_heading }}</h3>
+                                            <p>{{ section.settings.subscribe_subheading }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="bsbsubs-bottom">
+                                        <div class="form-text">
+                                            <p class="form-heading">{{ section.settings.form_heading }}</p>
+                                            <p class="form-subheading">{{ section.settings.form_subheading }}</p>
+                                        </div>
+                                        <div class="nl-form">
+                                            {% form 'customer' %}
+                                            <div class="form-in">
+                                                <div class="email_input">
+                                                <input
+                                                    type="email"
+                                                    name="contact[email]"
+                                                    class=""
+                                                    placeholder="Enter Email Address"
+                                                    required>
+                                                </div>
+                                                <div class="submit_btn">
+                                                <input
+                                                    type="submit"
+                                                    class="custom-btn black"
+                                                    value="Subscribe">
+                                                </div>
+                                            </div>
+                                            {% if form.posted_successfully? %}
+                                                <script>
+                                                window.location.href = '/pages/thank-you';
+                                                </script>
+                                            {% elsif form.errors %}
+                                                <div class="form-error">
+                                                <p>There was an error submitting the form. Please check your email address and try again.</p>
+                                                </div>
+                                            {% endif %}
+                                            {% endform %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bcw-share">
+                                <div class="article-share">
+                                  <p>Share</p>
+                                  <div class="share-wrap">
+                                    {% comment %} Added 'share-copy' class and a data attribute for fallback {% endcomment %}
+                                    <a href="javascript:void(0)" class="share-copy" data-url="{{ shop.url | append: article.url }}">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="Copy Link">
+                                    </a>
+                                    
+                                    {% comment %} Improved Facebook Link {% endcomment %}
+                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url | url_encode }}">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="Facebook">
+                                    </a>
 
+                                    {% comment %} Changed ID to a CLASS 'whatsapp-share' {% endcomment %}
+                                    <a target="_blank" href="#!" class="whatsapp-share">
+                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="WhatsApp">
+                                    </a>
+                                  </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -70,7 +142,37 @@
 {% schema %}
   {
     "name": "Article",
-    "settings": [],
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "subscribe_logo",
+            "label": "Logo Image"
+        },
+        {
+            "type": "text",
+            "id": "subscribe_heading",
+            "label": "Subscribe heading",
+            "default": "Untamed. Exotic. Organic"
+        },
+        {
+            "type": "text",
+            "id": "subscribe_subheading",
+            "label": "Subscribe Sub heading",
+            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum ultrices quis malesuada aliquam ac at. "
+        },
+        {
+            "type": "text",
+            "id": "form_heading",
+            "label": "Form heading",
+            "default": "stay updated!"
+        },
+        {
+            "type": "text",
+            "id": "form_subheading",
+            "label": "Form Sub Heading",
+            "default": "Subscribe to our newsletter for the latest updates, insights, and exclusive content."
+        }
+    ],
     "blocks": [
       {
         "name": "Heading Block",
@@ -112,39 +214,51 @@
 </script>
 
 <script>
-  document.getElementById('whatsapp-share').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default link behavior
-    const pageUrl = encodeURIComponent(window.location.href); // Encode the page URL
-    const shareText = encodeURIComponent("Check out this page: "); // Your custom message
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${pageUrl}`;
-    window.open(whatsappUrl, '_blank'); // Open WhatsApp share link in a new tab
-  });
-  document.getElementById('whatsapp-share1').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default link behavior
-    const pageUrl = encodeURIComponent(window.location.href); // Encode the page URL
-    const shareText = encodeURIComponent("Check out this page: "); // Your custom message
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${pageUrl}`;
-    window.open(whatsappUrl, '_blank'); // Open WhatsApp share link in a new tab
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- 1. WHATSAPP SHARE LOGIC ---
+  // Use querySelectorAll to find all buttons with the class
+  document.querySelectorAll('.whatsapp-share').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const pageUrl = encodeURIComponent(window.location.href);
+      const shareText = encodeURIComponent("Check out this article: ");
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${pageUrl}`;
+      window.open(whatsappUrl, '_blank');
+    });
   });
 
-  // Select all buttons with the “share-btn” class
+  // --- 2. COPY / NATIVE SHARE LOGIC ---
   const shareButtons = document.querySelectorAll(".share-copy");
 
-  // Loop over each button and attach a click handler
   shareButtons.forEach(button => {
-  button.addEventListener("click", async () => {
-    // Always grab the current page URL:
-    const shareData = {
-      url:   window.location.href
-    };
+    button.addEventListener("click", async () => {
+      const urlToShare = window.location.href;
 
-    try {
-      await navigator.share(shareData);
-    } catch (err) {
-      console.error(err);
-    }
+      // Try Mobile Native Share first
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: urlToShare
+          });
+        } catch (err) {
+          console.log("Share cancelled or failed");
+        }
+      } else {
+        // Fallback: Copy to Clipboard for Desktop
+        navigator.clipboard.writeText(urlToShare).then(() => {
+          alert("Link copied to clipboard!");
+          
+          // Optional: Change icon or text temporarily
+          const originalText = button.innerHTML;
+          button.style.color = "#28a745"; // Success green
+          setTimeout(() => { button.style.color = ""; }, 2000);
+        }).catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+      }
+    });
   });
-  });
-
-
+});
 </script>

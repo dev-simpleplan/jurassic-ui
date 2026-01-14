@@ -49,6 +49,9 @@
                             <div class="swiper-wrapper">
                               <!-- Slides dynamically inserted here -->
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -59,17 +62,22 @@
                     <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/World.svg?v=1761908094" alt="">
                 </div>
                 <div class="map-points">
-                {% for block in section.blocks %}
-                    <div class="map-items{% if forloop.first %} active{% endif %}" style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%" data-collection-handle="{{ block.settings.collection.handle }}">
-                        <div class="dot" data-collection-handle="{{ block.settings.collection.handle }}"></div>
+                  {% for block in section.blocks %}
+                    {% comment %} Normalize the name for matching {% endcomment %}
+                    {% assign country_slug = block.settings.country_name | downcase | escape %}
+                    
+                    <div class="map-items{% if forloop.first %} active{% endif %}" 
+                        style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%" 
+                        data-country="{{ country_slug }}"> {% comment %} THIS LINE IS CRITICAL {% endcomment %}
+                        
+                        <div class="dot"></div>
                         <div class="mapitem-image">
                             <img class="icon collection-img"
-                            src="{{ block.settings.fruit_image | img_url: 'master' }}"
-                            alt="{{ block.settings.fruit_image.alt }}"
-                            style="" />
+                                src="{{ block.settings.fruit_image | img_url: 'master' }}"
+                                alt="{{ block.settings.country_name }}" />
                         </div>
                     </div>
-                {% endfor %}
+                  {% endfor %}
                 </div>
             </div>
             </div>
@@ -77,132 +85,125 @@
     </div>
 </section>
 
-{% comment %} <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Helper to build product slide (customize contents as needed)
-  async function renderProductCard(product) {
-    const mapWrapper = document.querySelector('.worldMap');
-    try{
-        const response = await fetch('/?section_id=worldMap');
-        const text = await response.text();
-        const html = new DOMParser().parseFromString(text, 'text/html');
-
-        if(!mapWrapper) return;
-
-        console.log(html);
-    }
-    catch(error){
-        console.error(error);
-    }
-  }
-
-  renderProductCard();
-});
-</script> {% endcomment %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Ensure productsData is always an object
-  window.collectionProductsData = window.collectionProductsData || {};
+// 1. GLOBAL SCOPE VARIABLES & UTILITIES
+window.locationProductsData = window.locationProductsData || {};
+let swiperInstance = null; // Renamed to avoid conflicts with the Swiper library name
 
-  // Helper to render a product card (JS conditional for BEST SELLER)
-  function renderProductCard(product) {
-    return `
-      <a href="${product.product_url}" class="product-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="product-image fc_top" style="position:relative;">
-          <img src="${product.image_url}" alt="${product.title}" style="width:100%;">
+// 2. PRODUCT DATA PRELOAD
+{% for product in collections.all.products %}
+  {% assign country_obj = product.metafields.custom.country_of_origin.value %}
+  {% assign country_name = country_obj.country_name | default: country_obj.name | default: country_obj | downcase | strip %}
+  
+  {% if country_name != blank %}
+    if (!window.locationProductsData["{{ country_name }}"]) {
+      window.locationProductsData["{{ country_name }}"] = [];
+    }
+    window.locationProductsData["{{ country_name }}"].push({
+      "id": {{ product.selected_or_first_available_variant.id | json }},
+      "title": {{ product.title | json }},
+      "image_url": {{ product.featured_image | img_url: 'medium' | json }},
+      "product_url": {{ product.url | json }},
+      "tags": {{ product.tags | json }}
+    });
+  {% endif %}
+{% endfor %}
+
+// 3. UI RENDER FUNCTIONS
+function renderProductCard(product) {
+  return `
+    <div class="recommended-item">
+      <a href="${product.product_url}">
+        <div class="ri-img">
+          <img src="${product.image_url}" alt="${product.title}" class="product-card__image">
           ${product.tags && product.tags.includes('Best Seller') ? `
-            <div class="fc_bestsell_tags" style="position:absolute;top:15px;right:0px;">
+            <div class="fc_bestsell_tags" style="position:absolute;top:15px;right:0px;z-index:9">
               <span>Bestseller</span>
             </div>
           ` : ''}
         </div>
-        <div class="product-details" style="padding:10px;border:1px solid #1a1a1a;border-top:transparent;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
-          <h3 style="margin:0;font-size:1rem;">${product.title}</h3>
-          <p class="price" style="margin:0;color:#222;font-weight:bold;">${product.price}</p>
-        </div>
       </a>
-    `;
-  }
+      <div class="ri-txt">
+        <p class="rit-title">${product.title}</p>
+      </div>
+      <div class="ri-form">
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="${product.id}">
+          <input type="hidden" name="quantity" value="1">
+          <div class="fc_add_to_cart">
+            <button type="submit" class="add-to-cart">Add to Cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+}
 
-  var swiper;
-
-  function initializeSwiper() {
-    swiper = new Swiper(".mySwiper", {
-      effect: "cards",
-      grabCursor: true,
-      slidesPerView: 'auto'
-    });
-  }
-
-  function triggerFadeOnSwiper() {
-    var swiperEl = document.querySelector('.mySwiper');
-    swiperEl.classList.remove('swiper-fade-in'); // Reset
-    swiperEl.classList.add('swiper-fade-init');
-    setTimeout(function() {
-      swiperEl.classList.add('swiper-fade-in');
-    }, 20); // Short delay to allow adding the class
-    setTimeout(function() {
-      swiperEl.classList.remove('swiper-fade-init');
-      swiperEl.classList.remove('swiper-fade-in');
-    }, 1200); // Remove the classes after 1.2 sec
-  }
-
-  function fetchProductsAndUpdateSwiper(collectionHandle) {
-    var products = (window.collectionProductsData && window.collectionProductsData[collectionHandle]) ? window.collectionProductsData[collectionHandle] : [];
-    if (swiper) {
-      swiper.destroy(true, true);
-      swiper = null;
+function initializeSwiper() {
+  swiperInstance = new Swiper(".mySwiper", {
+    effect: "cards",
+    grabCursor: true,
+    loop: true,
+    slidesPerView: 'auto',
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev"
     }
-    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
-    swiperWrapper.innerHTML = "";
+  });
+}
 
-    if (products.length === 0) {
-      swiperWrapper.innerHTML = '<p style="padding:20px">No products found in this collection.</p>';
-    } else {
-      products.forEach(function(product) {
-        var slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        slide.innerHTML = renderProductCard(product);
-        swiperWrapper.appendChild(slide);
-      });
-    }
-    initializeSwiper();
-    triggerFadeOnSwiper();
-  }
+function fetchProductsByCountry(countryName) {
+  const name = countryName.toLowerCase();
+  const products = window.locationProductsData[name] || [];
+  const swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
+  
+  if (!swiperWrapper) return;
+  
+  swiperWrapper.innerHTML = "";
 
-  // Grab first collection handle safely
-  var firstCollection = (typeof window.collectionProductsData === 'object' && window.collectionProductsData !== null)
-    ? Object.keys(window.collectionProductsData)[0]
-    : null;
-
-  if (firstCollection) {
-    fetchProductsAndUpdateSwiper(firstCollection);
+  if (products.length === 0) {
+    swiperWrapper.innerHTML = `<p style="padding:20px">No products found from <b>${countryName}</b></p>`;
   } else {
-    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
-    swiperWrapper.innerHTML = '<p style="padding:20px">No collections configured yet.</p>';
+    products.forEach(product => {
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.innerHTML = renderProductCard(product);
+      swiperWrapper.appendChild(slide);
+    });
   }
 
-  // Map points click event
-  var mapPointsEl = document.querySelector('.map-points');
-  if (mapPointsEl) {
-    mapPointsEl.addEventListener('click', function(e) {
-      var clicked = null;
-      if (e.target.classList.contains('dot') || e.target.classList.contains('collection-img')) {
-        clicked = e.target.closest('.map-items');
-      }
-      if (!clicked) return;
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+  }
+  initializeSwiper();
+}
 
-      var handle = clicked.dataset.collectionHandle;
-      if (handle) {
-        fetchProductsAndUpdateSwiper(handle);
-      }
+// 4. EVENT LISTENERS
+document.addEventListener('DOMContentLoaded', function () {
+  // Map Points Click Listener
+  const mapPoints = document.querySelector('.map-points');
+  if (mapPoints) {
+    mapPoints.addEventListener('click', function(e) {
+      const item = e.target.closest('.map-items');
+      if (!item) return;
 
-      document.querySelectorAll('.map-points .map-items').forEach(function(item) {
-        item.classList.remove('active');
-      });
-      clicked.classList.add('active');
+      const country = item.getAttribute('data-country');
+      if (country) {
+        fetchProductsByCountry(country);
+        
+        // Active State UI
+        document.querySelectorAll('.map-items').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      }
     });
+  }
+
+  // Load the first country from the blocks on initial load
+  const firstItem = document.querySelector('.map-items');
+  if (firstItem) {
+    const initialCountry = firstItem.getAttribute('data-country');
+    fetchProductsByCountry(initialCountry);
   }
 });
 </script>
@@ -229,13 +230,14 @@ document.addEventListener('DOMContentLoaded', function () {
   ],
   "blocks": [
     {
-      "type": "collection_block",
-      "name": "Collection",
+      "type": "location_point",
+      "name": "Map Location",
       "settings": [
         {
-          "type": "collection",
-          "id": "collection",
-          "label": "Select collection"
+          "type": "text",
+          "id": "country_name",
+          "label": "Country Name",
+          "info": "Must match the 'Country Of Origin' metafield value exactly (e.g. Thailand)"
         },
         {
           "type": "image_picker",

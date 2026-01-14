@@ -10,11 +10,9 @@
             <img src="{{ 'placeholder.jpg' | asset_url }}" class="img">
             {% endif %}
         </div>
-
-        {% assign raw_text = article.content | default: article.excerpt | strip_html %}
-        {% assign words = raw_text | split: " " | size %}
-        {% assign read_time = words | divided_by: 200 | ceil %}
-        <p class="read-time-tag">{{ read_time }} Min Read</p>
+        {% if article.metafields.custom.read_time != blank %}
+            <p class="read-time-tag">{{ article.metafields.custom.read_time }} Min Read</p>
+        {% endif %}
     </div>
 
     <div class="bc-content">

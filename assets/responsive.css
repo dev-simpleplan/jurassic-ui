@@ -12,6 +12,10 @@
   .mic-data .micd-icon {
     width: 42px;
   }
+  .jw-carousel .slick-prev,
+  .jw-carousel .slick-next {
+    left: calc(100% - 51.85%);
+  }
 }
 
 @media (max-width: 1300px) {
@@ -257,6 +261,9 @@
   }
   .hnav-menu>ul {
     gap: 14px;
+  }
+  .jw-carousel .slick-prev, .jw-carousel .slick-next {
+      left: calc(100% - 52.5%);
   }
 }
 
@@ -689,6 +696,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     right: 0;
     margin: auto;
     background-color: #FCF9F5;
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Vector_-_2026-01-13T160723.378.svg?v=1768300665);
   }
   .jw-carousel .slick-prev {
     margin-left: calc(50% - 64px);

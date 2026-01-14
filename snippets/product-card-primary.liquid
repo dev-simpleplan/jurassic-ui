@@ -180,20 +180,17 @@
               {% endif %}
 
               <p class="fc_weight">
-                {% if current_variant.unit_price_measurement
-                  and current_variant.unit_price_measurement.reference_unit != 'kg' %}
-                  
-                  {{ current_variant.unit_price | money }} /
-                  {{ current_variant.unit_price_measurement.reference_unit }}
-
-                {% elsif current_variant.unit_price_measurement == blank %}
-                  
-                  {{ current_variant.price | money }} / piece
-
+                {% if current_variant.unit_price_measurement %}
+                  {% comment %} 
+                    If Shopify has unit price data, use the official unit_price.
+                    This handles kg, g, ml, etc., automatically.
+                  {% endcomment %}
+                  {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
                 {% else %}
-                  
-                  {{ current_variant.price | money }} / piece
-
+                  {% comment %} 
+                    Fallback if no unit price is defined in Shopify Admin 
+                  {% endcomment %}
+                  {{ current_variant.price | money }} / unit
                 {% endif %}
               </p>
 
@@ -313,6 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const plus = card.querySelector('.add_product');
   const minus = card.querySelector('.remove_product');
   const qtyEl = card.querySelector('.qty-value');
+
+  const weightText = card.querySelector(".fc_weight");
+if (weightText && variant.dataset.unit) {
+  weightText.textContent = variant.dataset.unit;
+}
 
   let qty = parseInt(qtyEl.textContent, 10) || 1;
   let lineKey = null;

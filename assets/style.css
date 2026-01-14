@@ -1459,7 +1459,7 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 }
 .numb_in .numbold {
     font-family: var(--scale);
-    font-size: 46px;
+    font-size: 60px;
     font-weight: 400;
     color: var(--off-white);
     display: flex;
@@ -2406,6 +2406,7 @@ footer::before {
 /* About Page CSS */
 .about-banner {
     position: relative;
+    margin-top: 100px;
 }
 .about-banner .banner-image {
     height: 70vh;
@@ -2417,7 +2418,7 @@ footer::before {
 }
 .about-banner .banner-bottom {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     width: 100%;
     height: 100px;
@@ -2680,6 +2681,7 @@ footer::before {
     width: 100%;
     position: relative;
     z-index: 2;
+    padding: 0 40px;
 }
 .jw-head .jw-in {
     display: flex;
@@ -2782,7 +2784,7 @@ footer::before {
 .jw-carousel .slick-next {
     position: absolute;
     bottom: 150px;
-    left: calc(100% - 51.8%);
+    left: calc(100% - 51.4%);
     width: 55px;
     height: 55px;
     border: none;
@@ -2795,7 +2797,7 @@ footer::before {
     background-repeat: no-repeat;
     background-size: 16px;
     background-position: center;
-    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Vector_-_2026-01-13T160723.378.svg?v=1768300665);
+    background-image: url(https://cdn.shopify.com/s/files/1/0752/8015/4881/files/arrow-top.svg?v=1761821335);
     z-index: 2;
     transition: 0.3s ease all;
     cursor: pointer;
@@ -2851,7 +2853,7 @@ footer::before {
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
-    gap: 30px;
+    gap: 50px;
 }
 .sustain-colm .numb_in {
     display: flex;
@@ -2893,7 +2895,8 @@ footer::before {
 .wmap-right .map-image {
     width: 100%;
 }
-.map-image svg {
+.map-image svg,
+.map-image img {
     width: 100%;
 }
 .wmap-right .map-points {
@@ -2906,6 +2909,9 @@ footer::before {
 }
 .map-points .map-items {
     position: absolute;
+}
+.map-points .map-items.is-selected {
+    background: transparent;
 }
 .map-items .mapitem-image {
     /* visibility: hidden;
@@ -2972,6 +2978,7 @@ footer::before {
     /* Adjust as desired: 300px–450px is typical */
     width: 100%;
     margin: 0 auto;
+    padding-bottom: 20px;
     /* Center the slider horizontally */
 }
 .swiper-slide {
@@ -2989,6 +2996,16 @@ footer::before {
 }
 .swiper-fade-init.swiper-fade-in {
     opacity: 0;
+}
+.cards-slider .swiper-button-next,
+.cards-slider .swiper-button-prev {
+  color: #000;
+  bottom: -30px;
+  top: auto;
+}
+.cards-slider .swiper-button-next::after,
+.cards-slider .swiper-button-prev::after {
+  font-size: 20px;
 }
 .imgcroll-in {
     display: grid;
@@ -4331,6 +4348,92 @@ section.imagescroll {
 .bcw-content p span img {
     width: 100%;
     height: auto;
+}
+.bcw-share {
+    margin-top: 20px;
+}
+.bcw-share .article-share {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.article-share p {
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1A1A1A;
+}
+.article-share .share-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+}
+.bcw-subscribe-box {
+    background-color: #DBD7C8;
+    padding: 24px;
+}
+.bsb-subs-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+.bsbsubs-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.bsb-logo img {
+    width: 180px;
+}
+.bsb-data {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.bsb-data h3 {
+    font-weight: 300;
+    font-size: 30px;
+    letter-spacing: -0.32px;
+    text-transform: capitalize;
+}
+.bsb-data p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #151515;
+    max-width: 38ch;
+}
+.bsbsubs-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.bsbsubs-bottom .form-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.form-text .form-heading {
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1A1A1A;
+}
+.form-text .form-subheading {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0;
+}
+.bsbsubs-bottom .nl-form .form-in {
+    grid-template-columns: 6fr 5fr;
+}
+.bsbsubs-bottom .form-in .email_input input {
+    background-color: #fff;
+    border: none;
 }
 
 /* Blog Page CSS Ends */
