@@ -197,6 +197,42 @@
     "map": {
       "type": "map",
       "blocks": {
+        "location_point_Ch6hJe": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Kenya",
+            "fruit_image": "shopify://shop_images/fruit-appear-1.png",
+            "top_position": 46,
+            "left_position": 56
+          }
+        },
+        "location_point_hzKtzU": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Brazil",
+            "fruit_image": "shopify://shop_images/fruit-appear-3.png",
+            "top_position": 52,
+            "left_position": 31
+          }
+        },
+        "location_point_PWEXdc": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Canada",
+            "fruit_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+            "top_position": 23,
+            "left_position": 13
+          }
+        },
+        "location_point_UQR7fA": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "India",
+            "fruit_image": "shopify://shop_images/Date-Segae-Saudi-Arabia-JurassicFruit_2524b40b-a724-4aae-9ce4-f73c7ed8ba5e.jpg",
+            "top_position": 39,
+            "left_position": 67
+          }
+        },
         "location_point_cPGTCg": {
           "type": "location_point",
           "settings": {
@@ -226,6 +262,10 @@
         }
       },
       "block_order": [
+        "location_point_Ch6hJe",
+        "location_point_hzKtzU",
+        "location_point_PWEXdc",
+        "location_point_UQR7fA",
         "location_point_cPGTCg",
         "location_point_iwjRQX",
         "location_point_LMQBiB"
