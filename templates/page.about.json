@@ -197,28 +197,78 @@
     "map": {
       "type": "map",
       "blocks": {
-        "collection_block_EQmLfF": {
-          "type": "collection_block",
+        "location_point_Ch6hJe": {
+          "type": "location_point",
           "settings": {
-            "collection": "fruit",
-            "fruit_image": "shopify://shop_images/fruit-appear-2.png",
-            "top_position": 34,
-            "left_position": 71
+            "country_name": "Kenya",
+            "fruit_image": "shopify://shop_images/fruit-appear-1.png",
+            "top_position": 46,
+            "left_position": 56
           }
         },
-        "collection_block_Q4AKGg": {
-          "type": "collection_block",
+        "location_point_hzKtzU": {
+          "type": "location_point",
           "settings": {
-            "collection": "fine-food",
+            "country_name": "Brazil",
+            "fruit_image": "shopify://shop_images/fruit-appear-3.png",
+            "top_position": 52,
+            "left_position": 31
+          }
+        },
+        "location_point_PWEXdc": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Canada",
+            "fruit_image": "shopify://shop_images/u2434633728_generate_4_images_of_coconut_from_four_different__8c693bd1-f484-4a76-b451-8f96a1e59e35_3_4.png",
+            "top_position": 23,
+            "left_position": 13
+          }
+        },
+        "location_point_UQR7fA": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "India",
+            "fruit_image": "shopify://shop_images/Date-Segae-Saudi-Arabia-JurassicFruit_2524b40b-a724-4aae-9ce4-f73c7ed8ba5e.jpg",
+            "top_position": 39,
+            "left_position": 67
+          }
+        },
+        "location_point_cPGTCg": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Thailand",
+            "fruit_image": "shopify://shop_images/fruit-appear-2.png",
+            "top_position": 42,
+            "left_position": 74
+          }
+        },
+        "location_point_iwjRQX": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "France",
+            "fruit_image": "shopify://shop_images/fruit-appear-4.png",
+            "top_position": 31,
+            "left_position": 46
+          }
+        },
+        "location_point_LMQBiB": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Indonesia",
             "fruit_image": "shopify://shop_images/fruit-appear-1.png",
-            "top_position": 27,
-            "left_position": 50
+            "top_position": 46,
+            "left_position": 77
           }
         }
       },
       "block_order": [
-        "collection_block_EQmLfF",
-        "collection_block_Q4AKGg"
+        "location_point_Ch6hJe",
+        "location_point_hzKtzU",
+        "location_point_PWEXdc",
+        "location_point_UQR7fA",
+        "location_point_cPGTCg",
+        "location_point_iwjRQX",
+        "location_point_LMQBiB"
       ],
       "settings": {
         "heading": "A World of Flavor in Your Hands",
