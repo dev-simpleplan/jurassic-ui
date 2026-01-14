@@ -55,76 +55,101 @@
                             </div>
                         </div>
                         <div class="bcw-right">
-                            <div class="bcw-subscribe-box">
-                                <div class="bsb-subs-wrap">
-                                    <div class="bsbsubs-top">
-                                        <div class="bsb-logo">
-                                            <img src="{{ section.settings.subscribe_logo |  img_url: 'master'  }}" alt="">
-                                        </div>
-                                        <div class="bsb-data">
-                                            <h3>{{ section.settings.subscribe_heading }}</h3>
-                                            <p>{{ section.settings.subscribe_subheading }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="bsbsubs-bottom">
-                                        <div class="form-text">
-                                            <p class="form-heading">{{ section.settings.form_heading }}</p>
-                                            <p class="form-subheading">{{ section.settings.form_subheading }}</p>
-                                        </div>
-                                        <div class="nl-form">
-                                            {% form 'customer' %}
-                                            <div class="form-in">
-                                                <div class="email_input">
-                                                <input
-                                                    type="email"
-                                                    name="contact[email]"
-                                                    class=""
-                                                    placeholder="Enter Email Address"
-                                                    required>
-                                                </div>
-                                                <div class="submit_btn">
-                                                <input
-                                                    type="submit"
-                                                    class="custom-btn black"
-                                                    value="Subscribe">
-                                                </div>
+                            <div class="bcwright-in">
+                                <div class="bcw-subscribe-box">
+                                    <div class="bsb-subs-wrap">
+                                        <div class="bsbsubs-top">
+                                            <div class="bsb-logo">
+                                                <img src="{{ section.settings.subscribe_logo |  img_url: 'master'  }}" alt="">
                                             </div>
-                                            {% if form.posted_successfully? %}
-                                                <script>
-                                                window.location.href = '/pages/thank-you';
-                                                </script>
-                                            {% elsif form.errors %}
-                                                <div class="form-error">
-                                                <p>There was an error submitting the form. Please check your email address and try again.</p>
+                                            <div class="bsb-data">
+                                                <h3>{{ section.settings.subscribe_heading }}</h3>
+                                                <p>{{ section.settings.subscribe_subheading }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="bsbsubs-bottom">
+                                            <div class="form-text">
+                                                <p class="form-heading">{{ section.settings.form_heading }}</p>
+                                                <p class="form-subheading">{{ section.settings.form_subheading }}</p>
+                                            </div>
+                                            <div class="nl-form">
+                                                {% form 'customer' %}
+                                                <div class="form-in">
+                                                    <div class="email_input">
+                                                    <input
+                                                        type="email"
+                                                        name="contact[email]"
+                                                        class=""
+                                                        placeholder="Enter Email Address"
+                                                        required>
+                                                    </div>
+                                                    <div class="submit_btn">
+                                                    <input
+                                                        type="submit"
+                                                        class="custom-btn black"
+                                                        value="Subscribe">
+                                                    </div>
                                                 </div>
-                                            {% endif %}
-                                            {% endform %}
+                                                {% if form.posted_successfully? %}
+                                                    <script>
+                                                    window.location.href = '/pages/thank-you';
+                                                    </script>
+                                                {% elsif form.errors %}
+                                                    <div class="form-error">
+                                                    <p>There was an error submitting the form. Please check your email address and try again.</p>
+                                                    </div>
+                                                {% endif %}
+                                                {% endform %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="bcw-share">
-                                <div class="article-share">
-                                  <p>Share</p>
-                                  <div class="share-wrap">
-                                    {% comment %} Added 'share-copy' class and a data attribute for fallback {% endcomment %}
-                                    <a href="javascript:void(0)" class="share-copy" data-url="{{ shop.url | append: article.url }}">
-                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="Copy Link">
-                                    </a>
-                                    
-                                    {% comment %} Improved Facebook Link {% endcomment %}
-                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url | url_encode }}">
-                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="Facebook">
-                                    </a>
+                                <div class="bcw-share">
+                                    <div class="article-share">
+                                      <p>Share</p>
+                                      <div class="share-wrap">
+                                        {% comment %} Added 'share-copy' class and a data attribute for fallback {% endcomment %}
+                                        <a href="javascript:void(0)" class="share-copy" data-url="{{ shop.url | append: article.url }}">
+                                          <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/mdi_share.svg?v=1748847807" alt="Copy Link">
+                                        </a>
+                                        
+                                        {% comment %} Improved Facebook Link {% endcomment %}
+                                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url | url_encode }}">
+                                          <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/ic_sharp-facebook.svg?v=1748847807" alt="Facebook">
+                                        </a>
 
-                                    {% comment %} Changed ID to a CLASS 'whatsapp-share' {% endcomment %}
-                                    <a target="_blank" href="#!" class="whatsapp-share">
-                                      <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="WhatsApp">
-                                    </a>
-                                  </div>
+                                        {% comment %} Changed ID to a CLASS 'whatsapp-share' {% endcomment %}
+                                        <a target="_blank" href="#!" class="whatsapp-share">
+                                          <img src="https://cdn.shopify.com/s/files/1/0754/5539/8146/files/formkit_whatsapp.svg?v=1748847806" alt="WhatsApp">
+                                        </a>
+                                      </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="bcw-product-box">
+                                    <div class="bcw-product-wrap">
+                                        <div class="bpw-top">
+                                            <div class="bpwt-heading">
+                                                <h3>{{ section.settings.productbox_heading }}</h3>
+                                                <span>
+                                                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Group_66.svg?v=1765202267" alt="">
+                                                </span>
+                                            </div>
+                                            <div class="bpwt-para">
+                                              <p>{{ section.settings.productbox_para }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="bpw-bottom">
+                                            {% assign product = section.settings.product %}
+                                            {% if product == blank %}
+                                                <p class="noproducts">No product selected.</p>
+                                            {% else %}
+                                                {% render 'product-card-primary', product: product %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
                     </div>
 
                     {% when 'subscribe_block' %}
@@ -171,7 +196,24 @@
             "id": "form_subheading",
             "label": "Form Sub Heading",
             "default": "Subscribe to our newsletter for the latest updates, insights, and exclusive content."
-        }
+        },
+        {
+            "type": "text",
+            "id": "productbox_heading",
+            "label": "ProductBox heading",
+            "default": "Cocnut is a part of our discovery box"
+        },
+        {
+            "type": "text",
+            "id": "productbox_para",
+            "label": "ProductBox Sub heading",
+            "default": "New to Jurassic? This Discovery Box is your perfect start."
+        },
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Select product"
+        },
     ],
     "blocks": [
       {

@@ -100,28 +100,65 @@ let swiperInstance = null; // Renamed to avoid conflicts with the Swiper library
     if (!window.locationProductsData["{{ country_name }}"]) {
       window.locationProductsData["{{ country_name }}"] = [];
     }
+
+    {% comment %} Pre-verify certificates to avoid empty arrays {% endcomment %}
+    {% assign has_certs = false %}
+    {% if product.metafields.custom.certificate != blank %}
+      {% assign has_certs = true %}
+    {% endif %}
+
     window.locationProductsData["{{ country_name }}"].push({
       "id": {{ product.selected_or_first_available_variant.id | json }},
       "title": {{ product.title | json }},
       "image_url": {{ product.featured_image | img_url: 'medium' | json }},
       "product_url": {{ product.url | json }},
-      "tags": {{ product.tags | json }}
+      "tags": {{ product.tags | json }},
+      "certificates": [
+        {% if has_certs %}
+          {% for item in product.metafields.custom.certificate.value %}
+            {
+              "image": {{ item.badge_image | img_url: 'master' | json }},
+              "name": {{ item.display_name | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        {% endif %}
+      ]
     });
   {% endif %}
 {% endfor %}
 
 // 3. UI RENDER FUNCTIONS
 function renderProductCard(product) {
+  // Safe Check: Only generate HTML if certificates exist and are not empty
+  let certificateHtml = '';
+  
+  if (product.certificates && product.certificates.length > 0) {
+    const certItems = product.certificates.map(cert => `
+      <div class="fc_organic_auth">
+        <img src="${cert.image}" alt="${cert.name}" class="img_sizing" onerror="this.style.display='none'">
+      </div>
+    `).join('');
+
+    certificateHtml = `
+      <div class="certificates-wrapper" style="display:flex; gap:5px; z-index:10;">
+        ${certItems}
+      </div>
+    `;
+  }
+
   return `
     <div class="recommended-item">
       <a href="${product.product_url}">
-        <div class="ri-img">
+        <div class="ri-img" style="position:relative;">
           <img src="${product.image_url}" alt="${product.title}" class="product-card__image">
+          
           ${product.tags && product.tags.includes('Best Seller') ? `
             <div class="fc_bestsell_tags" style="position:absolute;top:15px;right:0px;z-index:9">
               <span>Bestseller</span>
             </div>
           ` : ''}
+
+          ${certificateHtml} 
         </div>
       </a>
       <div class="ri-txt">

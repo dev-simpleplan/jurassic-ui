@@ -640,6 +640,9 @@ span.cart-compare-price {
   text-transform: capitalize;
   color: #FFFFFF;
 }
+.cards-slider .ri-txt .rit-title {
+  font-size: 15px;
+}
 .recommended-item .fc_add_to_cart {
   background: transparent;
   font-weight: 500;
@@ -1924,6 +1927,12 @@ p.tp-head.juiciness {
   gap: 6px;
   overflow: hidden;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.box-content-in::-webkit-scrollbar {
+  display: none;
 }
 .box-content-in .cotent-item {
   font-size: 12px;

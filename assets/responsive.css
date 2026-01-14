@@ -1111,6 +1111,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     justify-content: flex-start;
     gap: 50px 20px;
   }
+  .sustain-colm .numb_in {
+    width: 45%;
+  }
   .sustain-colm .numb_in:first-child {
     width: 100%;
   }
@@ -1360,5 +1363,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .wpl-wrap .wplw-bottom {
     width: 100%;
+  }
+  .fc_bottom .fc_bottom_top {
+    padding-bottom: 24px;
+  }
+  .home-banner {
+    min-height: 100vh;
+    height: auto;
+  }
+  .lttop-in .lttop-image {
+    display: none;
+  }
+  .lttop-content {
+    padding: 0;
+    margin-top: 50px;
   }
 }
