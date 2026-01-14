@@ -197,28 +197,38 @@
     "map": {
       "type": "map",
       "blocks": {
-        "collection_block_EQmLfF": {
-          "type": "collection_block",
+        "location_point_cPGTCg": {
+          "type": "location_point",
           "settings": {
-            "collection": "fruit",
+            "country_name": "Thailand",
             "fruit_image": "shopify://shop_images/fruit-appear-2.png",
-            "top_position": 34,
-            "left_position": 71
+            "top_position": 42,
+            "left_position": 74
           }
         },
-        "collection_block_Q4AKGg": {
-          "type": "collection_block",
+        "location_point_iwjRQX": {
+          "type": "location_point",
           "settings": {
-            "collection": "fine-food",
+            "country_name": "France",
+            "fruit_image": "shopify://shop_images/fruit-appear-4.png",
+            "top_position": 31,
+            "left_position": 46
+          }
+        },
+        "location_point_LMQBiB": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Indonesia",
             "fruit_image": "shopify://shop_images/fruit-appear-1.png",
-            "top_position": 27,
-            "left_position": 50
+            "top_position": 46,
+            "left_position": 77
           }
         }
       },
       "block_order": [
-        "collection_block_EQmLfF",
-        "collection_block_Q4AKGg"
+        "location_point_cPGTCg",
+        "location_point_iwjRQX",
+        "location_point_LMQBiB"
       ],
       "settings": {
         "heading": "A World of Flavor in Your Hands",
