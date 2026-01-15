@@ -28,7 +28,10 @@
           "type": "nav_menu_right",
           "settings": {
             "nav_items_right": "boxes",
-            "product_list": []
+            "product_list": [
+              "lala-box",
+              "lala-box-test-product"
+            ]
           }
         },
         "nav_menu_right_EMiXFk": {
