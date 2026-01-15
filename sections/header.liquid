@@ -98,12 +98,10 @@
                                           <li>
                                             <a href="{{ sublink.url }}">
                                               <div class="link-flex">
-                                                
                                                 {%- comment -%} 
                                                   Only attempt to render the image container if the link is a Product or Collection.
                                                   Pages, Blogs, and Search links will skip this block.
                                                 {%- endcomment -%}
-                                                
                                                 {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
                                                   
                                                   {%- assign nav_image = blank -%}
