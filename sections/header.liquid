@@ -98,13 +98,32 @@
                                           <li>
                                             <a href="{{ sublink.url }}">
                                               <div class="link-flex">
-                                                {%- if sublink.object and sublink.object.image -%}
-                                                  <div class="lf-image">
-                                                    <img
-                                                      src="{{ sublink.object.image | image_url: width: 320 }}"
-                                                      alt="{{ sublink.object.title | default: sublink.title | escape }}">
-                                                  </div>
+                                                
+                                                {%- comment -%} 
+                                                  Only attempt to render the image container if the link is a Product or Collection.
+                                                  Pages, Blogs, and Search links will skip this block.
+                                                {%- endcomment -%}
+                                                
+                                                {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
+                                                  
+                                                  {%- assign nav_image = blank -%}
+                                                  {%- if sublink.type == 'collection_link' -%}
+                                                    {%- assign nav_image = sublink.object.image -%}
+                                                  {%- elsif sublink.type == 'product_link' -%}
+                                                    {%- assign nav_image = sublink.object.featured_image -%}
+                                                  {%- endif -%}
+
+                                                  {%- if nav_image != blank -%}
+                                                    <div class="lf-image">
+                                                      <img
+                                                        src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                                        alt="{{ sublink.title | escape }}"
+                                                        loading="lazy">
+                                                    </div>
+                                                  {%- endif -%}
+                                                  
                                                 {%- endif -%}
+
                                                 <div class="lf-text">{{ sublink.title }}</div>
                                               </div>
                                             </a>
@@ -287,10 +306,6 @@
             "type": "link_list",
             "id": "nav_items_right",
             "label": "Nav Items"
-          }, {
-            "type": "image_picker",
-            "id": "mega_menu_img_right",
-            "label": "Mega Menu Image Right"
           },
           {
             "type": "product_list",
