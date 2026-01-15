@@ -169,7 +169,7 @@
                               <div class="mms-right">
                                 <div class="mmsr-wrap">
                                     <div class="mmsr-top">
-                                      {% block.settings.product-list-heading %}
+                                      {{ block.settings.product_list_heading | default: 'Favourites' }}
                                     </div>
                                     <div class="mmsr-bottom">
                                       {% for item in block.settings.product_list %}
@@ -307,7 +307,7 @@
           },
           {
             "type": "text",
-            "id": "product-list-heading",
+            "id": "product_list_heading",
             "label": "Product List Heading"
           },
           {

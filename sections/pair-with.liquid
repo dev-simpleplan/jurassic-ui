@@ -100,15 +100,22 @@
 
 {% schema %}
   {
-    "name": "Frequently Bought",
+    "name": "Pair With",
     "tag": "section",
-    "class": "frequentlyBought",
+    "class": "pair-with",
     "settings": [
       {
         "type": "textarea",
         "id": "head",
         "label": "Heading before product title",
         "default": "Frequently Bought<br>Together with"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Pair With",
+        "settings": {
+        }
       }
     ]
   }

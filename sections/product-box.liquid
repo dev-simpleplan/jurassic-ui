@@ -325,6 +325,25 @@
                     </div>
                   </div>
                 </div>
+              {% when 'pair_with' %}
+                {% assign paired_product = product.metafields.custom.pair_with_product.value %}
+                
+                <div class="pair-with">
+                  <div class="freqIn">
+                      <div class="heading">
+                        <h3>{{ block.settings.head }}</h3>
+                      </div>
+                      <div class="freq-wrap">
+                        {% if paired_product != blank %}
+                          <div class="paired-item-container">
+                            {% render 'product-card-primary', product: paired_product %}
+                          </div>
+                        {% else %}
+                          <p class="no-selection-msg">No product selected to pair with this box.</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
               {% when '@app' %}
                 <div class="app-block">
                   {% render block %}
@@ -813,11 +832,13 @@
               "label": "Payment USP Text"
             }
           ]
-        }, {
+        }, 
+        {
           "type": "variant_selector",
           "name": "Variant Selector",
           "limit": 1
-        }, {
+        }, 
+        {
           "type": "delivery-info",
           "name": "Delivery information",
           "settings": [
@@ -837,7 +858,20 @@
               "label": "Modal content"
             }
           ]
-        }, {
+        },
+        {
+          "type": "pair_with",
+          "name": "Pair With",
+          "settings": [
+            {
+              "type": "text",
+              "id": "head",
+              "label": "Pair with heading",
+              "default": "pair it with"
+            }
+          ]
+        },
+        {
           "type": "@app"
         }
       ],
