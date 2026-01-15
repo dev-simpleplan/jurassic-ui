@@ -171,7 +171,7 @@
                               <div class="mms-right">
                                 <div class="mmsr-wrap">
                                     <div class="mmsr-top">
-                                      Favourites
+                                      {% block.settings.product-list-heading %}
                                     </div>
                                     <div class="mmsr-bottom">
                                       {% for item in block.settings.product_list %}
@@ -306,6 +306,11 @@
             "type": "link_list",
             "id": "nav_items_right",
             "label": "Nav Items"
+          },
+          {
+            "type": "text",
+            "id": "product-list-heading",
+            "label": "Product List Heading"
           },
           {
             "type": "product_list",
