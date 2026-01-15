@@ -4336,6 +4336,13 @@ section.imagescroll {
     flex-direction: column;
     gap: 14px;
 }
+.bcw-content h2,
+.bcw-content h3,
+.bcw-content h4,
+.bcw-content h5,
+.bcw-content h6 {
+    margin-top: 30px;
+}
 .bcw-content h4 {
     font-weight: 300;
 }
