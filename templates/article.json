@@ -31,6 +31,7 @@
         "content"
       ],
       "settings": {
+        "subscribe_logo": "shopify://shop_images/Jurassic_Fruit.svg",
         "subscribe_heading": "Untamed. Exotic. Organic",
         "subscribe_subheading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum ultrices quis malesuada aliquam ac at.",
         "form_heading": "stay updated!",
