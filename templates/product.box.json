@@ -31,6 +31,12 @@
           "type": "variant_selector",
           "settings": {}
         },
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
+          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "settings": {
+            "page": ""
+          }
+        },
         "store_usp": {
           "type": "store_usp",
           "settings": {
@@ -51,10 +57,24 @@
             "page": "delivery-popup"
           }
         },
-        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
-          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+        "offer_yEMChf": {
+          "type": "offer",
           "settings": {
-            "page": ""
+            "code": "JURASSIC222",
+            "text": "Buy 3 @ $350 + Free Gifts"
+          }
+        },
+        "offer_8RjLwe": {
+          "type": "offer",
+          "settings": {
+            "code": "JURASSIC222",
+            "text": "Buy 3 @ $350 + Free Gifts"
+          }
+        },
+        "pair_with_UwJtYY": {
+          "type": "pair_with",
+          "settings": {
+            "head": "pair it with"
           }
         }
       },
@@ -63,9 +83,12 @@
         "product_info",
         "box_content",
         "variant_selector",
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ",
         "store_usp",
         "delivery_info_WFVGrD",
-        "staging_delivery_date_app_product_delivery_info_jGcmjQ"
+        "offer_yEMChf",
+        "offer_8RjLwe",
+        "pair_with_UwJtYY"
       ],
       "settings": {
         "acc_1": "How to eat & Store",
