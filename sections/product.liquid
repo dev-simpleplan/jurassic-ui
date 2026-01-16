@@ -183,30 +183,18 @@
                   {% endfor %}
                 </div>
 
-              {% when 'box_content' %}
-                <div class="boxIn">
-                  {% comment %} Main Box Content {% endcomment %}
-                  <div class="box-content">
-                    <div class="box-content-title">
-                      Main Fruits
+              {% when 'product_usp' %}
+               <div class="product-usp">
+                  {% for item in product.metafields.custom.product_usp.value %}
+                    <div class="pu-item">
+                      <div class="pui-icon">
+                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
+                      </div>
+                      <div class="pui-txt">
+                        <p>{{ item.usp_text }}</p>
+                      </div>
                     </div>
-                    <div class="box-content-in">
-                      {% for item in product.metafields.custom.main_box_content.value %}
-                        <div class="cotent-item">{{ item.title }}</div>
-                      {% endfor %}
-                    </div>
-                  </div>
-                  {% comment %} Additional Box Content {% endcomment %}
-                  <div class="box-content">
-                    <div class="box-content-title">
-                      Additional Fruits
-                    </div>
-                    <div class="box-content-in">
-                      {% for item in product.metafields.custom.additional_box_content.value %}
-                        <div class="cotent-item">{{ item.title }}</div>
-                      {% endfor %}
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
 
               {% when 'store_usp' %}
