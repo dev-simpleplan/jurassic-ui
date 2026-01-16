@@ -125,7 +125,6 @@
                       </div>
                     {% endif %}
 
-
                     <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
                     <div class="tr-okendo">
                       <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
@@ -137,10 +136,7 @@
                         {% if certificate != '' %}
                           {% for item in certificate.value %}
                             <div class="tsc-img">
-                              <img
-                                src="{{ item.badge_image |  img_url: 'master' }}"
-                                alt="{{ item.display_name }}"
-                                class="img">
+                              <img src="{{ item.badge_image |  img_url: 'master' }}" alt="{{ item.display_name }}" class="img">
                             </div>
                           {% endfor %}
                         {% endif %}
@@ -149,6 +145,7 @@
                   </div>
                   <h1>{{ product.title }}</h1>
                 </div>
+
               {% when 'product_info' %}
                 <div class="product-info-block">
                   {% comment %} For Origin {% endcomment %}
@@ -185,19 +182,33 @@
                     </div>
                   {% endfor %}
                 </div>
-              {% when 'product_usp' %}
-                <div class="product-usp">
-                  {% for item in product.metafields.custom.product_usp.value %}
-                    <div class="pu-item">
-                      <div class="pui-icon">
-                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
-                      </div>
-                      <div class="pui-txt">
-                        <p>{{ item.usp_text }}</p>
-                      </div>
+
+              {% when 'box_content' %}
+                <div class="boxIn">
+                  {% comment %} Main Box Content {% endcomment %}
+                  <div class="box-content">
+                    <div class="box-content-title">
+                      Main Fruits
                     </div>
-                  {% endfor %}
+                    <div class="box-content-in">
+                      {% for item in product.metafields.custom.main_box_content.value %}
+                        <div class="cotent-item">{{ item.title }}</div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% comment %} Additional Box Content {% endcomment %}
+                  <div class="box-content">
+                    <div class="box-content-title">
+                      Additional Fruits
+                    </div>
+                    <div class="box-content-in">
+                      {% for item in product.metafields.custom.additional_box_content.value %}
+                        <div class="cotent-item">{{ item.title }}</div>
+                      {% endfor %}
+                    </div>
+                  </div>
                 </div>
+
               {% when 'store_usp' %}
                 <div class="store-usp">
                   {% comment %} For Shipping USP {% endcomment %}
@@ -235,53 +246,12 @@
                   </div>
                 </div>
 
-              {% assign has_offers = false %}
-                {% for block in section.blocks %}
-                  {% if block.type == 'offer' %}
-                    {% assign has_offers = true %}
-                  {% endif %}
-                {% endfor %}
-
-                {% if has_offers %}
-                <div class="product-offers">
-                  <div class="offers-head">Offers</div>
-
-                  <div class="offers-list">
-                    {% for block in section.blocks %}
-                      {% if block.type == 'offer' %}
-                        <div class="offer-card" {{ block.shopify_attributes }}>
-                          <div class="offer-left">
-                            <span class="offer-icon">
-                              {%  render 'icon-offer' %}
-                            </span>
-                            <div>
-                              <p class="offer-code">{{ block.settings.code }}</p>
-                              <p class="offer-text">{{ block.settings.text }}</p>
-                            </div>
-                          </div>
-
-                          <button
-                            class="offer-copy-btn" data-code="{{ block.settings.code }}">{{ block.settings.code }}{%  render 'icon-copy' %}</button>
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-                {% endif %}
-
-                
-
-
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
                     <div class="select_variant">
                       {% unless product.has_only_default_variant %}
-                        <variant-selector
-                          data-url="{{ product.url }}"
-                          data-section="{{ section.id }}"
-                          data-initial-variant="{{ default_variant.id }}">
-
+                        <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                           <div class="sv-perKg">
                             <p>Select variant</p>
                             <div class="perKg">
@@ -293,97 +263,64 @@
                               {% endif %}
                             </div>
                           </div>
-
-                          
-
-
                           {% for option in product.options_with_values %}
-  <div class="variant-option" data-option="{{ option.name }}">
-    <ul class="variant-values" data-index="{{ forloop.index0 }}">
+                            <div class="variant-option" data-option="{{ option.name }}">
+                              <ul class="variant-values" data-index="{{ forloop.index0 }}">
+                                {% for value in option.values %}
+                                  {% assign matched_variant = nil %}
 
-      {% for value in option.values %}
-        {% assign matched_variant = nil %}
+                                  {% for variant in product.variants %}
+                                    {% case option.position %}
+                                      {% when 1 %}
+                                        {% if variant.option1 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 2 %}
+                                        {% if variant.option2 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                      {% when 3 %}
+                                        {% if variant.option3 == value %}
+                                          {% assign matched_variant = variant %}
+                                          {% break %}
+                                        {% endif %}
+                                    {% endcase %}
+                                  {% endfor %}
 
-        {% for variant in product.variants %}
-          {% case option.position %}
-            {% when 1 %}
-              {% if variant.option1 == value %}
-                {% assign matched_variant = variant %}
-                {% break %}
-              {% endif %}
-            {% when 2 %}
-              {% if variant.option2 == value %}
-                {% assign matched_variant = variant %}
-                {% break %}
-              {% endif %}
-            {% when 3 %}
-              {% if variant.option3 == value %}
-                {% assign matched_variant = variant %}
-                {% break %}
-              {% endif %}
-          {% endcase %}
-        {% endfor %}
-
-        {% assign is_active = false %}
-
-        {% case option.position %}
-          {% when 1 %}
-            {% if default_variant.option1 == value %}
-              {% assign is_active = true %}
-            {% endif %}
-          {% when 2 %}
-            {% if default_variant.option2 == value %}
-              {% assign is_active = true %}
-            {% endif %}
-          {% when 3 %}
-            {% if default_variant.option3 == value %}
-              {% assign is_active = true %}
-            {% endif %}
-        {% endcase %}
-
-        <li
-          class="variant-value {% if is_active %}active{% endif %}"
-          data-value="{{ value | escape }}"
-          {% if matched_variant.metafields.custom.bestseller == true %}
-            data-best="bestseller"
-          {% endif %}
-        >
-
-          {% if matched_variant.metafields.custom.bestseller == true %}
-            <div class="vv-bestseller">best seller</div>
-          {% endif %}
-
-          <div class="vv-value">
-            <div class="vvv-value">
-              {{ value }}
-            </div>
-
-            {% if matched_variant.compare_at_price > matched_variant.price %}
-              <div class="vvv-discount">
-                {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
-                {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
-                {{ discount_percentage }}% OFF
-              </div>
-            {% endif %}
-          </div>
-
-          <div class="vv-peices">
-            {% if matched_variant.unit_price_measurement %}
-              {% if matched_variant.unit_price_measurement.quantity_value == 1 %}
-                {{ matched_variant.unit_price_measurement.quantity_value | round }} Peice
-              {% else %}
-                {{ matched_variant.unit_price_measurement.quantity_value | round }} Peices
-              {% endif %}
-            {% endif %}
-          </div>
-
-        </li>
-      {% endfor %}
-
-    </ul>
-  </div>
-{% endfor %}
-
+                                  <li
+                                    class="variant-value {% if option.selected_value == value %}active{% endif %}"
+                                    data-value="{{ value | escape }}"
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                    data-best="bestseller"
+                                    {% endif %}>
+                                    {% if matched_variant.metafields.custom.bestseller == true %}
+                                      <div class="vv-bestseller">best seller</div>
+                                    {% endif %}
+                                    <div class="vv-value">
+                                      <div class="vvv-value">
+                                        {{ value }}
+                                      </div>
+                                      {% if matched_variant.compare_at_price > matched_variant.price %}
+                                        <div class="vvv-discount">
+                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
+                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
+                                          {{ discount_percentage }}% OFF
+                                        </div>
+                                      {% endif %}
+                                    </div>
+                                    <div class="vv-peices">
+                                      {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
+                                      {% if matched_variant.metafields.custom.pieces %}
+                                        {{ matched_variant.metafields.custom.pieces }}
+                                      {% endif %}
+                                    </div>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            </div>
+                          {% endfor %}
 
                           <script type="application/json">
                             {{ product.variants | json }}
@@ -392,42 +329,34 @@
                       {% endunless %}
                     </div>
                     <div class="priceCheckout">
-  <div class="price" id="price-{{ section.id }}">
-
-    {% if selected_variant.compare_at_price > selected_variant.price %}
-      <strike class="real-price">
-        {{ selected_variant.compare_at_price | money }}
-      </strike>
-    {% endif %}
-
-    <span class="sell-price">
-      {{ selected_variant.price | money }}
-    </span>
-
-
-    <span class="price-txt">
-      Taxes, Excl. shipping
-    </span>
-  </div>
-
-  <div class="submit">
-    <button
-      type="submit"
-      name="add"
-      class="custom-btn filled"
-      id="add-to-cart"
-      data-variant-id="{{ selected_variant.id }}"
-      {% unless selected_variant.available %}disabled{% endunless %}
-    >
-      {% if default_variant.available %}
-        Add To Cart
-      {% else %}
-        Sold Out
-      {% endif %}
-    </button>
-  </div>
-</div>
-
+                      <div class="price" id="price-{{ section.id }}">
+                        {% if selected_variant.price < selected_variant.compare_at_price %}
+                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
+                        {% endif %}
+                        <span class="sell-price">
+                          {{ selected_variant.price | money }}
+                        </span>
+                        <span class="price-txt">
+                          Taxes, Excl. shipping
+                        </span>
+                      </div>
+                      <div class="submit">
+                        <button
+                          type="submit"
+                          name="add"
+                          class="custom-btn filled"
+                          id="add-to-cart"
+                          {% if selected_variant.available==false %}
+                          disabled
+                          {% endif %}>
+                          {% if selected_variant.available == false %}
+                            Sold Out
+                          {% else %}
+                            Add To Cart
+                          {% endif %}
+                        </button>
+                      </div>
+                    </div>
                     <div class="payment-options">
                       <p>Guaranteed safe checkout with payment options</p>
                       <div class="po-icon-wrap">
@@ -440,13 +369,45 @@
                     </div>
                   </div>
                 </div>
+
+              {% when 'offer' %}
+                {%- comment -%} Calculate indices for peeking at previous/next blocks {%- endcomment -%}
+                {% assign prev_index = forloop.index0 | minus: 1 %}
+                {% assign next_index = forloop.index0 | plus: 1 %}
+                
+                {%- comment -%} 
+                  Only open the container if this is the FIRST offer in a consecutive row.
+                {%- endcomment -%}
+                {% if forloop.first or section.blocks[prev_index].type != 'offer' %}
+                  <div class="product-offers">
+                    <div class="offers-head">Offers</div>
+                    <div class="offers-list">
+                {% endif %}
+
+                    <div class="offer-card" {{ block.shopify_attributes }}>
+                      <div class="offer-left">
+                        <span class="offer-icon">{% render 'icon-offer' %}</span>
+                        <div>
+                          <p class="offer-code">{{ block.settings.code }}</p>
+                          <p class="offer-text">{{ block.settings.text }}</p>
+                        </div>
+                      </div>
+                      <button type="button" class="offer-copy-btn" data-code="{{ block.settings.code }}">
+                        {{ block.settings.code }}{% render 'icon-copy' %}
+                      </button>
+                    </div>
+
+                {%- comment -%} 
+                  Only close the container if the NEXT block is NOT an offer, or it's the last block.
+                {%- endcomment -%}
+                {% if forloop.last or section.blocks[next_index].type != 'offer' %}
+                    </div>
+                  </div>
+                {% endif %}
+
               {% when '@app' %}
-              {% unless forloop.first %}
-                <div class="app-block">
-                  {% render block %}
-                </div>
-              {% endunless %}
-              {% else %}
+                <div class="app-block">{% render block %}</div>
+
             {% endcase %}
           {% endfor %}
         {% endform %}
@@ -1030,11 +991,13 @@ document.addEventListener('click', function (e) {
             "label": "Payment USP Text"
           }
         ]
-      }, {
+      }, 
+      {
         "type": "variant_selector",
         "name": "Variant Selector",
         "limit": 1
-      }, {
+      }, 
+      {
         "type": "delivery-info",
         "name": "Delivery information",
         "settings": [
@@ -1056,26 +1019,26 @@ document.addEventListener('click', function (e) {
         ]
       },
       {
-      "type": "offer",
-      "name": "Offer / Coupon",
-      "settings": [
-        {
-          "type": "text",
-          "id": "code",
-          "label": "Coupon Code",
-          "default": "JURASSIC222"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Offer Text",
-          "default": "Buy 3 @ $350 + Free Gifts"
-        }
-      ]
-    },
-    {
-        "type": "@app"
-    }
+        "type": "offer",
+        "name": "Offer / Coupon",
+        "settings": [
+          {
+            "type": "text",
+            "id": "code",
+            "label": "Coupon Code",
+            "default": "JURASSIC222"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Offer Text",
+            "default": "Buy 3 @ $350 + Free Gifts"
+          }
+        ]
+      },
+      {
+          "type": "@app"
+      }
     ],
     "settings": [
       {

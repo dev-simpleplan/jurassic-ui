@@ -1947,4 +1947,66 @@ p.tp-head.juiciness {
   width: max-content;
   text-wrap-mode: nowrap;
 }
+.pair-with {
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e3df;
+    border-radius: 20px;
+    margin-top: 16px;
+}
+.pair-with .heading h3 {
+  font-weight: 500;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+.pair-with .freq-wrap {
+  margin-top: 16px;
+  display: block;
+}
+.pair-with .fruits_card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: none;
+  gap: 30px;
+  background: inherit;
+}
+.pair-with .fc_bottom .fc_bottom_center {
+  display: none;
+}
+.pair-with .fruits_card .fc_top {
+  border-radius: 12px;
+  overflow: hidden;
+  order: 2;
+}
+.pair-with .fc_product_title {
+  font-weight: 600;
+  font-size: 20px;
+}
+.pair-with .fc_trust_text {
+  display: none;
+}
+.pair-with .fc_category_tags {
+    display: none;
+}
+.pair-with .fc_organic_auth {
+  bottom: auto;
+  top: 18px;
+}
+.pair-with .fc_bottom .fc_bottom_top,
+.pair-with .fc_bottom .fc_bottom_end {
+  padding-left: 0;
+}
+.pair-with .fc_price_weight {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.pair-with .fc_price_weight p span {
+  padding-left: 0;
+}
+.pair-with .fc_image {
+  aspect-ratio: inherit;
+  width: 100%;
+  height: 100%;
+}
 /* Product Page Ends */

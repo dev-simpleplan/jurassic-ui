@@ -87,10 +87,8 @@
               <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
             </div>
             <div class="rating_info">
-              {% if product.metafields.custom.country_of_origin %}
-                <span class="dot_seperator"></span>
-                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              {% endif %}
+              <span class="dot_seperator dynamic-review-dot"></span>
+              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
             </div>
           </div>
           <p class="fc_product_title">

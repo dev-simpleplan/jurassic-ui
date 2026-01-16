@@ -90,7 +90,7 @@
             name="id"
             value="{{ selected_variant.id }}">
 
-          {% for block in section.blocks %}
+            {% for block in section.blocks %}
             {% case block.type %}
               {% when 'title' %}
                 <div class="title">
@@ -103,7 +103,6 @@
                       </div>
                     {% endif %}
 
-
                     <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
                     <div class="tr-okendo">
                       <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
@@ -115,10 +114,7 @@
                         {% if certificate != '' %}
                           {% for item in certificate.value %}
                             <div class="tsc-img">
-                              <img
-                                src="{{ item.badge_image |  img_url: 'master' }}"
-                                alt="{{ item.display_name }}"
-                                class="img">
+                              <img src="{{ item.badge_image |  img_url: 'master' }}" alt="{{ item.display_name }}" class="img">
                             </div>
                           {% endfor %}
                         {% endif %}
@@ -127,6 +123,7 @@
                   </div>
                   <h1>{{ product.title }}</h1>
                 </div>
+
               {% when 'product_info' %}
                 <div class="product-info-block">
                   {% comment %} Additional Information {% endcomment %}
@@ -141,6 +138,7 @@
                     </div>
                   {% endfor %}
                 </div>
+
               {% when 'box_content' %}
                 <div class="boxIn">
                   {% comment %} Main Box Content {% endcomment %}
@@ -166,6 +164,7 @@
                     </div>
                   </div>
                 </div>
+
               {% when 'store_usp' %}
                 <div class="store-usp">
                   {% comment %} For Shipping USP {% endcomment %}
@@ -202,6 +201,7 @@
                     </div>
                   </div>
                 </div>
+
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
@@ -325,9 +325,44 @@
                     </div>
                   </div>
                 </div>
+
+              {% when 'offer' %}
+                {%- comment -%} Calculate indices for peeking at previous/next blocks {%- endcomment -%}
+                {% assign prev_index = forloop.index0 | minus: 1 %}
+                {% assign next_index = forloop.index0 | plus: 1 %}
+                
+                {%- comment -%} 
+                  Only open the container if this is the FIRST offer in a consecutive row.
+                {%- endcomment -%}
+                {% if forloop.first or section.blocks[prev_index].type != 'offer' %}
+                  <div class="product-offers">
+                    <div class="offers-head">Offers</div>
+                    <div class="offers-list">
+                {% endif %}
+
+                    <div class="offer-card" {{ block.shopify_attributes }}>
+                      <div class="offer-left">
+                        <span class="offer-icon">{% render 'icon-offer' %}</span>
+                        <div>
+                          <p class="offer-code">{{ block.settings.code }}</p>
+                          <p class="offer-text">{{ block.settings.text }}</p>
+                        </div>
+                      </div>
+                      <button type="button" class="offer-copy-btn" data-code="{{ block.settings.code }}">
+                        {{ block.settings.code }}{% render 'icon-copy' %}
+                      </button>
+                    </div>
+
+                {%- comment -%} 
+                  Only close the container if the NEXT block is NOT an offer, or it's the last block.
+                {%- endcomment -%}
+                {% if forloop.last or section.blocks[next_index].type != 'offer' %}
+                    </div>
+                  </div>
+                {% endif %}
+
               {% when 'pair_with' %}
                 {% assign paired_product = product.metafields.custom.pair_with_product.value %}
-                
                 <div class="pair-with">
                   <div class="freqIn">
                       <div class="heading">
@@ -344,13 +379,16 @@
                       </div>
                     </div>
                 </div>
+
               {% when '@app' %}
-                <div class="app-block">
-                  {% render block %}
-                </div>
-            {% else %}
-              {% endcase %}
-            {% endfor %}
+                <div class="app-block">{% render block %}</div>
+
+            {% endcase %}
+          {% endfor %}
+
+
+
+
           {% endform %}
         </div>
       </div>
@@ -763,6 +801,20 @@
 
   </script>
 
+  <script>
+    document.querySelectorAll('.offer-copy-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const code = this.getAttribute('data-code');
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = this.innerHTML;
+          this.innerText = 'COPIED!';
+          setTimeout(() => { this.innerHTML = originalText; }, 2000);
+        });
+      });
+    });
+  </script>
+
   {% schema %}
     {
       "name": "Product",
@@ -856,6 +908,24 @@
               "type": "page",
               "id": "page",
               "label": "Modal content"
+            }
+          ]
+        },
+        {
+          "type": "offer",
+          "name": "Offer / Coupon",
+          "settings": [
+            {
+              "type": "text",
+              "id": "code",
+              "label": "Coupon Code",
+              "default": "JURASSIC222"
+            },
+            {
+              "type": "text",
+              "id": "text",
+              "label": "Offer Text",
+              "default": "Buy 3 @ $350 + Free Gifts"
             }
           ]
         },

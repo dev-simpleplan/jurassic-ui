@@ -150,6 +150,16 @@
 .star_review .oke-sr-count span {
   display: flex;
 }
+/* Hide the dot by default */
+.dynamic-review-dot {
+  display: none !important;
+}
+
+/* Only show the dot when Okendo is explicitly NOT hidden */
+/* This targets the container only when the hidden class is absent */
+.star_rating:not(:has(.oke-sr--hidden)) + .rating_info .dynamic-review-dot {
+  display: inline-block !important;
+}
 .rating_info {
   display: flex;
   gap: 5px;

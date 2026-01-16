@@ -583,7 +583,7 @@ li.nav-item a.nav-link:hover::before {
 li.nav-item.has-mega-menu {
     
 }
-li.nav-item.has-mega-menu::before {
+/* li.nav-item.has-mega-menu::before {
     content: '';
     position: fixed;
     width: 100vw;
@@ -592,10 +592,9 @@ li.nav-item.has-mega-menu::before {
     left: 0;
     top: 100px;
     transition: .1s ease all;
-    /* clip-path: inset(0 0 100% 0); */
     opacity: 0;
     visibility: hidden;
-}
+} */
 .mega-menu {
     top: 100px;
     left: 0;
@@ -622,7 +621,7 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 }
 .header-in ul>li:hover .mega-menu {
     clip-path: inset(0 0 0 0);
-    transition: 1s ease all;
+    transition: 0.5s ease all;
     transition-delay: 0.2s;
 }
 .header-in ul>li:hover::before {

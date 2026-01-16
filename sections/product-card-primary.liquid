@@ -87,10 +87,8 @@
               <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
             </div>
             <div class="rating_info">
-              {% if product.metafields.custom.country_of_origin %}
-                <span class="dot_seperator"></span>
-                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              {% endif %}
+              <span class="dot_seperator dynamic-review-dot"></span>
+              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
             </div>
           </div>
           <p class="fc_product_title">
@@ -241,4 +239,41 @@ document.addEventListener('DOMContentLoaded', () => {
     window.initCardCartLogic(card);
   });
 });
+</script>
+
+<script>
+(function() {
+  const checkOkendoRating = () => {
+    const containers = document.querySelectorAll('.star_review');
+    
+    containers.forEach(container => {
+      const dot = container.querySelector('.dynamic-review-dot');
+      const jsonData = container.querySelector('script[type="application/json"]');
+      
+      if (jsonData && dot) {
+        try {
+          const data = JSON.parse(jsonData.innerHTML);
+          // If review count is greater than 0, show the dot
+          if (data.reviewCount > 0) {
+            dot.style.setProperty('display', 'inline-block', 'important');
+          } else {
+            dot.style.setProperty('display', 'none', 'important');
+          }
+        } catch (e) {
+          // If JSON isn't ready, keep it hidden
+          dot.style.display = 'none';
+        }
+      }
+    });
+  };
+
+  // Run the check frequently for the first few seconds while Okendo loads
+  const timer = setInterval(checkOkendoRating, 500);
+  
+  // Stop checking after 5 seconds to save performance
+  setTimeout(() => clearInterval(timer), 5000);
+
+  // Also run on window load
+  window.addEventListener('load', checkOkendoRating);
+})();
 </script>
