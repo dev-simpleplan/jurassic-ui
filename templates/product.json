@@ -12,20 +12,6 @@
     "template": {
       "type": "product",
       "blocks": {
-        "offer_MKP99r": {
-          "type": "offer",
-          "settings": {
-            "code": "Test 2",
-            "text": "30% off | One Time Purchase"
-          }
-        },
-        "offer_MHYyhK": {
-          "type": "offer",
-          "settings": {
-            "code": "Order 1",
-            "text": "20% off | One Time Purchase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {
@@ -57,6 +43,26 @@
             "payment_usp_text": "Secure Payment"
           }
         },
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
+          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "settings": {
+            "page": ""
+          }
+        },
+        "offer_MKP99r": {
+          "type": "offer",
+          "settings": {
+            "code": "Test 2",
+            "text": "30% off | One Time Purchase"
+          }
+        },
+        "offer_MHYyhK": {
+          "type": "offer",
+          "settings": {
+            "code": "Order 1",
+            "text": "20% off | One Time Purchase"
+          }
+        },
         "delivery_info_WFVGrD": {
           "type": "delivery-info",
           "settings": {
@@ -64,24 +70,18 @@
             "popup_button": "click here to get delivery information (cost, delay)",
             "page": "delivery-popup"
           }
-        },
-        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
-          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
-          "settings": {
-            "page": ""
-          }
         }
       },
       "block_order": [
-        "offer_MKP99r",
-        "offer_MHYyhK",
         "title",
         "product_info",
         "product_usp",
         "variant_selector",
         "store_usp",
-        "delivery_info_WFVGrD",
-        "staging_delivery_date_app_product_delivery_info_jGcmjQ"
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ",
+        "offer_MKP99r",
+        "offer_MHYyhK",
+        "delivery_info_WFVGrD"
       ],
       "settings": {
         "acc_1": "How to eat & Store",
