@@ -475,6 +475,12 @@
 .fc_add_to_cart.active .add-to-cart-btn {
   display: none;
 }
+.fc_add_to_cart:not(.active) .qty-controls {
+  display: none;
+}
+.fc_add_to_cart:not(.active) .add-to-cart-btn {
+  display: block;
+}
 
 .qty-controls span {
   cursor: pointer;

@@ -147,10 +147,10 @@
                         {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
                         
                         {{ pieces }}
-                        {% if pieces == 1 %} Peice{% else %} Peices{% endif %}
+                        {% if pieces == 1 %} Piece{% else %} Pieces{% endif %}
                         
                       {% else %}
-                        0 Peices
+                        0 Pieces
                       {% endif %}
                     </p>
 
@@ -231,7 +231,6 @@
 </div>
 
   <script>
-
 document.addEventListener('DOMContentLoaded', () => {
 
   async function addToCart(id, qty) {
@@ -242,184 +241,131 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(r => r.json());
   }
 
-  async function changeCart(key, qty) {
-    return fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: qty })
-    });
-  }
-
   async function getCart() {
     return fetch('/cart.js').then(r => r.json());
   }
 
-  // ---------------- SAFE SIDE CART OPEN (NO SCROLL JUMP) ----------------
   function openSideCartDirectly() {
     const sideCart = document.querySelector('.sideCart');
     if (!sideCart) return;
-
     sideCart.classList.add('active');
     document.body.classList.add('stay');
-    // document.documentElement.classList.add('stay');
-
-    // ✅ THIS ACTUALLY WORKS
     window.initializeCartFunction?.();
   }
 
-
-
-
-
-
-
-  // ---------------- HEADER CART COUNT SYNC ----------------
   async function updateHeaderCartCount() {
     const res = await fetch('/cart.js');
     const cart = await res.json();
-
     const el = document.querySelector('.header__cart-quantity');
     if (!el) return;
-
     el.textContent = cart.item_count;
-
-    if (cart.item_count > 0) {
-      el.classList.remove('is-hidden');
-    } else {
-      el.classList.add('is-hidden');
-    }
+    cart.item_count > 0 ? el.classList.remove('is-hidden') : el.classList.add('is-hidden');
   }
-
 
   document.querySelectorAll('.fc_add_to_cart').forEach(card => {
+    if (card.dataset.bound === 'true') return;
+    card.dataset.bound = 'true';
 
-  // 🔒 Prevent duplicate bindings
-  if (card.dataset.bound === 'true') return;
-  card.dataset.bound = 'true';
+    const variantId = Number(card.dataset.variantId);
+    const inv = parseInt(card.dataset.inventory, 10);
+    const maxQty = Number.isFinite(inv) && inv > 0 ? inv : 0;
+    
+    const addBtn = card.querySelector('.add-to-cart-btn');
+    const plus = card.querySelector('.add_product');
+    const minus = card.querySelector('.remove_product');
+    const qtyEl = card.querySelector('.qty-value');
 
-  if (card.dataset.available !== 'true') return;
+    let isLoading = false;
 
-  const variantId = Number(card.dataset.variantId);
-  const inv = parseInt(card.dataset.inventory, 10);
-  const maxQty = Number.isFinite(inv) && inv > 0 ? inv : 0;
-  if (maxQty === 0) return;
+    /* ---------------- ADD TO CART ---------------- */
+    addBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (isLoading) return;
+      isLoading = true;
 
-  const addBtn = card.querySelector('.add-to-cart-btn');
-  const plus = card.querySelector('.add_product');
-  const minus = card.querySelector('.remove_product');
-  const qtyEl = card.querySelector('.qty-value');
+      addBtn.disabled = true;
+      addBtn.textContent = 'Adding…';
 
-  const weightText = card.querySelector(".fc_weight");
-if (weightText && variant.dataset.unit) {
-  weightText.textContent = variant.dataset.unit;
-}
+      try {
+        const response = await addToCart(variantId, 1);
+        
+        if (response && response.id) {
+          // ⏱️ Wait 300ms for Shopify's server to finalize the session
+          await new Promise(resolve => setTimeout(resolve, 300));
 
-  let qty = parseInt(qtyEl.textContent, 10) || 1;
-  let lineKey = null;
-  let isLoading = false;
+          // 🔄 Call the GLOBAL side cart loader
+          if (window.loadCartItems) {
+            await window.loadCartItems();
+          }
+          
+          // 🔄 Update the cart page background
+          if (typeof loadCartPageItems === 'function') {
+            await loadCartPageItems();
+          }
 
-  /* ---------------- ADD TO CART ---------------- */
-  addBtn.addEventListener('click', async (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-
-  if (isLoading) return;
-  isLoading = true;
-
-  addBtn.disabled = true;
-  addBtn.textContent = 'Adding…';
-
-  try {
-    const cartBefore = await getCart();
-    const existing = cartBefore.items.find(
-      i => i.variant_id === variantId
-    );
-
-    if (existing) {
-      await changeCart(existing.key, existing.quantity + 1);
-    } else {
-      await addToCart(variantId, 1);
-    }
-
-    const cartAfter = await getCart();
-    const item = cartAfter.items.find(
-      i => i.variant_id === variantId
-    );
-
-    qty = item.quantity;
-    lineKey = item.key;
-    qtyEl.textContent = qty;
-
-    requestAnimationFrame(() => {
-      card.classList.add('active');
+          openSideCartDirectly();
+          await updateHeaderCartCount();
+        }
+      } catch (err) {
+        console.error('Add failed:', err);
+      } finally {
+        addBtn.disabled = false;
+        addBtn.textContent = 'Add to Cart';
+        isLoading = false;
+      }
     });
 
-    await updateHeaderCartCount();
-    openSideCartDirectly();
+    /* ---------------- MINUS ---------------- */
+    minus.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (isLoading) return;
+      isLoading = true;
 
-  } catch (err) {
-    console.error(err);
-  } finally {
-    isLoading = false;
-  }
-});
+      try {
+        const cart = await getCart();
+        const item = cart.items.find(i => i.variant_id === variantId);
 
+        if (item) {
+          const newQty = item.quantity - 1;
+          // Use Global Function from Side Cart to ensure full sync
+          if (window.updateCartItem) {
+            await window.updateCartItem(item.key, newQty, variantId);
+            // Local fallback update for speed
+            qtyEl.textContent = Math.max(0, newQty);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isLoading = false;
+      }
+    });
 
+    /* ---------------- PLUS ---------------- */
+    plus.addEventListener('click', async (e) => {
+      e.preventDefault();
+      // Get current qty from the UI
+      const currentUIDisplay = parseInt(qtyEl.textContent);
+      if (isLoading || currentUIDisplay >= maxQty) return;
+      isLoading = true;
 
-  /* ---------------- PLUS ---------------- */
-  plus.addEventListener('click', async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+      try {
+        const cart = await getCart();
+        const item = cart.items.find(i => i.variant_id === variantId);
 
-    if (isLoading || qty >= maxQty) return;
-    isLoading = true;
-
-    qty++;
-    qtyEl.textContent = qty;
-
-    await changeCart(lineKey, qty);
-
-    const cart = await getCart();
-    await updateHeaderCartCount();
-
-    isLoading = false;
+        if (item) {
+          const newQty = item.quantity + 1;
+          if (window.updateCartItem) {
+            await window.updateCartItem(item.key, newQty, variantId);
+            qtyEl.textContent = newQty;
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isLoading = false;
+      }
+    });
   });
-
-  /* ---------------- MINUS ---------------- */
-  minus.addEventListener('click', async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isLoading) return;
-    isLoading = true;
-
-    qty--;
-
-    if (qty <= 0) {
-      await changeCart(lineKey, 0);
-
-      requestAnimationFrame(() => {
-        card.classList.remove('active');
-      });
-
-      qty = 0;
-      isLoading = false;
-
-      const cart = await getCart();
-      await updateHeaderCartCount();
-      return;
-    }
-
-    qtyEl.textContent = qty;
-    await changeCart(lineKey, qty);
-
-    const cart = await getCart();
-    await updateHeaderCartCount();
-
-    isLoading = false;
-  });
-
-});
-
 });
 </script>

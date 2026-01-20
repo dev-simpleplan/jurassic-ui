@@ -308,16 +308,25 @@
       }
     };
 
-    // 🔁 Sync cart page when discount is applied/removed anywhere
+    // 🔁 Sync cart page when the cart is updated anywhere (side cart, product card, etc.)
     document.addEventListener('cart:updated', (e) => {
+      console.log('🔄 [CartPage] Global update detected, refreshing page data...');
       const cart = e.detail;
 
-      // Re-render cart page totals & discount row
+      // 1. Re-render cart page items, totals, and counts
       loadCartPageItems();
 
-      // Sync discount pills on cart page too
-      document.querySelectorAll('discount-field')
-        .forEach(df => df.updateFromCart(cart));
+      // 2. Sync discount pills
+      document.querySelectorAll('discount-field').forEach(df => {
+        if (typeof df.updateFromCart === 'function') {
+          df.updateFromCart(cart);
+        }
+      });
+      
+      // 3. Sync all product cards (if they are visible on this page)
+      if (window.syncAllCardsWithCart) {
+        window.syncAllCardsWithCart(cart);
+      }
     });
 
 
@@ -354,13 +363,22 @@
       });
 
       minusBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const line = Number(btn.dataset.line);
           const itemEl = btn.closest('.cart-page-item');
           const qtyEl = itemEl.querySelector('.cart-page-qty-count');
           const currentQty = Number(qtyEl.textContent);
+          
+          // Calculate new quantity
           const newQty = currentQty > 1 ? currentQty - 1 : 0;
-          updateCartPageItem(line, newQty);
+          
+          // 🔄 Update the cart
+          await updateCartPageItem(line, newQty);
+          
+          // ✅ BROADCAST: Tell the side cart and product cards to update
+          const res = await fetch('/cart.js');
+          const cart = await res.json();
+          document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
         });
       });
     };

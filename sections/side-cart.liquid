@@ -231,6 +231,38 @@
   };
 
 
+  /// Optimized Global Card Sync Logic
+  window.syncAllCardsWithCart = async function(cartData) {
+    const cart = cartData || await fetch(window.Shopify.routes.root + 'cart.js').then(r => r.json());
+    
+    document.querySelectorAll('.product-card-primary').forEach(card => {
+      const cardAddToCartWrapper = card.querySelector('.fc_add_to_cart');
+      if (!cardAddToCartWrapper) return;
+
+      const variantId = cardAddToCartWrapper.dataset.variantId;
+      const cartItem = cart.items.find(item => item.variant_id.toString() === variantId.toString());
+
+      if (cartItem && cartItem.quantity > 0) {
+        cardAddToCartWrapper.classList.add('active');
+        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
+        if (qtyValue) qtyValue.innerText = cartItem.quantity;
+      } else {
+        // Revert UI to 'Add to Cart' state
+        cardAddToCartWrapper.classList.remove('active');
+        
+        const btn = cardAddToCartWrapper.querySelector('.add-to-cart-btn');
+        if (btn) {
+          btn.innerText = 'Add to Cart';
+          btn.disabled = false;
+        }
+        
+        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
+        if (qtyValue) qtyValue.innerText = '1';
+      }
+    });
+  };
+
+
 
     function attachAddToCartListeners(scope = document) {
       // Find all forms that add to cart (use ends-with action for safety)
@@ -348,11 +380,16 @@
 
 
     // Load and Render Cart Items
-    async function loadCartItems() {
+    window.loadCartItems = async function() {
       showLoader();
       try {
-        const res = await fetch(window.Shopify.routes.root + 'cart.js');
+        // Force fresh data from Shopify
+        const res = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
         const cart = await res.json();
+        
+        // Sync the UI
+        if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
+        
         // 🔁 Sync discount pills whenever cart loads
         document.querySelectorAll('discount-field')
           .forEach(df => df.updateFromCart(cart));
@@ -431,27 +468,26 @@
           }
 
           return `
-          
-            <div class="cart-item" data-line="${index + 1}">
+            <div class="cart-item" data-line="${index + 1}" data-key="${item.key}">
               <div class="cart-item-left">
                 <div class="cart-item-image">
-                  <a href="${item.url}"><img src="${item.image}" alt="${item.title}" class="cart-image" /></a>
+                  <a href="${item.url}">
+                    <img src="${item.image}" alt="${item.product_title}" class="cart-image" />
+                  </a>
                 </div>
-                <div class="cart-item-info ${hasDiscount ? 'hasDiscount' : ''}">
-                  <a href="${item.url}"><p class="cart-item-title">${item.title}</p></a>
-                  ${hasDiscount ? `<p class="cart-discount-percent">${discountPercent}% Off</p>` : ''}
-                  <p class="cart-price">
-                    ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''}
-                    ${formatMoney(item.final_line_price)}
-                  </p>
+                <div class="cart-item-info">
+                  <a href="${item.url}">
+                    <p class="cart-item-title">${item.product_title}</p>
+                  </a>
+                  <p class="cart-price">${formatMoney(item.final_line_price)}</p>
                 </div>
               </div>
               <div class="cart-qty">
-                <button class="qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">
+                <button class="qty-btn minus" data-line="${index + 1}" data-key="${item.key}" data-qty="${item.quantity}">
                   ${item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`}
                 </button>
                 <span class="qty-count">${item.quantity}</span>
-                <button class="qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">
+                <button class="qty-btn plus" data-line="${index + 1}" data-key="${item.key}" data-qty="${item.quantity}">
                   {% render 'plus-icon' %}
                 </button>
               </div>
@@ -461,6 +497,7 @@
 
         const allItemsHTML = await Promise.all(itemHtmlPromises);
         if (cartItemsWrapper) cartItemsWrapper.innerHTML = allItemsHTML.join('');
+        attachQtyHandlers();
 
         // 🧾 Update totals and counts
         let originalSubtotal = 0;
@@ -521,32 +558,61 @@
       }
     }
 
+    window.resetCardUI = function(variantId) {
+    // Find the specific card for this variant
+    const cardContainer = document.querySelector(`.fc_add_to_cart[data-variant-id="${variantId}"]`);
+    
+    if (cardContainer) {
+      // 1. Remove the 'active' class to show the 'Add to Cart' button instead of +/-
+      cardContainer.classList.remove('active');
+      
+      // 2. Find the button inside and reset its text/disabled state
+      const btn = cardContainer.querySelector('.add-to-cart-btn');
+      if (btn) {
+        btn.innerText = 'Add to Cart';
+        btn.disabled = false;
+      }
+      
+      // 3. Reset the internal quantity number back to 1
+      const qtyValue = cardContainer.querySelector('.qty-value');
+      if (qtyValue) qtyValue.innerText = '1';
+    }
+  };
 
-    // Update Cart item Quantity and Add new item when a product is already in cart.
-    async function updateCartItem(line, quantity) {
+
+    // Global Update Function
+    // --- Update this in your Side Cart script ---
+    window.updateCartItem = async function(key, quantity, variantId) {
       showLoader();
-
       try {
         const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ line, quantity })
+          body: JSON.stringify({ id: key, quantity: quantity }) // Using 'key' instead of 'line'
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
+        const updatedCart = await response.json();
+        
+        // Refresh both Side Cart and Product Card UI
+        await loadCartItems(); 
+        if (window.syncAllCardsWithCart) {
+          window.syncAllCardsWithCart(updatedCart);
+        }
 
-        const data = await response.json();
-        console.log('Cart updated:', data);
+        // Tell the Cart Page to refresh
+        document.dispatchEvent(new CustomEvent('cart:updated', { detail: updatedCart }));
 
-        await loadCartItems(); // Re-render cart after update
-        await recommendedCart();
-        await fetchShippingRateByRegion();
       } catch (err) {
-        console.error('Error updating cart:', err);
+        console.error('Removal failed:', err);
       } finally {
+        // Force unblock all buttons and clear "Adding..."
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+          btn.disabled = false;
+          if (btn.innerText === 'ADDING...') btn.innerText = 'Add to Cart';
+        });
         hideLoader();
       }
-    }
+    };
 
 
     // Quantity button handlers
@@ -554,28 +620,27 @@
       const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
       const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
 
-      plusBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const line = Number(btn.dataset.line);
-          const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
-          const currentQty = Number(qtyCount.textContent);
-          updateCartItem(line, currentQty + 1);
+      minusBtns.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const key = btn.dataset.key; // Get the unique item key
+          const currentQty = Number(btn.dataset.qty);
+          const variantId = btn.dataset.variantId;
+          
+          const newQty = currentQty > 1 ? currentQty - 1 : 0;
+          await window.updateCartItem(key, newQty, variantId);
         });
       });
 
-      minusBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+      plusBtns.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
           const line = Number(btn.dataset.line);
-          const qtyCount = btn.closest('.cart-item').querySelector('.qty-count');
-          const currentQty = Number(qtyCount.textContent);
-          const newQty = currentQty > 1 ? currentQty - 1 : 0;
-          console.log('New Qty:', newQty);
-          if (newQty === 1) {
-            btn.classList.add('one-item');
-          } else {
-            btn.classList.remove('one-item');
+          const currentQty = Number(btn.dataset.qty);
+          const variantId = btn.dataset.variantId;
+          
+          if (window.updateCartItem) {
+            await window.updateCartItem(line, currentQty + 1, variantId);
           }
-          updateCartItem(line, newQty);
         });
       });
     }
