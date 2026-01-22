@@ -273,17 +273,49 @@ document.addEventListener('click', function (e) {
   ----------------------------- */
   if (e.target.closest('[data-locale-apply]')) {
     const country = modal.dataset.selectedCountry;
-    const languageUrl = modal.dataset.selectedLanguageUrl;
-
-    let targetUrl = languageUrl || window.location.origin;
-
-    if (country) {
-      const url = new URL(targetUrl, window.location.origin);
-      url.searchParams.set('country', country);
-      window.location.href = url.toString();
-    } else if (languageUrl) {
-      window.location.href = languageUrl;
+    const languageCode = modal.dataset.selectedLanguage;
+    
+    // 1. Get current path (e.g., /products/mango)
+    let currentPath = window.location.pathname;
+    
+    // 2. Remove existing language prefix from path if necessary
+    // Shopify handles language roots like /en, /fr, etc.
+    const availableLanguages = [];
+    {% for language in localization.available_languages %}
+      availableLanguages.push('{{ language.iso_code }}');
+    {% endfor %}
+    
+    const pathParts = currentPath.split('/');
+    if (pathParts[1] && availableLanguages.includes(pathParts[1])) {
+      pathParts.splice(1, 1); // Remove the old language code
+      currentPath = pathParts.join('/') || '/';
     }
+
+    // 3. Build the new URL
+    // If language is not the default, add it to the path
+    let newPath = (languageCode === '{{ shop.published_locales.first.iso_code }}') 
+                  ? currentPath 
+                  : '/' + languageCode + currentPath;
+
+    // Clean up double slashes
+    newPath = newPath.replace(/\/+/g, '/');
+
+    const finalUrl = new URL(newPath, window.location.origin);
+    
+    // 4. Set the country parameter
+    if (country) {
+      finalUrl.searchParams.set('country', country);
+    }
+    
+    // Keep existing search params (like variants) if you want
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.forEach((value, key) => {
+      if (key !== 'country') { // Don't overwrite our new country
+        finalUrl.searchParams.set(key, value);
+      }
+    });
+
+    window.location.href = finalUrl.toString();
   }
 });
 </script>

@@ -278,7 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isLoading = false;
 
     /* ---------------- ADD TO CART ---------------- */
-    addBtn.addEventListener('click', async (e) => {
+    // Added null check before listener
+    addBtn?.addEventListener('click', async (e) => {
       e.preventDefault();
       if (isLoading) return;
       isLoading = true;
@@ -288,35 +289,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const response = await addToCart(variantId, 1);
-        
         if (response && response.id) {
-          // ⏱️ Wait 300ms for Shopify's server to finalize the session
           await new Promise(resolve => setTimeout(resolve, 300));
-
-          // 🔄 Call the GLOBAL side cart loader
-          if (window.loadCartItems) {
-            await window.loadCartItems();
-          }
+          if (window.loadCartItems) await window.loadCartItems();
+          if (typeof loadCartPageItems === 'function') await loadCartPageItems();
           
-          // 🔄 Update the cart page background
-          if (typeof loadCartPageItems === 'function') {
-            await loadCartPageItems();
-          }
-
-          openSideCartDirectly();
-          await updateHeaderCartCount();
+          if (typeof openSideCartDirectly === 'function') openSideCartDirectly();
+          if (typeof updateHeaderCartCount === 'function') await updateHeaderCartCount();
         }
       } catch (err) {
         console.error('Add failed:', err);
       } finally {
-        addBtn.disabled = false;
-        addBtn.textContent = 'Add to Cart';
+        if (addBtn) {
+          addBtn.disabled = false;
+          addBtn.textContent = 'Add to Cart';
+        }
         isLoading = false;
       }
     });
 
     /* ---------------- MINUS ---------------- */
-    minus.addEventListener('click', async (e) => {
+    // Added null check
+    minus?.addEventListener('click', async (e) => {
       e.preventDefault();
       if (isLoading) return;
       isLoading = true;
@@ -325,14 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const cart = await getCart();
         const item = cart.items.find(i => i.variant_id === variantId);
 
-        if (item) {
+        if (item && window.updateCartItem) {
           const newQty = item.quantity - 1;
-          // Use Global Function from Side Cart to ensure full sync
-          if (window.updateCartItem) {
-            await window.updateCartItem(item.key, newQty, variantId);
-            // Local fallback update for speed
-            qtyEl.textContent = Math.max(0, newQty);
-          }
+          await window.updateCartItem(item.key, newQty, variantId);
+          if (qtyEl) qtyEl.textContent = Math.max(0, newQty);
         }
       } catch (err) {
         console.error(err);
@@ -342,10 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ---------------- PLUS ---------------- */
-    plus.addEventListener('click', async (e) => {
+    // Added null check
+    plus?.addEventListener('click', async (e) => {
       e.preventDefault();
-      // Get current qty from the UI
-      const currentUIDisplay = parseInt(qtyEl.textContent);
+      const currentUIDisplay = qtyEl ? parseInt(qtyEl.textContent) : 0;
       if (isLoading || currentUIDisplay >= maxQty) return;
       isLoading = true;
 
@@ -353,12 +343,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const cart = await getCart();
         const item = cart.items.find(i => i.variant_id === variantId);
 
-        if (item) {
+        if (item && window.updateCartItem) {
           const newQty = item.quantity + 1;
-          if (window.updateCartItem) {
-            await window.updateCartItem(item.key, newQty, variantId);
-            qtyEl.textContent = newQty;
-          }
+          await window.updateCartItem(item.key, newQty, variantId);
+          if (qtyEl) qtyEl.textContent = newQty;
         }
       } catch (err) {
         console.error(err);
@@ -366,6 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isLoading = false;
       }
     });
-  });
+});
 });
 </script>

@@ -22,6 +22,7 @@
         {% render 'cross' %}
       </div>
     </div>
+    {% render 'cart-shipping-goal' %}
     <div
       class="sc-shipping-arrival"
       data-user-language="{{ request.locale.name }}"
@@ -377,7 +378,108 @@
   return [...new Set(codes)];
 }
 
+let shippingWasReached = false;
+let giftWasReached = false;
 
+function updateShippingGoal(cart) {
+  const goalContainer = document.querySelector('.cart-shipping-goal');
+  if (!goalContainer) return;
+
+  const x_ship = parseInt(goalContainer.dataset.thresholdShipping);
+  const y_gift = parseInt(goalContainer.dataset.thresholdGift);
+  const total = cart.total_price;
+
+  // Select elements once
+  const shipMarker = document.querySelector('.shipping-unlocked');
+  const giftMarkerElement = document.querySelector('.goal-marker-gift');
+  const progressFill = document.getElementById('shipping-goal-progress');
+  const messageEl = document.getElementById('shipping-goal-message');
+
+  // 1. Update Bar Width & Color
+  const percentage = Math.min((total / y_gift) * 100, 100);
+  if (progressFill) {
+    progressFill.style.width = percentage + '%';
+    // Turn bar green if first milestone is reached
+    progressFill.style.backgroundColor = total >= x_ship ? '#28a745' : '#4caf50';
+  }
+
+  // 2. Milestone Achievement & Celebration Logic
+  if (total >= x_ship) {
+    if (!shippingWasReached) {
+      shippingWasReached = true;
+      console.log("🎉 Free Shipping Unlocked!");
+    }
+    shipMarker?.classList.add('achieved');
+  } else {
+    shippingWasReached = false;
+    shipMarker?.classList.remove('achieved');
+  }
+
+  if (total >= y_gift) {
+    if (!giftWasReached) {
+      giftWasReached = true;
+      console.log("🎁 Free Gift Unlocked!");
+      if (typeof triggerConfetti === 'function') triggerConfetti();
+    }
+    giftMarkerElement?.classList.add('achieved');
+  } else {
+    giftWasReached = false;
+    giftMarkerElement?.classList.remove('achieved');
+  }
+
+  // 3. Dynamic Text Message
+  if (total < x_ship) {
+    messageEl.innerHTML = `Spend <span class="goal-highlight">${formatMoney(x_ship - total)}</span> more for <b>Free Shipping</b>`;
+  } else if (total < y_gift) {
+    messageEl.innerHTML = `<b>Free Shipping unlocked!</b> Spend <span class="goal-highlight">${formatMoney(y_gift - total)}</span> more for a <b>Free Gift</b>`;
+  } else {
+    messageEl.innerHTML = `<span class="goal-highlight">All rewards unlocked!</span> Check your cart for your gift.`;
+  }
+}
+
+// Replace with your actual gift variant ID from Admin
+const FREE_GIFT_VARIANT_ID = "{{ settings.cart_free_gift_product.first_available_variant.id }}";
+
+async function handleFreeGift(cart) {
+  const goalContainer = document.querySelector('.cart-shipping-goal');
+  if (!goalContainer || !FREE_GIFT_VARIANT_ID) return false;
+
+  const y_gift = parseInt(goalContainer.dataset.thresholdGift);
+  const giftItem = cart.items.find(item => item.variant_id.toString() === FREE_GIFT_VARIANT_ID);
+  
+  // Add gift if total >= Y and not already there
+  if (cart.total_price >= y_gift && !giftItem) {
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: FREE_GIFT_VARIANT_ID, quantity: 1, properties: { '_is_free_gift': 'true' } })
+    });
+    return true; 
+  }
+  // Remove gift if total < Y and it is currently there
+  if (cart.total_price < y_gift && giftItem) {
+    await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: giftItem.key, quantity: 0 })
+    });
+    return true;
+  }
+  return false;
+}
+
+function triggerConfetti() {
+  const container = document.querySelector('.cart-shipping-goal');
+  for (let i = 0; i < 30; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti-piece';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.backgroundColor = ['#28a745', '#ffd700', '#ff4d4d'][Math.floor(Math.random() * 3)];
+    container.appendChild(confetti);
+    
+    setTimeout(() => confetti.remove(), 2000);
+  }
+}
 
     // Load and Render Cart Items
     window.loadCartItems = async function() {
@@ -386,6 +488,16 @@
         // Force fresh data from Shopify
         const res = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
         const cart = await res.json();
+
+        // ✅ RUN GIFT LOGIC FIRST
+        const needsRefresh = await handleFreeGift(cart);
+        if (needsRefresh) {
+          const freshRes = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
+          cart = await freshRes.json();
+        }
+
+        // ✅ UPDATE THE PROGRESS BAR
+        if (typeof updateShippingGoal === 'function') updateShippingGoal(cart);
         
         // Sync the UI
         if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
@@ -632,14 +744,16 @@
       });
 
       plusBtns.forEach(btn => {
+        if (btn.dataset.listener === 'true') return;
+        btn.dataset.listener = 'true';
         btn.addEventListener('click', async (e) => {
           e.preventDefault();
-          const line = Number(btn.dataset.line);
+          const key = btn.dataset.key; // Changed from line to key
           const currentQty = Number(btn.dataset.qty);
           const variantId = btn.dataset.variantId;
           
           if (window.updateCartItem) {
-            await window.updateCartItem(line, currentQty + 1, variantId);
+            await window.updateCartItem(key, currentQty + 1, variantId);
           }
         });
       });
@@ -744,6 +858,13 @@
     "name": "Side Cart",
     "class": "sideCart",
     "tag": "section",
-    "settings": []
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free Shipping Threshold (In Whole Currency)",
+        "default": 100
+      }
+    ]
   }
 {% endschema %}
