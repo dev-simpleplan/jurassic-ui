@@ -110,6 +110,7 @@
     },
     "jurassic-nature": {
       "type": "jurassic-by-nature",
+      "disabled": true,
       "settings": {
         "section_heading": "Jurassic by Nature",
         "section_subheading": "A Fruit Born With the Dinosaurs... and Still Intact",
@@ -126,6 +127,7 @@
     },
     "spacer_Nh7Bjn": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -254,6 +256,7 @@
         "title_CqVYTJ",
         "title_zNyBLK"
       ],
+      "disabled": true,
       "name": "facts",
       "settings": {
         "heading": "want to learn some interesting facts about the fruit’s",
@@ -262,6 +265,7 @@
     },
     "spacer_LKTbj6": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -442,6 +446,7 @@
     },
     "image_text_scroll_qVRxF4": {
       "type": "image-text-scroll",
+      "disabled": true,
       "name": "Durian Shape",
       "settings": {
         "heading": "Our story started with a durian",
@@ -461,6 +466,7 @@
     },
     "spacer_1": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
