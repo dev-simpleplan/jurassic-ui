@@ -466,7 +466,6 @@
     },
     "spacer_1": {
       "type": "spacer",
-      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
