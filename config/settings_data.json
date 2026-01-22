@@ -9,10 +9,15 @@
  */
 {
   "current": {
+    "cart_shipping_threshold": 99,
+    "cart_gift_threshold": 119,
+    "cart_free_gift_product": "100-gift-card",
     "sections": {
       "side-cart": {
         "type": "side-cart",
-        "settings": {}
+        "settings": {
+          "free_shipping_threshold": 100
+        }
       },
       "newsletter": {
         "type": "newsletter",
