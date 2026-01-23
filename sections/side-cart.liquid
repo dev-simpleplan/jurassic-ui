@@ -46,8 +46,6 @@
             const cartData = document.querySelector(".sc-shipping-arrival");
 
             cartData.appendChild(scriptTag);
-
-            console.log('🛒 Cart data:', cart);
           } catch (error) {
             console.error('Error fetching cart:', error);
           }
@@ -65,7 +63,6 @@
           <p class="subtotal-amount cs-res">0.00</p>
         </div>
 
-        <!-- ✅ NEW -->
         <div class="cart-discount" style="display:none;">
           <p class="cs-title">Discount:</p>
           <p class="discount-amount cs-res">-0.00</p>
@@ -99,17 +96,19 @@
 
 
 <script id="cart_function">
+  // CONFIG & STATE
+  let shippingWasReached = false;
+  let giftWasReached = false;
+  const FREE_GIFT_VARIANT_ID = "{{ settings.cart_free_gift_product.first_available_variant.id }}"; 
 
   document.addEventListener('DOMContentLoaded', function () {
     const sideCart = document.querySelector('.sideCart');
     const cartItemsContainer = document.querySelector('.sc-in');
     const cartItemsWrapper = document.querySelector('.side-cart-with-items');
-    const cartIn = document.querySelector('.sc-wrapper');
     const cartFooter = document.querySelector('.sc-footer');
     const body = document.querySelector('body');
     const html = document.querySelector('html');
-
-
+    const loader = document.querySelector('.cart-loader');
 
     function formatMoney(cents) {
       const value = (cents / 100).toFixed(2);
@@ -118,740 +117,284 @@
       return `${symbol}${value} ${code}`;
     }
 
-    document.querySelector('.cart-open')?.addEventListener('click', function () {
-      sideCart.classList.add('active');
-      body.classList.add('stay');
-      html.classList.add('stay');
-      loadCartItems();
-    });
+    function showLoader() { loader?.classList.add('active'); }
+    function hideLoader() { loader?.classList.remove('active'); }
 
-    document.querySelector('.sc-close')?.addEventListener('click', function () {
-      sideCart.classList.remove('active');
-      body.classList.remove('stay')
-      html.classList.remove('stay')
-    });
+    // --- 1. PRODUCT CARD SYNC (The plus/minus on collection pages) ---
+    window.syncAllCardsWithCart = async function(cartData) {
+      const cart = cartData || await fetch(window.Shopify.routes.root + 'cart.js').then(r => r.json());
+      document.querySelectorAll('.fc_add_to_cart').forEach(card => {
+        const variantId = card.closest('[data-variant-id]')?.dataset.variantId || card.dataset.variantId;
+        if (!variantId) return;
+        const cartItem = cart.items.find(item => item.variant_id.toString() === variantId.toString());
+        if (cartItem && cartItem.quantity > 0) {
+          card.classList.add('active'); 
+          const qtyValue = card.querySelector('.qty-value');
+          if (qtyValue) qtyValue.innerText = cartItem.quantity;
+        } else {
+          card.classList.remove('active');
+          const btn = card.querySelector('.add-to-cart-btn');
+          if (btn) { btn.innerText = 'Add to Cart'; btn.disabled = false; }
+        }
+      });
+    };
 
-    const loader = document.querySelector('.cart-loader');
-
-    function showLoader() {
-      loader?.classList.add('active');
-    }
-
-    function hideLoader() {
-      loader?.classList.remove('active');
-    }
-
+    // --- 2. RECOMMENDATIONS LOGIC ---
     const recommendedCart = async () => {
-    const recommendationWrapper = document.querySelector('.cart-recommendation');
-    const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
-    if (!recommendationIn) return;
+      const recommendationWrapper = document.querySelector('.cart-recommendation');
+      const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
+      if (!recommendationIn || !recommendationWrapper) return;
 
-    try {
-      showLoader();
+      try {
+        const cartRes = await fetch('/cart.js');
+        const cart = await cartRes.json();
 
-      const cartRes = await fetch('/cart.js');
-      const cart = await cartRes.json();
+        const renderProducts = (products) => {
+          if (!products || !products.length) { recommendationIn.style.display = 'none'; return; }
+          recommendationIn.style.display = 'flex';
+          let html = '';
+          products.forEach((product) => {
+            const imageSrc = typeof product.featured_image === 'string' ? product.featured_image : product.featured_image?.src || product.images?.[0]?.src || '';
+            const varId = product.variants?.[0]?.id || '';
+            html += `
+              <div class="recommended-item">
+                <div class="ri-img"><img src="${imageSrc}" alt="${product.title}"></div>
+                <div class="ri-txt"><p class="rit-title">${product.title}</p></div>
+                <div class="ri-form">
+                  <form action="/cart/add" method="post">
+                    <input type="hidden" name="id" value="${varId}">
+                    <div class="fc_add_to_cart">
+                      <button type="submit" class="add-to-cart">Add to Cart</button>
+                    </div>
+                  </form>
+                </div>
+              </div>`;
+          });
+          recommendationWrapper.innerHTML = html;
+          attachAddToCartListeners(recommendationWrapper);
+        };
 
-      // helper to render products array
-      const renderProducts = (products) => {
-        if (!products || !products.length) {
-          recommendationIn.style.display = 'none';
-          return;
+        if (cart.items.length > 0) {
+          const res = await fetch(`/recommendations/products.json?product_id=${cart.items[0].product_id}&limit=4`);
+          const data = await res.json();
+          renderProducts(data.products || []);
+        } else {
+          const fallbackRes = await fetch(`/collections/fruit/products.json?limit=4`);
+          const fallbackData = await fallbackRes.json();
+          renderProducts(fallbackData.products || fallbackData);
         }
+      } catch (e) { console.error(e); }
+    };
 
-        recommendationIn.style.display = 'flex';
-        let recommendationsHtml = '';
+    // --- 3. PROGRESS BAR & AUTO-GIFT ---
+    function updateShippingGoal(cart) {
+      const goalContainer = document.querySelector('.cart-shipping-goal');
+      if (!goalContainer || !cart) return;
+      const x_ship = parseInt(goalContainer.dataset.thresholdShipping);
+      const y_gift = parseInt(goalContainer.dataset.thresholdGift);
+      const total = cart.total_price;
+      const progressFill = document.getElementById('shipping-goal-progress');
+      const messageEl = document.getElementById('shipping-goal-message');
 
-        products.forEach((product) => {
-          const imageSrc =
-            typeof product.featured_image === 'string'
-              ? product.featured_image
-              : product.featured_image?.src
-                ? product.featured_image.src
-                : product.images?.[0]?.src || product.images?.[0] || '';
-          const price = formatMoney(product.price);
-          const varId = product.variants && product.variants.length ? product.variants[0].id : '';
-
-          recommendationsHtml += `
-            <div class="recommended-item">
-              <div class="ri-img">
-                <img src="${imageSrc}" alt="${product.title}" class="product-card__image">
-              </div>
-              <div class="ri-txt">
-                <p class="rit-title">${product.title}</p>
-              </div>
-              <div class="ri-form">
-                <form action="/cart/add" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="id" value="${varId}">
-                  <input type="hidden" name="quantity" value="1">
-                  <div class="fc_add_to_cart">
-                    <span class="remove_product">-</span>
-                    <button type="submit" class="add-to-cart">
-                      Add to Cart
-                    </button>
-                    <span class="add_product">+</span>
-                  </div>
-                </form>
-              </div>
-            </div>
-          `;
-        });
-
-        recommendationWrapper.innerHTML = recommendationsHtml;
-        attachAddToCartListeners(recommendationWrapper);
-      };
-
-      // ✅ CASE 1: Cart has items → use product recommendations API
-      if (cart.items.length > 0) {
-        const firstProductId = cart.items[0].product_id;
-        if (!firstProductId) {
-          recommendationIn.style.display = 'none';
-          return;
-        }
-
-        const response = await fetch(`/recommendations/products.json?product_id=${firstProductId}&limit=8`);
-        const data = await response.json();
-        renderProducts(data.products || []);
-        return;
+      const percentage = Math.min((total / y_gift) * 100, 100);
+      if (progressFill) {
+        progressFill.style.width = percentage + '%';
+        progressFill.style.backgroundColor = total >= x_ship ? '#2e7d32' : '#81c784';
       }
+      
+      const shipMarker = document.querySelector('.shipping-unlocked');
+      const giftMarker = document.querySelector('.goal-marker-gift');
+      if (total >= x_ship) shipMarker?.classList.add('achieved'); else shipMarker?.classList.remove('achieved');
+      if (total >= y_gift) {
+        if (!giftWasReached && typeof triggerConfetti === 'function') triggerConfetti();
+        giftWasReached = true; giftMarker?.classList.add('achieved');
+      } else { giftWasReached = false; giftMarker?.classList.remove('achieved'); }
 
-      // ✅ CASE 2: Cart empty → show fallback collection
-      const fallbackHandle = 'fruit'; // change this to your collection handle
-      const fallbackRes = await fetch(`/collections/${fallbackHandle}/products.json?limit=8`);
-      const fallbackData = await fallbackRes.json();
-      // some themes return { products: [...] }, some return array directly – adjust if needed
-      const fallbackProducts = fallbackData.products || fallbackData;
-      renderProducts(fallbackProducts);
-
-    } catch (error) {
-      console.error('❌ Error fetching product recommendations:', error);
-      if (recommendationWrapper) recommendationWrapper.style.display = 'none';
-    } finally {
-      hideLoader();
+      if (total < x_ship) messageEl.innerHTML = `Spend <span class="goal-highlight">${formatMoney(x_ship - total)}</span> more for <b>Free Shipping</b>`;
+      else if (total < y_gift) messageEl.innerHTML = `<b>Free Shipping unlocked!</b> Spend <span class="goal-highlight">${formatMoney(y_gift - total)}</span> more for a <b>Free Gift</b>`;
+      else messageEl.innerHTML = `<span class="goal-highlight">All rewards unlocked!</span>`;
     }
-  };
 
-
-  /// Optimized Global Card Sync Logic
-  window.syncAllCardsWithCart = async function(cartData) {
-    const cart = cartData || await fetch(window.Shopify.routes.root + 'cart.js').then(r => r.json());
-    
-    document.querySelectorAll('.product-card-primary').forEach(card => {
-      const cardAddToCartWrapper = card.querySelector('.fc_add_to_cart');
-      if (!cardAddToCartWrapper) return;
-
-      const variantId = cardAddToCartWrapper.dataset.variantId;
-      const cartItem = cart.items.find(item => item.variant_id.toString() === variantId.toString());
-
-      if (cartItem && cartItem.quantity > 0) {
-        cardAddToCartWrapper.classList.add('active');
-        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
-        if (qtyValue) qtyValue.innerText = cartItem.quantity;
-      } else {
-        // Revert UI to 'Add to Cart' state
-        cardAddToCartWrapper.classList.remove('active');
-        
-        const btn = cardAddToCartWrapper.querySelector('.add-to-cart-btn');
-        if (btn) {
-          btn.innerText = 'Add to Cart';
-          btn.disabled = false;
-        }
-        
-        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
-        if (qtyValue) qtyValue.innerText = '1';
+    async function handleFreeGift(cart) {
+      if (!FREE_GIFT_VARIANT_ID) return false;
+      const goalContainer = document.querySelector('.cart-shipping-goal');
+      if (!goalContainer) return false;
+      const y_gift = parseInt(goalContainer.dataset.thresholdGift);
+      const giftItem = cart.items.find(item => item.variant_id.toString() === FREE_GIFT_VARIANT_ID);
+      if (cart.total_price >= y_gift && !giftItem) {
+        await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: FREE_GIFT_VARIANT_ID, quantity: 1, properties: { '_is_free_gift': 'true' } }) });
+        return true; 
       }
-    });
-  };
-
-
-
-    function attachAddToCartListeners(scope = document) {
-      // Find all forms that add to cart (use ends-with action for safety)
-      scope.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
-        // Prevent adding multiple listeners to same form
-        if (form.dataset.listenerAttached === 'true') return;
-        form.dataset.listenerAttached = 'true';
-
-        // Prefer a custom button class, fallback to any submit button
-        const addToCartBtn = form.querySelector('.add-to-cart-btn') || form.querySelector('button[type="submit"]');
-
-        if (!addToCartBtn) return;
-
-        addToCartBtn.addEventListener('click', async (e) => {
-          // Prevent native form submit so we control requests
-          e.preventDefault();
-
-          // Guard against duplicates
-          if (form.dataset.submitting === 'true') return;
-          form.dataset.submitting = 'true';
-          showLoader();
-
-          try {
-            const formData = new FormData(form);
-
-            // If button has data-variant-id and input id is missing, ensure it exists
-            const btnVariantId = addToCartBtn.dataset.variantId;
-            if (btnVariantId && !form.querySelector('input[name="id"]')) {
-              formData.set('id', btnVariantId);
-            }
-
-            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
-              method: 'POST',
-              body: formData
-            });
-
-            if (!response.ok) throw new Error('Network response was not ok');
-
-            const data = await response.json();
-            console.log('Added to cart:', data);
-
-            // Open side cart and re-render
-            sideCart.classList.add('active');
-            await loadCartItems();
-            await fetchShippingRateByRegion();
-            await recommendedCart();
-          } catch (err) {
-            console.error('Error adding to cart:', err);
-          } finally {
-            form.dataset.submitting = 'false';
-            hideLoader();
-          }
-        });
-      });
-    }
-
-        document.addEventListener('cart:updated', async (e) => {
-  const cart = e.detail;
-
-  // 🔁 Always re-render totals from ONE place
-  await loadCartItems();
-
-  // 🔁 Sync all discount pills everywhere
-  document.querySelectorAll('discount-field')
-    .forEach(df => df.updateFromCart(cart));
-});
-
-  
-    (function () {
-      // Capture submits early
-      document.addEventListener('submit', function (e) {
-        const form = e.target;
-        if (!form || form.getAttribute('action') !== '/cart/add') return;
-
-        // if already submitting, stop duplicate
-        if (form.dataset.submitting === 'true') {
-          e.preventDefault();
-          return;
-        }
-
-        form.dataset.submitting = 'true';
-
-        // Re-enable after a short safe timeout
-        setTimeout(() => {
-          form.dataset.submitting = 'false';
-        }, 3000);
-      }, true);
-    })();
-
-
-    function getDiscountCodesFromCart(cart) {
-      const codes = [];
-
-      // Cart-level discounts
-      if (cart.cart_level_discount_applications?.length) {
-        cart.cart_level_discount_applications.forEach(d => {
-          if (d.type === 'discount_code') {
-            codes.push(d.title);
-          }
-        });
+      if (cart.total_price < y_gift && giftItem) {
+        await fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: giftItem.key, quantity: 0 }) });
+        return true;
       }
-
-      // Line-level discounts
-      cart.items.forEach(item => {
-        item.line_level_discount_allocations.forEach(allocation => {
-          if (allocation.discount_application.type === 'discount_code') {
-            codes.push(allocation.discount_application.title);
-          }
-        });
-      });
-
-  return [...new Set(codes)];
-}
-
-let shippingWasReached = false;
-let giftWasReached = false;
-
-function updateShippingGoal(cart) {
-  const goalContainer = document.querySelector('.cart-shipping-goal');
-  if (!goalContainer) return;
-
-  const x_ship = parseInt(goalContainer.dataset.thresholdShipping);
-  const y_gift = parseInt(goalContainer.dataset.thresholdGift);
-  const total = cart.total_price;
-
-  // Select elements once
-  const shipMarker = document.querySelector('.shipping-unlocked');
-  const giftMarkerElement = document.querySelector('.goal-marker-gift');
-  const progressFill = document.getElementById('shipping-goal-progress');
-  const messageEl = document.getElementById('shipping-goal-message');
-
-  // 1. Update Bar Width & Color
-  const percentage = Math.min((total / y_gift) * 100, 100);
-  if (progressFill) {
-    progressFill.style.width = percentage + '%';
-    // Turn bar green if first milestone is reached
-    progressFill.style.backgroundColor = total >= x_ship ? '#28a745' : '#4caf50';
-  }
-
-  // 2. Milestone Achievement & Celebration Logic
-  if (total >= x_ship) {
-    if (!shippingWasReached) {
-      shippingWasReached = true;
-      console.log("🎉 Free Shipping Unlocked!");
+      return false;
     }
-    shipMarker?.classList.add('achieved');
-  } else {
-    shippingWasReached = false;
-    shipMarker?.classList.remove('achieved');
-  }
 
-  if (total >= y_gift) {
-    if (!giftWasReached) {
-      giftWasReached = true;
-      console.log("🎁 Free Gift Unlocked!");
-      if (typeof triggerConfetti === 'function') triggerConfetti();
-    }
-    giftMarkerElement?.classList.add('achieved');
-  } else {
-    giftWasReached = false;
-    giftMarkerElement?.classList.remove('achieved');
-  }
-
-  // 3. Dynamic Text Message
-  if (total < x_ship) {
-    messageEl.innerHTML = `Spend <span class="goal-highlight">${formatMoney(x_ship - total)}</span> more for <b>Free Shipping</b>`;
-  } else if (total < y_gift) {
-    messageEl.innerHTML = `<b>Free Shipping unlocked!</b> Spend <span class="goal-highlight">${formatMoney(y_gift - total)}</span> more for a <b>Free Gift</b>`;
-  } else {
-    messageEl.innerHTML = `<span class="goal-highlight">All rewards unlocked!</span> Check your cart for your gift.`;
-  }
-}
-
-// Replace with your actual gift variant ID from Admin
-const FREE_GIFT_VARIANT_ID = "{{ settings.cart_free_gift_product.first_available_variant.id }}";
-
-async function handleFreeGift(cart) {
-  const goalContainer = document.querySelector('.cart-shipping-goal');
-  if (!goalContainer || !FREE_GIFT_VARIANT_ID) return false;
-
-  const y_gift = parseInt(goalContainer.dataset.thresholdGift);
-  const giftItem = cart.items.find(item => item.variant_id.toString() === FREE_GIFT_VARIANT_ID);
-  
-  // Add gift if total >= Y and not already there
-  if (cart.total_price >= y_gift && !giftItem) {
-    await fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: FREE_GIFT_VARIANT_ID, quantity: 1, properties: { '_is_free_gift': 'true' } })
-    });
-    return true; 
-  }
-  // Remove gift if total < Y and it is currently there
-  if (cart.total_price < y_gift && giftItem) {
-    await fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: giftItem.key, quantity: 0 })
-    });
-    return true;
-  }
-  return false;
-}
-
-function triggerConfetti() {
-  const container = document.querySelector('.cart-shipping-goal');
-  for (let i = 0; i < 30; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti-piece';
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.backgroundColor = ['#28a745', '#ffd700', '#ff4d4d'][Math.floor(Math.random() * 3)];
-    container.appendChild(confetti);
-    
-    setTimeout(() => confetti.remove(), 2000);
-  }
-}
-
-    // Load and Render Cart Items
+    // --- 4. MAIN RENDER FUNCTION ---
     window.loadCartItems = async function() {
       showLoader();
       try {
-        // Force fresh data from Shopify
         const res = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
-        const cart = await res.json();
+        let cart = await res.json();
 
-        // ✅ RUN GIFT LOGIC FIRST
+        // ✅ INSERT THE GIFT LOGIC HERE
+        // This checks if the gift needs to be added or removed before anything else happens
         const needsRefresh = await handleFreeGift(cart);
         if (needsRefresh) {
+          // If handleFreeGift added/removed an item, we MUST fetch the cart again
           const freshRes = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
-          cart = await freshRes.json();
+          cart = await freshRes.json(); 
         }
 
-        // ✅ UPDATE THE PROGRESS BAR
-        if (typeof updateShippingGoal === 'function') updateShippingGoal(cart);
-        
-        // Sync the UI
-        if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
-        
-        // 🔁 Sync discount pills whenever cart loads
-        document.querySelectorAll('discount-field')
-          .forEach(df => df.updateFromCart(cart));
-        console.log('Cart Data:', cart);
+        // 2. Now proceed with the rest of your UI updates using the fresh 'cart' object
+        updateShippingGoal(cart);
 
-        if (!cartItemsContainer) return;
-
-        const subtotalDiv = document.querySelector('.subtotal-amount');
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-        const totalDivs = document.querySelectorAll('.total-amount, .checkout-total');
+        // 1. Sync header counts
         const cartCountSpan = document.getElementById('cart_item_count');
         const headCount = document.querySelector('.header__cart-quantity');
+        if (cartCountSpan) cartCountSpan.textContent = `(${cart.item_count} items)`;
+        if (headCount) headCount.textContent = cart.item_count;
 
-        // 🧹 Hide/Show wrappers properly
+        // 2. Empty Cart Handling
         if (cart.items.length === 0) {
-          // Show empty cart
-          cartItemsContainer.innerHTML = `
-            <div class="side-cart-empty">
-              <div class="jf-icon">{% render 'jf' %}</div>
-              <div class="sce-txt">
-                <h3>uh-oh!</h3>
-                <p>You have an empty basket.</p>
-              </div>
-            </div>
-          `;
-
+          cartItemsContainer.innerHTML = `<div class="side-cart-empty">Your basket is empty</div>`;
           if (cartItemsWrapper) cartItemsWrapper.style.display = 'none';
           if (cartFooter) cartFooter.style.display = 'none';
-
-          // keep recommendation wrapper visible, content is handled by recommendedCart()
-          const cartRecWrapper = document.querySelector('.cart-recommendation-wrapper');
-          if (cartRecWrapper) cartRecWrapper.style.display = 'flex';
-          if (cartCountSpan) cartCountSpan.textContent = `(0 item)`;
-          if (headCount) headCount.textContent = '0';
-
-          // ensure fallback recommendations for empty cart
+          updateShippingGoal(cart);
           recommendedCart();
           return;
         }
 
-        // ✅ If cart has items, make sure both sections are visible
-        if (cartItemsWrapper) {
-          cartItemsWrapper.style.display = 'block';
+        // 3. Gift Logic Check
+        if (await handleFreeGift(cart)) {
+          const freshRes = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
+          cart = await freshRes.json();
         }
+
+        // 4. Update UI Elements
+        updateShippingGoal(cart);
+        recommendedCart();
+        if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
+        if (cartItemsWrapper) cartItemsWrapper.style.display = 'block';
         if (cartFooter) cartFooter.style.display = 'block';
 
-        const emptyDiv = cartItemsContainer.querySelector('.side-cart-empty');
-        if (emptyDiv) {
-          emptyDiv.remove();
-          cartItemsContainer.appendChild(cartItemsWrapper);
-        }
-        const cartRec = document.querySelector('.cart-recommendation');
-        if (cartRec) cartRec.style.display = 'flex'
-
-        const itemHtmlPromises = cart.items.map(async (item, index) => {
-          let compareAtPrice = null;
-
-          try {
-            const productRes = await fetch(`/products/${item.handle}.js`);
-            const productData = await productRes.json();
-
-            const matchedVariant = productData.variants.find(v => v.id === item.variant_id);
-            if (matchedVariant && matchedVariant.compare_at_price) {
-              compareAtPrice = (matchedVariant.compare_at_price).toFixed(2);
-            }
-          } catch (err) {
-            console.warn(`Could not fetch product data for ${item.title}:`, err);
-          }
-
-          // compareAtPrice = item.original_price;
-
-          const hasDiscount = compareAtPrice && compareAtPrice > item.final_line_price;
-          let discountPercent = 0;
-          if (hasDiscount) {
-            discountPercent = Math.round(((compareAtPrice - item.final_line_price) / compareAtPrice) * 100);
-          }
-
+        // 5. Render Items
+        const itemHtmlPromises = cart.items.map(async (item) => {
+          const isGift = item.variant_id.toString() === FREE_GIFT_VARIANT_ID;
           return `
-            <div class="cart-item" data-line="${index + 1}" data-key="${item.key}">
+            <div class="cart-item ${isGift ? 'is-free-gift' : ''}" data-key="${item.key}">
               <div class="cart-item-left">
-                <div class="cart-item-image">
-                  <a href="${item.url}">
-                    <img src="${item.image}" alt="${item.product_title}" class="cart-image" />
-                  </a>
-                </div>
+                <div class="cart-item-image"><img src="${item.image}" alt="${item.product_title}" class="cart-image" /></div>
                 <div class="cart-item-info">
-                  <a href="${item.url}">
-                    <p class="cart-item-title">${item.product_title}</p>
-                  </a>
-                  <p class="cart-price">${formatMoney(item.final_line_price)}</p>
+                  <p class="cart-item-title">${item.product_title}</p>
+                  <p class="cart-price">
+                    ${isGift ? `<span style="color:#28a745; font-weight:bold;">FREE</span> <s>${formatMoney(item.original_price)}</s>` : formatMoney(item.final_line_price)}
+                  </p>
                 </div>
               </div>
               <div class="cart-qty">
-                <button class="qty-btn minus" data-line="${index + 1}" data-key="${item.key}" data-qty="${item.quantity}">
-                  ${item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`}
+                <button class="qty-btn minus" data-key="${item.key}" data-qty="${item.quantity}">
+                  ${isGift ? `{% render 'bin-icon' %}` : (item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`)}
                 </button>
                 <span class="qty-count">${item.quantity}</span>
-                <button class="qty-btn plus" data-line="${index + 1}" data-key="${item.key}" data-qty="${item.quantity}">
+                <button class="qty-btn plus ${isGift ? 'disabled' : ''}" data-key="${item.key}" data-qty="${item.quantity}" style="${isGift ? 'opacity:0.5; pointer-events:none;' : ''}">
                   {% render 'plus-icon' %}
                 </button>
               </div>
-            </div>
-          `;
+            </div>`;
         });
-
         const allItemsHTML = await Promise.all(itemHtmlPromises);
         if (cartItemsWrapper) cartItemsWrapper.innerHTML = allItemsHTML.join('');
         attachQtyHandlers();
 
-        // 🧾 Update totals and counts
+
+
+        // 6. TOTALS & DISCOUNTS CALCULATION
         let originalSubtotal = 0;
-
-        cart.items.forEach(item => {
-          originalSubtotal += item.original_line_price;
-        });
-
+        cart.items.forEach(item => { originalSubtotal += item.original_line_price; });
         const discountedSubtotal = cart.items_subtotal_price;
-        const total = cart.total_price;
         const discountAmount = originalSubtotal - discountedSubtotal;
+        let visualTotal = cart.total_price;
+
+        // Update subtotal UI
+        const subtotalDiv = document.querySelector('.subtotal-amount');
+        if (subtotalDiv) subtotalDiv.innerHTML = formatMoney(originalSubtotal); 
 
         const discountRow = document.querySelector('.cart-discount');
         const discountDiv = document.querySelector('.discount-amount');
-
-
-        // Subtotal (always original)
-        if (subtotalDiv) {
-          subtotalDiv.innerHTML = formatMoney(originalSubtotal);
-        }
-
-        // Horizon-style discount detection
-        const discountCodes = getDiscountCodesFromCart(cart);
-
-        if (discountCodes.length > 0 && discountAmount > 0) {
-          discountRow.style.display = 'flex';
-          discountDiv.innerHTML = `- ${formatMoney(discountAmount)}`;
+        if (discountAmount > 0) {
+          if (discountRow) discountRow.style.display = 'flex';
+          if (discountDiv) discountDiv.innerHTML = `- ${formatMoney(discountAmount)}`;
+          // Sync custom discount badges
+          document.querySelectorAll('discount-field').forEach(df => { if (typeof df.updateFromCart === 'function') df.updateFromCart(cart); });
         } else {
-          discountRow.style.display = 'none';
-        } 
-
-
-        // Total (final payable)
-        document.querySelectorAll('.total-amount, .checkout-total')
-          .forEach(el => el.innerHTML = formatMoney(total));
-
-        if (headCount) headCount.textContent = cart.item_count;
-        if (cartCountSpan) {
-          cartCountSpan.textContent = cart.item_count === 1
-            ? `(1 item)`
-            : `(${cart.item_count} items)`;
+          if (discountRow) discountRow.style.display = 'none';
         }
 
-        cartItemsContainer.querySelectorAll('.cart-item').forEach(item => {
-          const minusBtn = item.querySelector('.qty-btn.minus');
-          const qtyCount = item.querySelector('.qty-count');
-          if (Number(qtyCount.textContent) === 1) minusBtn.classList.add('one-item');
-        });
-
-        recommendedCart();
-        attachQtyHandlers();
-        fetchShippingRateByRegion();
-
-      } catch (err) {
-        console.error('Error loading cart:', err);
-      } finally {
-        hideLoader();
-      }
-    }
-
-    window.resetCardUI = function(variantId) {
-    // Find the specific card for this variant
-    const cardContainer = document.querySelector(`.fc_add_to_cart[data-variant-id="${variantId}"]`);
-    
-    if (cardContainer) {
-      // 1. Remove the 'active' class to show the 'Add to Cart' button instead of +/-
-      cardContainer.classList.remove('active');
-      
-      // 2. Find the button inside and reset its text/disabled state
-      const btn = cardContainer.querySelector('.add-to-cart-btn');
-      if (btn) {
-        btn.innerText = 'Add to Cart';
-        btn.disabled = false;
-      }
-      
-      // 3. Reset the internal quantity number back to 1
-      const qtyValue = cardContainer.querySelector('.qty-value');
-      if (qtyValue) qtyValue.innerText = '1';
-    }
-  };
-
-
-    // Global Update Function
-    // --- Update this in your Side Cart script ---
-    window.updateCartItem = async function(key, quantity, variantId) {
-      showLoader();
-      try {
-        const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: key, quantity: quantity }) // Using 'key' instead of 'line'
-        });
-
-        const updatedCart = await response.json();
-        
-        // Refresh both Side Cart and Product Card UI
-        await loadCartItems(); 
-        if (window.syncAllCardsWithCart) {
-          window.syncAllCardsWithCart(updatedCart);
+        // Shipping Milestone Fix
+        const x_ship = parseInt(document.querySelector('.cart-shipping-goal')?.dataset.thresholdShipping);
+        const shippingAmountDiv = document.querySelector('.shipping-amount');
+        if (visualTotal >= x_ship && shippingAmountDiv) {
+          shippingAmountDiv.innerHTML = `<span style="color:#28a745; font-weight:bold;">FREE</span>`;
+        } else if (shippingAmountDiv) {
+          shippingAmountDiv.innerHTML = `Calculated at checkout`;
+          if (typeof fetchShippingRateByRegion === 'function') fetchShippingRateByRegion(); 
         }
 
-        // Tell the Cart Page to refresh
-        document.dispatchEvent(new CustomEvent('cart:updated', { detail: updatedCart }));
+        // Adjust for gift price in total
+        const giftInCart = cart.items.find(i => i.variant_id.toString() === FREE_GIFT_VARIANT_ID);
+        if (giftInCart && visualTotal >= parseInt(document.querySelector('.cart-shipping-goal')?.dataset.thresholdGift)) {
+          visualTotal -= giftInCart.final_line_price;
+        }
 
-      } catch (err) {
-        console.error('Removal failed:', err);
-      } finally {
-        // Force unblock all buttons and clear "Adding..."
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-          btn.disabled = false;
-          if (btn.innerText === 'ADDING...') btn.innerText = 'Add to Cart';
-        });
-        hideLoader();
-      }
+        document.querySelectorAll('.total-amount, .checkout-total').forEach(el => el.innerHTML = formatMoney(visualTotal));
+        document.querySelector('.subtotal-amount').innerHTML = formatMoney(originalSubtotal);
+
+      } catch (err) { console.error(err); } finally { hideLoader(); }
     };
 
+    // --- 5. EVENT LISTENERS ---
+    document.querySelector('.cart-open')?.addEventListener('click', () => { sideCart?.classList.add('active'); body?.classList.add('stay'); html?.classList.add('stay'); loadCartItems(); });
+    document.querySelector('.sc-close')?.addEventListener('click', () => { sideCart?.classList.remove('active'); body?.classList.remove('stay'); html?.classList.remove('stay'); });
 
-    // Quantity button handlers
     function attachQtyHandlers() {
-      const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
-      const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
+      cartItemsContainer?.querySelectorAll('.qty-btn.minus').forEach(btn => { btn.onclick = async () => await window.updateCartItem(btn.dataset.key, Math.max(0, Number(btn.dataset.qty) - 1)); });
+      cartItemsContainer?.querySelectorAll('.qty-btn.plus').forEach(btn => { btn.onclick = async () => await window.updateCartItem(btn.dataset.key, Number(btn.dataset.qty) + 1); });
+    }
 
-      minusBtns.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const key = btn.dataset.key; // Get the unique item key
-          const currentQty = Number(btn.dataset.qty);
-          const variantId = btn.dataset.variantId;
-          
-          const newQty = currentQty > 1 ? currentQty - 1 : 0;
-          await window.updateCartItem(key, newQty, variantId);
-        });
-      });
-
-      plusBtns.forEach(btn => {
-        if (btn.dataset.listener === 'true') return;
-        btn.dataset.listener = 'true';
-        btn.addEventListener('click', async (e) => {
-          e.preventDefault();
-          const key = btn.dataset.key; // Changed from line to key
-          const currentQty = Number(btn.dataset.qty);
-          const variantId = btn.dataset.variantId;
-          
-          if (window.updateCartItem) {
-            await window.updateCartItem(key, currentQty + 1, variantId);
-          }
+    function attachAddToCartListeners(scope = document) {
+      scope.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
+        if (form.dataset.listener === 'true') return;
+        form.dataset.listener = 'true';
+        form.querySelector('button')?.addEventListener('click', async (e) => {
+          e.preventDefault(); showLoader();
+          await fetch('/cart/add.js', { method: 'POST', body: new FormData(form) });
+          await loadCartItems(); hideLoader();
         });
       });
     }
 
-    // Show First Shipping option if available. Handled with use case of Not deliverable regions.
-    async function fetchShippingRateByRegion() {
-      try {
-        const failedFlag = localStorage.getItem('shippingRateFailed');
-        if (failedFlag === 'true') {
-          console.warn('⚠️ Shipping rate fetch previously failed — skipping future attempts.');
-          return;
-        }
+    window.updateCartItem = async function(key, quantity) {
+      showLoader();
+      await fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: key, quantity }) });
+      await loadCartItems();
+    };
 
-        let geoData;
-
-        const cachedGeo = localStorage.getItem('userGeoData');
-        if (cachedGeo) {
-          geoData = JSON.parse(cachedGeo);
-          console.log('Using cached geo data:', geoData);
-        } else {
-          console.log('Fetching geo data from API...');
-          const geoRes = await fetch('https://ipapi.co/json/');
-          if (!geoRes.ok) throw new Error('Failed to get IP location data');
-
-          geoData = await geoRes.json();
-
-          localStorage.setItem(
-            'userGeoData',
-            JSON.stringify({
-              country_name: geoData.country_name,
-              postal: geoData.postal,
-              cachedAt: Date.now(),
-            })
-          );
-        }
-
-        const country = geoData.country_name;
-        const zip = geoData.postal || '00000';
-
-        console.log(`🌍 Location detected: ${country}, ZIP: ${zip}`);
-
-        const res = await fetch(
-          `/cart/shipping_rates.json?shipping_address[country]=${encodeURIComponent(country)}&shipping_address[zip]=${encodeURIComponent(zip)}`
-        );
-
-        if (!res.ok) {
-          localStorage.setItem('shippingRateFailed', 'true');
-          throw new Error(`Shipping rate fetch failed (${res.status})`);
-        }
-
-        const data = await res.json();
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-
-        if (data.shipping_rates && data.shipping_rates.length > 0) {
-          console.log('Available Shipping Rates:', data.shipping_rates);
-          const firstRate = data.shipping_rates[0];
-          console.log(`First Rate: ${firstRate.name} - ${firstRate.price} ${firstRate.currency}`);
-
-          if (shippingAmountDiv) {
-            shippingAmountDiv.innerHTML = `${formatMoney(firstRate.price)}`;
-          }
-        } else {
-          console.log('No shipping rates available for your region.');
-          localStorage.setItem('shippingRateFailed', 'true');
-          if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
-        }
-
-      } catch (error) {
-        console.error('Error fetching shipping rates:', error);
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-        if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
-
-        localStorage.setItem('shippingRateFailed', 'true');
+    function triggerConfetti() {
+      const container = document.querySelector('.cart-shipping-goal');
+      if (!container) return;
+      for (let i = 0; i < 30; i++) {
+        const piece = document.createElement('div'); piece.className = 'confetti-piece'; piece.style.left = Math.random() * 100 + '%';
+        piece.style.backgroundColor = ['#28a745', '#ffd700', '#ff4d4d'][Math.floor(Math.random() * 3)];
+        container.appendChild(piece); setTimeout(() => piece.remove(), 2000);
       }
     }
-
 
     loadCartItems();
-    attachAddToCartListeners();
-    
-    
-    // ✅ Expose reinitialization function globally
-    window.initializeCartFunction = async function (cartData) {
-      const cart = cartData || await fetch('/cart.js').then(r => r.json());
-
-      loadCartItems();
-      attachAddToCartListeners();
-
-      document.querySelectorAll('discount-field')
-        .forEach(df => df.updateFromCart(cart));
-    };
-
-    window.initializeCartFunction();
-
   });
 </script>
-
 
 {% schema %}
   {
