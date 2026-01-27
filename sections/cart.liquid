@@ -201,34 +201,19 @@
         }
 
         // 🔥 ONLY CHANGE: now async per item so we can get compare_at_price
-        const itemsHTML = await Promise.all(
-          cart.items.map(async (item, index) => {
+        // Replace the itemsHTML Promise.all block in the Cart Page script:
+        const itemsHTML = cart.items.map((item, index) => {
             const line = index + 1;
             const priceEach = item.final_line_price / item.quantity;
 
-            // --- Get compare_at_price from product JSON ---
-            let compareAtPrice = null;
-
-            try {
-              const productRes = await fetch(`/products/${item.handle}.js`);
-              const productData = await productRes.json();
-
-              const variantData = productData.variants.find(v => v.id === item.variant_id);
-              if (variantData && variantData.compare_at_price) {
-                compareAtPrice = Number(variantData.compare_at_price); // cents
-              }
-            } catch (err) {
-              console.warn('Unable to load product JSON for discount:', err);
-            }
-
-            const hasDiscount =
-              compareAtPrice &&
-              compareAtPrice > Number(item.final_line_price);
+            // Use original_price from the cart object instead of fetching product.js
+            const compareAtPrice = item.variant_id && item.original_line_price ? item.original_line_price : null;
+            const hasDiscount = item.original_line_price > item.final_line_price;
 
             let discountPercent = 0;
             if (hasDiscount) {
               discountPercent = Math.round(
-                ((compareAtPrice - item.final_line_price) / compareAtPrice) * 100
+                ((item.original_line_price - item.final_line_price) / item.original_line_price) * 100
               );
             }
 
@@ -244,20 +229,18 @@
                     <div class="oci-item">
                         <div class="oci-label">Unit price</div>
                         <div class="oci-data">
-                            <p class="cart-price">
-                                ${formatMoney(priceEach)}
-                            </p>
+                            <p class="cart-price">${formatMoney(priceEach)}</p>
                         </div>
                     </div>
                     <div class="oci-item">
                         <div class="oci-label">Unit</div>
                         <div class="oci-data">
                             <div class="cart-page-qty">
-                                <button class="cart-page-qty-btn minus" data-line="${index + 1}" data-qty="${item.quantity}">
+                                <button class="cart-page-qty-btn minus" data-line="${line}" data-qty="${item.quantity}">
                                 ${item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`}
                                 </button>
                                 <span class="cart-page-qty-count">${item.quantity}</span>
-                                <button class="cart-page-qty-btn plus" data-line="${index + 1}" data-qty="${item.quantity}">
+                                <button class="cart-page-qty-btn plus" data-line="${line}" data-qty="${item.quantity}">
                                 {% render 'plus-icon' %}
                                 </button>
                             </div>
@@ -267,11 +250,7 @@
                         <div class="oci-label">Discount</div>
                         <div class="oci-data">
                             <p class="cart-price">
-                                ${
-                              hasDiscount
-                                ? `<span class="cart-discount-label">${discountPercent}% Off</span>`
-                                : ''
-                            }
+                                ${hasDiscount ? `<span class="cart-discount-label">${discountPercent}% Off</span>` : '0%'}
                             </p>
                         </div>
                     </div>
@@ -279,19 +258,17 @@
                         <div class="oci-label">Total price</div>
                         <div class="oci-data">
                             <p class="cart-price">
-                                ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(compareAtPrice)}</span>` : ''} ${formatMoney(item.final_line_price)}
+                                ${hasDiscount ? `<span class="cart-compare-price">${formatMoney(item.original_line_price)}</span>` : ''} 
+                                ${formatMoney(item.final_line_price)}
                             </p>
                         </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              
             </div>
           `;
-       })
-        );
+        });
 
         itemsWrapper.innerHTML = itemsHTML.join('');
 
