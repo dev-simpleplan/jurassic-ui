@@ -15,9 +15,7 @@
     "sections": {
       "side-cart": {
         "type": "side-cart",
-        "settings": {
-          "free_shipping_threshold": 100
-        }
+        "settings": {}
       },
       "newsletter": {
         "type": "newsletter",
