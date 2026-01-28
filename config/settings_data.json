@@ -11,6 +11,7 @@
   "current": {
     "cart_shipping_threshold": 99,
     "cart_gift_threshold": 119,
+    "free_gift_product": "100-gift-card",
     "cart_free_gift_product": "100-gift-card",
     "sections": {
       "side-cart": {
