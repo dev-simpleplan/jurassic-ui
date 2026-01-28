@@ -549,28 +549,6 @@
       "settings": {
         "spacer_height": 140
       }
-    },
-    "1769609572d5325e0f": {
-      "type": "apps",
-      "blocks": {
-        "kite_discount_free_gift_app_block_custom_discount_bADHBB": {
-          "type": "shopify://apps/kite-discount-free-gift/blocks/app-block-customDiscount/2c7302c4-455d-4078-a829-48563ba26089",
-          "settings": {
-            "blockId": "block-id",
-            "sideCartEnabled": false,
-            "widgetIconColor": "#ffffff",
-            "widgetTextColor": "#ffffff",
-            "widgetBackgroundColor": "#ffffff",
-            "widgetBorderColor": "#ffffff",
-            "widgetButtonColor": "#ffffff",
-            "widgetDropdownColor": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "kite_discount_free_gift_app_block_custom_discount_bADHBB"
-      ],
-      "settings": {}
     }
   },
   "order": [
@@ -596,7 +574,6 @@
     "17640536864cbd5f05",
     "spacer10",
     "video",
-    "spacer4",
-    "1769609572d5325e0f"
+    "spacer4"
   ]
 }
