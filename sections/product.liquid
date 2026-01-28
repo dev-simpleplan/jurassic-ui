@@ -75,13 +75,26 @@
               {% endif %}
           </div>
           <div class="prod-main-image">
-            {% for media in product.media %}
+            {% if product.media.size > 0 %}
+              {% for media in product.media %}
+                <div class="item">
+                  <div class="prod-main">
+                    {% render 'product-media', media: media %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              {% comment %} This renders ONLY if there are no images/videos {% endcomment %}
               <div class="item">
                 <div class="prod-main">
-                  {% render 'product-media' | media: media %}
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647"
+                    alt="{{ product.title }}"
+                    class="image-custom"
+                    loading="lazy">
                 </div>
               </div>
-            {% endfor %}
+            {% endif %}
           </div>
           <div class="btn-wrap">
             <button class="custom-prev">
@@ -93,13 +106,26 @@
           </div>
         </div>
         <div class="prod-thumb-image">
-          {% for media in product.media %}
+          {% if product.media.size > 0 %}
+            {% for media in product.media %}
+              <div class="item">
+                <div class="prod-thumb">
+                  {% render 'product-media', media: media %}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            {% comment %} Show a small thumbnail placeholder if no media exists {% endcomment %}
             <div class="item">
               <div class="prod-thumb">
-                {% render 'product-media' | media: media %}
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647"
+                  alt="Placeholder"
+                  class="image-custom thumb-placeholder"
+                  loading="lazy">
               </div>
             </div>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
       <div class="pro-desp">

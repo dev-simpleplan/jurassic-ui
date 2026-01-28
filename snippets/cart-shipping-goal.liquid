@@ -1,12 +1,19 @@
-{% assign threshold_shipping = settings.cart_shipping_threshold | default: 180 | times: 100 %}
-{% assign threshold_gift = settings.cart_gift_threshold | default: 300 | times: 100 %}
-{% assign cart_total = cart.total_price %}
+{%- comment -%} 
+  Correctly extracting the ID from the admin product picker setting
+{%- endcomment -%}
+{%- assign gift_product = settings.free_gift_product -%}
+{%- assign gift_variant_id = gift_product.first_available_variant.id -%}
+
+{%- assign threshold_shipping = settings.cart_shipping_threshold | default: 99 | times: 100 -%}
+{%- assign threshold_gift = settings.cart_gift_threshold | default: 119 | times: 100 -%}
+{%- assign cart_total = cart.total_price -%}
 
 <div class="cart-shipping-goal" 
      data-threshold-shipping="{{ threshold_shipping }}"
-     data-threshold-gift="{{ threshold_gift }}">
+     data-threshold-gift="{{ threshold_gift }}"
+     data-gift-variant-id="{{ gift_variant_id }}">
   
-  <div class="shipping-goal-text">
+   <div class="shipping-goal-text">
     <p id="shipping-goal-message">
       {% if cart_total < threshold_shipping %}
         Spend <span class="goal-highlight">{{ threshold_shipping | minus: cart_total | money }}</span> more for <b>Free Shipping</b>

@@ -97,8 +97,8 @@
       },
       {
         "type": "product",
-        "id": "cart_free_gift_product",
-        "label": "Free Gift Product"
+        "id": "free_gift_product",
+        "label": "Select Free Gift Product"
       }
     ]
   }

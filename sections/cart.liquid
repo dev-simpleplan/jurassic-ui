@@ -148,6 +148,13 @@
         console.log('🛒 [CartPage] Loading cart items...');
         const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart.js');
         const cart = await res.json();
+
+        // Call the same global goal tracker
+        if (window.updateCartGoals) {
+          window.updateCartGoals(cart);
+        }
+        
+
         hydrateDiscountFields(cart);
         console.log('🛒 [CartPage] Cart Data:', cart);
 
