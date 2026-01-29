@@ -78,14 +78,14 @@
           "additionalJavascriptAndCss": ""
         }
       },
-      "8218531531362863771": {
-        "type": "shopify://apps/kite-discount-free-gift/blocks/app-embed/2c7302c4-455d-4078-a829-48563ba26089",
+      "18155451270687726080": {
+        "type": "shopify://apps/snap-cart-drawer/blocks/sticky_button/749c3d78-31de-41bb-a321-492d569e1a37",
         "disabled": false,
         "settings": {}
       },
-      "7280966411886983154": {
-        "type": "shopify://apps/monk/blocks/app-embed/e949adb6-87ca-4b97-8f31-0e51bf507f2d",
-        "disabled": false,
+      "8218531531362863771": {
+        "type": "shopify://apps/kite-discount-free-gift/blocks/app-embed/2c7302c4-455d-4078-a829-48563ba26089",
+        "disabled": true,
         "settings": {}
       }
     }
