@@ -472,29 +472,31 @@
           originalSubtotal += item.original_line_price;
         });
 
-        const discountedSubtotal = cart.items_subtotal_price;
+        const discountedSubtotal = cart.items_subtotal_price; 
         const total = cart.total_price;
-        const discountAmount = originalSubtotal - discountedSubtotal;
+
+        // Calculate total discounts (original price vs what they are actually paying)
+        let totalOriginalPrice = 0;
+        cart.items.forEach(item => {
+          totalOriginalPrice += item.original_line_price;
+        });
+        
+        const totalSavings = totalOriginalPrice - total;
+
+        // Update Subtotal (Show the price after line-item discounts to match Cart Page)
+        if (subtotalDiv) {
+          subtotalDiv.innerHTML = formatMoney(discountedSubtotal);
+        }
 
         const discountRow = document.querySelector('.cart-discount');
         const discountDiv = document.querySelector('.discount-amount');
 
-
-        // Subtotal (always original)
-        if (subtotalDiv) {
-          subtotalDiv.innerHTML = formatMoney(originalSubtotal);
-        }
-
-        // Horizon-style discount detection
-        const discountCodes = getDiscountCodesFromCart(cart);
-
-        if (discountCodes.length > 0 && discountAmount > 0) {
+        if (totalSavings > 0) {
           discountRow.style.display = 'flex';
-          discountDiv.innerHTML = `- ${formatMoney(discountAmount)}`;
+          discountDiv.innerHTML = `- ${formatMoney(totalSavings)}`;
         } else {
           discountRow.style.display = 'none';
-        } 
-
+        }
 
         // Total (final payable)
         document.querySelectorAll('.total-amount, .checkout-total')

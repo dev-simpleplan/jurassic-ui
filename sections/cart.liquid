@@ -145,35 +145,32 @@
     // 🚚 Load & render cart items (cart PAGE only)
     const loadCartPageItems = async () => {
       try {
-        console.log('🛒 [CartPage] Loading cart items...');
-        const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart.js');
+        
+        const res = await fetch((window.Shopify?.routes?.root || '/') + 'cart.js?v=' + new Date().getTime());
         const cart = await res.json();
+
         hydrateDiscountFields(cart);
         console.log('🛒 [CartPage] Cart Data:', cart);
 
-        // 🧮 Update subtotal & total
-        if (subtotalDiv) {
-        subtotalDiv.textContent = formatMoney(cart.items_subtotal_price);
-        }
-
-        // ✅ DISCOUNT ROW (same logic as side cart)
-        const discountRow = cartSection.querySelector('.cart-discount');
-        const discountAmountEl = cartSection.querySelector('.discount-amount');
-
-        let originalSubtotal = 0;
+        // 1. Calculate Original Price (before any discounts)
+        let totalOriginalPrice = 0;
         cart.items.forEach(item => {
-          originalSubtotal += item.original_line_price;
+          totalOriginalPrice += item.original_line_price;
         });
 
-        const discountedSubtotal = cart.items_subtotal_price;
-        const discountAmount = originalSubtotal - discountedSubtotal;
+        // 2. The subtotal usually shown is the one AFTER product discounts
+        if (subtotalDiv) {
+          subtotalDiv.textContent = formatMoney(cart.items_subtotal_price);
+        }
 
-        // Reuse SAME discount detection logic
-        const discountCodes = getDiscountCodesFromCart(cart);
+        // 3. Match the Side Cart's discount logic
+        const discountRow = cartSection.querySelector('.cart-discount');
+        const discountAmountEl = cartSection.querySelector('.discount-amount');
+        const totalSavings = totalOriginalPrice - cart.total_price;
 
-        if (discountCodes.length > 0 && discountAmount > 0) {
+        if (totalSavings > 0) {
           discountRow.style.display = 'flex';
-          discountAmountEl.textContent = `- ${formatMoney(discountAmount)}`;
+          discountAmountEl.textContent = `- ${formatMoney(totalSavings)}`;
         } else {
           discountRow.style.display = 'none';
         }
