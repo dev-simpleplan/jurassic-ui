@@ -54,7 +54,6 @@
       </script>
     </div>
     <div class="sc-in">
-      {% render 'cart-shipping-goal' %}
       <div class="side-cart-with-items" data-lenis-prevent></div>
     </div>
     <div class="sc-footer">
@@ -102,13 +101,6 @@
 
   let lastCartTotal = 0; // Tracks the total to prevent redundant shipping fetches
 
-  function formatMoney(cents) {
-      const value = (cents / 100).toFixed(2);
-      const symbol = window.currencySymbol || '';
-      const code = window.activeCurrency || '';
-      return `${symbol}${value} ${code}`;
-    }
-
   document.addEventListener('DOMContentLoaded', function () {
     const sideCart = document.querySelector('.sideCart');
     const cartItemsContainer = document.querySelector('.sc-in');
@@ -118,163 +110,14 @@
     const body = document.querySelector('body');
     const html = document.querySelector('html');
 
-    // --- Global Goal Tracker ---
-    // Add this variable at the very top of your script file to track state
-      let isCartUpdating = false;
 
-      window.updateCartGoals = function(cart) {
-        // 🛑 Exit if we are already in the middle of an update to prevent loops
-        if (isCartUpdating) return;
 
-        const goalContainer = document.querySelector('.cart-shipping-goal');
-        if (!goalContainer) return;
-
-        const thresholdShipping = parseInt(goalContainer.dataset.thresholdShipping);
-        const thresholdGift = parseInt(goalContainer.dataset.thresholdGift);
-        const giftVariantId = goalContainer.dataset.giftVariantId;
-        const cartTotal = cart.total_price;
-
-        // 1. Progress Bar & Message Updates (Visual only - no requests)
-        const progressFill = document.getElementById('shipping-goal-progress');
-        const messageEl = document.getElementById('shipping-goal-message');
-        
-        if (progressFill) {
-          const percentage = Math.min((cartTotal / thresholdGift) * 100, 100);
-          progressFill.style.width = percentage + '%';
-        }
-
-        if (messageEl) {
-          if (cartTotal < thresholdShipping) {
-            messageEl.innerHTML = `Spend <span class="goal-highlight">${formatMoney(thresholdShipping - cartTotal)}</span> more for <b>Free Shipping</b>`;
-          } else if (cartTotal < thresholdGift) {
-            messageEl.innerHTML = `Spend <span class="goal-highlight">${formatMoney(thresholdGift - cartTotal)}</span> more for a <b>Free Gift</b>`;
-          } else {
-            messageEl.innerHTML = `<span class="goal-highlight">All rewards unlocked!</span>`;
-          }
-        }
-
-        // 2. Shipping Text Toggle (Visual only - no requests)
-        document.querySelectorAll('.shipping-amount').forEach(div => {
-          if (cartTotal >= thresholdShipping) {
-            div.innerHTML = "FREE";
-            div.style.color = "#2d8a22";
-            div.style.fontWeight = "bold";
-          } else {
-            div.innerHTML = "Calculated at checkout";
-            div.style.color = "";
-            div.style.fontWeight = "";
-          }
-        });
-
-        // 3. Optimized Gift Logic: Only fires if state MUST change
-        if (giftVariantId) {
-          const giftInCart = cart.items.find(item => item.variant_id.toString() === giftVariantId.toString());
-          const needsGift = cartTotal >= thresholdGift;
-
-          if (needsGift && !giftInCart) {
-            handleDynamicGift(giftVariantId, 'add');
-          } else if (!needsGift && giftInCart) {
-            handleDynamicGift(giftInCart.key, 'remove');
-          }
-        }
-      };
-
-      async function handleDynamicGift(id, action) {
-        if (isCartUpdating) return;
-
-        // 🔍 Check what ID the script is seeing
-        console.log("🎁 Dynamic Gift ID from Liquid:", id);
-
-        // 1. Ensure we have a valid ID before proceeding
-        if (!id || id === "" || id === "undefined" || id === "null") {
-          console.warn("⚠️ No Gift ID found. Check your Liquid snippet.");
-          return;
-        }
-
-        try {
-          // 2. Fresh check of the cart to see if the gift is ALREADY there
-          // This prevents redundant requests that cause the 429 error
-          const res = await fetch('/cart.js');
-          const cart = await res.json();
-          
-          // Check using string comparison to be safe
-          const giftInCart = cart.items.find(item => item.variant_id.toString() === id.toString());
-
-          if (action === 'add' && giftInCart) return; // Stop if already added
-          if (action === 'remove' && !giftInCart) return; // Stop if already gone
-          
-          isCartUpdating = true; // 🔒 Lock process
-
-          const url = action === 'add' ? '/cart/add.js' : '/cart/change.js';
-          const body = action === 'add' 
-            ? { items: [{ id: id, quantity: 1, properties: { '_is_gift': 'true' } }] }
-            : { id: id, quantity: 0 };
-
-          const response = await fetch(window.Shopify.routes.root + url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-          });
-          
-          if (response.ok) {
-            // 3. Re-render the UI once the gift is added/removed
-            await window.loadCartItems(); 
-          }
-        } catch (err) {
-          console.error("Gift API Error:", err);
-        } finally {
-          isCartUpdating = false; // 🔓 Unlock
-        }
-      }
-
-    // async function handleDynamicGift(cart, threshold, giftId) {
-    //   const giftInCart = cart.items.find(item => item.variant_id.toString() === giftId.toString());
-    //   const meetsThreshold = cart.total_price >= threshold;
-
-    //   // Guard: Only hit the API if the state actually needs to change
-    //   if (meetsThreshold && !giftInCart) {
-    //     console.log("🎁 Adding Gift:", giftId);
-    //     try {
-    //       const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ 
-    //           items: [{ id: giftId, quantity: 1, properties: { '_is_gift': 'true' } }] 
-    //         })
-    //       });
-    //       if (response.ok) {
-    //         await window.loadCartItems();
-    //       }
-    //     } catch (e) { console.error("Gift add failed", e); }
-    //   } 
-    //   else if (!meetsThreshold && giftInCart) {
-    //     console.log("🗑️ Removing Gift:", giftId);
-    //     // Use the specific item key for a clean removal
-    //     await window.updateCartItem(giftInCart.key, 0);
-    //   }
-    // }
-
-    // Helper function to manage the Free Gift
-    async function handleFreeGiftLogic(cart, threshold) {
-      const GIFT_VARIANT_ID = '4567890123456'; // 👈 Replace with your Free Gift Variant ID
-      const giftInCart = cart.items.find(item => item.variant_id.toString() === GIFT_VARIANT_ID);
-
-      // If threshold reached and gift NOT in cart -> Add it
-      if (cart.total_price >= threshold && !giftInCart) {
-        await fetch(window.Shopify.routes.root + 'cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: GIFT_VARIANT_ID, quantity: 1 }] })
-        });
-        window.loadCartItems(); // Refresh UI
-      } 
-      // If threshold no longer met but gift IS in cart -> Remove it
-      else if (cart.total_price < threshold && giftInCart) {
-        await window.updateCartItem(giftInCart.key, 0);
-      }
+    function formatMoney(cents) {
+      const value = (cents / 100).toFixed(2);
+      const symbol = window.currencySymbol || '';
+      const code = window.activeCurrency || '';
+      return `${symbol}${value} ${code}`;
     }
-
-    
 
     document.querySelector('.cart-open')?.addEventListener('click', function () {
       sideCart.classList.add('active');
@@ -316,18 +159,7 @@
           let recommendationsHtml = '';
 
           products.forEach((product) => {
-            // Locate this section inside your recommendedCart function
-            let imageSrc = '';
-    
-            if (typeof product.featured_image === 'string') {
-              imageSrc = product.featured_image;
-            } else if (product.featured_image && product.featured_image.src) {
-              imageSrc = product.featured_image.src;
-            } else if (product.images && product.images.length > 0) {
-              imageSrc = typeof product.images[0] === 'string' ? product.images[0] : product.images[0].src;
-            } else {
-              imageSrc = ''; // Fallback placeholder if needed
-            }
+            const imageSrc = product.featured_image || (product.images && product.images[0]) || '';
             const price = formatMoney(product.price);
             const varId = product.variants && product.variants.length ? product.variants[0].id : '';
 
@@ -531,8 +363,6 @@
         // Force fresh data from Shopify
         const res = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
         const cart = await res.json();
-
-        window.updateCartGoals(cart);
         
         // Sync the UI
         if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
@@ -591,12 +421,10 @@
         const cartRec = document.querySelector('.cart-recommendation');
         if (cartRec) cartRec.style.display = 'flex'
 
-        
-        const giftId = document.querySelector('.cart-shipping-goal')?.dataset.giftVariantId;
+        // Replace the old itemHtmlPromises block with this:
         const itemHtmlPromises = cart.items.map(async (item, index) => {
-          
-          const isGift = item.variant_id.toString() === giftId || item.properties?._is_gift === 'true';
-          const priceDisplay = isGift ? 'FREE' : formatMoney(item.final_line_price);
+          // We avoid fetching /products/${item.handle}.js here to prevent 429 errors.
+          // Shopify's cart.js already provides 'original_line_price' and 'final_line_price'.
           
           const hasDiscount = item.original_line_price > item.final_line_price;
           let discountPercent = 0;

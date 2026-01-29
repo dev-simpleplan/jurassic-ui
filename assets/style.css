@@ -4902,8 +4902,7 @@ section.imagescroll {
     border-radius: 20px;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
     padding: 20px 40px 40px 40px;
-    /* margin: 15px 2px; */
-    margin-bottom: 30px;
+    margin: 15px 2px;
     text-align: center;
 }
 .shipping-goal-text {
