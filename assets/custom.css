@@ -450,9 +450,9 @@
   justify-content: center;
 }
 
-.fc_add_to_cart.active .add-to-cart-btn {
+/* .fc_add_to_cart.active .add-to-cart-btn {
   display: none;
-}
+} */
 .fc_add_to_cart {
   display: flex;
   justify-content: center;
@@ -472,9 +472,9 @@
   display: flex;
 }
 
-.fc_add_to_cart.active .add-to-cart-btn {
+/* .fc_add_to_cart.active .add-to-cart-btn {
   display: none;
-}
+} */
 .fc_add_to_cart:not(.active) .qty-controls {
   display: none;
 }

@@ -31,27 +31,6 @@
       <p>Arrives
         <span id="arrival-date">Sep 2 - Sep 4</span>
       </p>
-
-      <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-          try {
-            const response = await fetch('/cart.js');
-            const cart = await response.json();
-
-            const scriptTag = document.createElement('script');
-            scriptTag.id = 'cart-data';
-            scriptTag.type = 'application/json';
-            scriptTag.textContent = JSON.stringify(cart);
-            const cartData = document.querySelector(".sc-shipping-arrival");
-
-            cartData.appendChild(scriptTag);
-
-            console.log('🛒 Cart data:', cart);
-          } catch (error) {
-            console.error('Error fetching cart:', error);
-          }
-        });
-      </script>
     </div>
     <div class="sc-in">
       <div class="side-cart-with-items" data-lenis-prevent></div>
@@ -64,7 +43,6 @@
           <p class="subtotal-amount cs-res">0.00</p>
         </div>
 
-        <!-- ✅ NEW -->
         <div class="cart-discount" style="display:none;">
           <p class="cs-title">Discount:</p>
           <p class="discount-amount cs-res">-0.00</p>
@@ -98,83 +76,111 @@
 
 
 <script id="cart_function">
+(function () {
+  // 🛑 Do NOT run Side Cart on Cart page
+  if (document.body.classList.contains('template-cart')) {
+    console.log('🛑 Side cart disabled on cart page');
+    return;
+  }
 
-  let lastCartTotal = 0; // Tracks the total to prevent redundant shipping fetches
+  let initialized = false;
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', initSideCart);
+
+  function initSideCart() {
+    if (initialized) return;
+    initialized = true;
+
+    /* =======================
+       GLOBAL FLAGS
+    ======================= */
+    window.Shopify = window.Shopify || {};
+    window.Shopify.cart_ajax_enabled = true;
+
+    window.__SIDE_CART_REFRESHING__ = false;
+    let userActionInProgress = false;
+
+    /* =======================
+       HELPERS
+    ======================= */
+
+    function formatMoney(cents) {
+      return `${window.currencySymbol || ''}${(cents / 100).toFixed(2)} ${window.activeCurrency || ''}`;
+    }
+
+    /* =======================
+       DOM
+    ======================= */
     const sideCart = document.querySelector('.sideCart');
     const cartItemsContainer = document.querySelector('.sc-in');
     const cartItemsWrapper = document.querySelector('.side-cart-with-items');
-    const cartIn = document.querySelector('.sc-wrapper');
     const cartFooter = document.querySelector('.sc-footer');
-    const body = document.querySelector('body');
-    const html = document.querySelector('html');
-
-
-
-    function formatMoney(cents) {
-      const value = (cents / 100).toFixed(2);
-      const symbol = window.currencySymbol || '';
-      const code = window.activeCurrency || '';
-      return `${symbol}${value} ${code}`;
-    }
-
-    document.querySelector('.cart-open')?.addEventListener('click', function () {
-      sideCart.classList.add('active');
-      body.classList.add('stay');
-      html.classList.add('stay');
-      loadCartItems();
-    });
-
-    document.querySelector('.sc-close')?.addEventListener('click', function () {
-      sideCart.classList.remove('active');
-      body.classList.remove('stay')
-      html.classList.remove('stay')
-    });
-
     const loader = document.querySelector('.cart-loader');
 
-    function showLoader() {
-      loader?.classList.add('active');
+    if (!sideCart) {
+      console.warn('❌ Side cart container not found');
+      return;
     }
 
-    function hideLoader() {
-      loader?.classList.remove('active');
-    }
+    function showLoader() { loader?.classList.add('active'); }
+    function hideLoader() { loader?.classList.remove('active'); }
 
-    const recommendedCart = async (cartData) => {
-      const recommendationWrapper = document.querySelector('.cart-recommendation');
-      const recommendationIn = document.querySelector('.cart-recommendation-wrapper');
-      if (!recommendationIn || !recommendationWrapper) return;
+    /* =======================
+       OPEN / CLOSE
+    ======================= */
+    document.querySelector('.cart-open')?.addEventListener('click', async () => {
+      sideCart.classList.add('active');
+      document.body.classList.add('stay');
+      document.documentElement.classList.add('stay');
+      // Always refresh when opening to show latest cart state
+      await loadCartItems(true);
+      startCartMonitoring();
+    });
+
+    document.querySelector('.sc-close')?.addEventListener('click', () => {
+      sideCart.classList.remove('active');
+      document.body.classList.remove('stay');
+      document.documentElement.classList.remove('stay');
+      stopCartMonitoring();
+    });
+
+    /* =======================
+       RECOMMENDED CART
+    ======================= */
+    window.recommendedCart = async function (cart) {
+      const wrapper = document.querySelector('.cart-recommendation');
+      const container = document.querySelector('.cart-recommendation-wrapper');
+      if (!wrapper || !container) return;
 
       try {
-        const cart = cartData;
-        const renderProducts = (products) => {
-          if (!products || !products.length) {
-            recommendationIn.style.display = 'none';
+        const render = (products) => {
+          if (!products?.length) {
+            container.style.display = 'none';
             return;
           }
 
-          recommendationIn.style.display = 'flex';
-          let recommendationsHtml = '';
+          container.style.display = 'flex';
 
-          products.forEach((product) => {
-            const imageSrc = product.featured_image || (product.images && product.images[0]) || '';
-            const price = formatMoney(product.price);
-            const varId = product.variants && product.variants.length ? product.variants[0].id : '';
+          wrapper.innerHTML = products.map(p => {
+            const img =
+              typeof p.featured_image === 'string'
+                ? p.featured_image
+                : p.featured_image?.src || p.images?.[0]?.src || '';
 
-            // Restored your EXACT original HTML structure
-            recommendationsHtml += `
+            const variantId = p.variants?.[0]?.id;
+            if (!variantId) return '';
+
+            return `
               <div class="recommended-item">
                 <div class="ri-img">
-                  <img src="${imageSrc}" alt="${product.title}" class="product-card__image">
+                  <img src="${img}" alt="${p.title}" class="product-card__image">
                 </div>
                 <div class="ri-txt">
-                  <p class="rit-title">${product.title}</p>
+                  <p class="rit-title">${p.title}</p>
                 </div>
                 <div class="ri-form">
-                  <form action="/cart/add" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="${varId}">
+                  <form action="/cart/add" method="post" data-external-add>
+                    <input type="hidden" name="id" value="${variantId}">
                     <input type="hidden" name="quantity" value="1">
                     <div class="fc_add_to_cart">
                       <span class="remove_product">-</span>
@@ -185,204 +191,213 @@
                 </div>
               </div>
             `;
-          });
+          }).join('');
 
-          recommendationWrapper.innerHTML = recommendationsHtml;
-          attachAddToCartListeners(recommendationWrapper);
+          attachAddToCartListeners(wrapper);
         };
 
-        if (cart && cart.items && cart.items.length > 0) {
-          const firstProductId = cart.items[0].product_id;
-          const response = await fetch(`/recommendations/products.json?product_id=${firstProductId}&limit=8`);
-          const data = await response.json();
-          renderProducts(data.products || []);
+        if (cart.items.length) {
+          const res = await fetch(`/recommendations/products.json?product_id=${cart.items[0].product_id}&limit=8`);
+          const data = await res.json();
+          render(data.products);
         } else {
-          const fallbackHandle = 'fruit'; 
-          const fallbackRes = await fetch(`/collections/${fallbackHandle}/products.json?limit=8`);
-          const fallbackData = await fallbackRes.json();
-          renderProducts(fallbackData.products || fallbackData);
+          const res = await fetch('/collections/fruit/products.json?limit=8');
+          const data = await res.json();
+          render(data.products || data);
         }
-      } catch (error) {
-        console.error('❌ Recommendation error:', error);
+      } catch (e) {
+        console.error('Recommended cart error', e);
       }
     };
 
+    let lastCartSnapshot = null;
+    let cartMonitorInterval = null;
+    let monitoringActive = false;
 
-  /// Optimized Global Card Sync Logic
-  window.syncAllCardsWithCart = async function(cartData) {
-    const cart = cartData || await fetch(window.Shopify.routes.root + 'cart.js').then(r => r.json());
-    
-    document.querySelectorAll('.product-card-primary').forEach(card => {
-      const cardAddToCartWrapper = card.querySelector('.fc_add_to_cart');
-      if (!cardAddToCartWrapper) return;
-
-      const variantId = cardAddToCartWrapper.dataset.variantId;
-      const cartItem = cart.items.find(item => item.variant_id.toString() === variantId.toString());
-
-      if (cartItem && cartItem.quantity > 0) {
-        cardAddToCartWrapper.classList.add('active');
-        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
-        if (qtyValue) qtyValue.innerText = cartItem.quantity;
+    /* =======================
+       GLOBAL CART UPDATE LISTENER
+    ======================= */
+    // Listen for cart:updated events from anywhere in the app
+    document.addEventListener('cart:updated', async (e) => {
+      console.log('🎁 [SideCart] cart:updated event received, refreshing...');
+      
+      // Refresh immediately if cart is open, or when it opens next
+      if (sideCart.classList.contains('active')) {
+        await loadCartItems(true);
       } else {
-        // Revert UI to 'Add to Cart' state
-        cardAddToCartWrapper.classList.remove('active');
-        
-        const btn = cardAddToCartWrapper.querySelector('.add-to-cart-btn');
-        if (btn) {
-          btn.innerText = 'Add to Cart';
-          btn.disabled = false;
+        // Update snapshot so when cart opens, it shows latest data
+        try {
+          const res = await fetch('/cart.js');
+          const cart = await res.json();
+          lastCartSnapshot = JSON.stringify(
+            cart.items.map(i => ({
+              key: i.key,
+              qty: i.quantity,
+              price: i.final_line_price
+            }))
+          );
+        } catch (e) {
+          console.error('[SideCart] Error updating snapshot', e);
         }
-        
-        const qtyValue = cardAddToCartWrapper.querySelector('.qty-value');
-        if (qtyValue) qtyValue.innerText = '1';
       }
     });
-  };
 
-
-
-    function attachAddToCartListeners(scope = document) {
-      // Find all forms that add to cart (use ends-with action for safety)
-      scope.querySelectorAll('form[action$="/cart/add"]').forEach(form => {
-        // Prevent adding multiple listeners to same form
-        if (form.dataset.listenerAttached === 'true') return;
-        form.dataset.listenerAttached = 'true';
-
-        // Prefer a custom button class, fallback to any submit button
-        const addToCartBtn = form.querySelector('.add-to-cart-btn') || form.querySelector('button[type="submit"]');
-
-        if (!addToCartBtn) return;
-
-        addToCartBtn.addEventListener('click', async (e) => {
-          // Prevent native form submit so we control requests
-          e.preventDefault();
-
-          // Guard against duplicates
-          if (form.dataset.submitting === 'true') return;
-          form.dataset.submitting = 'true';
-          showLoader();
-
-          try {
-            const formData = new FormData(form);
-
-            // If button has data-variant-id and input id is missing, ensure it exists
-            const btnVariantId = addToCartBtn.dataset.variantId;
-            if (btnVariantId && !form.querySelector('input[name="id"]')) {
-              formData.set('id', btnVariantId);
+    /* =======================
+       INTERCEPT CART ADD REQUESTS
+    ======================= */
+    // Intercept all /cart/add.js fetch calls to refresh side cart
+    const originalFetch = window.fetch;
+    window.fetch = async function(...args) {
+      const url = args[0];
+      if (typeof url === 'string' && url.includes('/cart/add.js') && args[1]?.method === 'POST') {
+        const response = await originalFetch.apply(this, args);
+        
+        // After successful add, refresh side cart
+        if (response.ok) {
+          console.log('🔄 [SideCart] External add detected, refreshing...');
+          // Small delay to let gift app process
+          setTimeout(async () => {
+            if (sideCart.classList.contains('active')) {
+              await loadCartItems(true);
+            } else {
+              // Update snapshot for when cart opens
+              try {
+                const res = await fetch('/cart.js');
+                const cart = await res.json();
+                lastCartSnapshot = JSON.stringify(
+                  cart.items.map(i => ({
+                    key: i.key,
+                    qty: i.quantity,
+                    price: i.final_line_price
+                  }))
+                );
+              } catch (e) {
+                console.error('[SideCart] Error updating snapshot', e);
+              }
             }
+          }, 500);
+        }
+        
+        return response;
+      }
+      return originalFetch.apply(this, args);
+    };
 
-            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
-              method: 'POST',
-              body: formData
-            });
-
-            if (!response.ok) throw new Error('Network response was not ok');
-
-            const data = await response.json();
-            console.log('Added to cart:', data);
-
-            // Open side cart and re-render
-            sideCart.classList.add('active');
-            await loadCartItems();
-            await fetchShippingRateByRegion();
-            await recommendedCart();
-          } catch (err) {
-            console.error('Error adding to cart:', err);
-          } finally {
-            form.dataset.submitting = 'false';
-            hideLoader();
-          }
-        });
-      });
-    }
-
-        document.addEventListener('cart:updated', async (e) => {
-  const cart = e.detail;
-
-  // 🔁 Always re-render totals from ONE place
-  await loadCartItems();
-
-  // 🔁 Sync all discount pills everywhere
-  document.querySelectorAll('discount-field')
-    .forEach(df => df.updateFromCart(cart));
-});
-
-  
-    (function () {
-      // Capture submits early
-      document.addEventListener('submit', function (e) {
-        const form = e.target;
-        if (!form || form.getAttribute('action') !== '/cart/add') return;
-
-        // if already submitting, stop duplicate
-        if (form.dataset.submitting === 'true') {
-          e.preventDefault();
+    function startCartMonitoring() {
+      if (cartMonitorInterval || monitoringActive) return;
+      
+      monitoringActive = true;
+      console.log('👀 [SideCart] Starting cart monitoring');
+      
+      cartMonitorInterval = setInterval(async () => {
+        if (!sideCart.classList.contains('active')) {
+          stopCartMonitoring();
           return;
         }
 
-        form.dataset.submitting = 'true';
+        if (userActionInProgress || window.__SIDE_CART_REFRESHING__) {
+          return;
+        }
 
-        // Re-enable after a short safe timeout
-        setTimeout(() => {
-          form.dataset.submitting = 'false';
-        }, 3000);
-      }, true);
-    })();
-
-
-    function getDiscountCodesFromCart(cart) {
-      const codes = [];
-
-      // Cart-level discounts
-      if (cart.cart_level_discount_applications?.length) {
-        cart.cart_level_discount_applications.forEach(d => {
-          if (d.type === 'discount_code') {
-            codes.push(d.title);
+        try {
+          const res = await fetch('/cart.js');
+          
+          if (res.status === 429) {
+            console.warn('⚠️ [SideCart] Rate limit hit');
+            stopCartMonitoring();
+            setTimeout(() => {
+              if (sideCart.classList.contains('active')) {
+                startCartMonitoring();
+              }
+            }, 5000);
+            return;
           }
-        });
+
+          const cart = await res.json();
+
+          const currentSnapshot = JSON.stringify(
+            cart.items.map(i => ({
+              key: i.key,
+              qty: i.quantity,
+              price: i.final_line_price
+            }))
+          );
+
+          if (lastCartSnapshot && currentSnapshot !== lastCartSnapshot) {
+            console.log('🎁 [SideCart] Cart changed externally, refreshing...');
+            lastCartSnapshot = currentSnapshot;
+            loadCartItems(true);
+          }
+        } catch (e) {
+          console.error('[SideCart] Monitoring error', e);
+        }
+      }, 3000);
+    }
+
+    function stopCartMonitoring() {
+      if (cartMonitorInterval) {
+        console.log('🛑 [SideCart] Stopping cart monitoring');
+        clearInterval(cartMonitorInterval);
+        cartMonitorInterval = null;
+        monitoringActive = false;
       }
+    }
 
-      // Line-level discounts
-      cart.items.forEach(item => {
-        item.line_level_discount_allocations.forEach(allocation => {
-          if (allocation.discount_application.type === 'discount_code') {
-            codes.push(allocation.discount_application.title);
-          }
-        });
-      });
-
-  return [...new Set(codes)];
-}
-
-
-
-    // Load and Render Cart Items
-    window.loadCartItems = async function() {
+    /* =======================
+       LOAD CART
+    ======================= */
+    window.loadCartItems = async function (force = false) {
+      if (window.__SIDE_CART_REFRESHING__ && !force) {
+        console.log('[SideCart] Already refreshing, skipping');
+        return;
+      }
+      
+      window.__SIDE_CART_REFRESHING__ = true;
       showLoader();
+
       try {
-        // Force fresh data from Shopify
-        const res = await fetch(`${window.Shopify.routes.root}cart.js?v=${new Date().getTime()}`);
+        const res = await fetch('/cart.js');
+        
+        if (res.status === 429) {
+          console.error('⚠️ [SideCart] Rate limit hit while loading cart');
+          hideLoader();
+          window.__SIDE_CART_REFRESHING__ = false;
+          return;
+        }
+
         const cart = await res.json();
-        
-        // Sync the UI
-        if (window.syncAllCardsWithCart) window.syncAllCardsWithCart(cart);
-        
-        // 🔁 Sync discount pills whenever cart loads
+        console.log('📦 [SideCart] Cart loaded:', cart.item_count, 'items');
+
+        const snapshot = JSON.stringify(
+          cart.items.map(i => ({
+            key: i.key,
+            qty: i.quantity,
+            price: i.final_line_price
+          }))
+        );
+
+        lastCartSnapshot = snapshot;
+
+        // Update cart count
+        const cartCount = document.getElementById('cart_item_count');
+        if (cartCount) {
+          cartCount.textContent = `(${cart.item_count} items)`;
+        }
+
+        // Sync discount fields
         document.querySelectorAll('discount-field')
-          .forEach(df => df.updateFromCart(cart));
-        console.log('Cart Data:', cart);
+          .forEach(df => df.updateFromCart?.(cart));
 
-        if (!cartItemsContainer) return;
+        // Recommended products
+        await recommendedCart(cart);
 
-        const subtotalDiv = document.querySelector('.subtotal-amount');
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-        const totalDivs = document.querySelectorAll('.total-amount, .checkout-total');
-        const cartCountSpan = document.getElementById('cart_item_count');
-        const headCount = document.querySelector('.header__cart-quantity');
-
-        // 🧹 Hide/Show wrappers properly
-        if (cart.items.length === 0) {
-          // Show empty cart
+        // EMPTY CART
+        if (!cart.items.length) {
+          cartItemsWrapper.style.display = 'none';
+          cartFooter.style.display = 'none';
+          // Clear any existing items first
+          cartItemsWrapper.innerHTML = '';
+          // Show empty message
           cartItemsContainer.innerHTML = `
             <div class="side-cart-empty">
               <div class="jf-icon">{% render 'jf' %}</div>
@@ -390,50 +405,34 @@
                 <h3>uh-oh!</h3>
                 <p>You have an empty basket.</p>
               </div>
-            </div>
-          `;
-
-          if (cartItemsWrapper) cartItemsWrapper.style.display = 'none';
-          if (cartFooter) cartFooter.style.display = 'none';
-
-          // keep recommendation wrapper visible, content is handled by recommendedCart()
-          const cartRecWrapper = document.querySelector('.cart-recommendation-wrapper');
-          if (cartRecWrapper) cartRecWrapper.style.display = 'flex';
-          if (cartCountSpan) cartCountSpan.textContent = `(0 item)`;
-          if (headCount) headCount.textContent = '0';
-
-          // ensure fallback recommendations for empty cart
-          recommendedCart(cart);
+            </div>`;
           return;
         }
 
-        // ✅ If cart has items, make sure both sections are visible
-        if (cartItemsWrapper) {
-          cartItemsWrapper.style.display = 'block';
+        // CRITICAL: Restore cartItemsWrapper if it was removed by empty state
+        let activeWrapper = cartItemsWrapper;
+        if (!cartItemsWrapper || !cartItemsContainer.contains(cartItemsWrapper)) {
+          cartItemsContainer.innerHTML = '<div class="side-cart-with-items" data-lenis-prevent></div>';
+          // Re-query after restoring
+          activeWrapper = document.querySelector('.side-cart-with-items');
         }
-        if (cartFooter) cartFooter.style.display = 'block';
 
-        const emptyDiv = cartItemsContainer.querySelector('.side-cart-empty');
-        if (emptyDiv) {
-          emptyDiv.remove();
-          cartItemsContainer.appendChild(cartItemsWrapper);
+        if (!activeWrapper) {
+          console.error('❌ [SideCart] Could not find or restore cartItemsWrapper');
+          return;
         }
-        const cartRec = document.querySelector('.cart-recommendation');
-        if (cartRec) cartRec.style.display = 'flex'
 
-        // Replace the old itemHtmlPromises block with this:
-        const itemHtmlPromises = cart.items.map(async (item, index) => {
-          // We avoid fetching /products/${item.handle}.js here to prevent 429 errors.
-          // Shopify's cart.js already provides 'original_line_price' and 'final_line_price'.
-          
-          const hasDiscount = item.original_line_price > item.final_line_price;
-          let discountPercent = 0;
-          if (hasDiscount) {
-            discountPercent = Math.round(((item.original_line_price - item.final_line_price) / item.original_line_price) * 100);
-          }
+        activeWrapper.style.display = 'block';
+        cartFooter.style.display = 'block';
+
+        // ITEMS
+        activeWrapper.innerHTML = cart.items.map((item, index) => {
+          const isFreeGift =
+            item.final_line_price === 0 &&
+            item.original_line_price > 0;
 
           return `
-            <div class="cart-item" data-line="${index + 1}" data-key="${item.key}">
+            <div class="cart-item" data-key="${item.key}">
               <div class="cart-item-left">
                 <div class="cart-item-image">
                   <a href="${item.url}">
@@ -444,10 +443,12 @@
                   <a href="${item.url}">
                     <p class="cart-item-title">${item.product_title}</p>
                   </a>
-                  <p class="cart-price">${formatMoney(item.final_line_price)}</p>
-                  ${hasDiscount ? `<span class="cart-discount-label">${discountPercent}% Off</span>` : ''}
+                  <p class="cart-price">
+                    ${isFreeGift ? 'FREE' : formatMoney(item.final_line_price)}
+                  </p>
                 </div>
               </div>
+
               <div class="cart-qty">
                 <button class="qty-btn minus" data-line="${index + 1}" data-key="${item.key}" data-qty="${item.quantity}">
                   ${item.quantity > 1 ? `{% render 'minus-icon' %}` : `{% render 'bin-icon' %}`}
@@ -459,250 +460,186 @@
               </div>
             </div>
           `;
-        });
+        }).join('');
 
-        const allItemsHTML = await Promise.all(itemHtmlPromises);
-        if (cartItemsWrapper) cartItemsWrapper.innerHTML = allItemsHTML.join('');
-        attachQtyHandlers();
+        // TOTALS
+        const originalSubtotal = cart.items.reduce(
+          (sum, item) => sum + item.original_line_price,
+          0
+        );
 
-        // 🧾 Update totals and counts
-        let originalSubtotal = 0;
+        document.querySelectorAll('.subtotal-amount')
+          .forEach(el => el.textContent = formatMoney(originalSubtotal));
 
-        cart.items.forEach(item => {
-          originalSubtotal += item.original_line_price;
-        });
-
-        const discountedSubtotal = cart.items_subtotal_price; 
-        const total = cart.total_price;
-
-        // Calculate total discounts (original price vs what they are actually paying)
-        let totalOriginalPrice = 0;
-        cart.items.forEach(item => {
-          totalOriginalPrice += item.original_line_price;
-        });
-        
-        const totalSavings = totalOriginalPrice - total;
-
-        // Update Subtotal (Show the price after line-item discounts to match Cart Page)
-        if (subtotalDiv) {
-          subtotalDiv.innerHTML = formatMoney(discountedSubtotal);
-        }
+        document.querySelectorAll('.total-amount, .checkout-total')
+          .forEach(el => el.textContent = formatMoney(cart.total_price));
 
         const discountRow = document.querySelector('.cart-discount');
-        const discountDiv = document.querySelector('.discount-amount');
+        const discountAmountEl = document.querySelector('.discount-amount');
+        const discount = originalSubtotal - cart.total_price;
 
-        if (totalSavings > 0) {
+        if (discount > 0) {
           discountRow.style.display = 'flex';
-          discountDiv.innerHTML = `- ${formatMoney(totalSavings)}`;
+          discountAmountEl.textContent = `- ${formatMoney(discount)}`;
         } else {
           discountRow.style.display = 'none';
         }
 
-        // Total (final payable)
-        document.querySelectorAll('.total-amount, .checkout-total')
-          .forEach(el => el.innerHTML = formatMoney(total));
-
-        if (headCount) headCount.textContent = cart.item_count;
-        if (cartCountSpan) {
-          cartCountSpan.textContent = cart.item_count === 1
-            ? `(1 item)`
-            : `(${cart.item_count} items)`;
-        }
-
-        cartItemsContainer.querySelectorAll('.cart-item').forEach(item => {
-          const minusBtn = item.querySelector('.qty-btn.minus');
-          const qtyCount = item.querySelector('.qty-count');
-          if (Number(qtyCount.textContent) === 1) minusBtn.classList.add('one-item');
-        });
-
-        recommendedCart(cart);
         attachQtyHandlers();
-        if (cart.total_price !== lastCartTotal) {
-            fetchShippingRateByRegion();
-            lastCartTotal = cart.total_price;
-        }
 
-      } catch (err) {
-        console.error('Error loading cart:', err);
+      } catch (e) {
+        console.error('❌ [SideCart] Error loading cart', e);
       } finally {
         hideLoader();
-      }
-    }
-
-    window.resetCardUI = function(variantId) {
-    // Find the specific card for this variant
-    const cardContainer = document.querySelector(`.fc_add_to_cart[data-variant-id="${variantId}"]`);
-    
-    if (cardContainer) {
-      // 1. Remove the 'active' class to show the 'Add to Cart' button instead of +/-
-      cardContainer.classList.remove('active');
-      
-      // 2. Find the button inside and reset its text/disabled state
-      const btn = cardContainer.querySelector('.add-to-cart-btn');
-      if (btn) {
-        btn.innerText = 'Add to Cart';
-        btn.disabled = false;
-      }
-      
-      // 3. Reset the internal quantity number back to 1
-      const qtyValue = cardContainer.querySelector('.qty-value');
-      if (qtyValue) qtyValue.innerText = '1';
-    }
-  };
-
-
-    // Global Update Function
-    // --- Update this in your Side Cart script ---
-    window.updateCartItem = async function(key, quantity, variantId) {
-      showLoader();
-      try {
-        const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: key, quantity: quantity }) // Using 'key' instead of 'line'
-        });
-
-        const updatedCart = await response.json();
-        
-        // Refresh both Side Cart and Product Card UI
-        await loadCartItems(); 
-        if (window.syncAllCardsWithCart) {
-          window.syncAllCardsWithCart(updatedCart);
-        }
-
-        // Tell the Cart Page to refresh
-        document.dispatchEvent(new CustomEvent('cart:updated', { detail: updatedCart }));
-
-      } catch (err) {
-        console.error('Removal failed:', err);
-      } finally {
-        // Force unblock all buttons and clear "Adding..."
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-          btn.disabled = false;
-          if (btn.innerText === 'ADDING...') btn.innerText = 'Add to Cart';
-        });
-        hideLoader();
+        window.__SIDE_CART_REFRESHING__ = false;
       }
     };
 
-
-    // Quantity button handlers
+    /* =======================
+       QTY
+    ======================= */
     function attachQtyHandlers() {
-      const plusBtns = cartItemsContainer.querySelectorAll('.qty-btn.plus');
-      const minusBtns = cartItemsContainer.querySelectorAll('.qty-btn.minus');
-
-      minusBtns.forEach(btn => {
-        btn.onclick = async (e) => { // Use onclick to prevent multiple listeners
-          const key = btn.dataset.key;
-          const currentQty = Number(btn.dataset.qty);
-          const variantId = btn.dataset.variantId;
-          const newQty = currentQty > 1 ? currentQty - 1 : 0;
-          await window.updateCartItem(key, newQty, variantId);
-        };
+      document.querySelectorAll('.plus').forEach(btn => {
+        btn.onclick = () => updateCartItem(btn.dataset.key, Number(btn.dataset.qty) + 1);
       });
-
-      plusBtns.forEach(btn => {
-        btn.onclick = async (e) => {
-          const key = btn.dataset.key; // Fixed: using key instead of line
-          const currentQty = Number(btn.dataset.qty);
-          const variantId = btn.dataset.variantId;
-          await window.updateCartItem(key, currentQty + 1, variantId);
-        };
+      document.querySelectorAll('.minus').forEach(btn => {
+        btn.onclick = () => updateCartItem(btn.dataset.key, Math.max(0, Number(btn.dataset.qty) - 1));
       });
     }
 
-    // Show First Shipping option if available. Handled with use case of Not deliverable regions.
-    async function fetchShippingRateByRegion() {
+    async function updateCartItem(key, qty) {
+      if (userActionInProgress) {
+        console.log('⏳ [SideCart] Update already in progress');
+        return;
+      }
+
+      console.log(`🔄 [SideCart] Updating item ${key} to qty ${qty}`);
+      userActionInProgress = true;
+      showLoader();
+
       try {
-        const failedFlag = localStorage.getItem('shippingRateFailed');
-        if (failedFlag === 'true') {
-          console.warn('⚠️ Shipping rate fetch previously failed — skipping future attempts.');
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: key, quantity: qty })
+        });
+
+        if (response.status === 429) {
+          alert('Too many requests. Please wait a moment.');
           return;
         }
 
-        let geoData;
+        console.log('✅ [SideCart] Update request sent, waiting for gift app...');
 
-        const cachedGeo = localStorage.getItem('userGeoData');
-        if (cachedGeo) {
-          geoData = JSON.parse(cachedGeo);
-          console.log('Using cached geo data:', geoData);
-        } else {
-          console.log('Fetching geo data from API...');
-          const geoRes = await fetch('https://ipapi.co/json/');
-          if (!geoRes.ok) throw new Error('Failed to get IP location data');
+        // ✅ Wait for gift app to process
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
-          geoData = await geoRes.json();
+        await loadCartItems(true);
 
-          localStorage.setItem(
-            'userGeoData',
-            JSON.stringify({
-              country_name: geoData.country_name,
-              postal: geoData.postal,
-              cachedAt: Date.now(),
-            })
-          );
-        }
-
-        const country = geoData.country_name;
-        const zip = geoData.postal || '00000';
-
-        console.log(`🌍 Location detected: ${country}, ZIP: ${zip}`);
-
-        const res = await fetch(
-          `/cart/shipping_rates.json?shipping_address[country]=${encodeURIComponent(country)}&shipping_address[zip]=${encodeURIComponent(zip)}`
-        );
-
-        if (!res.ok) {
-          localStorage.setItem('shippingRateFailed', 'true');
-          throw new Error(`Shipping rate fetch failed (${res.status})`);
-        }
-
-        const data = await res.json();
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-
-        if (data.shipping_rates && data.shipping_rates.length > 0) {
-          console.log('Available Shipping Rates:', data.shipping_rates);
-          const firstRate = data.shipping_rates[0];
-          console.log(`First Rate: ${firstRate.name} - ${firstRate.price} ${firstRate.currency}`);
-
-          if (shippingAmountDiv) {
-            shippingAmountDiv.innerHTML = `${formatMoney(firstRate.price)}`;
-          }
-        } else {
-          console.log('No shipping rates available for your region.');
-          localStorage.setItem('shippingRateFailed', 'true');
-          if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
-        }
-
-      } catch (error) {
-        console.error('Error fetching shipping rates:', error);
-        const shippingAmountDiv = document.querySelector('.shipping-amount');
-        if (shippingAmountDiv) shippingAmountDiv.innerHTML = 'Shipping Unavailable';
-
-        localStorage.setItem('shippingRateFailed', 'true');
+      } catch (e) {
+        console.error('❌ [SideCart] Update error', e);
+        await loadCartItems(true);
+      } finally {
+        hideLoader();
+        userActionInProgress = false;
       }
     }
 
 
-    loadCartItems();
+    /* =======================
+       ADD TO CART
+    ======================= */
+    function attachAddToCartListeners(scope = document) {
+      const forms = scope.querySelectorAll('form[action$="/cart/add"]');
+      
+      forms.forEach((form, index) => {
+        if (form.dataset.bound) {
+          return;
+        }
+        form.dataset.bound = 'true';
+
+        // Listen to both form submit AND button click (in case button click bypasses form submit)
+        const submitHandler = async e => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          if (userActionInProgress) {
+            console.log('⏳ [SideCart] Add already in progress');
+            return;
+          }
+
+          console.log('➕ [SideCart] Adding to cart...');
+          userActionInProgress = true;
+          showLoader();
+
+          try {
+            const response = await fetch('/cart/add.js', { 
+              method: 'POST', 
+              body: new FormData(form) 
+            });
+
+            if (response.status === 429) {
+              alert('Too many requests. Please wait a moment.');
+              hideLoader();
+              userActionInProgress = false;
+              return;
+            }
+
+            if (!response.ok) {
+              throw new Error('Failed to add to cart');
+            }
+
+            console.log('✅ [SideCart] Add successful, opening cart...');
+            
+            // ✅ CRITICAL FIX: Start monitoring BEFORE opening cart
+            if (!monitoringActive) {
+              startCartMonitoring();
+            }
+            
+            // Open cart
+            sideCart.classList.add('active');
+            document.body.classList.add('stay');
+            document.documentElement.classList.add('stay');
+
+            // ✅ Refresh cart immediately - retry if needed for gift app processing
+            console.log('🔄 [SideCart] Loading cart items immediately...');
+            await loadCartItems(true);
+            
+            // Retry after short delay to catch gift app updates
+            setTimeout(async () => {
+              if (sideCart.classList.contains('active')) {
+                console.log('🔄 [SideCart] Retry refresh for gift app updates...');
+                await loadCartItems(true);
+              }
+            }, 500);
+
+          } catch (e) {
+            console.error('❌ [SideCart] Add to cart error', e);
+            await loadCartItems(true);
+          } finally {
+            hideLoader();
+            userActionInProgress = false;
+          }
+        };
+
+        form.addEventListener('submit', submitHandler, { capture: true });
+        
+        // Also listen to button clicks directly (in case they bypass form submit)
+        const button = form.querySelector('button[type="submit"], .add-to-cart');
+        if (button) {
+          button.addEventListener('click', submitHandler, { capture: true });
+        }
+      });
+    }
+
     attachAddToCartListeners();
-    
-    
-    // ✅ Expose reinitialization function globally
-    window.initializeCartFunction = async function (cartData) {
-      const cart = cartData || await fetch('/cart.js').then(r => r.json());
-
-      loadCartItems();
-      attachAddToCartListeners();
-
-      document.querySelectorAll('discount-field')
-        .forEach(df => df.updateFromCart(cart));
-    };
-
-    window.initializeCartFunction();
-
-  });
+    loadCartItems();
+  }
+})();
 </script>
+
+
 
 
 {% schema %}

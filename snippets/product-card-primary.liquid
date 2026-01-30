@@ -198,7 +198,8 @@
                 <div class="fc_add_to_cart"
                   data-variant-id="{{ current_variant.id }}"
                   data-available="{{ current_variant.available }}"
-                  data-inventory="{{ current_variant.inventory_quantity }}">
+                  data-inventory="{{ current_variant.inventory_quantity }}"
+                  data-external-add>
 
                   <button
                     type="button"
@@ -207,11 +208,6 @@
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
 
-                  <div class="qty-controls">
-                    <span class="remove_product">–</span>
-                    <span class="qty-value">1</span>
-                    <span class="add_product">+</span>
-                  </div>
                 </div>
               </div>
             <div class="fc_trust_text">
@@ -230,10 +226,10 @@
   </div>
 </div>
 
-  <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  async function addToCart(id, qty) {
+  async function addToCart(id, qty = 1) {
     return fetch('/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -241,119 +237,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(r => r.json());
   }
 
-  async function getCart() {
-    return fetch('/cart.js').then(r => r.json());
-  }
-
   function openSideCartDirectly() {
     const sideCart = document.querySelector('.sideCart');
     if (!sideCart) return;
+
     sideCart.classList.add('active');
     document.body.classList.add('stay');
-    window.initializeCartFunction?.();
+    document.documentElement.classList.add('stay');
+
+    // 🔑 ENSURE CONTENT IS RENDERED
+    if (typeof window.renderSideCartItems === 'function') {
+      window.renderSideCartItems();
+    }
   }
 
+
   async function updateHeaderCartCount() {
-    const res = await fetch('/cart.js');
-    const cart = await res.json();
+    const cart = await fetch('/cart.js').then(r => r.json());
     const el = document.querySelector('.header__cart-quantity');
     if (!el) return;
     el.textContent = cart.item_count;
-    cart.item_count > 0 ? el.classList.remove('is-hidden') : el.classList.add('is-hidden');
+    el.classList.toggle('is-hidden', cart.item_count === 0);
   }
 
-  document.querySelectorAll('.fc_add_to_cart').forEach(card => {
-    if (card.dataset.bound === 'true') return;
-    card.dataset.bound = 'true';
+  /* ---------------- VARIANT SWITCH ---------------- */
+  document.querySelectorAll('.fc_variant_item').forEach(variant => {
+    variant.addEventListener('click', () => {
+      const card = variant.closest('.product-card-primary');
+      if (!card) return;
 
-    const variantId = Number(card.dataset.variantId);
-    const inv = parseInt(card.dataset.inventory, 10);
-    const maxQty = Number.isFinite(inv) && inv > 0 ? inv : 0;
-    
-    const addBtn = card.querySelector('.add-to-cart-btn');
-    const plus = card.querySelector('.add_product');
-    const minus = card.querySelector('.remove_product');
-    const qtyEl = card.querySelector('.qty-value');
+      // active state
+      variant
+        .parentElement
+        .querySelectorAll('.fc_variant_item')
+        .forEach(v => v.classList.remove('active'));
 
-    let isLoading = false;
+      variant.classList.add('active');
 
-    /* ---------------- ADD TO CART ---------------- */
-    // Added null check before listener
-    addBtn?.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (isLoading) return;
-      isLoading = true;
+      const variantId = variant.dataset.id;
+      const price = variant.dataset.price;
+      const compare = variant.dataset.compare;
+      const unit = variant.dataset.unit;
+      const image = variant.dataset.image;
 
-      addBtn.disabled = true;
-      addBtn.textContent = 'Adding…';
+      // update price
+      const priceWrap = card.querySelector('.fc_price_weight');
+      if (priceWrap) {
+        priceWrap.querySelector('.selling_price').innerText = price;
+        const compareEl = priceWrap.querySelector('#compare_price');
+        if (compareEl) compareEl.innerText = compare;
+      }
 
-      try {
-        const response = await addToCart(variantId, 1);
-        if (response && response.id) {
-          await new Promise(resolve => setTimeout(resolve, 300));
-          if (window.loadCartItems) await window.loadCartItems();
-          if (typeof loadCartPageItems === 'function') await loadCartPageItems();
-          
-          if (typeof openSideCartDirectly === 'function') openSideCartDirectly();
-          if (typeof updateHeaderCartCount === 'function') await updateHeaderCartCount();
-        }
-      } catch (err) {
-        console.error('Add failed:', err);
-      } finally {
-        if (addBtn) {
-          addBtn.disabled = false;
-          addBtn.textContent = 'Add to Cart';
-        }
-        isLoading = false;
+      // update image
+      const img = card.querySelector('.primary-img');
+      if (img && image) img.src = image;
+
+      // update add to cart button variant
+      const addWrap = card.querySelector('.fc_add_to_cart');
+      if (addWrap) {
+        addWrap.dataset.variantId = variantId;
       }
     });
+  });
 
-    /* ---------------- MINUS ---------------- */
-    // Added null check
-    minus?.addEventListener('click', async (e) => {
+  /* ---------------- ADD TO CART ---------------- */
+  document.querySelectorAll('.fc_add_to_cart .add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
       e.preventDefault();
-      if (isLoading) return;
-      isLoading = true;
+      e.stopImmediatePropagation();
+      const wrap = btn.closest('.fc_add_to_cart');
+      if (!wrap) return;
+
+      const variantId = Number(wrap.dataset.variantId);
+      if (!variantId) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Adding…';
 
       try {
-        const cart = await getCart();
-        const item = cart.items.find(i => i.variant_id === variantId);
+        await addToCart(variantId, 1);
+        openSideCartDirectly();
 
-        if (item && window.updateCartItem) {
-          const newQty = item.quantity - 1;
-          await window.updateCartItem(item.key, newQty, variantId);
-          if (qtyEl) qtyEl.textContent = Math.max(0, newQty);
-        }
+        window.initializeCartFunction?.();
+
       } catch (err) {
-        console.error(err);
+        console.error('Add to cart failed', err);
       } finally {
-        isLoading = false;
+        btn.disabled = false;
+        btn.textContent = 'Add to Cart';
       }
     });
+  });
 
-    /* ---------------- PLUS ---------------- */
-    // Added null check
-    plus?.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const currentUIDisplay = qtyEl ? parseInt(qtyEl.textContent) : 0;
-      if (isLoading || currentUIDisplay >= maxQty) return;
-      isLoading = true;
-
-      try {
-        const cart = await getCart();
-        const item = cart.items.find(i => i.variant_id === variantId);
-
-        if (item && window.updateCartItem) {
-          const newQty = item.quantity + 1;
-          await window.updateCartItem(item.key, newQty, variantId);
-          if (qtyEl) qtyEl.textContent = newQty;
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isLoading = false;
-      }
-    });
-});
 });
 </script>

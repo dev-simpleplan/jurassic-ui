@@ -79,27 +79,5 @@
         "default": 4
       }
     ]
-  },
-  {
-    "name": "Cart Goals",
-    "settings": [
-      {
-        "type": "number",
-        "id": "cart_shipping_threshold",
-        "label": "Free Shipping Threshold (In Whole Currency)",
-        "default": 180
-      },
-      {
-        "type": "number",
-        "id": "cart_gift_threshold",
-        "label": "Free Gift Threshold (In Whole Currency)",
-        "default": 300
-      },
-      {
-        "type": "product",
-        "id": "free_gift_product",
-        "label": "Select Free Gift Product"
-      }
-    ]
   }
 ]
