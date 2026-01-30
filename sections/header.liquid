@@ -267,16 +267,18 @@
             {% else %}
               <a href="{{ routes.account_login_url }}" class="profile">{% render 'icon-profile' %}</a>
             {% endif %}
-            <div class="cart" data-ajax-cart-section>
-              <a href="javascript:void(0)" class="cart-open">
-                {% render 'icon-cart' %}
-              </a>
-              <span
-                data-ajax-cart-bind="item_count"
-                class="header__cart-quantity{% if cart.item_count == 0 %} is-hidden{% endif %}">
-                {{ cart.item_count }}
-              </span>
-            </div>
+            {% unless template.name == 'cart' %}
+              <div class="cart" data-ajax-cart-section>
+                <a href="javascript:void(0)" class="cart-open">
+                  {% render 'icon-cart' %}
+                </a>
+                <span
+                  data-ajax-cart-bind="item_count"
+                  class="header__cart-quantity{% if cart.item_count == 0 %} is-hidden{% endif %}">
+                  {{ cart.item_count }}
+                </span>
+              </div>
+            {% endunless %}
           </div>
         </div>
 
