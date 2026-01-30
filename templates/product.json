@@ -92,11 +92,12 @@
     "spacer0": {
       "type": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 70
       }
     },
     "frequently": {
       "type": "frequently-bought",
+      "custom_css": [],
       "settings": {
         "head": "Frequently Bought<br>Together with"
       }
@@ -211,10 +212,12 @@
         "cards_gKwDPP",
         "cards_PcKgVt"
       ],
+      "disabled": true,
       "settings": {}
     },
     "spacer_BmkhaA": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -437,6 +440,7 @@
         "cards_47PU9w",
         "cards_kb9bFP"
       ],
+      "disabled": true,
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
@@ -466,6 +470,7 @@
     },
     "spacer_1": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
