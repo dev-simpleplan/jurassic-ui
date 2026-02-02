@@ -246,8 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('stay');
 
     // 🔑 ENSURE CONTENT IS RENDERED
-    if (typeof window.renderSideCartItems === 'function') {
-      window.renderSideCartItems();
+    // 🔑 Call the correct function from your side cart script
+    if (typeof window.loadCartItems === 'function') {
+      window.loadCartItems();
     }
   }
 
@@ -318,7 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
         await addToCart(variantId, 1);
         openSideCartDirectly();
 
-        window.initializeCartFunction?.();
+        // This is redundant if you fixed the function above, 
+        // but it's good practice to call the refresh logic here.
+        if (typeof window.loadCartItems === 'function') {
+          await window.loadCartItems();
+        }
 
       } catch (err) {
         console.error('Add to cart failed', err);

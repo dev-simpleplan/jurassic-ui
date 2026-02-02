@@ -478,6 +478,18 @@
                   <p class="cart-item-title">${item.title}</p>
                   <div class="other-cart-info">
                     <div class="oci-item">
+                        <div class="oci-label">Quantity</div>
+                        <div class="oci-data">
+                            <p class="cart-quantity">
+                              ${item.options_with_values?.length
+                                ? item.options_with_values
+                                    .map(opt => `<p class="cart-variant">${opt.value}</p>`)
+                                    .join('')
+                                : ''}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="oci-item">
                         <div class="oci-label">Unit price</div>
                         <div class="oci-data">
                             <p class="cart-price">${formatMoney(priceEach)}</p>

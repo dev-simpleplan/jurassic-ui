@@ -4069,6 +4069,16 @@ section.imagescroll {
     letter-spacing: -0.32px;
     text-transform: capitalize;
 }
+.oci-item .cart-variant {
+    background-color: #F5ECE1;
+    padding: 6px 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 136%;
+    letter-spacing: -0.02em;
+    color: #151515;
+    border-radius: 4px;
+}
 .oci-item .cart-discount-label {
     font-weight: 600;
     font-size: 12px;

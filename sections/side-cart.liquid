@@ -73,11 +73,11 @@
     </div>
   </div>
 </div>
+<div class="sidecart-bg"></div>
 
 
 <script id="cart_function">
 (function () {
-  // 🛑 Do NOT run Side Cart on Cart page
   if (document.body.classList.contains('template-cart')) {
     console.log('🛑 Side cart disabled on cart page');
     return;
@@ -91,29 +91,40 @@
     if (initialized) return;
     initialized = true;
 
-    /* =======================
-       GLOBAL FLAGS
-    ======================= */
     window.Shopify = window.Shopify || {};
     window.Shopify.cart_ajax_enabled = true;
 
-    window.__SIDE_CART_REFRESHING__ = false;
-    let userActionInProgress = false;
+    const REQUEST_LIMITS = {
+      maxPerMinute: 30,
+      requestTimestamps: []
+    };
 
-    /* =======================
-       HELPERS
-    ======================= */
+    function canMakeRequest() {
+      const now = Date.now();
+      const oneMinuteAgo = now - 60000;
+      
+      REQUEST_LIMITS.requestTimestamps = REQUEST_LIMITS.requestTimestamps.filter(
+        ts => ts > oneMinuteAgo
+      );
+      
+      if (REQUEST_LIMITS.requestTimestamps.length >= REQUEST_LIMITS.maxPerMinute) {
+        console.warn('⚠️ [SideCart] Rate limit reached');
+        return false;
+      }
+      
+      REQUEST_LIMITS.requestTimestamps.push(now);
+      return true;
+    }
+
+    // ✅ SIMPLIFIED: Remove complex state management
+    let isUpdating = false;
 
     function formatMoney(cents) {
       return `${window.currencySymbol || ''}${(cents / 100).toFixed(2)} ${window.activeCurrency || ''}`;
     }
 
-    /* =======================
-       DOM
-    ======================= */
     const sideCart = document.querySelector('.sideCart');
     const cartItemsContainer = document.querySelector('.sc-in');
-    const cartItemsWrapper = document.querySelector('.side-cart-with-items');
     const cartFooter = document.querySelector('.sc-footer');
     const loader = document.querySelector('.cart-loader');
 
@@ -122,18 +133,20 @@
       return;
     }
 
-    function showLoader() { loader?.classList.add('active'); }
-    function hideLoader() { loader?.classList.remove('active'); }
+    function showLoader() { 
+      if (loader) loader.classList.add('active'); 
+    }
+    
+    function hideLoader() { 
+      if (loader) loader.classList.remove('active'); 
+    }
 
-    /* =======================
-       OPEN / CLOSE
-    ======================= */
     document.querySelector('.cart-open')?.addEventListener('click', async () => {
       sideCart.classList.add('active');
       document.body.classList.add('stay');
       document.documentElement.classList.add('stay');
-      // Always refresh when opening to show latest cart state
-      await loadCartItems(true);
+      
+      await loadCartItems();
       startCartMonitoring();
     });
 
@@ -144,9 +157,6 @@
       stopCartMonitoring();
     });
 
-    /* =======================
-       RECOMMENDED CART
-    ======================= */
     window.recommendedCart = async function (cart) {
       const wrapper = document.querySelector('.cart-recommendation');
       const container = document.querySelector('.cart-recommendation-wrapper');
@@ -214,74 +224,39 @@
     let cartMonitorInterval = null;
     let monitoringActive = false;
 
-    /* =======================
-       GLOBAL CART UPDATE LISTENER
-    ======================= */
-    // Listen for cart:updated events from anywhere in the app
+    let cartUpdateTimeout = null;
+    
     document.addEventListener('cart:updated', async (e) => {
-      console.log('🎁 [SideCart] cart:updated event received, refreshing...');
+      console.log('🎁 [SideCart] cart:updated event received');
       
-      // Refresh immediately if cart is open, or when it opens next
-      if (sideCart.classList.contains('active')) {
-        await loadCartItems(true);
-      } else {
-        // Update snapshot so when cart opens, it shows latest data
-        try {
-          const res = await fetch('/cart.js');
-          const cart = await res.json();
-          lastCartSnapshot = JSON.stringify(
-            cart.items.map(i => ({
-              key: i.key,
-              qty: i.quantity,
-              price: i.final_line_price
-            }))
-          );
-        } catch (e) {
-          console.error('[SideCart] Error updating snapshot', e);
-        }
+      if (cartUpdateTimeout) {
+        clearTimeout(cartUpdateTimeout);
       }
-    });
-
-    /* =======================
-       INTERCEPT CART ADD REQUESTS
-    ======================= */
-    // Intercept all /cart/add.js fetch calls to refresh side cart
-    const originalFetch = window.fetch;
-    window.fetch = async function(...args) {
-      const url = args[0];
-      if (typeof url === 'string' && url.includes('/cart/add.js') && args[1]?.method === 'POST') {
-        const response = await originalFetch.apply(this, args);
-        
-        // After successful add, refresh side cart
-        if (response.ok) {
-          console.log('🔄 [SideCart] External add detected, refreshing...');
-          // Small delay to let gift app process
-          setTimeout(async () => {
-            if (sideCart.classList.contains('active')) {
-              await loadCartItems(true);
-            } else {
-              // Update snapshot for when cart opens
-              try {
-                const res = await fetch('/cart.js');
-                const cart = await res.json();
-                lastCartSnapshot = JSON.stringify(
-                  cart.items.map(i => ({
-                    key: i.key,
-                    qty: i.quantity,
-                    price: i.final_line_price
-                  }))
-                );
-              } catch (e) {
-                console.error('[SideCart] Error updating snapshot', e);
-              }
+      
+      cartUpdateTimeout = setTimeout(async () => {
+        if (sideCart.classList.contains('active')) {
+          await loadCartItems();
+        } else {
+          try {
+            if (!canMakeRequest()) return;
+            
+            const res = await fetch('/cart.js');
+            if (res.ok) {
+              const cart = await res.json();
+              lastCartSnapshot = JSON.stringify(
+                cart.items.map(i => ({
+                  key: i.key,
+                  qty: i.quantity,
+                  price: i.final_line_price
+                }))
+              );
             }
-          }, 500);
+          } catch (e) {
+            console.error('[SideCart] Error updating snapshot', e);
+          }
         }
-        
-        return response;
-      }
-      return originalFetch.apply(this, args);
-    };
+      }, 300);
+    }, { passive: true });
 
     function startCartMonitoring() {
       if (cartMonitorInterval || monitoringActive) return;
@@ -295,7 +270,11 @@
           return;
         }
 
-        if (userActionInProgress || window.__SIDE_CART_REFRESHING__) {
+        if (isUpdating) {
+          return;
+        }
+
+        if (!canMakeRequest()) {
           return;
         }
 
@@ -309,9 +288,11 @@
               if (sideCart.classList.contains('active')) {
                 startCartMonitoring();
               }
-            }, 5000);
+            }, 10000);
             return;
           }
+
+          if (!res.ok) return;
 
           const cart = await res.json();
 
@@ -326,12 +307,14 @@
           if (lastCartSnapshot && currentSnapshot !== lastCartSnapshot) {
             console.log('🎁 [SideCart] Cart changed externally, refreshing...');
             lastCartSnapshot = currentSnapshot;
-            loadCartItems(true);
+            await loadCartItems();
+          } else if (!lastCartSnapshot) {
+            lastCartSnapshot = currentSnapshot;
           }
         } catch (e) {
           console.error('[SideCart] Monitoring error', e);
         }
-      }, 3000);
+      }, 5000);
     }
 
     function stopCartMonitoring() {
@@ -344,29 +327,35 @@
     }
 
     /* =======================
-       LOAD CART
+       ✅ CRITICAL FIX: SIMPLIFIED LOAD CART
     ======================= */
-    window.loadCartItems = async function (force = false) {
-      if (window.__SIDE_CART_REFRESHING__ && !force) {
-        console.log('[SideCart] Already refreshing, skipping');
+    window.loadCartItems = async function () {
+      console.log('🔄 [SideCart] loadCartItems called');
+      
+      // ✅ Don't check isUpdating - always allow load
+      
+      if (!canMakeRequest()) {
+        console.warn('⚠️ [SideCart] Rate limit - skipping');
         return;
       }
       
-      window.__SIDE_CART_REFRESHING__ = true;
       showLoader();
 
       try {
+        console.log('📡 [SideCart] Fetching /cart.js...');
         const res = await fetch('/cart.js');
         
         if (res.status === 429) {
-          console.error('⚠️ [SideCart] Rate limit hit while loading cart');
-          hideLoader();
-          window.__SIDE_CART_REFRESHING__ = false;
+          console.error('⚠️ [SideCart] Rate limit hit');
           return;
         }
 
+        if (!res.ok) {
+          throw new Error(`Cart fetch failed: ${res.status}`);
+        }
+
         const cart = await res.json();
-        console.log('📦 [SideCart] Cart loaded:', cart.item_count, 'items');
+        console.log('📦 [SideCart] Cart loaded:', cart.item_count, 'items', cart);
 
         const snapshot = JSON.stringify(
           cart.items.map(i => ({
@@ -378,26 +367,33 @@
 
         lastCartSnapshot = snapshot;
 
-        // Update cart count
         const cartCount = document.getElementById('cart_item_count');
         if (cartCount) {
           cartCount.textContent = `(${cart.item_count} items)`;
         }
 
-        // Sync discount fields
         document.querySelectorAll('discount-field')
           .forEach(df => df.updateFromCart?.(cart));
 
-        // Recommended products
         await recommendedCart(cart);
 
-        // EMPTY CART
+        // Clear empty state
+        const emptyState = cartItemsContainer.querySelector('.side-cart-empty');
+        if (emptyState) {
+          emptyState.remove();
+          console.log('🗑️ [SideCart] Removed empty state');
+        }
+
         if (!cart.items.length) {
-          cartItemsWrapper.style.display = 'none';
-          cartFooter.style.display = 'none';
-          // Clear any existing items first
-          cartItemsWrapper.innerHTML = '';
-          // Show empty message
+          const existingWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
+          if (existingWrapper) {
+            existingWrapper.remove();
+          }
+          
+          if (cartFooter) {
+            cartFooter.style.display = 'none';
+          }
+          
           cartItemsContainer.innerHTML = `
             <div class="side-cart-empty">
               <div class="jf-icon">{% render 'jf' %}</div>
@@ -406,27 +402,29 @@
                 <p>You have an empty basket.</p>
               </div>
             </div>`;
+          console.log('📝 [SideCart] Showing empty cart');
           return;
         }
 
-        // CRITICAL: Restore cartItemsWrapper if it was removed by empty state
-        let activeWrapper = cartItemsWrapper;
-        if (!cartItemsWrapper || !cartItemsContainer.contains(cartItemsWrapper)) {
-          cartItemsContainer.innerHTML = '<div class="side-cart-with-items" data-lenis-prevent></div>';
-          // Re-query after restoring
-          activeWrapper = document.querySelector('.side-cart-with-items');
+        // ✅ Force recreate wrapper
+        console.log('🔧 [SideCart] Recreating cart items wrapper');
+        
+        const oldWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
+        if (oldWrapper) {
+          oldWrapper.remove();
+        }
+        
+        const newWrapper = document.createElement('div');
+        newWrapper.className = 'side-cart-with-items';
+        newWrapper.setAttribute('data-lenis-prevent', '');
+        cartItemsContainer.appendChild(newWrapper);
+
+        if (cartFooter) {
+          cartFooter.style.display = 'block';
         }
 
-        if (!activeWrapper) {
-          console.error('❌ [SideCart] Could not find or restore cartItemsWrapper');
-          return;
-        }
-
-        activeWrapper.style.display = 'block';
-        cartFooter.style.display = 'block';
-
-        // ITEMS
-        activeWrapper.innerHTML = cart.items.map((item, index) => {
+        console.log('📝 [SideCart] Rendering', cart.items.length, 'items');
+        newWrapper.innerHTML = cart.items.map((item, index) => {
           const isFreeGift =
             item.final_line_price === 0 &&
             item.original_line_price > 0;
@@ -440,12 +438,21 @@
                   </a>
                 </div>
                 <div class="cart-item-info">
-                  <a href="${item.url}">
-                    <p class="cart-item-title">${item.product_title}</p>
-                  </a>
-                  <p class="cart-price">
-                    ${isFreeGift ? 'FREE' : formatMoney(item.final_line_price)}
-                  </p>
+                  <div class="cii-top">
+                    <a href="${item.url}">
+                      <p class="cart-item-title">${item.product_title}</p>
+                    </a>
+                    <p class="cart-price">
+                      ${isFreeGift ? 'FREE' : formatMoney(item.final_line_price)}
+                    </p>
+                  </div>
+                  <div class="cii-bottom">
+                    ${item.options_with_values?.length
+                      ? item.options_with_values
+                          .map(opt => `<p class="cart-variant">${opt.value}</p>`)
+                          .join('')
+                      : ''}
+                  </div>
                 </div>
               </div>
 
@@ -462,7 +469,6 @@
           `;
         }).join('');
 
-        // TOTALS
         const originalSubtotal = cart.items.reduce(
           (sum, item) => sum + item.original_line_price,
           0
@@ -478,43 +484,59 @@
         const discountAmountEl = document.querySelector('.discount-amount');
         const discount = originalSubtotal - cart.total_price;
 
-        if (discount > 0) {
+        if (discount > 0 && discountRow && discountAmountEl) {
           discountRow.style.display = 'flex';
           discountAmountEl.textContent = `- ${formatMoney(discount)}`;
-        } else {
+        } else if (discountRow) {
           discountRow.style.display = 'none';
         }
 
         attachQtyHandlers();
+        
+        console.log('✅ [SideCart] Render complete');
 
       } catch (e) {
         console.error('❌ [SideCart] Error loading cart', e);
       } finally {
         hideLoader();
-        window.__SIDE_CART_REFRESHING__ = false;
       }
     };
 
-    /* =======================
-       QTY
-    ======================= */
+    let qtyUpdateTimeout = null;
+    
     function attachQtyHandlers() {
       document.querySelectorAll('.plus').forEach(btn => {
-        btn.onclick = () => updateCartItem(btn.dataset.key, Number(btn.dataset.qty) + 1);
+        btn.onclick = () => {
+          if (qtyUpdateTimeout) clearTimeout(qtyUpdateTimeout);
+          qtyUpdateTimeout = setTimeout(() => {
+            updateCartItem(btn.dataset.key, Number(btn.dataset.qty) + 1);
+          }, 200);
+        };
       });
+      
       document.querySelectorAll('.minus').forEach(btn => {
-        btn.onclick = () => updateCartItem(btn.dataset.key, Math.max(0, Number(btn.dataset.qty) - 1));
+        btn.onclick = () => {
+          if (qtyUpdateTimeout) clearTimeout(qtyUpdateTimeout);
+          qtyUpdateTimeout = setTimeout(() => {
+            updateCartItem(btn.dataset.key, Math.max(0, Number(btn.dataset.qty) - 1));
+          }, 200);
+        };
       });
     }
 
     async function updateCartItem(key, qty) {
-      if (userActionInProgress) {
+      if (isUpdating) {
         console.log('⏳ [SideCart] Update already in progress');
         return;
       }
 
+      if (!canMakeRequest()) {
+        alert('Too many requests. Please wait a moment.');
+        return;
+      }
+
       console.log(`🔄 [SideCart] Updating item ${key} to qty ${qty}`);
-      userActionInProgress = true;
+      isUpdating = true;
       showLoader();
 
       try {
@@ -529,48 +551,51 @@
           return;
         }
 
-        console.log('✅ [SideCart] Update request sent, waiting for gift app...');
+        if (!response.ok) {
+          throw new Error(`Cart update failed: ${response.status}`);
+        }
 
-        // ✅ Wait for gift app to process
+        console.log('✅ [SideCart] Update successful, waiting for gift app...');
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        await loadCartItems(true);
+        await loadCartItems();
 
       } catch (e) {
         console.error('❌ [SideCart] Update error', e);
-        await loadCartItems(true);
+        await loadCartItems();
       } finally {
         hideLoader();
-        userActionInProgress = false;
+        isUpdating = false;
       }
     }
 
-
     /* =======================
-       ADD TO CART
+       ✅ CRITICAL FIX: SIMPLIFIED ADD TO CART
     ======================= */
     function attachAddToCartListeners(scope = document) {
       const forms = scope.querySelectorAll('form[action$="/cart/add"]');
       
-      forms.forEach((form, index) => {
-        if (form.dataset.bound) {
-          return;
-        }
-        form.dataset.bound = 'true';
+      forms.forEach((form) => {
+        if (form.dataset.cartBound) return;
+        form.dataset.cartBound = 'true';
 
-        // Listen to both form submit AND button click (in case button click bypasses form submit)
         const submitHandler = async e => {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
           
-          if (userActionInProgress) {
+          if (isUpdating) {
             console.log('⏳ [SideCart] Add already in progress');
             return;
           }
 
+          if (!canMakeRequest()) {
+            alert('Too many requests. Please wait a moment.');
+            return;
+          }
+
           console.log('➕ [SideCart] Adding to cart...');
-          userActionInProgress = true;
+          isUpdating = true;
           showLoader();
 
           try {
@@ -581,8 +606,6 @@
 
             if (response.status === 429) {
               alert('Too many requests. Please wait a moment.');
-              hideLoader();
-              userActionInProgress = false;
               return;
             }
 
@@ -590,42 +613,41 @@
               throw new Error('Failed to add to cart');
             }
 
-            console.log('✅ [SideCart] Add successful, opening cart...');
-            
-            // ✅ CRITICAL FIX: Start monitoring BEFORE opening cart
-            if (!monitoringActive) {
-              startCartMonitoring();
-            }
+            const data = await response.json();
+            console.log('✅ [SideCart] Product added:', data);
             
             // Open cart
             sideCart.classList.add('active');
             document.body.classList.add('stay');
             document.documentElement.classList.add('stay');
 
-            // ✅ Refresh cart immediately - retry if needed for gift app processing
-            console.log('🔄 [SideCart] Loading cart items immediately...');
-            await loadCartItems(true);
+            // ✅ CRITICAL: Call loadCartItems WITHOUT any delay
+            console.log('🔄 [SideCart] Loading cart immediately...');
+            await loadCartItems();
             
-            // Retry after short delay to catch gift app updates
+            // Start monitoring
+            if (!monitoringActive) {
+              startCartMonitoring();
+            }
+            
+            // Second refresh for gift app
             setTimeout(async () => {
               if (sideCart.classList.contains('active')) {
-                console.log('🔄 [SideCart] Retry refresh for gift app updates...');
-                await loadCartItems(true);
+                console.log('🔄 [SideCart] Second refresh for gift app...');
+                await loadCartItems();
               }
-            }, 500);
+            }, 1500);
 
           } catch (e) {
             console.error('❌ [SideCart] Add to cart error', e);
-            await loadCartItems(true);
           } finally {
             hideLoader();
-            userActionInProgress = false;
+            isUpdating = false;
           }
         };
 
         form.addEventListener('submit', submitHandler, { capture: true });
         
-        // Also listen to button clicks directly (in case they bypass form submit)
         const button = form.querySelector('button[type="submit"], .add-to-cart');
         if (button) {
           button.addEventListener('click', submitHandler, { capture: true });
@@ -638,9 +660,6 @@
   }
 })();
 </script>
-
-
-
 
 {% schema %}
   {
