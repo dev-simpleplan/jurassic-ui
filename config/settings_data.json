@@ -60,24 +60,6 @@
         "disabled": false,
         "settings": {}
       },
-      "10111608272286102450": {
-        "type": "shopify://apps/pickeasy/blocks/app-embed/7e06b047-cfd1-4df7-add1-81e9a842022c",
-        "disabled": false,
-        "settings": {
-          "enable_network_listeners": false,
-          "xhrRequestExactMatch": "",
-          "xhrRequestExactMatchTimeout": 500,
-          "xhrRequestPartialMatch": "",
-          "xhrRequestPartialMatchTimeout": 500,
-          "fetchRequestExactMatch": "",
-          "fetchRequestExactMatchTimeout": 500,
-          "fetchRequestPartialMatch": "",
-          "fetchRequestPartialMatchimeout": 500,
-          "buttonClickClassName": "",
-          "buttonClickTimeout": 500,
-          "additionalJavascriptAndCss": ""
-        }
-      },
       "8218531531362863771": {
         "type": "shopify://apps/kite-discount-free-gift/blocks/app-embed/2c7302c4-455d-4078-a829-48563ba26089",
         "disabled": true,
@@ -91,6 +73,24 @@
           "hide_theme_cart": false,
           "enable_defer_loading": false,
           "enable_corner_test_campaigns": true
+        }
+      },
+      "10111608272286102450": {
+        "type": "shopify://apps/pickeasy/blocks/app-embed/7e06b047-cfd1-4df7-add1-81e9a842022c",
+        "disabled": true,
+        "settings": {
+          "enable_network_listeners": false,
+          "xhrRequestExactMatch": "",
+          "xhrRequestExactMatchTimeout": 500,
+          "xhrRequestPartialMatch": "",
+          "xhrRequestPartialMatchTimeout": 500,
+          "fetchRequestExactMatch": "",
+          "fetchRequestExactMatchTimeout": 500,
+          "fetchRequestPartialMatch": "",
+          "fetchRequestPartialMatchimeout": 500,
+          "buttonClickClassName": "",
+          "buttonClickTimeout": 500,
+          "additionalJavascriptAndCss": ""
         }
       }
     }
