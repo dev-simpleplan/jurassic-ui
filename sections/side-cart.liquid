@@ -157,6 +157,13 @@
       stopCartMonitoring();
     });
 
+    document.querySelector('.sidecart-bg')?.addEventListener('click', () => {
+      sideCart.classList.remove('active');
+      document.body.classList.remove('stay');
+      document.documentElement.classList.remove('stay');
+      stopCartMonitoring();
+    });
+
     window.recommendedCart = async function (cart) {
       const wrapper = document.querySelector('.cart-recommendation');
       const container = document.querySelector('.cart-recommendation-wrapper');

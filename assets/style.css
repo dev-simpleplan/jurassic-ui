@@ -2408,7 +2408,7 @@ footer::before {
     margin-top: 100px;
 }
 .about-banner .banner-image {
-    height: 70vh;
+    height: 60vh;
     min-height: 400px;
     overflow: hidden;
 }
@@ -2433,7 +2433,7 @@ footer::before {
 }
 .lost-taste {
     background-color: var(--grey-black);
-    padding-top: 60px;
+    padding-top: 30px;
 }
 .lost-taste .custom-heading {
     display: flex;
