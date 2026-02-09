@@ -332,26 +332,35 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         function openNav() {
-      document.getElementById("mySidenav").classList.toggle("active");
-      document.body.classList.toggle("stay");
-      document.querySelector(".navbar_toggler")?.classList.toggle("open");
-          }
+            document.getElementById("mySidenav").classList.toggle("active");
+            document.body.classList.toggle("stay");
+            document.querySelector(".navbar_toggler")?.classList.toggle("open");
+        }
 
           var $cmenu = $('.hnav-menu');
-          $cmenu.find('.has-mega-menu > .arrow').on('click', function (e) {
-      e.preventDefault();
-      if ($(this).next('.mega-menu').is(':visible')) {
-        $(this).removeClass('active');
-        $(this).next('.mega-menu').slideUp();
-      } else {
-        $cmenu.find('.has-mega-menu > .arrow').removeClass('active');
-        $(this).addClass('active');
-        $cmenu.find('.has-mega-menu > .arrow').next('.mega-menu').slideUp();
-        $(this).next('.mega-menu').slideToggle();
-      }
-          });
 
-      });
+          $cmenu.find('.has-mega-menu > .arrow').on('click', function (e) {
+            // Check if the window width is less than 992px
+            if (window.innerWidth < 992) {
+              e.preventDefault();
+              
+              var $megaMenu = $(this).next('.mega-menu');
+
+              if ($megaMenu.is(':visible')) {
+                $(this).removeClass('active');
+                $megaMenu.slideUp();
+              } else {
+                // Reset other arrows and menus
+                $cmenu.find('.has-mega-menu > .arrow').removeClass('active');
+                $cmenu.find('.mega-menu').slideUp();
+
+                // Open current menu
+                $(this).addClass('active');
+                $megaMenu.slideToggle();
+              }
+            }
+          });
+      
           /* Close the side navigation */
           // function closeNav() {
           //   document.getElementById("mySidenav").classList.remove("active");
@@ -365,6 +374,7 @@
           //   document.body.classList.remove("stay");
           //   document.querySelector(".navbar_toggler")?.classList.remove("open");
           // });
+        });
 
     </script>
 
