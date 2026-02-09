@@ -67,30 +67,12 @@
       },
       "2131494470682214141": {
         "type": "shopify://apps/corner-cart-drawer-free-gift/blocks/corner-widget/73667a27-0d48-44b7-91f9-aef741c803ed",
-        "disabled": true,
+        "disabled": false,
         "settings": {
           "elementToReplaceInCartPage": ".cart-page-data",
           "hide_theme_cart": false,
           "enable_defer_loading": false,
           "enable_corner_test_campaigns": true
-        }
-      },
-      "10111608272286102450": {
-        "type": "shopify://apps/pickeasy/blocks/app-embed/7e06b047-cfd1-4df7-add1-81e9a842022c",
-        "disabled": true,
-        "settings": {
-          "enable_network_listeners": false,
-          "xhrRequestExactMatch": "",
-          "xhrRequestExactMatchTimeout": 500,
-          "xhrRequestPartialMatch": "",
-          "xhrRequestPartialMatchTimeout": 500,
-          "fetchRequestExactMatch": "",
-          "fetchRequestExactMatchTimeout": 500,
-          "fetchRequestPartialMatch": "",
-          "fetchRequestPartialMatchimeout": 500,
-          "buttonClickClassName": "",
-          "buttonClickTimeout": 500,
-          "additionalJavascriptAndCss": ""
         }
       }
     }
