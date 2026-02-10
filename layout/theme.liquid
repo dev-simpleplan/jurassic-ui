@@ -78,7 +78,8 @@
   <body>
     {% section 'top-bar' %}
     {% sections 'header-group' %}
-    {% section 'side-cart' %}
+    {% comment %} Disabled - Using corner cart app now {% endcomment %}
+    {%- comment %} {% section 'side-cart' %} {% endcomment %}
 
     <div class="main">
       {{ content_for_layout }}

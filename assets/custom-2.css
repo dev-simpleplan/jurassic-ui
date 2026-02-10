@@ -1091,17 +1091,24 @@ span.cart-compare-price {
   align-items: flex-start;
   justify-content: space-between;
 }
+.pro-img-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 110px;
+  width: 60%;
+}
 .pro-img {
   display: flex;
   flex-direction: row-reverse;
-  width: 60%;
+  width: 100%;
   justify-content: space-between;
   gap: 11px;
   align-items: stretch;
   max-height: 700px;
   overflow: hidden;
-  position: sticky;
-  top: 110px;
+  position: relative;
 }
 .pro-desp {
   width: 38%;
@@ -1172,6 +1179,7 @@ span.cart-compare-price {
   left: 0;
   top: 0;
   height: 100%;
+  cursor: pointer;
 }
 .prod-main-image img,
 .prod-thumb-image img {
@@ -1288,10 +1296,13 @@ span.cart-compare-price {
 }
 .product-info .title h1 {
   font-weight: 500;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 120%;
   letter-spacing: 0em;
   color: #202322;
+}
+.product-info .title .price {
+  
 }
 .product-info-block {
   display: flex;
@@ -1635,11 +1646,88 @@ li.variant-value.active .vvv-value {
   border: none;
   width: 100%;
   border-radius: 40px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .priceCheckout .submit {
-  width: 70%;
+  width: 100%;
   display: flex;
 }
+.priceCheckout .qty-selector {
+    position: relative;
+    width: 90px !important;
+}
+.priceCheckout .qty-selector button {
+    position: absolute;
+    right: 13px;
+    background: transparent;
+    border: 0px;
+    padding: 2px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--color-brand);
+}
+.priceCheckout .qty-selector button.plus {
+    top: 6px;
+}
+.priceCheckout .qty-selector button.minus {
+    bottom: 0px;
+}
+.priceCheckout #Quantity {
+    background: #fff;
+    border: 2px solid #ffc760;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 0;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+    width: 90px !important;
+    width: unset;
+    height: 50px;
+    margin-bottom: 0px !important;
+    padding: 10px 30px 10px 10px !important;
+    text-align: center;
+}
+#add-to-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#add-to-cart .btn-spinner {
+  display: none;
+  position: absolute;
+}
+#add-to-cart .btn-check {
+  display: none;
+}
+
+#add-to-cart.loading .btn-text {
+  opacity: 0.3;
+}
+
+#add-to-cart.loading .btn-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+#add-to-cart.success .btn-check {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .payment-options {
   padding: 16px;
   border-radius: 12px;
