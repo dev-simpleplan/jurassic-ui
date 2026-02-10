@@ -85,8 +85,11 @@
       ],
       "settings": {
         "acc_1": "How to eat & Store",
+        "eatImage": "shopify://shop_images/Screenshot_2026-02-10_at_8.10.39_PM.png",
         "acc_2": "Seasonal Calendar - fruit origin",
-        "acc_3": "taste profile"
+        "acc_3": "taste profile",
+        "para_3": "What does it taste like? The flesh of the mangosteen is sweet and melt-in-your-mouth, with a unique touch of brightness. Even those tasting it for the first time describe it as one of the best fruits in the world—a flavor profile often compared to a blend of lychee, peach, strawberry, and pineapple",
+        "acc_5": "Description"
       }
     },
     "spacer0": {
