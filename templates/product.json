@@ -19,10 +19,6 @@
             "title_testimonial": ""
           }
         },
-        "product_info": {
-          "type": "product_info",
-          "settings": {}
-        },
         "product_usp": {
           "type": "product_usp",
           "settings": {}
@@ -30,6 +26,12 @@
         "variant_selector": {
           "type": "variant_selector",
           "settings": {}
+        },
+        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
+          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "settings": {
+            "page": ""
+          }
         },
         "store_usp": {
           "type": "store_usp",
@@ -43,11 +45,9 @@
             "payment_usp_text": "Secure Payment"
           }
         },
-        "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
-          "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
-          "settings": {
-            "page": ""
-          }
+        "product_info": {
+          "type": "product_info",
+          "settings": {}
         },
         "offer_MKP99r": {
           "type": "offer",
@@ -74,11 +74,11 @@
       },
       "block_order": [
         "title",
-        "product_info",
         "product_usp",
         "variant_selector",
-        "store_usp",
         "staging_delivery_date_app_product_delivery_info_jGcmjQ",
+        "store_usp",
+        "product_info",
         "offer_MKP99r",
         "offer_MHYyhK",
         "delivery_info_WFVGrD"
@@ -530,12 +530,60 @@
         "cards_rXQKrp",
         "cards_ixEMk3"
       ],
+      "disabled": true,
       "name": "left-image-with-items",
       "settings": {
         "video_img": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
         "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4",
         "heading": "​​The Hands That Harvest Paradise",
         "sub_heading": "From sun-drenched mornings to mindful harvests—meet the growers behind your cravings."
+      }
+    },
+    "jurassic_way_ftQp3x": {
+      "type": "jurassic-way",
+      "blocks": {
+        "slide_kJ93iW": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
+            "slide_heading": "Guardians of the Land",
+            "slide_content": "Our farmers grow with care, tending to wild groves and heritage orchards using age-old, chemical-free methods."
+          }
+        },
+        "slide_NWiBeV": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/3f0a5d7fb6f50877410da6e39f0e8ef9a0e5bebc.jpg",
+            "slide_heading": "Ripe with Intention",
+            "slide_content": "Every fruit is handpicked at peak maturity—never rushed, never forced—ensuring real flavor and real nourishment."
+          }
+        },
+        "slide_WLQ6Vn": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/roar.jpg",
+            "slide_heading": "Faces Behind the Flavor",
+            "slide_content": "These are smallholders with big hearts. Their work is dignified, their stories real, their impact lasting."
+          }
+        },
+        "slide_WQQNRF": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+            "slide_heading": "Connected by Care",
+            "slide_content": "From their hands to your home, our direct partnerships ensure purity, fairness, and a shared love for food done right."
+          }
+        }
+      },
+      "block_order": [
+        "slide_kJ93iW",
+        "slide_NWiBeV",
+        "slide_WLQ6Vn",
+        "slide_WQQNRF"
+      ],
+      "name": "jurassic-way",
+      "settings": {
+        "section_heading": "​​The Hands That Harvest Paradise"
       }
     },
     "spacer_2": {
@@ -631,6 +679,7 @@
     "image_text_scroll_qVRxF4",
     "spacer_1",
     "left-image-with-items",
+    "jurassic_way_ftQp3x",
     "spacer_2",
     "faq",
     "spacer_awrgBz",
