@@ -184,25 +184,24 @@
                   </div>
                   <h1>{{ product.title }}</h1>
                     <div class="price" id="price-{{ section.id }}">
-                        <div class="price-detailsss"> 
-                            <span class="sell-price"> 
-                              {{ selected_variant.price | money }}
-                            </span>
-                            {% if selected_variant.price < selected_variant.compare_at_price %}
-                              <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
-                            {% endif %}
+                      <div class="price-detailsss"> 
+                        <div class="sell-price">
+                          {{ selected_variant.price | money }}
                         </div>
-                        <span class="price-txt">
-                          Taxes, Excl. shipping
-                        </span>
-                    </div>
-                    {% if selected_variant.compare_at_price > selected_variant.price %}
-                      <div class="vvv-discount">
-                        {% assign discount = selected_variant.compare_at_price | minus: selected_variant.price %}
-                        {% assign discount_percentage = discount | times: 100 | divided_by: selected_variant.compare_at_price | round %}
-                        {{ discount_percentage }}% OFF
+
+                        <div>
+                          <strike class="real-price"></strike>
+                        </div>
+
+                        <!-- ALWAYS present -->
+                        <div class="vvv-discount" style="display:none"></div>
                       </div>
-                    {% endif %}
+
+                      <span class="price-txt">
+                        VAT, Taxes, Excl. shipping
+                      </span>
+                    </div>
+
                 </div>
 
               {% when 'product_usp' %}
@@ -349,13 +348,14 @@
                                       <div class="vvv-value">
                                         {{ value }}
                                       </div>
-                                      {% if matched_variant.compare_at_price > matched_variant.price %}
-                                        <div class="vvv-discount">
-                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
-                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
-                                          {{ discount_percentage }}% OFF
-                                        </div>
-                                      {% endif %}
+                                      <div class="perKg">
+                                        {% if matched_variant.unit_price_measurement %}
+                                          {{ matched_variant.unit_price | money }} / {{ matched_variant.unit_price_measurement.reference_unit }}
+                                        {% comment %} {{ matched_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                                        {% else %}
+                                          {{ matched_variant.price | money }} / unit
+                                        {% endif %}
+                                      </div>
                                     </div>
                                     <div class="vv-peices">
                                       {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
@@ -377,17 +377,7 @@
                       {% endunless %}
                     </div>
                     <div class="priceCheckout">
-                      {% comment %} <div class="price" id="price-{{ section.id }}">
-                        {% if selected_variant.price < selected_variant.compare_at_price %}
-                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
-                        {% endif %}
-                        <span class="sell-price">
-                          {{ selected_variant.price | money }}
-                        </span>
-                        <span class="price-txt">
-                          Taxes, Excl. shipping
-                        </span>
-                      </div> {% endcomment %}
+                      
                       <div class="submit submit--with-qty">
                         <div class="qty-selector">
                           <button type="button" class="qty-btn minus" data-action="decrease">−</button>
@@ -920,19 +910,49 @@ class VariantSelector extends HTMLElement {
   }
 
   updatePriceInstant() {
+    if (!this.currentVariant) return;
+
     const priceWrap = document.getElementById('price-{{ section.id }}');
     if (!priceWrap) return;
 
-    const { price, compare_at_price } = this.currentVariant;
+    const sellPriceEl = priceWrap.querySelector('.sell-price');
+    const comparePriceEl = priceWrap.querySelector('.real-price');
+    const discountEl = priceWrap.querySelector('.vvv-discount');
 
-    priceWrap.innerHTML = `
-      ${compare_at_price && compare_at_price > price
-        ? `<strike class="real-price">${formatMoneySafe(compare_at_price)}</strike>`
-        : ''}
-      <span class="sell-price">${formatMoneySafe(price)}</span>
-      <span class="price-txt">Taxes, Excl. shipping</span>
-    `;
+    const price = this.currentVariant.price;
+    const compare = this.currentVariant.compare_at_price;
 
+    /* Selling price */
+    if (sellPriceEl) {
+      sellPriceEl.textContent = formatMoneySafe(price);
+    }
+
+    /* Compare-at price */
+    if (comparePriceEl) {
+      if (compare && compare > price) {
+        comparePriceEl.textContent = formatMoneySafe(compare);
+        comparePriceEl.style.display = '';
+      } else {
+        comparePriceEl.style.display = 'none';
+        comparePriceEl.textContent = '';
+      }
+    }
+
+    /* 🔥 DISCOUNT PERCENTAGE */
+    if (discountEl) {
+      if (compare && compare > price) {
+        const discountPercent = Math.round(
+          ((compare - price) * 100) / compare
+        );
+        discountEl.textContent = `${discountPercent}% OFF`;
+        discountEl.style.display = '';
+      } else {
+        discountEl.textContent = '';
+        discountEl.style.display = 'none';
+      }
+    }
+
+    /* Unit / kg text */
     const perKg = document.querySelector('.perKg');
     if (perKg) {
       if (this.currentVariant.unit_price_measurement) {
@@ -942,10 +962,12 @@ class VariantSelector extends HTMLElement {
           this.currentVariant.unit_price_measurement.reference_unit;
       } else {
         perKg.textContent =
-          formatMoneySafe(this.currentVariant.price) + ' / unit';
+          formatMoneySafe(price) + ' / unit';
       }
     }
   }
+
+
 
   updateAddToCartButton() {
     const btn = document.getElementById('add-to-cart');
