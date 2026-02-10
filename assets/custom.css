@@ -691,8 +691,8 @@ section.faq-page .faq-head h1 {
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  padding-top: 24px;
-  padding-bottom: 12px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   transition: 0.4s all ease;
 }
 
@@ -739,7 +739,7 @@ section.faq-page .faq-head h1 {
 }
 
 .faq-answer p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 140%;
   color: #1a1a1a;
   max-width: 65ch;
@@ -768,7 +768,7 @@ section.faq-page .faq-head h1 {
   list-style: disc;
 }
 .faq-answer ul li {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 140%;
   color: #1a1a1a;
   max-width: 65ch;

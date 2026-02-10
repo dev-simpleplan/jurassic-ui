@@ -253,6 +253,7 @@
                       </div>
                     </div>
                   {% endfor %}
+
                 </div>
 
               {% when 'store_usp' %}
@@ -349,19 +350,20 @@
                                         {{ value }}
                                       </div>
                                       <div class="perKg">
-                                        {% if matched_variant.unit_price_measurement %}
+                                        {% comment %} {% if matched_variant.unit_price_measurement %}
                                           {{ matched_variant.unit_price | money }} / {{ matched_variant.unit_price_measurement.reference_unit }}
                                         {% comment %} {{ matched_variant.unit_price_measurement.reference_value }} {% endcomment %}
                                         {% else %}
                                           {{ matched_variant.price | money }} / unit
-                                        {% endif %}
+                                        {% endif %} {% endcomment %}
+                                         {% if matched_variant.metafields.custom.pieces %}
+                                            /  {{ matched_variant.metafields.custom.pieces }}
+                                          {% endif %}
                                       </div>
                                     </div>
                                     <div class="vv-peices">
                                       {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
-                                      {% if matched_variant.metafields.custom.pieces %}
-                                        {{ matched_variant.metafields.custom.pieces }}
-                                      {% endif %}
+                                      
                                       {{ matched_variant.price | money }}
                                     </div>
                                   </li>
@@ -501,7 +503,11 @@
           </div>
         </div>
         <div class="pa-div">
-          <div class="pa-eat-store">
+          <div class="paeat-wrap">
+            <div class="pawrap-image">
+              <img src="{{ section.settings.eatImage |  img_url: 'master' }}" alt="{{  }}">
+            </div>
+            <div class="pa-eat-store">
             {% for item in product.metafields.custom.how_to_store_eat.value %}
               <div class="paes-item">
                 <div class="paes-icon">
@@ -510,6 +516,7 @@
                 <p>{{ item.body }}</p>
               </div>
             {% endfor %}
+          </div>
           </div>
         </div>
       </div>
@@ -602,6 +609,9 @@
           </div>
         </div>
         <div class="pa-div">
+          <div class="padiv-para">
+            <p>{{ section.settings.para_3 }}</p>
+          </div>
           <div class="pad-taste-profile">
             {% comment %} Texture {% endcomment %}
             <div class="profile-in">
@@ -674,6 +684,38 @@
           </div>
         </div>
       </div>
+      {% comment %} Description {% endcomment %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+            {{ section.settings.acc_5 }}
+          </div>
+          <div class="pa-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M12 8V16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-horizontal"
+                stroke-linejoin="round" />
+              <path
+                d="M8 12H16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-vertical"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          </div>
+          <div class="pa-div">
+
+          </div>
+       </div>
     </div>
   </div>
 </div>
@@ -1202,16 +1244,35 @@ document.addEventListener('click', function (e) {
         "id": "acc_1",
         "label": "Accordion 1 Label",
         "default": "How to eat & Store"
-      }, {
+      }, 
+      {
+        "type": "image_picker",
+        "id": "eatImage",
+        "label": "Eat & Store Image"
+      },
+      {
         "type": "text",
         "id": "acc_2",
         "label": "Accordion 2 Label",
         "default": "Seasonal Calendar - fruit origin"
-      }, {
+      }, 
+      {
         "type": "text",
         "id": "acc_3",
         "label": "Accordion 3 Label",
         "default": "taste profile"
+      },
+      {
+        "type": "text",
+        "id": "para_3",
+        "label": "Accordion 3 Paragraph",
+        "default": "What does it taste like? The flesh of the mangosteen is sweet and melt-in-your-mouth, with a unique touch of brightness. Even those tasting it for the first time describe it as one of the best fruits in the world—a flavor profile often compared to a blend of lychee, peach, strawberry, and pineapple"
+      },
+      {
+        "type": "text",
+        "id": "acc_5",
+        "label": "Accordion 5 Label",
+        "default": "Description"
       }
     ]
   }

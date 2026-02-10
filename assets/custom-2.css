@@ -2027,6 +2027,12 @@ p.tp-head.juiciness {
 .juiciness .taste-pill.active {
   background-color: #31b99b;
 }
+.padiv-para {
+  margin-bottom: 30px;
+}
+.padiv-para p {
+  font-size: 14px;
+}
 .pad-taste-profile {
   display: grid;
   grid-template-columns: 1fr 1fr;
