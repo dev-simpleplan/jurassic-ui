@@ -1858,7 +1858,7 @@ li.variant-value.active .perKg {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  max-width: 21ch;
+  /* max-width: 21ch; */
 }
 .pa-item:first-child {
   padding-top: 0;
@@ -1867,10 +1867,22 @@ li.variant-value.active .perKg {
   padding-bottom: 0;
   border-bottom: 0;
 }
+.paeat-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.paeat-wrap .pawrap-image {
+  width: 100%;
+}
+.pawrap-image img {
+  width: 100%;
+}
 .pa-eat-store {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 40px;
+  gap: 30px;
 }
 .paes-item p {
   font-size: 14px;
@@ -1983,6 +1995,23 @@ p.tp-head.juiciness {
   line-height: 110%;
   letter-spacing: 0.01em;
   color: #000000;
+}
+p.product-description-metafield {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.pa-technical {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pa-technical .pati-data p {
+  font-size: 16px;
+  font-weight: 600;
+}
+.pa-technical .pati-data p span {
+  font-weight: 400;
+  font-size: 15px;
 }
 .tp-wrap {
   display: flex;
