@@ -67,7 +67,7 @@
       },
       "2131494470682214141": {
         "type": "shopify://apps/corner-cart-drawer-free-gift/blocks/corner-widget/73667a27-0d48-44b7-91f9-aef741c803ed",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "elementToReplaceInCartPage": ".cart-page-data",
           "hide_theme_cart": false,
