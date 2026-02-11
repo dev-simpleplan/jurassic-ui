@@ -939,9 +939,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .top-bar-in .tb-rating {
     display: none;
   }
+  .pro-img-wrap {
+    width: 100%;
+    position: relative;
+    top: 0;
+    gap: 20px;
+  }
   .pro-img {
     position: relative;
     top: 0;
+  }
+  .pro-img-wrap .tr-testimonial {
+    width: 100%;
+    margin-bottom: 30px;
   }
   .hiw-search .search-input-bar.active {
     top: 35px;
@@ -1447,7 +1457,21 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .pair-with .fruits_card .fc_top {
     order: -1;
   }
-
+  .priceCheckout .submit {
+    flex-direction: column;
+  }
+  .priceCheckout #Quantity {
+    height: 42px;
+  }
+  .priceCheckout .custom-btn {
+    width: 100%;
+  }
+  .jm-review-widget__header-and-body {
+    padding: 0 20px;
+  }
+  .fruits_cards_slider.for_responsive {
+    padding: 0 20px!important;
+  }
 }
 @media(max-width:425px){
   footer::before {
