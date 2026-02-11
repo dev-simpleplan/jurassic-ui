@@ -1391,7 +1391,7 @@ span.cart-compare-price {
 .product-usp {
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 6px;
   overflow: hidden;
   overflow-x: auto;
@@ -1897,7 +1897,7 @@ li.variant-value.active .perKg {
   border-radius: 20px;
 }
 .pa-div {
-  padding-top: 24px;
+  padding-top: 15px;
   display: none;
 }
 .pas-month {
@@ -2006,12 +2006,12 @@ p.product-description-metafield {
   gap: 4px;
 }
 .pa-technical .pati-data p {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 }
 .pa-technical .pati-data p span {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
 }
 .tp-wrap {
   display: flex;

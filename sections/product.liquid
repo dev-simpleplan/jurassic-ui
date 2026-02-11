@@ -474,6 +474,81 @@
 <div class="product-accordion">
   <div class="container">
     <div class="pa-wrapper">
+      {% comment %} Technical Details {% endcomment %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+                {{ section.settings.acc_4 }}
+              </div>
+              <div class="pa-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none">
+                  <path
+                    d="M12 8V16"
+                    stroke="#202322"
+                    stroke-width="2"
+                    class="plus-horizontal"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M8 12H16"
+                    stroke="#202322"
+                    stroke-width="2"
+                    class="plus-vertical"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+          </div>
+          <div class="pa-div">
+              <div class="pa-technical">
+                <div class="pc-tech-item">
+                  <div class="pati-data">
+                    <p>Scientific Name: <span>Garcinia mangostana</span></p>
+                  </div>
+                </div>
+                <div class="pc-tech-item">
+                  <div class="pati-data">
+                    <p>Common Names: <span>{{ product.metafields.custom.alternative_name }}</span></p>
+                  </div>
+                </div>
+              </div>
+          </div>
+       </div>
+      {% comment %} Description {% endcomment %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+                {{ section.settings.acc_5 }}
+              </div>
+              <div class="pa-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none">
+                  <path
+                    d="M12 8V16"
+                    stroke="#202322"
+                    stroke-width="2"
+                    class="plus-horizontal"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M8 12H16"
+                    stroke="#202322"
+                    stroke-width="2"
+                    class="plus-vertical"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+          </div>
+          <div class="pa-div">
+            <p class="product-description-metafield">{{ product.metafields.custom.description }}</p>
+          </div>
+       </div>
       {% comment %} How to Store {% endcomment %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
@@ -521,7 +596,7 @@
         </div>
       </div>
       {% comment %} Seasonal Information {% endcomment %}
-      <div class="pa-item">
+      {% comment %} <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
             {{ section.settings.acc_2 }}
@@ -579,7 +654,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
       {% comment %} Taste Profile {% endcomment %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
@@ -684,81 +759,7 @@
           </div>
         </div>
       </div>
-      {% comment %} Technical Details {% endcomment %}
-       <div class="pa-item">
-          <div class="pa-ques-wrap">
-              <div class="pa-ques">
-                {{ section.settings.acc_4 }}
-              </div>
-              <div class="pa-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none">
-                  <path
-                    d="M12 8V16"
-                    stroke="#202322"
-                    stroke-width="2"
-                    class="plus-horizontal"
-                    stroke-linejoin="round" />
-                  <path
-                    d="M8 12H16"
-                    stroke="#202322"
-                    stroke-width="2"
-                    class="plus-vertical"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-          </div>
-          <div class="pa-div">
-              <div class="pa-technical">
-                <div class="pc-tech-item">
-                  <div class="pati-data">
-                    <p>Scientific Name: <span>Garcinia mangostana</span></p>
-                  </div>
-                </div>
-                <div class="pc-tech-item">
-                  <div class="pati-data">
-                    <p>Common Names: <span>{{ product.metafields.custom.alternative_name }}</span></p>
-                  </div>
-                </div>
-              </div>
-          </div>
-       </div>
-      {% comment %} Description {% endcomment %}
-       <div class="pa-item">
-          <div class="pa-ques-wrap">
-              <div class="pa-ques">
-                {{ section.settings.acc_5 }}
-              </div>
-              <div class="pa-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none">
-                  <path
-                    d="M12 8V16"
-                    stroke="#202322"
-                    stroke-width="2"
-                    class="plus-horizontal"
-                    stroke-linejoin="round" />
-                  <path
-                    d="M8 12H16"
-                    stroke="#202322"
-                    stroke-width="2"
-                    class="plus-vertical"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-          </div>
-          <div class="pa-div">
-            <p class="product-description-metafield">{{ product.metafields.custom.description }}</p>
-          </div>
-       </div>
+      
     </div>
   </div>
 </div>
