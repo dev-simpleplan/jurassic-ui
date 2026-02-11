@@ -201,7 +201,8 @@
                 <div class="fc_add_to_cart"
                   data-variant-id="{{ current_variant.id }}"
                   data-available="{{ current_variant.available }}"
-                  data-inventory="{{ current_variant.inventory_quantity }}">
+                  data-inventory="{{ current_variant.inventory_quantity }}"
+                  data-external-add>
 
                   <button
                     type="button"
@@ -210,13 +211,8 @@
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
 
-                  <div class="qty-controls">
-                    <span class="remove_product">–</span>
-                    <span class="qty-value">1</span>
-                    <span class="add_product">+</span>
-                  </div>
                 </div>
-              </div>
+            </div>
             <div class="fc_trust_text">
               <p>Only {{ current_variant.inventory_quantity }} Left</p>
               <span class="dot_seperator"></span>

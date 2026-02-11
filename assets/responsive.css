@@ -156,11 +156,11 @@
     gap: 50px 40px;
   }
   .faq-wrap .faq-accordian-wrapper {
-    gap: 15px;
+    gap: 0px;
     margin-top: 10px;
   }
   .f-answer {
-    padding: 0px 0 20px 0;
+    padding: 0px 0 10px 0;
   }
   .sc-in .cart-item {
     flex-direction: column;
