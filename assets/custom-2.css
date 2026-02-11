@@ -1903,6 +1903,38 @@ li.variant-value.active .perKg {
   padding-top: 15px;
   display: none;
 }
+.nutrition-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+.nutri-image img {
+  width: 100%;
+}
+.nutri-info {
+  display: flex;
+  align-items: center;
+}
+.nutri-info p {
+  font-size: 15px;
+  max-width: 80%;
+  margin: 0 auto;
+}
+.origin-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.origin-wrap p {
+  font-size: 15px;
+}
+.origin-wrap ul {
+  padding-left: 20px;
+  list-style: disc;
+}
+.origin-wrap ul li {
+  font-size: 14px;
+}
 .pas-month {
   display: flex;
   align-items: stretch;
