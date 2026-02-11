@@ -280,106 +280,6 @@
         "spacer_height": 140
       }
     },
-    "reviews_FNV7Gf": {
-      "type": "reviews",
-      "blocks": {
-        "review_item_QpMDqc": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_RDW7UV": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_rJMf7T": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_qR7Eei": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_DyjYpK": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_nHfCmn": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_A6AUXi": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        },
-        "review_item_CY7H7F": {
-          "type": "review_item",
-          "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
-            "comment": "Rare exotic fruits assorted box from Jurassic Fruit was amazing!",
-            "review_star": 4.7,
-            "user_name": "Denny Silver",
-            "user_desig": "Mother of 3"
-          }
-        }
-      },
-      "block_order": [
-        "review_item_QpMDqc",
-        "review_item_RDW7UV",
-        "review_item_rJMf7T",
-        "review_item_qR7Eei",
-        "review_item_DyjYpK",
-        "review_item_nHfCmn",
-        "review_item_A6AUXi",
-        "review_item_CY7H7F"
-      ],
-      "disabled": true,
-      "name": "Reviews Section",
-      "settings": {
-        "heading": "What Explorers Are Saying"
-      }
-    },
     "1765873593de6c460a": {
       "type": "apps",
       "blocks": {
@@ -671,7 +571,6 @@
     "spacer_BmkhaA",
     "facts",
     "spacer_LKTbj6",
-    "reviews_FNV7Gf",
     "1765873593de6c460a",
     "spacer_wXMU4V",
     "three-icon-sec",
