@@ -9,7 +9,7 @@
         <div class="faq-wrap">
             <div class="faq-accordian-wrapper">
                 {% for item in product.metafields.custom.faqs.value %}
-                    <div class="faq-item">
+                    <div class="faq-item" data-image="{{ item.faq_image | img_url: 'master' }}">
                         <div class="faq-question">
                             <div class="faq-question-left">
                                 <div class="f-question">
@@ -29,7 +29,7 @@
                 {% endfor %}
             </div>
             <div class="faq-image">
-                <img width="100%" height="100%" src="{{ section.settings.faq_image | img_url:'master' }}" alt="{{ section.settings.faq_image.alt }}">
+                <img id="faq-dynamic-image" width="100%" height="100%" src="{{ section.settings.faq_image | img_url:'master' }}" alt="{{ section.settings.faq_image.alt }}">
             </div>
         </div>
 
@@ -40,17 +40,23 @@
 </div>
 
 <script>
-    // faq accordion
+$(document).ready(function () {
+    var $mainImage = $('#faq-dynamic-image');
 
-  $(document).ready(function () {
-    // open first FAQ by default
+    // 1. Initialize: Set image to the first item's image on load
+    var firstImage = $('.faq-item').first().data('image');
+    if(firstImage) {
+        $mainImage.attr('src', firstImage);
+    }
+
     var $firstItem = $('.faq-item').first();
     $firstItem.addClass('active');
-    $firstItem.find('.faq-answer').show(); // use show() to avoid animation on load
+    $firstItem.find('.faq-answer').show();
 
     $('.faq-question').click(function () {
         var $faqItem = $(this).parent('.faq-item');
         var $faqAnswer = $faqItem.find('.faq-answer');
+        var newImageUrl = $faqItem.data('image'); // Get image URL from data attribute
 
         if ($faqItem.hasClass('active')) {
             $faqItem.removeClass('active');
@@ -58,13 +64,19 @@
         } else {
             $('.faq-item').removeClass('active');
             $('.faq-answer').slideUp();
+            
             $faqItem.addClass('active');
             $faqAnswer.slideDown();
+
+            // 2. Change the image with a simple fade effect
+            if(newImageUrl) {
+                $mainImage.fadeOut(200, function() {
+                    $(this).attr('src', newImageUrl).fadeIn(200);
+                });
+            }
         }
     });
 });
-
-
 </script>
 
 {% schema %}
