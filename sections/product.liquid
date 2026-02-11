@@ -1057,14 +1057,32 @@ class VariantSelector extends HTMLElement {
   updateAddToCartButton() {
     const btn = document.getElementById('add-to-cart');
     const qtyInput = document.getElementById('Quantity');
-    if (!btn || !qtyInput) return;
+    if (!btn || !qtyInput || !this.currentVariant) return;
+
+    const label = btn.querySelector('.btn-label');
+    const priceEl = btn.querySelector('.btn-price');
+
+    // 🛑 SOLD OUT STATE
+    if (!this.currentVariant.available) {
+      btn.classList.remove('loading', 'success');
+      btn.disabled = true;
+
+      if (label) label.textContent = 'Sold Out';
+      if (priceEl) priceEl.textContent = '';
+
+      return;
+    }
+
+    // ✅ AVAILABLE STATE
+    btn.disabled = false;
 
     const qty = parseInt(qtyInput.value, 10) || 1;
-    btn.querySelector('.btn-price').textContent =
-      formatMoneySafe(this.currentVariant.price * qty);
+    const total = this.currentVariant.price * qty;
 
-    btn.disabled = !this.currentVariant.available;
+    if (label) label.textContent = 'Add to Cart';
+    if (priceEl) priceEl.textContent = formatMoneySafe(total);
   }
+
 }
 
 customElements.define('variant-selector', VariantSelector);
