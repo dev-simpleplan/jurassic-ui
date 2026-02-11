@@ -1847,8 +1847,11 @@ li.variant-value.active .perKg {
   max-height: 100%;
 }
 .paes-icon {
-  width: 20px;
+  width: 100%;
   flex-shrink: 0;
+}
+.paes-icon img {
+  width: 100%;
 }
 .pa-item {
   padding: 20px 0;
@@ -1856,7 +1859,7 @@ li.variant-value.active .perKg {
 }
 .paes-item {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 14px;
   /* max-width: 21ch; */
 }
@@ -1868,9 +1871,8 @@ li.variant-value.active .perKg {
   border-bottom: 0;
 }
 .paeat-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  width: 100%;
+  overflow: hidden;
 }
 .paeat-wrap .pawrap-image {
   width: 100%;
@@ -1879,10 +1881,11 @@ li.variant-value.active .perKg {
   width: 100%;
 }
 .pa-eat-store {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
+  display: grid;
+    grid-auto-columns: 30%;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    gap: 30px;
 }
 .paes-item p {
   font-size: 14px;

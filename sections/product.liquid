@@ -579,22 +579,62 @@
         </div>
         <div class="pa-div">
           <div class="paeat-wrap">
-            <div class="pawrap-image">
-              <img src="{{ section.settings.eatImage |  img_url: 'master' }}" alt="{{  }}">
-            </div>
             <div class="pa-eat-store">
             {% for item in product.metafields.custom.how_to_store_eat.value %}
               <div class="paes-item">
                 <div class="paes-icon">
                   <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
                 </div>
-                <p>{{ item.body }}</p>
+                {{ item.body_text | metafield_tag }}
               </div>
             {% endfor %}
           </div>
           </div>
         </div>
       </div>
+
+      {% comment %} Nutrition & Benefits {% endcomment %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ section.settings.nutrition_heading }}
+          </div>
+          <div class="pa-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M12 8V16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-horizontal"
+                stroke-linejoin="round" />
+              <path
+                d="M8 12H16"
+                stroke="#202322"
+                stroke-width="2"
+                class="plus-vertical"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="nutrition-info">
+            <div class="nutri-image">
+                <img src="{{ section.settings.nutri-image |  img_url: 'master' }}" alt="">
+            </div>
+            <div class="nutri-info">
+              <p>
+                Nature's Immunity Support Mangosteen is famous for its high concentration of Xanthones, a powerful bioactive compound researched for its antioxidant and anti-inflammatory properties
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {% comment %} Seasonal Information {% endcomment %}
       {% comment %} <div class="pa-item">
         <div class="pa-ques-wrap">
@@ -1311,6 +1351,17 @@ document.addEventListener('click', function (e) {
         "type": "image_picker",
         "id": "eatImage",
         "label": "Eat & Store Image"
+      },
+      {
+        "type": "text",
+        "id": "nutrition_heading",
+        "label": "Nutrition Label",
+        "default": "Nutrition & Benefits"
+      },
+      {
+        "type": "image_picker",
+        "id": "nutri-image",
+        "label": "Nutrition Image"
       },
       {
         "type": "text",
