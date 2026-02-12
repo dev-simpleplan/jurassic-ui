@@ -1472,6 +1472,23 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .fruits_cards_slider.for_responsive {
     padding: 0 20px!important;
   }
+  .pa-eat-store {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+  }
+  .nutrition-info {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .nutri-info p {
+    max-width: 100%;
+  }
+  .priceCheckout .qty-selector {
+    width: 100%!important;
+  }
+  .origin-wrap p, .origin-wrap ul li {
+    font-size: 14px;
+  }
 }
 @media(max-width:425px){
   footer::before {

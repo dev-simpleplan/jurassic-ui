@@ -1931,9 +1931,12 @@ li.variant-value.active .perKg {
 .origin-wrap ul {
   padding-left: 20px;
   list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .origin-wrap ul li {
-  font-size: 14px;
+  font-size: 15px;
 }
 .pas-month {
   display: flex;
