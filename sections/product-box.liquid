@@ -32,54 +32,92 @@
 <div class="product-info">
   <div class="container">
     <div class="pro-grid">
-      <div class="pro-img">
-          <div class="pro-right-side">
-          <div class="prs-data">
-            {% if product.tags.size > 0 %}
-                <div class="fc_category_tags">
-                  {% for tag in product.tags %}
-                    {% unless tag == 'Best Seller' %}
-                      <span>{{ tag }}</span>
-                    {% endunless %}
-                  {% endfor %}
-                </div>
-              {% endif %}
+      <div class="pro-img-wrap">
+          <div class="pro-img">
+            <div class="pro-right-side">
+              <div class="prs-data">
+                {% if product.tags.size > 0 %}
+                    <div class="fc_category_tags">
+                      {% for tag in product.tags %}
+                        {% unless tag == 'Best Seller' %}
+                          <span>{{ tag }}</span>
+                        {% endunless %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
-              {% if product.tags contains 'Best Seller' %}
-                <div class="fc_bestsell_tags">
-                  <span>Bestseller</span>
-                </div>
-              {% endif %}
-          </div>
-          <div class="prod-main-image">
-            {% for media in product.media %}
-              <div class="item">
-                <div class="prod-main">
-                  {% render 'product-media' | media: media %}
-                </div>
+                  {% if product.tags contains 'Best Seller' %}
+                    <div class="fc_bestsell_tags">
+                      <span>Bestseller</span>
+                    </div>
+                  {% endif %}
               </div>
-            {% endfor %}
-          </div>
-          <div class="btn-wrap">
-            <button class="custom-prev">
-              {%- render 'arrow-prev' -%}
-            </button>
-            <button class="custom-next">
-              {%- render 'arrow-next' -%}
-            </button>
-          </div>
-        </div>
-      
-        <div class="prod-thumb-image">
-          {% for media in product.media %}
-            <div class="item">
-              <div class="prod-thumb">
-                {% render 'product-media' | media: media %}
+              <div class="prod-main-image">
+                {% if product.media.size > 0 %}
+                  {% for media in product.media %}
+                    <div class="item">
+                      <div class="prod-main">
+                        {% render 'product-media', media: media %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% comment %} This renders ONLY if there are no images/videos {% endcomment %}
+                  <div class="item">
+                    <div class="prod-main">
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647"
+                        alt="{{ product.title }}"
+                        class="image-custom"
+                        loading="lazy">
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="btn-wrap">
+                <button class="custom-prev">
+                  {%- render 'arrow-prev' -%}
+                </button>
+                <button class="custom-next">
+                  {%- render 'arrow-next' -%}
+                </button>
               </div>
             </div>
-          {% endfor %}
-        </div>
-      </div>
+            <div class="prod-thumb-image">
+              {% if product.media.size > 0 %}
+                {% for media in product.media %}
+                  <div class="item">
+                    <div class="prod-thumb">
+                      {% render 'product-media', media: media %}
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                {% comment %} Show a small thumbnail placeholder if no media exists {% endcomment %}
+                <div class="item">
+                  <div class="prod-thumb">
+                    <img
+                      src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647"
+                      alt="Placeholder"
+                      class="image-custom thumb-placeholder"
+                      loading="lazy">
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="pro-test">
+            {% for block in section.blocks %}
+              {% if block.settings.show_testimonial 
+                and product.metafields.custom.title_testimonial != blank %}
+                <div class="tr-testimonial">
+                  {% render 'testimonial-icon' %}
+                  {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+       </div>
       <div class="pro-desp">
         {% form 'product'
           , product
@@ -95,13 +133,13 @@
               {% when 'title' %}
                 <div class="title">
                   <div class="title-review">
-                    {% if block.settings.show_testimonial 
+                    {% comment %} {% if block.settings.show_testimonial 
                       and product.metafields.custom.title_testimonial != blank %}
                       <div class="tr-testimonial">
                         {% render 'testimonial-icon' %}
                         {{ product.metafields.custom.title_testimonial | metafield_tag }}
                       </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
 
                     <!-- OKENDO APP BLOCK BESIDE TESTIMONIAL -->
                     <div class="tr-okendo">
@@ -122,6 +160,25 @@
                     </div>
                   </div>
                   <h1>{{ product.title }}</h1>
+                    <div class="price" id="price-{{ section.id }}">
+                      <div class="price-detailsss"> 
+                        <div class="sell-price">
+                          {{ selected_variant.price | money }}
+                        </div>
+
+                        <div>
+                          <strike class="real-price"></strike>
+                        </div>
+
+                        <!-- ALWAYS present -->
+                        <div class="vvv-discount" style="display:none"></div>
+                      </div>
+
+                      <span class="price-txt">
+                        VAT, Taxes, Excl. shipping
+                      </span>
+                    </div>
+
                 </div>
 
               {% when 'product_info' %}
@@ -258,19 +315,22 @@
                                       <div class="vvv-value">
                                         {{ value }}
                                       </div>
-                                      {% if matched_variant.compare_at_price > matched_variant.price %}
-                                        <div class="vvv-discount">
-                                          {% assign discount = matched_variant.compare_at_price | minus: matched_variant.price %}
-                                          {% assign discount_percentage = discount | times: 100 | divided_by: matched_variant.compare_at_price | round %}
-                                          {{ discount_percentage }}% OFF
-                                        </div>
-                                      {% endif %}
+                                      <div class="perKg">
+                                        {% comment %} {% if matched_variant.unit_price_measurement %}
+                                          {{ matched_variant.unit_price | money }} / {{ matched_variant.unit_price_measurement.reference_unit }}
+                                        {% comment %} {{ matched_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                                        {% else %}
+                                          {{ matched_variant.price | money }} / unit
+                                        {% endif %} {% endcomment %}
+                                         {% if matched_variant.metafields.custom.pieces %}
+                                            /  {{ matched_variant.metafields.custom.pieces }}
+                                          {% endif %}
+                                      </div>
                                     </div>
                                     <div class="vv-peices">
                                       {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
-                                      {% if matched_variant.metafields.custom.pieces %}
-                                        {{ matched_variant.metafields.custom.pieces }}
-                                      {% endif %}
+                                      
+                                      {{ matched_variant.price | money }}
                                     </div>
                                   </li>
                                 {% endfor %}
@@ -285,35 +345,37 @@
                       {% endunless %}
                     </div>
                     <div class="priceCheckout">
-                      <div class="price" id="price-{{ section.id }}">
-                        {% if selected_variant.price < selected_variant.compare_at_price %}
-                          <strike class="real-price">{{ selected_variant.compare_at_price | money }}</strike>
-                        {% endif %}
-                        <span class="sell-price">
-                          {{ selected_variant.price | money }}
-                        </span>
-                        <span class="price-txt">
-                          Taxes, Excl. shipping
-                        </span>
-                      </div>
-                      <div class="submit">
+                      
+                      <div class="submit submit--with-qty">
+                        <div class="qty-selector">
+                          <button type="button" class="qty-btn minus" data-action="decrease">−</button>
+                          <input
+                            type="number"
+                            name="quantity"
+                            id="Quantity"
+                            value="1"
+                            min="1"
+                          >
+                          <button type="button" class="qty-btn plus" data-action="increase">+</button>
+                        </div>
+
                         <button
-                          type="submit"
-                          name="add"
+                          type="button"
                           class="custom-btn filled"
                           id="add-to-cart"
-                          {% if selected_variant.available==false %}
-                          disabled
-                          {% endif %}>
-                          {% if selected_variant.available == false %}
-                            Sold Out
-                          {% else %}
-                            Add To Cart
-                          {% endif %}
+                        >
+                          <span class="btn-text">
+                            <span class="btn-label">Add to Cart</span>
+                            <span class="btn-price">—</span>
+                          </span>
+
+                          <span class="btn-spinner" aria-hidden="true"></span>
+                          <span class="btn-check" aria-hidden="true">✓</span>
                         </button>
                       </div>
+
                     </div>
-                    <div class="payment-options">
+                    {% comment %} <div class="payment-options">
                       <p>Guaranteed safe checkout with payment options</p>
                       <div class="po-icon-wrap">
                         {%- unless shop.enabled_payment_types == empty -%}
@@ -322,7 +384,7 @@
                           {%- endfor -%}
                         {%- endunless -%}
                       </div>
-                    </div>
+                    </div> {% endcomment %}
                   </div>
                 </div>
 
@@ -731,6 +793,8 @@
         });
     }
       }
+
+      
 
       customElements.define('variant-selector', VariantSelector);
   </script>

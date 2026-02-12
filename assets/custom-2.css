@@ -1126,7 +1126,7 @@ span.cart-compare-price {
 } 
 .price-detailsss .sell-price {
   font-weight: 700;
-  font-size: 21px;
+  font-size: 24px;
   line-height: 100%;
   color: #151515;
 }
@@ -1862,6 +1862,25 @@ li.variant-value.active .perKg {
   flex-direction: column;
   gap: 14px;
   /* max-width: 21ch; */
+}
+.paes-item .metafield-rich_text_field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.paes-item .metafield-rich_text_field p {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 150%;
+}
+.paes-item .metafield-rich_text_field p.boldp {
+  font-size: 16px;
+  font-weight: 600;
+}
+.paes-item .metafield-rich_text_field p a {
+  font-weight: 600;
+  color: #f7a816;
+  text-decoration: underline;
 }
 .pa-item:first-child {
   padding-top: 0;

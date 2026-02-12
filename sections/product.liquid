@@ -663,16 +663,48 @@
               </div>
           </div>
           <div class="pa-div">
-            <div class="origin-wrap">
-              <p class="product-description-metafield"><b>Grown by Families, Not Factories</b></p>
-              <p>Our mangosteen comes from a cooperative of 500 small family farms in Indonesia. These "micro-farms" typically have just 5 to 50 trees, allowing farmers to use traditional methods without chemicals</p>
-              <ul>
-                <li>Harvest: Picked ripe on demand (never stored for months)</li>
-                <li>Logistics: Air-flown to ensure you receive them 5–7 days after harvest, not weeks</li>
-                <li>Safety: Regularly lab-tested to ensure they are 100% pesticide-free</li>
-              </ul>
+            <div class="paeat-wrap">
+              <div class="pa-eat-store">
+              {% comment %} {% for item in product.metafields.custom.how_to_store_eat.value %} {% endcomment %}
+                <div class="paes-item">
+                  <div class="paes-icon">
+                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/eat1.jpg?v=1770820433">
+                  </div>
+                  <div class="metafield-rich_text_field">
+                    <p class="boldp">Where It Begins</p>
+                    <p>In the humid groves of Indonesia, this fruit grows all year round.
+Not on vast plantations, but across 500 small family farms — each caring for just 5 to 50 trees.
+These are living orchards, often passed down through generations.
+ No chemicals. No shortcuts. Just soil, rain, sun, and time.</p>
+                  </div>
+                </div>
+                <div class="paes-item">
+                  <div class="paes-icon">
+                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/eat2.jpg?v=1770820433">
+                  </div>
+                  <div class="metafield-rich_text_field">
+                    <p class="boldp">How It’s Grown</p>
+                    <p>Our farmers follow ancestral methods, on land that has never been treated with pesticides or herbicides.
+Because these are micro-farms, they’ve remained untouched by industrial agriculture.
+We regularly conduct independent lab testing — and to date, every analysis has confirmed zero detectable residues.
+View latest lab results → <a href="#">Link</a></p>
+                  </div>
+                </div>
+                <div class="paes-item">
+                  <div class="paes-icon">
+                    <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/eat3-02-10_at_8.10.39_PM.png?v=1770820433">
+                  </div>
+                  <div class="metafield-rich_text_field">
+                    <p class="boldp">How It Reaches You</p>
+                    <p>Harvested at peak ripeness, the fruit is carefully sorted and shipped by air.
+No long cold storage. No chemical preservation.
+Just a direct journey from grove to you — preserving freshness, aroma, and vitality within days.</p>
+                  </div>
+                </div>
+              {% comment %} {% endfor %} {% endcomment %}
             </div>
           </div>
+       </div>
        </div>
       {% comment %} Seasonal Information {% endcomment %}
       {% comment %} <div class="pa-item">
