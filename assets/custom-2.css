@@ -1721,7 +1721,7 @@ li.variant-value.active .perKg {
     align-items: center;
     justify-content: space-between;
     width: 100px !important;
-    border: 2px solid #ffc760;
+    border: 1px solid #e5e3df;
     border-radius: 40px;
     padding: 0 10px;
 }
