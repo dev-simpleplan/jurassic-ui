@@ -209,7 +209,7 @@
                   </button>
                   {% unless product.available %}
                     <a href="#" class="BIS_trigger" 
-                      data-product-handle="{{ product | json | escape }}" 
+                      data-product-data="{{ product | json | escape }}" 
                       data-variant-id="{{ current_variant.id }}">
                       Email when available
                     </a>
