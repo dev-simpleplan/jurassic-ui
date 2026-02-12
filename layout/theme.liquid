@@ -103,107 +103,91 @@
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
           setTimeout(() => {
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-  });
+            const lenis = new Lenis({
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
 
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+            function raf(time) {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
 
-  const header = document.querySelector('header');
+            const header = document.querySelector('header');
 
-  let lastScroll = 0;
-  const BACKDROP_TRIGGER = 80; // px from top
+            let lastScroll = 0;
+            const BACKDROP_TRIGGER = 80; // px from top
 
-  lenis.on('scroll', ({ scroll }) => {
+            lenis.on('scroll', ({ scroll }) => {
 
-    /* ===============================
-       BACKDROP — position based
-       =============================== */
-    if (scroll > BACKDROP_TRIGGER) {
-      header.classList.add('backdrop');
-    } else {
-      // only remove when fully back to top
-      header.classList.remove('backdrop');
-    }
+              /* ===============================
+                BACKDROP — position based
+                =============================== */
+              if (scroll > BACKDROP_TRIGGER) {
+                header.classList.add('backdrop');
+              } else {
+                // only remove when fully back to top
+                header.classList.remove('backdrop');
+              }
 
-    /* ===============================
-       ACTIVE — direction based
-       =============================== */
-    if (scroll > lastScroll && scroll > BACKDROP_TRIGGER) {
-      // scrolling down
-      header.classList.add('active');
-    } else {
-      // scrolling up OR near top
-      header.classList.remove('active');
-    }
+              /* ===============================
+                ACTIVE — direction based
+                =============================== */
+              if (scroll > lastScroll && scroll > BACKDROP_TRIGGER) {
+                // scrolling down
+                header.classList.add('active');
+              } else {
+                // scrolling up OR near top
+                header.classList.remove('active');
+              }
 
-    lastScroll = scroll;
-  });
+              lastScroll = scroll;
+            });
 
-}, 0);
+          }, 0);
 
 
 
       
 
       if (window.gsap && window.ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-        const mm = gsap.matchMedia();
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
 
-        mm.add("(min-width: 993px)", () => {
-          const imageText = document.querySelector(".image-text-scroll");
-          if (!imageText) return;
+  mm.add("(min-width: 993px)", () => {
+    const imageText = document.querySelector(".image-text-scroll");
+    if (!imageText) return;
 
-          gsap.set(
-            ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
-            { opacity: 0 }
-          );
+    const targets = ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"];
 
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: imageText,
-              start: "top top",
-              end: "+=300%",
-              pin: true,
-              scrub: 1,
-              snap: {
-                snapTo: "labels",
-                duration: { min: 0.2, max: 0.5 },
-                delay: 0.5,
-                ease: "none"
-              }
-            }
-          });
+    gsap.set(targets, { opacity: 0 });
 
-          tl.addLabel("step1")
-            .to("#image1", { opacity: 1, duration: 0.8 })
-            .addLabel("step2")
-            .to(".dt-in.one", { opacity: 1, duration: 0.8 })
-            .addLabel("step3")
-            .to("#image3", { opacity: 1, duration: 0.8 })
-            .addLabel("step4")
-            .to(".dt-in.three", { opacity: 1, duration: 0.8 })
-            .addLabel("step5")
-            .to("#image2", { opacity: 1, duration: 0.8 })
-            .addLabel("step6")
-            .to(".dt-in.two", { opacity: 1, duration: 0.8 })
-            .addLabel("step7")
-            .to(".dt-in.four", { opacity: 1, duration: 0.8 });
-
-          window.addEventListener("resize", ScrollTrigger.refresh);
-
-          return () => {
-            window.removeEventListener("resize", ScrollTrigger.refresh);
-            tl.scrollTrigger && tl.scrollTrigger.kill();
-            tl.kill();
-          };
-        });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: imageText,
+        start: "top 20%", // Triggers much earlier (when the section is near the top)
+        end: "+=30%",    // Very short scroll distance—releases the pin almost immediately
+        pin: true,
+        scrub: false,    // Animation plays at its own speed, not linked to scroll speed
+        toggleActions: "play none none reverse",
+        // markers: true // Uncomment this line to see exactly where the triggers are!
       }
+    });
+
+    tl.to(targets, {
+      opacity: 1,
+      duration: 0.4,    // Faster animation duration
+      stagger: 0.05,    // Faster sequence
+      ease: "power1.out"
+    });
+
+    return () => {
+      tl.scrollTrigger && tl.scrollTrigger.kill();
+      tl.kill();
+    };
+  });
+}
           }); /* ← missing closer added here */
     </script>
 
