@@ -108,14 +108,14 @@
           "css": ""
         }
       },
-      "12526071353035850722": {
-        "type": "shopify://apps/amp-back-in-stock/blocks/app-embed/bfa6a8c4-24e2-411a-9396-e35031b33f34",
-        "disabled": false,
-        "settings": {}
-      },
       "2102808784413787648": {
         "type": "shopify://apps/kbite-back-in-stock-notify-me/blocks/main-app-embed/147a6f7f-6771-4f9b-8dc6-c14e6b24f32c",
         "disabled": true,
+        "settings": {}
+      },
+      "12526071353035850722": {
+        "type": "shopify://apps/amp-back-in-stock/blocks/app-embed/bfa6a8c4-24e2-411a-9396-e35031b33f34",
+        "disabled": false,
         "settings": {}
       }
     }
