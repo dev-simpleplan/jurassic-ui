@@ -4177,6 +4177,17 @@ section.imagescroll {
     align-items: center;
     justify-content: center;
 }
+#corner-cowi-header {
+    padding-bottom: 20px!important;
+}
+#corner-cowi-close-btn {
+    font-size: 13px!important;
+    font-weight: 600;
+}
+#corner-cowi-close-btn-icon {
+    width: 10px!important;
+    height: 10px!important;
+}
 /* Cart Page CSS Ends */
 
 /* Blog Page CSS Starts */

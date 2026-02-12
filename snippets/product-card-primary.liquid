@@ -207,11 +207,19 @@
                     {% unless current_variant.available %}disabled{% endunless %}>
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
-
+                  {% unless product.available %}
+                    <a href="#" class="BIS_trigger" 
+                      data-product-handle="{{ product | json | escape }}" 
+                      data-variant-id="{{ current_variant.id }}">
+                      Email when available
+                    </a>
+                  {% endunless %}
                 </div>
             </div>
             <div class="fc_trust_text">
-              <p>Only {{ current_variant.inventory_quantity }} Left</p>
+              <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
+                Only {{ current_variant.inventory_quantity }} Left
+              </p>
               <span class="dot_seperator"></span>
               <p>Ships in 24 hrs</p>
               <span class="dot_seperator"></span>
