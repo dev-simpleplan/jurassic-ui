@@ -77,7 +77,7 @@
       },
       "4887604186841085581": {
         "type": "shopify://apps/yanet-back-in-stock/blocks/bis/4a272ca4-2ae2-4e8b-9da8-8dc6353ba485",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "product_list": [],
           "tags": "",
