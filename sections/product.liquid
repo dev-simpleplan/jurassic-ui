@@ -546,7 +546,10 @@
               </div>
           </div>
           <div class="pa-div">
-            <p class="product-description-metafield">{{ product.metafields.custom.description }}</p>
+            {% comment %} <p class="product-description-metafield">{{ product.metafields.custom.description }}</p> {% endcomment %}
+            <div class="product-desc">
+              {{ product.metafields.custom.new_description | metafield_tag }}
+            </div>
           </div>
        </div>
       {% comment %} How to Store {% endcomment %}

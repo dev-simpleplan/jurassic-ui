@@ -1863,6 +1863,9 @@ li.variant-value.active .perKg {
 height: 100%;
   object-fit: cover;
 }
+.pa-div .product-desc p {
+  font-size: 15px;
+}
 .pa-item {
   padding: 20px 0;
   border-bottom: 1px solid #e0e0e0;
