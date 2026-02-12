@@ -38,11 +38,11 @@
           "settings": {
             "shipping_usp_icon": "shopify://shop_images/truck.svg",
             "shipping_usp_page": "",
-            "shipping_usp_text": "Free shipping from 89 €*",
+            "shipping_usp_text": "Free shipping from 99 €",
             "freshness_icon": "shopify://shop_images/box.svg",
-            "freshness_text": "24h freshness guarantee",
+            "freshness_text": "Arrives fresh or refunded",
             "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
-            "payment_usp_text": "Secure Payment"
+            "payment_usp_text": "Pay after 30 days (Paypal logo)"
           }
         },
         "product_info": {
