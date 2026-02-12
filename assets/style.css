@@ -4171,6 +4171,12 @@ section.imagescroll {
     top: 0px;
     margin-top: 0!important;
 }
+.cardp-details #corner-corner-cart-item-list-empty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* Cart Page CSS Ends */
 
 /* Blog Page CSS Starts */
