@@ -7,6 +7,10 @@
   src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
   defer></script>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
 
 <div class="pro-breadcrumbs">
   <div class="container">
@@ -80,7 +84,11 @@
                   {% for media in product.media %}
                     <div class="item">
                       <div class="prod-main">
-                        {% render 'product-media', media: media %}
+                        <a href="{{ media | img_url: 'master' }}" 
+                          data-fancybox="gallery" 
+                          class="zoom-wrapper">
+                          {% render 'product-media', media: media %}
+                        </a>
                       </div>
                     </div>
                   {% endfor %}
@@ -1242,10 +1250,29 @@ $(document).ready(function () {
     centerMode: true,
     vertical: true,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 768, // On screens smaller than 768px
+        settings: {
+          vertical: false, // Switch to horizontal
+          slidesToShow: 4,
+          focusOnSelect: false,
+          centerMode: false, // Adjust visible items for smaller screens
+        }
+      }
+    ]
   });
 
   $('.custom-prev').click(() => $('.prod-main-image').slick('slickPrev'));
   $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
+});
+
+Fancybox.bind("[data-fancybox='gallery']", {
+  // Optional: Customization options
+  Hash: false,
+  Thumbs: {
+    autoStart: false,
+  },
 });
 </script>
 

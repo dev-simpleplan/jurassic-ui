@@ -1489,6 +1489,22 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .origin-wrap p, .origin-wrap ul li {
     font-size: 14px;
   }
+  .pro-img {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pro-right-side {
+    width: 100%;
+  }
+  .prod-thumb-image.slick-slider {
+    position: relative!important;
+    width: 100%;
+    height: 100%;
+    max-width: inherit!important;
+  }
+  .prod-thumb-image .slick-list {
+    height: auto !important;
+  }
 }
 @media(max-width:425px){
   footer::before {

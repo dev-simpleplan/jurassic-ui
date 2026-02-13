@@ -92,7 +92,7 @@
                                     <div class="child-block">
                                   {%- endif -%}
 
-                                      <p class="links-heading">{{ link.title }}</p>
+                                      {% comment %} <p class="links-heading">{{ link.title }}</p> {% endcomment %}
                                       <ul>
                                         {%- for sublink in link.links -%}
                                           <li>
