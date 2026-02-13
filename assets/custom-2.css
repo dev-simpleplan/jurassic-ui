@@ -1138,9 +1138,13 @@ span.cart-compare-price {
 }
 .title .price .price-txt {
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 100%;
   color: #6B6B6B;
+}
+.title .price .price-txt a {
+  color: #6B6B6B;
+  text-decoration: underline;
 }
 .price-detailsss .vvv-discount {
     padding : 4px;

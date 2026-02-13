@@ -1457,12 +1457,6 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .pair-with .fruits_card .fc_top {
     order: -1;
   }
-  .priceCheckout .submit {
-    flex-direction: column;
-  }
-  .priceCheckout #Quantity {
-    height: 42px;
-  }
   .priceCheckout .custom-btn {
     width: 100%;
   }
@@ -1483,10 +1477,18 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .nutri-info p {
     max-width: 100%;
   }
+  /* .priceCheckout .submit {
+    flex-direction: column;
+  } */
   .priceCheckout .qty-selector {
-    width: 100%!important;
+    width: 100px!important;
   }
   .origin-wrap p, .origin-wrap ul li {
+    font-size: 14px;
+  }
+  .priceCheckout #Quantity {
+    height: 42px;
+    padding: 0 4px!important;
     font-size: 14px;
   }
   .pro-img {
@@ -1505,10 +1507,48 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .prod-thumb-image .slick-list {
     height: auto !important;
   }
+  .pro-breadcrumbs {
+    padding: 30px 0 10px 0;
+  }
+  #corner-sticky-atc-container #corner-sticky_atc-product_info_wrapper {
+    flex-basis: auto!important;
+  }
+  #corner-sticky-atc-cta_section {
+    gap: 10px;
+  }
+  .store-usp {
+    overflow: inherit;
+    overflow-x: inherit;
+  }
+  .store-usp .su-item {
+    padding: 11px 6px;
+  }
+  .store-usp .su-item p, .store-usp .su-item a {
+    font-size: 12px;
+  }
+  .product-usp .pui-icon {
+      width: 20px;
+      height: 20px;
+  }
+  .product-usp .pu-item p {
+    font-size: 10px;
+  }
+  .product-info .title {
+    gap: 8px;
+  }
+  .pro-img-wrap .tr-testimonial {
+    margin-bottom: 8px;
+  }
 }
 @media(max-width:425px){
   footer::before {
     top: 8px;
+  }
+  .priceCheckout .submit {
+    flex-direction: column;
+  }
+  .priceCheckout .qty-selector {
+    width: 100%!important;
   }
 }
 @media(max-width:350px){

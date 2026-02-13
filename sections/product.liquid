@@ -206,7 +206,7 @@
                       </div>
 
                       <span class="price-txt">
-                        VAT, Taxes, Excl. shipping
+                        Prices include VAT, excluding <a href="javascript:vosi()">shipping costs.</a>
                       </span>
                     </div>
 
@@ -229,7 +229,7 @@
               {% when 'product_info' %}
                 <div class="product-info-block">
                   {% comment %} For Origin {% endcomment %}
-                  <div class="pi-item">
+                  {% comment %} <div class="pi-item">
                     {% render 'green-tick' %}
                     <div class="pii-info">
                       <p>
@@ -237,9 +237,9 @@
                         {{ product.metafields.custom.country_of_origin.value.country_name }}
                       </p>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
                   {% comment %} Seasonality {% endcomment %}
-                  <div class="pi-item">
+                  {% comment %} <div class="pi-item">
                     {% render 'green-tick' %}
                     <div class="pii-info">
                       <p>
@@ -247,7 +247,7 @@
                         {{ product.metafields.custom.country_season.value.season.value.seasonality }}
                       </p>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
 
                   {% comment %} Additional Information {% endcomment %}
                   {% for item in product.metafields.custom.additional_information.value %}
