@@ -532,6 +532,16 @@
         "name": "product_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "new_description",
+      "namespace": "custom",
+      "name": "New Description",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [

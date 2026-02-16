@@ -28,8 +28,14 @@
 
         <div class="fc_image">
           {% if images.size > 0 %}
+            {% comment %} 
+              Check if the selected default_variant has a specific image, 
+              otherwise fall back to the first product image.
+            {% endcomment %}
+            {% assign featured_img = default_variant.featured_media | default: images.first %}
+            
             <img
-              src="{{ images.first | img_url: 'master' }}"
+              src="{{ featured_img | img_url: 'master' }}"
               alt="{{ product.title | escape }}"
               class="img_sizing primary-img">
 
