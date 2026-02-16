@@ -194,15 +194,21 @@
                     <div class="price" id="price-{{ section.id }}">
                       <div class="price-detailsss"> 
                         <div class="sell-price">
-                          {{ selected_variant.price | money }}
+                          {{ selected_variant.price | money }} 
                         </div>
-
                         <div>
                           <strike class="real-price"></strike>
                         </div>
-
-                        <!-- ALWAYS present -->
                         <div class="vvv-discount" style="display:none"></div>
+                        <span class="sell-price-variant-perkg">(
+                          {% if selected_variant.unit_price_measurement %}
+                                          {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                                        {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                                        {% else %}
+                                          {{ selected_variant.price | money }} / unit
+                                        {% endif %}  
+                        )</span>
+                        <!-- ALWAYS present -->
                       </div>
 
                       <span class="price-txt">
@@ -372,7 +378,13 @@
                                     <div class="vv-peices">
                                       {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
                                       
-                                      {{ matched_variant.price | money }}
+                                      {% comment %} {{ matched_variant.price | money }} {% endcomment %}
+                                       {% if matched_variant.unit_price_measurement %}
+                                          {{ matched_variant.unit_price | money }} / {{ matched_variant.unit_price_measurement.reference_unit }}
+                                        {% comment %} {{ matched_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                                        {% else %}
+                                          {{ matched_variant.price | money }} / unit
+                                        {% endif %}
                                     </div>
                                   </li>
                                 {% endfor %}
@@ -408,7 +420,7 @@
                         >
                           <span class="btn-text">
                             <span class="btn-label">Add to Cart</span>
-                            <span class="btn-price">—</span>
+                            (<span class="btn-price">—</span>)
                           </span>
 
                           <span class="btn-spinner" aria-hidden="true"></span>
