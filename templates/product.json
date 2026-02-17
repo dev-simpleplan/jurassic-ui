@@ -72,6 +72,27 @@
             "popup_button": "click here to get delivery information (cost, delay)",
             "page": "delivery-popup"
           }
+        },
+        "market_price_xWqKfL": {
+          "type": "market_price",
+          "settings": {
+            "market_code": "de",
+            "shipping_price": "35€"
+          }
+        },
+        "market_price_a3PC3K": {
+          "type": "market_price",
+          "settings": {
+            "market_code": "fr",
+            "shipping_price": "13€"
+          }
+        },
+        "market_price_YngPir": {
+          "type": "market_price",
+          "settings": {
+            "market_code": "simpleplan-media-india",
+            "shipping_price": "INR450"
+          }
         }
       },
       "block_order": [
@@ -83,7 +104,10 @@
         "product_info",
         "offer_MKP99r",
         "offer_MHYyhK",
-        "delivery_info_WFVGrD"
+        "delivery_info_WFVGrD",
+        "market_price_xWqKfL",
+        "market_price_a3PC3K",
+        "market_price_YngPir"
       ],
       "settings": {
         "acc_1": "How to eat & Store",
