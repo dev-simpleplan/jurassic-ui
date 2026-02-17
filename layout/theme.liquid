@@ -100,7 +100,7 @@
     {% comment %} Script Tags {% endcomment %}
 
     {% comment %} Script Tags {% endcomment %}
-    <script src="https://unpkg.com/lenis@1.3.1/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js" defer></script> 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
@@ -442,10 +442,10 @@ tl.kill();
         });
 
     </script>
-
+{% render 'shipping-global-script' %}
 
     {%- render "ecom_footer" - %}
-    {% render 'shipping-global-script' %}
+    
   </body>
 
 </html>
