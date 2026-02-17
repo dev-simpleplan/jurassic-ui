@@ -45,6 +45,11 @@
   },
   "search": {
     "placeholder": "Artikel, Seiten oder Produkte suchen",
-    "no_results_html": "Für {{ terms }} wurden keine Ergebnisse gefunden."
+    "no_results_html": "Für {{ terms }} wurden keine Ergebnisse gefunden.",
+    "title": "Suchen",
+    "submit": "Suchen"
+  },
+  "collections": {
+    "title": "Sammlungen"
   }
 }
