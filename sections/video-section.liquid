@@ -14,6 +14,7 @@
                             muted: false,
                             controls: false,
                             playsinline: true,
+                            poster: "{{ section.settings.video_poster |  img_url: 'master' }}"
                             class: 'img ab'
                         }}
                         <button class="video-control" aria-label="Video Play Button">
@@ -88,6 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "type": "image_picker",
             "id": "video_img",
             "label": "Upload Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "video_poster",
+            "label": "Upload Video Poster"
         },
         {
             "type": "video",
