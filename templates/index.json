@@ -97,33 +97,40 @@
     "video-carousel": {
       "type": "video-carousel",
       "blocks": {
+        "ugc_videos_NrQzL4": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/🥭👑 Mangosteen trifft Passionsfrucht – die Königin küsst die Power 💛✨Die zarte, cremige Mangos.mp4"
+          }
+        },
         "ugc_videos_UXLNi4": {
           "type": "ugc-videos",
           "settings": {
             "video_img": "shopify://shop_images/5LAB10.jpg",
-            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+            "video_link": "shopify://files/videos/🍈✨ Jackfrucht – ein echtes NaturwunderHier siehst du, wie Sonja eine perfekt gereifte Jackfruch.mp4"
           }
         },
         "ugc_videos_kBLy7n": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+            "video_link": "shopify://files/videos/Papaya Golden 💛🥭 – klein, süß & voller NährstoffeDiese kleine Power-Frucht in Mango-Größe ist .mp4"
           }
         },
         "ugc_videos_3TBr6y": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+            "video_link": "shopify://files/videos/Die Mon Thong Durian – auch bekannt als „Golden Pillow“ 💛 – gilt als der König unter den Durian.mp4"
           }
         },
         "ugc_videos_inDUwA": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+            "video_link": "shopify://files/videos/Goldgelb, blumig, unvergesslich. 💛🥭Die legendäre Nam Dok Mai aus Thailand – natürlich süß mit  (1).mp4"
           }
         }
       },
       "block_order": [
+        "ugc_videos_NrQzL4",
         "ugc_videos_UXLNi4",
         "ugc_videos_kBLy7n",
         "ugc_videos_3TBr6y",
