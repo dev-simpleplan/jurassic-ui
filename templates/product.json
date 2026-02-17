@@ -99,12 +99,14 @@
     },
     "spacer0": {
       "type": "Spacer",
+      "disabled": true,
       "settings": {
         "spacer_height": 70
       }
     },
     "frequently": {
       "type": "frequently-bought",
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "head": "Frequently Bought<br>Together with"
@@ -112,6 +114,7 @@
     },
     "spacer_Nh7Bj": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
