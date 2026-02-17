@@ -42,7 +42,7 @@
             "freshness_icon": "shopify://shop_images/box.svg",
             "freshness_text": "Arrives fresh or refunded",
             "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
-            "payment_usp_text": "Pay after 30 days (Paypal logo)"
+            "payment_usp_text": "Pay after 30 days"
           }
         },
         "product_info": {
