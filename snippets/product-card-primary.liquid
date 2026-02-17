@@ -28,23 +28,20 @@
 
         <div class="fc_image">
           {% if images.size > 0 %}
-            {% comment %} 
-              Check if the selected default_variant has a specific image, 
-              otherwise fall back to the first product image.
-            {% endcomment %}
-            {% assign featured_img = default_variant.featured_media | default: images.first %}
-            
-            <img
-              src="{{ featured_img | img_url: 'master' }}"
-              alt="{{ product.title | escape }}"
-              class="img_sizing primary-img">
+          {% comment %} ALWAYS USE THE FIRST PRODUCT IMAGE AS PRIMARY {% endcomment %}
+          {% assign featured_img = images.first %}
+          
+          <img
+            src="{{ featured_img | img_url: 'master' }}"
+            alt="{{ product.title | escape }}"
+            class="img_sizing primary-img">
 
-            {% if images.size > 1 %}
-              <img
-                src="{{ images[1] | img_url: 'master' }}"
-                alt="{{ product.title | escape }}"
-                class="img_sizing hover-img">
-            {% endif %}
+          {% if images.size > 1 %}
+            <img
+              src="{{ images[1] | img_url: 'master' }}"
+              alt="{{ product.title | escape }}"
+              class="img_sizing hover-img">
+          {% endif %}
           {% else %}
             <img
               src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647' }}"
@@ -293,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const price = variant.dataset.price;
       const compare = variant.dataset.compare;
       const unit = variant.dataset.unit;
-      const image = variant.dataset.image;
+      {% comment %} const image = variant.dataset.image; {% endcomment %}
 
       // update price
       const priceWrap = card.querySelector('.fc_price_weight');
@@ -304,8 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // update image
-      const img = card.querySelector('.primary-img');
-      if (img && image) img.src = image;
+      {% comment %} const img = card.querySelector('.primary-img');
+      if (img && image) img.src = image; {% endcomment %}
 
       // update add to cart button variant
       const addWrap = card.querySelector('.fc_add_to_cart');

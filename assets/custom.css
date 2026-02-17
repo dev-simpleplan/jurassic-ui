@@ -53,6 +53,28 @@
 .fc_image {
   aspect-ratio: 1/1;
   overflow: hidden;
+  position: relative;
+}
+.fc_image .img_sizing {
+  transition: opacity 0.4s ease-in-out;
+}
+.fc_image .hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Hidden by default */
+  object-fit: cover;
+}
+
+/* Hover Effect: Show second image, hide first */
+.fruits_card:hover .hover-img {
+  opacity: 1;
+}
+
+.fruits_card:hover .primary-img {
+  opacity: 0;
 }
 .fc_top .fc_category_tags {
   position: absolute;

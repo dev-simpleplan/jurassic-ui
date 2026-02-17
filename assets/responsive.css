@@ -983,6 +983,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .pair-with .fruits_card .fc_top {
     order: 2;
   }
+  .collection-banner {
+    padding: 130px 0 38px 0;
+  }
 }
 
 @media (max-width: 767px) {
@@ -992,6 +995,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   header {
     top: 68px;
+    padding: 19px 0;
   }
   .container, .container-fluid {
     padding: 0 20px;
@@ -1538,6 +1542,16 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .pro-img-wrap .tr-testimonial {
     margin-bottom: 8px;
+  }
+  .collection-banner {
+      padding: 160px 0 32px 0;
+  }
+  .cb-collection {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: hidden;
+    overflow-x: auto;
   }
 }
 @media(max-width:425px){
