@@ -8,14 +8,20 @@
                 </div>
                 <div class="vidimage-in">
                     {% if section.settings.video_link != blank %}
-                        {{ section.settings.video_link | video_tag:
-                            autoplay: false,
-                            loop: true,
-                            muted: false,
-                            controls: false,
-                            playsinline: true,
-                            poster: section.settings.video_poster | img_url: 'master',
-                            class: 'img ab'
+                        {%- assign poster_url = nil -%}
+  
+                        {%- if section.settings.video_poster != blank -%}
+                            {%- assign poster_url = section.settings.video_poster | img_url: 'master' -%}
+                        {%- endif -%}
+
+                        {{ section.settings.video_link | video_tag: 
+                            class: 'img ab',
+                            autoplay: false, 
+                            loop: true, 
+                            muted: false, 
+                            controls: false, 
+                            playsinline: true, 
+                            poster: poster_url 
                         }}
                         <button class="video-control" aria-label="Video Play Button">
                             <span class="video-control-play">
