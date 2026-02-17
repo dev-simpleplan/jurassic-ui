@@ -278,7 +278,7 @@
                       <img src="{{ block.settings.shipping_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.shipping_usp_text }}">
                     </div>
                     <div class="sui-txt">
-                      <a href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
+                      <a id="delivery-data" href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
                     </div>
                   </div>
 
@@ -1332,6 +1332,96 @@ document.addEventListener('click', function (e) {
 });
 </script>
 
+{% comment %} <script>
+  (function() {
+
+  // --- 1. CONFIGURATION: Add your markets and prices here ---
+
+  const shippingPrices = {
+    'de': '35€',     // Germany
+    'at': '12€',     // Austria
+    'fr': '13€',     // France
+    'gb': '£25',     // United Kingdom
+    'us': '$45',     // United States
+    'simpleplan-media-india': 'INR450',     // India
+    'in': 'INR450',     // India
+    'default': '$19' // Fallback for everyone else
+  };
+
+  function updateShippingText() {
+    const displayElement = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+    const displayElementnew = document.getElementById('delivery-data');
+    const market = window.corner?.sessionData?.market;
+
+    if (!displayElement || !market) return;
+    const marketKey = market.toLowerCase();
+    // Look up the price from our table above, or use the default
+    const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+    const newText = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+    const newTextupdate = `Freeshipping from ${shippingPrice}.`;
+
+    // ONLY update if the text is actually different to prevent loops
+    if (displayElement.innerText !== newText) {
+      displayElement.innerText = newText;
+      console.log("✅ Market detected: " + marketKey + " | Price set to: " + shippingPrice);
+    }
+
+    if (displayElementnew.innerText !== newTextupdate) {
+      displayElementnew.innerText = newTextupdate;
+      console.log("✅ Market detected: " + marketKey + " | Price set to: " + shippingPrice);
+    }
+  }
+  // Check every 1 second to catch app re-renders
+  const persistentCheck = setInterval(updateShippingText, 1000);
+
+  // Backup: trigger when the app says it's ready
+  document.addEventListener("corner:ready", updateShippingText);
+
+})();
+</script> {% endcomment %}
+
+<script>
+  (function() {
+  // --- 1. DYNAMIC CONFIGURATION via Liquid ---
+  const shippingPrices = {
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        "{{ block.settings.market_code | downcase }}": "{{ block.settings.shipping_price }}",
+      {% endfor %}
+    {% else %}
+      // Fallback if no blocks are added
+      "default": "$19"
+    {% endif %}
+    "default": "{{ section.settings.default_shipping_price | default: '$19' }}"
+  };
+
+  function updateShippingText() {
+    const displayElement = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+    const displayElementnew = document.getElementById('delivery-data');
+    const market = window.corner?.sessionData?.market;
+
+    if (!displayElement || !market) return;
+    
+    const marketKey = market.toLowerCase();
+    const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+    
+    const newText = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+    const newTextupdate = `Free shipping from ${shippingPrice}.`;
+
+    if (displayElement.innerText !== newText) {
+      displayElement.innerText = newText;
+    }
+
+    if (displayElementnew && displayElementnew.innerText !== newTextupdate) {
+      displayElementnew.innerText = newTextupdate;
+    }
+  }
+
+  const persistentCheck = setInterval(updateShippingText, 1000);
+  document.addEventListener("corner:ready", updateShippingText);
+})();
+</script>
+
 
 
 {% schema %}
@@ -1449,6 +1539,23 @@ document.addEventListener('click', function (e) {
           }
         ]
       },
+      {
+      "type": "market_price",
+      "name": "Market Price",
+      "settings": [
+        {
+          "type": "text",
+          "id": "market_code",
+          "label": "Market Code (e.g. us, gb, in)",
+          "info": "Must match the window.corner market code"
+        },
+        {
+          "type": "text",
+          "id": "shipping_price",
+          "label": "Shipping Price (e.g. $45 or INR450)"
+        }
+      ]
+    },
       {
           "type": "@app"
       }
