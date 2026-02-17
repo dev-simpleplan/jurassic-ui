@@ -5137,6 +5137,9 @@ section.imagescroll {
 }
 /* Free SHipping Snippet */
 
+.submit.submit--with-qty .custom-btn .btn-label {
+    font-weight: 600;
+}
 
 
 @media (max-width: 1500px) {
