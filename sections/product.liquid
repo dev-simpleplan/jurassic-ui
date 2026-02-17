@@ -1380,7 +1380,7 @@ document.addEventListener('click', function (e) {
 })();
 </script> {% endcomment %}
 
-<script>
+{% comment %} <script>
   (function() {
   // --- 1. DYNAMIC CONFIGURATION via Liquid ---
   const shippingPrices = {
@@ -1420,7 +1420,7 @@ document.addEventListener('click', function (e) {
   const persistentCheck = setInterval(updateShippingText, 1000);
   document.addEventListener("corner:ready", updateShippingText);
 })();
-</script>
+</script> {% endcomment %}
 
 
 

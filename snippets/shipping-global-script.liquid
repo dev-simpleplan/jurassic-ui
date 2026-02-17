@@ -1,0 +1,48 @@
+<script>
+  (function() {
+    // 1. Safely build the object. If Metaobjects are empty, it defaults to {}
+    const shippingPrices = {
+      {%- for rate in shop.metaobjects.shipping_rate.values -%}
+        "{{ rate.market_code.value | downcase | strip }}": "{{ rate.price_value.value | strip }}",
+      {%- endfor -%}
+      "default": "{{ shop.metafields.custom.default_shipping.value | default: '$19' }}"
+    };
+
+    function updateShippingText() {
+      try {
+        const market = window.corner?.sessionData?.market;
+        if (!market) return;
+        
+        const marketKey = market.toLowerCase();
+        const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+
+        // ID selectors for your specific elements
+        const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+        const deliveryEl = document.getElementById('delivery-data');
+
+        if (mainEl) {
+          const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+          if (mainEl.innerText !== text) mainEl.innerText = text;
+        }
+
+        if (deliveryEl) {
+          const text = `Free shipping from ${shippingPrice}.`;
+          if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
+        }
+      } catch (e) {
+        // This prevents the error from stopping other scripts (like your cart)
+        console.error("Shipping Script Error:", e);
+      }
+    }
+
+    // Use a slightly longer interval to stay out of the way of your AJAX cart
+    setInterval(updateShippingText, 1000);
+
+    // Initial check
+    if (document.readyState === 'complete') {
+      updateShippingText();
+    } else {
+      window.addEventListener('load', updateShippingText);
+    }
+  })();
+</script>
