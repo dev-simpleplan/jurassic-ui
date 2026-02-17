@@ -315,14 +315,14 @@
                         <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                           <div class="sv-perKg">
                             <p>Select variant</p>
-                            <div class="perKg">
+                            {% comment %} <div class="perKg">
                               {% if selected_variant.unit_price_measurement %}
                                 {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
                               {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
                               {% else %}
                                 {{ selected_variant.price | money }} / unit
                               {% endif %}
-                            </div>
+                            </div> {% endcomment %}
                           </div>
                           {% for option in product.options_with_values %}
                             <div class="variant-option" data-option="{{ option.name }}">
@@ -1173,7 +1173,7 @@ class VariantSelector extends HTMLElement {
     }
 
     /* Unit / kg text */
-    const perKg = document.querySelector('.perKg');
+    {% comment %} const perKg = document.querySelector('.perKg');
     if (perKg) {
       if (this.currentVariant.unit_price_measurement) {
         perKg.textContent =
@@ -1184,7 +1184,7 @@ class VariantSelector extends HTMLElement {
         perKg.textContent =
           formatMoneySafe(price) + ' / unit';
       }
-    }
+    } {% endcomment %}
   }
 
 
