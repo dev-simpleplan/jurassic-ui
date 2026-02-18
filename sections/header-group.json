@@ -62,25 +62,9 @@
       "settings": {
         "select_logo": "shopify://shop_images/Jurassic_Fruit.svg"
       }
-    },
-    "1771406597d1b68ac1": {
-      "type": "apps",
-      "blocks": {
-        "omnisend_email_marketing_sms_embedded_form_AFNz3f": {
-          "type": "shopify://apps/omnisend-email-marketing-sms/blocks/embedded-form/44704aa2-794f-4c5d-8c8e-039c841158e9",
-          "settings": {
-            "form_id": "69958495faf307608c8f52f5"
-          }
-        }
-      },
-      "block_order": [
-        "omnisend_email_marketing_sms_embedded_form_AFNz3f"
-      ],
-      "settings": {}
     }
   },
   "order": [
-    "header",
-    "1771406597d1b68ac1"
+    "header"
   ]
 }
