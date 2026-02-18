@@ -72,27 +72,6 @@
             "popup_button": "click here to get delivery information (cost, delay)",
             "page": "delivery-popup"
           }
-        },
-        "market_price_xWqKfL": {
-          "type": "market_price",
-          "settings": {
-            "market_code": "de",
-            "shipping_price": "35€"
-          }
-        },
-        "market_price_a3PC3K": {
-          "type": "market_price",
-          "settings": {
-            "market_code": "fr",
-            "shipping_price": "13€"
-          }
-        },
-        "market_price_YngPir": {
-          "type": "market_price",
-          "settings": {
-            "market_code": "simpleplan-media-india",
-            "shipping_price": "INR450"
-          }
         }
       },
       "block_order": [
@@ -104,10 +83,7 @@
         "product_info",
         "offer_MKP99r",
         "offer_MHYyhK",
-        "delivery_info_WFVGrD",
-        "market_price_xWqKfL",
-        "market_price_a3PC3K",
-        "market_price_YngPir"
+        "delivery_info_WFVGrD"
       ],
       "settings": {
         "acc_1": "How to eat & Store",
@@ -312,15 +288,6 @@
     "1765873593de6c460a": {
       "type": "apps",
       "blocks": {
-        "judge_me_reviews_review_widget_XNJWzD": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        },
         "okendo_reviews_carousel_DFkkVF": {
           "type": "shopify://apps/okendo/blocks/reviews-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
           "disabled": true,
@@ -333,13 +300,13 @@
         }
       },
       "block_order": [
-        "judge_me_reviews_review_widget_XNJWzD",
         "okendo_reviews_carousel_DFkkVF"
       ],
       "settings": {}
     },
     "spacer_wXMU4V": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -516,6 +483,7 @@
         "slide_WLQ6Vn",
         "slide_WQQNRF"
       ],
+      "disabled": true,
       "name": "jurassic-way",
       "settings": {
         "section_heading": "​​The Hands That Harvest Paradise"
