@@ -684,6 +684,66 @@
         "name": "list.single_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "preorder_count",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Count",
+      "description": "Current preorder count for the variant",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "preorder_max_count",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Max Count",
+      "description": "Maximum preorder count allowed for the variant",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "shipping_text",
+      "namespace": "restockrocket_production",
+      "name": "Shipping Text",
+      "description": "Custom shipping text for the variant",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "market_preorder_count",
+      "namespace": "restockrocket_production",
+      "name": "Market Preorder Count",
+      "description": "Market-specific preorder counts for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "market_preorder_max_count",
+      "namespace": "restockrocket_production",
+      "name": "Market Preorder Max Count",
+      "description": "Market-specific preorder max counts for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "market_shipping_text",
+      "namespace": "restockrocket_production",
+      "name": "Market Shipping Text",
+      "description": "Market-specific shipping text for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
     }
   ],
   "shop": [
@@ -695,6 +755,66 @@
       "type": {
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "settings",
+      "namespace": "restockrocket_production",
+      "name": "Settings",
+      "description": "Settings for the app",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "selling_plans",
+      "namespace": "restockrocket_production",
+      "name": "Selling Plans",
+      "description": "Settings and variant IDs for preorder offers",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "out_of_stock_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "Out of Stock Variant IDs",
+      "description": "List of variant IDs that are currently out of stock",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "in_stock_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "In Stock Variant IDs",
+      "description": "List of variant IDs that are currently in stock",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "preorder_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Variant IDs",
+      "description": "List of variant IDs that are available for preorder",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "default_shipping",
+      "namespace": "custom",
+      "name": "Default Shipping Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ]

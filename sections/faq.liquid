@@ -2,9 +2,11 @@
     <div class="container-fluid">
         <div class="heading with-link">
             <h2>{{ section.settings.heading }}</h2>
-            <div class="heading-link hide-mobile">
-                <a href="{{ section.settings.cta_url }}">{{ section.settings.cta_text }}</a>
-            </div>
+            {% if section.settings.cta_url %}
+                <div class="heading-link hide-mobile">
+                    <a href="{{ section.settings.cta_url }}">{{ section.settings.cta_text }}</a>
+                </div>
+            {% endif %}
         </div>
         <div class="faq-wrap">
             <div class="faq-accordian-wrapper">
@@ -33,9 +35,11 @@
             </div>
         </div>
 
-        <div class="heading-link show-mobile">
+        {% if section.settings.cta_url %}
+            <div class="heading-link show-mobile">
                 <a href="{{ section.settings.cta_url }}">{{ section.settings.cta_text }}</a>
             </div>
+        {% endif %}
     </div>
 </div>
 

@@ -1284,9 +1284,15 @@ span.cart-compare-price {
 .prod-thumb-image .slick-list {
   height: 100%!important;
 }
-.pro-img-wrap .tr-testimonial {
+.pro-img-wrap .pro-test {
   width: calc(100% - 129px);
   margin-left: auto;
+  display: flex;
+  /* flex-direction: column; */
+  gap: 20px;
+}
+.pro-grid .pro-test.formobile {
+  display: none;
 }
 .pro-img-wrap .tr-testimonial p {
   font-size: 16px;
@@ -1858,16 +1864,22 @@ li.variant-value.active .perKg {
   
 }
 .paes-icon.square {
-  aspect-ratio: 1/1;
+  aspect-ratio: 8/7;
   overflow: hidden;
 }
 .paes-icon img {
   width: 100%;
   
 }
-.paes-icon.square img {
+.paes-icon.square img, .paes-icon.square video {
 height: 100%;
+width: 100%;
   object-fit: cover;
+  object-position: center;
+}
+.pa-div .product-desc h2 {
+  margin-bottom: 20px;
+  font-size: clamp(28px, 2.543px + 4.623vw, 36px);
 }
 .pa-div .product-desc p {
   font-size: 15px;
@@ -2087,7 +2099,7 @@ p.product-description-metafield {
 }
 .pa-technical .pati-data p span {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
 }
 .tp-wrap {
   display: flex;
@@ -2136,7 +2148,7 @@ p.product-description-metafield {
   margin-bottom: 30px;
 }
 .padiv-para p {
-  font-size: 14px;
+  font-size: 15px;
 }
 .pad-taste-profile {
   display: grid;

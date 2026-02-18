@@ -442,6 +442,23 @@ tl.kill();
         });
 
     </script>
+
+    <script>
+      // 1. Find ALL buttons with the class 'open-my-form'
+      const formButtons = document.querySelectorAll('.open-my-form');
+
+      // 2. Loop through each button found
+      formButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          // Optional: Prevent default if it's an <a> tag
+          e.preventDefault();
+          
+          // 3. Trigger the Omnisend popup
+          window.omnisend = window.omnisend || [];
+          window.omnisend.push(['openForm', '69958495faf307608c8f52f5']);
+        });
+      });
+    </script>
 {% render 'shipping-global-script' %}
 
     {%- render "ecom_footer" - %}

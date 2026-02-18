@@ -213,11 +213,9 @@
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
                   {% unless product.available %}
-                    <a href="#" class="BIS_trigger" 
-                      data-product-data="{{ product | json | escape }}" 
-                      data-variant-id="{{ current_variant.id }}">
+                    <button class="open-my-form BIS_trigger">
                       Email when available
-                    </a>
+                    </button>
                   {% endunless %}
                 </div>
             </div>

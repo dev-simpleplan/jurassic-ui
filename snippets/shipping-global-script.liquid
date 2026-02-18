@@ -1,32 +1,75 @@
 <script>
-  // Define the function globally so your cart script can "see" it
-  window.refreshShippingPrices = function() {
-    try {
-      const shippingPrices = {
-        {%- for rate in shop.metaobjects.shipping_rate.values -%}
-          "{{ rate.market_code.value | downcase | strip }}": "{{ rate.price_value.value | strip }}",
-        {%- endfor -%}
-        "default": "{{ shop.metafields.custom.default_shipping.value | default: '$19' }}"
-      };
+  (function() {
+    // 1. Safely build the object. If Metaobjects are empty, it defaults to {}
+    const shippingPrices = {
+      {%- for rate in shop.metaobjects.shipping_rate.values -%}
+        {%- if rate.market_code != blank and rate.price_value != blank -%}
+          "{{ rate.market_code | downcase | strip }}": "{{ rate.price_value | strip }}",
+        {%- endif -%}
+      {%- endfor -%}
+      "default": "{{ shop.metafields.custom.default_shipping.value | default: '$19' }}"
+    };
 
-      const market = window.corner?.sessionData?.market;
-      if (!market) return;
-      
-      const marketKey = market.toLowerCase();
-      const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+    function updateShippingText() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlMarket = urlParams.get('country');
 
-      const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
-      const deliveryEl = document.getElementById('delivery-data');
+    // 1. Detect the market from App or URL
+    let market = (window.corner?.sessionData?.market || urlMarket);
+    if (!market) return;
 
-      if (mainEl) mainEl.innerText = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
-      if (deliveryEl) deliveryEl.innerText = `Free shipping from ${shippingPrice}.`;
-      
-    } catch (e) {
-      console.log("Shipping price update skipped.");
+    let marketKey = market.toLowerCase().trim();
+
+    // 2. AUTOMATIC MAPPING: Translate full names to short codes
+    const countryMap = {
+      "france": "fr",
+      "germany": "de",
+      "austria": "at",
+      "united kingdom": "gb",
+      "united states": "us",
+      "india": "in"
+    };
+
+    // If the detected market is a full name (like 'france'), 
+    // change it to the code (like 'fr')
+    if (countryMap[marketKey]) {
+      marketKey = countryMap[marketKey];
     }
-  };
 
-  // Run once when page is ready
-  document.addEventListener("DOMContentLoaded", window.refreshShippingPrices);
-  document.addEventListener("corner:ready", window.refreshShippingPrices);
+    // 3. Match against your Metaobject Price Table
+    const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+
+    const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+    const deliveryEl = document.getElementById('delivery-data');
+
+    if (mainEl) {
+      const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+      if (mainEl.innerText !== text) mainEl.innerText = text;
+    }
+
+    if (deliveryEl) {
+      const text = `Free shipping from ${shippingPrice}.`;
+      if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
+    }
+
+    console.log("Mapped Market:", marketKey, "| Set Price:", shippingPrice);
+  } catch (e) {
+    console.error("Shipping Script Error:", e);
+  }
+}
+
+    console.log("Detected Market:", window.corner?.sessionData?.market);
+    console.log("Current Price Table:", shippingPrices);
+
+    // Use a slightly longer interval to stay out of the way of your AJAX cart
+    setInterval(updateShippingText, 1000);
+
+    // Initial check
+    if (document.readyState === 'complete') {
+      updateShippingText();
+    } else {
+      window.addEventListener('load', updateShippingText);
+    }
+  })();
 </script>

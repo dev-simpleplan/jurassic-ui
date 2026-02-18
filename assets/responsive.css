@@ -949,7 +949,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     position: relative;
     top: 0;
   }
-  .pro-img-wrap .tr-testimonial {
+  .pro-img-wrap .pro-test {
     width: 100%;
     margin-bottom: 30px;
   }
@@ -1552,6 +1552,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     justify-content: flex-start;
     overflow: hidden;
     overflow-x: auto;
+  }
+  .pro-grid .pro-test.formobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px 16px;
+    background: #ffffff;
+    border: 1px solid #e5e3df;
+    border-radius: 20px;
+    width: 100%;
+  }
+  .pro-img-wrap .pro-test.fordesktop {
+    display: none;
   }
 }
 @media(max-width:425px){
