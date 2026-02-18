@@ -99,14 +99,12 @@
     },
     "spacer0": {
       "type": "Spacer",
-      "disabled": true,
       "settings": {
         "spacer_height": 70
       }
     },
     "frequently": {
       "type": "frequently-bought",
-      "disabled": true,
       "custom_css": [],
       "settings": {
         "head": "Frequently Bought<br>Together with"
@@ -496,13 +494,6 @@
         "spacer_height": 140
       }
     },
-    "spacer_7pD8rp": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
     "177139754036d00b41": {
       "type": "apps",
       "blocks": {
@@ -518,6 +509,13 @@
         "okendo_reviews_widget_4WUGBX"
       ],
       "settings": {}
+    },
+    "spacer_7pD8rp": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     },
     "faq": {
       "type": "faq",
