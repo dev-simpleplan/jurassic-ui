@@ -1288,8 +1288,8 @@ span.cart-compare-price {
   width: calc(100% - 129px);
   margin-left: auto;
   display: flex;
-  /* flex-direction: column; */
-  gap: 20px;
+  flex-direction: column;
+  gap: 10px;
 }
 .pro-grid .pro-test.formobile {
   display: none;
