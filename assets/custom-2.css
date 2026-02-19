@@ -1869,13 +1869,17 @@ li.variant-value.active .perKg {
 }
 .paes-icon img {
   width: 100%;
-  
 }
 .paes-icon.square img, .paes-icon.square video {
-height: 100%;
-width: 100%;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   object-position: center;
+}
+.paes-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 .pa-div .product-desc h2 {
   margin-bottom: 20px;
@@ -1936,6 +1940,7 @@ width: 100%;
     grid-auto-flow: column;
     overflow-x: scroll;
     gap: 30px;
+    margin-bottom: 15px;
 }
 .paes-item p {
   font-size: 14px;
