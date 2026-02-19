@@ -212,11 +212,11 @@
                     {% unless current_variant.available %}disabled{% endunless %}>
                     {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
                   </button>
-                  {% unless product.available %}
+                  {% comment %} {% unless product.available %}
                     <button class="open-my-form BIS_trigger">
                       Email when available
                     </button>
-                  {% endunless %}
+                  {% endunless %} {% endcomment %}
                 </div>
             </div>
             <div class="fc_trust_text">

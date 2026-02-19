@@ -429,6 +429,8 @@
                           <span class="btn-spinner" aria-hidden="true"></span>
                           <span class="btn-check" aria-hidden="true">✓</span>
                         </button>
+
+                        
                       </div>
 
                     </div>
@@ -541,7 +543,10 @@
               </div>
           </div>
           <div class="pa-div">
-              <div class="pa-technical">
+              <div class="product-desc">
+                {{ product.metafields.custom.technical_details | metafield_tag }}
+              </div>
+              {% comment %} <div class="pa-technical">
                 <div class="pc-tech-item">
                   <div class="pati-data">
                     <p>Scientific Name: <span>Garcinia mangostana</span></p>
@@ -552,7 +557,7 @@
                     <p>Common Names: <span>{{ product.metafields.custom.alternative_name }}</span></p>
                   </div>
                 </div>
-              </div>
+              </div> {% endcomment %}
           </div>
        </div>
       {% comment %} Description {% endcomment %}
