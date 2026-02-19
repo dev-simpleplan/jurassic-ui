@@ -372,30 +372,40 @@
 </script>
 
 <script>
-   $(document).ready(function(){
-    $(".form-filter-wrap.list .ff-head").click(function(){
-      let $current = $(this).siblings(".ff-in");
-      let $parent = $(this).parent(".form-filter-wrap.list");
+   $(document).ready(function() {
+  // Toggle logic
+  $(".form-filter-wrap.list .ff-head").click(function(e) {
+    // Prevent the click from bubbling up to the document immediately
+    e.stopPropagation(); 
+    
+    let $current = $(this).siblings(".ff-in");
+    let $parent = $(this).parent(".form-filter-wrap.list");
 
-      if ($current.is(":visible")) {
-        // If already open, close it and remove active
-        $current.slideUp();
-        $(this).removeClass("active");
-        $parent.removeClass("active");
-      } else {
-        // Close all, remove active from others
-        $(".list .ff-in").slideUp();
-        $(".list .ff-head").removeClass("active");
-        $(".form-filter-wrap.list").removeClass("active");
+    if ($current.is(":visible")) {
+      $current.slideUp();
+      $(this).removeClass("active");
+      $parent.removeClass("active");
+    } else {
+      $(".list .ff-in").slideUp();
+      $(".list .ff-head").removeClass("active");
+      $(".form-filter-wrap.list").removeClass("active");
 
-
-        // Open current, add active
-        $current.slideDown();
-        $(this).addClass("active");
-        $parent.addClass("active");
-      }
-    });
+      $current.slideDown();
+      $(this).addClass("active");
+      $parent.addClass("active");
+    }
   });
+
+  // NEW: Close and remove all active classes when clicking outside
+  $(document).on("click", function(event) {
+    // Check if the click was outside the filter wrap
+    if (!$(event.target).closest(".form-filter-wrap.list").length) {
+      $(".list .ff-in").slideUp();
+      $(".list .ff-head").removeClass("active"); // Removes active from the title
+      $(".form-filter-wrap.list").removeClass("active"); // Removes active from the container
+    }
+  });
+});
 
 </script>
 

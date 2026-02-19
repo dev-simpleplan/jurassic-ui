@@ -525,6 +525,10 @@ header.active {
     top: 0;
     z-index: 999999999;
 }
+.brand-logo a {
+    padding: 10px 0;
+    display: inline-block;
+}
 .brand-logo img {
     width: 180px;
 }

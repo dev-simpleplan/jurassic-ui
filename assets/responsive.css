@@ -1554,17 +1554,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     overflow-x: auto;
   }
   .pro-grid .pro-test.formobile {
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 24px 16px;
-    background: #ffffff;
-    border: 1px solid #e5e3df;
-    border-radius: 20px;
-    width: 100%;
+    gap: 4px;
+  }
+  .tr-testimonial p strong {
+    font-weight: 400;
   }
   .pro-img-wrap .pro-test.fordesktop {
     display: none;
+  }
+  .brand-logo a {
+    padding: 0;
   }
 }
 @media(max-width:425px){

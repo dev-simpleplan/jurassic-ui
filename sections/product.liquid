@@ -237,6 +237,20 @@
 
               {% when 'product_info' %}
                 <div class="product-info-block">
+                  <div class="pro-test formobile">
+                    {% for block in section.blocks %}
+                      {% if block.settings.show_testimonial 
+                        and product.metafields.custom.title_testimonial != blank %}
+                        <div class="tr-okendo">
+                          <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
+                        </div>
+                        <div class="tr-testimonial">
+                          {% render 'testimonial-icon' %}
+                          {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
                   {% comment %} For Origin {% endcomment %}
                   {% comment %} <div class="pi-item">
                     {% render 'green-tick' %}
@@ -259,6 +273,7 @@
                   </div> {% endcomment %}
 
                   {% comment %} Additional Information {% endcomment %}
+
                   {% for item in product.metafields.custom.additional_information.value %}
                     <div class="pi-item">
                       {% render 'green-tick' %}
@@ -488,21 +503,6 @@
             {% endcase %}
           {% endfor %}
         {% endform %}
-      </div>
-
-      <div class="pro-test formobile">
-        {% for block in section.blocks %}
-          {% if block.settings.show_testimonial 
-            and product.metafields.custom.title_testimonial != blank %}
-            <div class="tr-okendo">
-              <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-            </div>
-            <div class="tr-testimonial">
-              {% render 'testimonial-icon' %}
-              {{ product.metafields.custom.title_testimonial | metafield_tag }}
-            </div>
-          {% endif %}
-        {% endfor %}
       </div>
     </div>
   </div>

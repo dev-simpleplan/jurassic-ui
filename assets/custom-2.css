@@ -1329,7 +1329,7 @@ span.cart-compare-price {
   color: #202322;
   padding-left: 8px;
   margin-top: -2px;
-  max-width: 39ch;
+  /* max-width: 39ch; */
 }
 .tr-testimonial svg {
   width: 100%;
@@ -1875,6 +1875,9 @@ li.variant-value.active .perKg {
   width: 100%;
   object-fit: cover;
   object-position: center;
+}
+.paes-icon.square video  {
+  object-fit: contain;
 }
 .paes-content {
   display: flex;
