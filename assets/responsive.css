@@ -1559,8 +1559,15 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     flex-direction: column;
     gap: 4px;
   }
+  .tr-testimonial p {
+    font-style: italic;
+    font-size: 13px;
+  }
   .tr-testimonial p strong {
     font-weight: 400;
+    margin-top: 4px;
+    display: block;
+    font-style: normal;
   }
   .pro-img-wrap .pro-test.fordesktop {
     display: none;
