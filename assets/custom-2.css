@@ -812,7 +812,17 @@ span.cart-compare-price {
   width: 100%;
   border-radius: 6px;
   top: 42px;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s ease all;
+  transform: translateY(-30px);
+  height: 0;
+}
+.form-filter-wrap.list .ff-in.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+  height: auto;
 }
 .form-filter-wrap.list .ff-in ul {
   display: flex;
@@ -888,7 +898,7 @@ span.cart-compare-price {
   outline: none;
   cursor: pointer;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 150%;
   letter-spacing: 1px;
   text-align: right;

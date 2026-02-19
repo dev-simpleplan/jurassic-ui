@@ -1575,6 +1575,17 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .brand-logo a {
     padding: 0;
   }
+  .collection-main {
+      padding-top: 40px;
+  }
+  .collection-main .head {
+    gap: 15px;
+  }
+  .tc-filter-wrap {
+    background-color: #fff;
+    padding: 10px 8px;
+    border-radius: 8px;
+  }
 }
 @media(max-width:425px){
   footer::before {
