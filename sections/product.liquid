@@ -742,7 +742,7 @@
         </div>
         <div class="pa-div">
           <div class="padiv-para">
-            <p>{{ section.settings.taste_content }}</p>
+            <p>{{ product.metafields.custom.taste_profile_body_text }}</p>
           </div>
           <div class="pad-taste-profile">
             {% comment %} Texture {% endcomment %}
@@ -1418,11 +1418,6 @@ document.addEventListener('click', function (e) {
         "id": "taste_heading",
         "label": "Tast Profile Label",
         "default": "Tast Profile"
-      },
-      {
-        "type": "text",
-        "id": "taste_content",
-        "label": "Taste Profile Paragraph"
       }
     ]
   }
