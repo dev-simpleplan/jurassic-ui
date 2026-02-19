@@ -86,15 +86,14 @@
         "delivery_info_WFVGrD"
       ],
       "settings": {
-        "acc_1": "How to eat & Store",
-        "eatImage": "shopify://shop_images/Screenshot_2026-02-10_at_8.10.39_PM.png",
+        "technical_heading": "Technical Details",
         "nutrition_heading": "Nutrition & Benefits",
-        "nutri-image": "shopify://shop_images/image_3.png",
-        "acc_2": "Seasonal Calendar - fruit origin",
-        "acc_3": "taste profile",
-        "para_3": "The flesh of the mangosteen is sweet and melt-in-your-mouth, with a touch of brightness that's unmistakable. Some describe its taste as a blend of lychee, peach, strawberry and pineapple. It's one of the most popular exotic fruits.",
-        "acc_4": "Technical Details",
-        "acc_5": "Description"
+        "seasonal_heading": "Seasonal Calendar - fruit origin",
+        "description_heading": "Description",
+        "howtostore_heading": "How To Eat & Store",
+        "origin_heading": "Origin & Sourcing",
+        "taste_heading": "Tast Profile",
+        "taste_content": "The flesh of the mangosteen is sweet and melt-in-your-mouth, with a touch of brightness that's unmistakable. Some describe its taste as a blend of lychee, peach, strawberry and pineapple. It's one of the most popular exotic fruits."
       }
     },
     "spacer0": {
