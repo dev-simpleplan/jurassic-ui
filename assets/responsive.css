@@ -1544,7 +1544,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     margin-bottom: 8px;
   }
   .collection-banner {
-      padding: 160px 0 32px 0;
+      padding: 140px 0 32px 0;
   }
   .cb-collection {
     flex-wrap: nowrap;
@@ -1576,7 +1576,8 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     padding: 0;
   }
   .collection-main {
-      padding-top: 40px;
+      padding-top: 0px;
+      width: 100%;
   }
   .collection-main .head {
     gap: 15px;
@@ -1586,6 +1587,14 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     padding: 10px 8px;
     border-radius: 8px;
     margin-top: 15px;
+  }
+  .filter-sidebar {
+    padding: 0;
+  }
+  .filtersidebar-in {
+    padding: 30px 20px;
+    max-height: 100dvh;
+    height: 100dvh;
   }
 }
 @media(max-width:425px){
