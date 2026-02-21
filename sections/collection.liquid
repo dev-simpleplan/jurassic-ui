@@ -287,15 +287,16 @@
             <div class="qf-wrapper">
               <button type="button" class="qf-pill" 
                       data-name="filter.v.availability" 
-                      data-value="1">
-                In Stock
-              </button>
-
+                      data-value="1">In Stock</button>
               <button type="button" class="qf-pill" 
                       data-name="filter.v.availability" 
-                      data-value="0">
-                Out Of Stock
-              </button>
+                      data-value="0">Out Of Stock</button>
+              {% comment %} <button type="button" class="qf-pill" 
+                      data-name="ffilter.p.t.category" 
+                      data-value="fb-2-10-7-20">Longan</button>
+              <button type="button" class="qf-pill" 
+                      data-name="ffilter.p.m.custom.country_of_origin" 
+                      data-value="gid://shopify/Metaobject/225680032001">Origin - Spain</button> {% endcomment %}
 
               <button type="button" class="qf-pill clear-all-pill" style="display: none;">
                 Clear All ✕
@@ -542,30 +543,43 @@
 </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
       const filter_button = document.querySelector('.filter-buttton');
       const filter_sidebar = document.querySelector('.filter-sidebar');
       const filter_close = document.querySelector('.filter-close-mob');
 
       // Open sidebar
       filter_button.addEventListener('click', function(e) {
-          e.stopPropagation(); // Prevents the document listener from firing immediately
+          e.stopPropagation(); 
           filter_sidebar.classList.add('active');
+          if (typeof lenis !== 'undefined') lenis.stop(); // Stop Lenis scrolling
       });
 
       // Close sidebar via close button
       filter_close.addEventListener('click', function() {
           filter_sidebar.classList.remove('active');
+          if (typeof lenis !== 'undefined') lenis.start(); // Restart Lenis
       });
 
-      // Close sidebar when clicking outside
-      document.addEventListener('click', function(event) {
-          const isClickInsideSidebar = filter_sidebar.contains(event.target);
-          const isClickOnButton = filter_button.contains(event.target);
-
-          // If the click happened outside both the sidebar and the open button
-          if (!isClickInsideSidebar && !isClickOnButton) {
+      // Close sidebar when clicking the BACKGROUND
+      filter_sidebar.addEventListener('click', function(event) {
+          // 'event.target' is the element you actually clicked
+          // 'this' is the filter_sidebar itself
+          // If they match, it means you clicked the background overlay, not the content inside
+          if (event.target === this) {
               filter_sidebar.classList.remove('active');
+              if (typeof lenis !== 'undefined') lenis.start();
+          }
+      });
+
+      // Optional: Keep the document click as a fallback for the button area
+      document.addEventListener('click', function(event) {
+          const isClickOnButton = filter_button.contains(event.target);
+          
+          // If clicking somewhere else entirely that isn't the sidebar or button
+          if (!filter_sidebar.contains(event.target) && !isClickOnButton) {
+              filter_sidebar.classList.remove('active');
+              if (typeof lenis !== 'undefined') lenis.start();
           }
       });
   });

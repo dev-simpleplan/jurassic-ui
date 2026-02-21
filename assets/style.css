@@ -2739,6 +2739,7 @@ footer::before {
 .jw-owl-item .jwowl-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding: 0 40px;
 }
 .jwgid-imagebox {
     aspect-ratio: 1/1;
@@ -2750,9 +2751,9 @@ footer::before {
     height: 100%;
 }
 .jwowlgrid-text {
-    max-width: 900px;
+    /* max-width: 900px; */
     width: 100%;
-    padding-left: 40px;
+    /* padding-left: 40px; */
     margin-left: auto;
     display: flex;
     flex-direction: column;
@@ -2790,7 +2791,7 @@ footer::before {
 .jw-carousel .slick-prev,
 .jw-carousel .slick-next {
     position: absolute;
-    bottom: 150px;
+    bottom: calc(50% - 0px);
     left: calc(100% - 51.4%);
     width: 55px;
     height: 55px;
@@ -2811,7 +2812,7 @@ footer::before {
 }
 .jw-carousel .slick-next {
     transform: rotate(180deg);
-    bottom: 80px !important;
+    bottom: calc(50% - 80px);
 }
 .jw-carousel .slick-prev:hover,
 .jw-carousel .slick-next:hover {

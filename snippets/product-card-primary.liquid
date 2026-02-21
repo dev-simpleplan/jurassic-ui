@@ -190,9 +190,6 @@
                   {% endcomment %}
                   {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_unit }}
                 {% else %}
-                  {% comment %} 
-                    Fallback if no unit price is defined in Shopify Admin 
-                  {% endcomment %}
                   {{ current_variant.price | money }} / unit
                 {% endif %}
               </p>
