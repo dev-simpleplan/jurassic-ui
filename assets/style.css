@@ -2459,9 +2459,9 @@ footer::before {
 .lost-taste .custom-heading h1 {
     font-size: 7.5cqw;
     width: 100%;
-    text-align: center;
+    text-align: left;
     display: block;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     color: var(--off-white);
     line-height: 110%;
 }
