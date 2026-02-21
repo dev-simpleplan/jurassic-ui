@@ -247,10 +247,18 @@
             <div class="loader-spinner"></div>
           </div>
           {% paginate collection.products by section.settings.number_of_product %}
-            {% for product in collection.products %}
-              {% render 'product-card-primary' | product: product %}
-            {% endfor %}
-            {% render 'pagination' | pagination: paginate %}
+            {% if collection.products_count > 0 %}
+              {% for product in collection.products %}
+                {% render 'product-card-primary' | product: product %}
+              {% endfor %}
+              {% render 'pagination' | pagination: paginate %}
+            {% else %}
+              <div class="no-products-found">
+                <h3>No products found</h3>
+                <p>Try adjusting your filters or clearing them to see more delicious fruits.</p>
+                <button type="button" class="reset-link custom-btn black" onclick="window.location.href=window.location.pathname">Clear all filters</button>
+              </div>
+            {% endif %}
           {% endpaginate %}
         </div>
       </div>
@@ -294,10 +302,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const parser = new DOMParser();
                 const newDoc = parser.parseFromString(data, "text/html");
                 const newGrid = newDoc.querySelector("#ProductGrid");
-                const newQuickFilters = newDoc.querySelector(".qf-wrapper");
+                const newQuickFilters = newDoc.querySelector(".quick-filters");
 
-                if (newGrid) productGrid.innerHTML = newGrid.innerHTML;
-                if (newQuickFilters) document.querySelector(".qf-wrapper").innerHTML = newQuickFilters.innerHTML;
+                if (newGrid) {
+                    productGrid.innerHTML = newGrid.innerHTML;
+                }
+                
+                if (newQuickFilters) {
+                    // This replaces the whole quick-filters div, 
+                    // updating the 'is-disabled' class automatically
+                    const oldFilters = document.querySelector(".quick-filters");
+                    oldFilters.className = newQuickFilters.className; 
+                    oldFilters.innerHTML = newQuickFilters.innerHTML;
+                }
 
                 // Re-run UI syncs
                 if (typeof lenis !== 'undefined') lenis.resize();
@@ -347,52 +364,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function bindQuickPills() {
         const pills = document.querySelectorAll('.qf-pill:not(.clear-all-pill)');
-        
-        // --- New: Sync Pill active states based on Sidebar checkboxes ---
+        const form = document.querySelector(".tc-filter-wrap form");
+
         function syncPillStates() {
-          const pills = document.querySelectorAll('.qf-pill:not(.clear-all-pill)');
-          pills.forEach(pill => {
-              const name = pill.getAttribute('data-name');
-              const value = pill.getAttribute('data-value');
-              // Find the matching radio/checkbox in the sidebar
-              const input = document.querySelector(`.filter-sidebar input[name="${name}"][value="${value}"]`);
-              
-              if (input && input.checked) {
-                  pill.classList.add('is-active');
-              } else {
-                  pill.classList.remove('is-active');
-              }
-          });
-      }
+            pills.forEach(pill => {
+                const name = pill.getAttribute('data-name');
+                const value = pill.getAttribute('data-value');
+                const input = form.querySelector(`input[name="${name}"][value="${value}"]`);
+                
+                if (input) {
+                    // Toggle Active State
+                    pill.classList.toggle('is-active', input.checked);
+                    
+                    // Toggle Disabled State (matches your sidebar screenshot)
+                    if (input.disabled) {
+                        pill.classList.add('is-disabled');
+                        pill.style.pointerEvents = 'none'; // Stop further clicks
+                    } else {
+                        pill.classList.remove('is-disabled');
+                        pill.style.pointerEvents = 'all';
+                    }
+                }
+            });
+        }
 
         pills.forEach(button => {
             button.onclick = function() {
                 const name = this.getAttribute('data-name');
                 const value = this.getAttribute('data-value');
-                const input = filterForm.querySelector(`input[name="${name}"][value="${value}"]`);
+                const input = form.querySelector(`input[name="${name}"][value="${value}"]`);
 
-                if (input) {
-                    if (input.disabled) {
-                        this.classList.add('is-disabled'); 
-                        setTimeout(() => this.classList.remove('is-disabled'), 500);
-                        return;
-                    }
+                if (input && !input.disabled) {
                     input.checked = !input.checked;
-                    updateProductGrid(); // This will trigger the sync via AJAX finish
+                    updateProductGrid();
                 }
             };
         });
-        
-        const clearBtn = document.querySelector('.clear-all-pill');
-          if (clearBtn) {
-              clearBtn.onclick = (e) => {
-                  e.preventDefault();
-                  // Redirect to the clean collection URL to strip all filters
-                  window.location.href = window.location.pathname;
-              };
-          }
 
-        // Run sync immediately on bind
+        const clearBtn = document.querySelector('.clear-all-pill');
+              if (clearBtn) {
+                  clearBtn.onclick = (e) => {
+                      e.preventDefault();
+                      // Redirect to the clean collection URL to strip all filters
+                      window.location.href = window.location.pathname;
+                  };
+              }
+
         syncPillStates();
     }
 

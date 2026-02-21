@@ -740,6 +740,21 @@ span.cart-compare-price {
   justify-content: center;
   gap: 24px;
 }
+.collection-wrapper .no-products-found {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  grid-column: 1 / -1;
+  padding-top: 40px;
+}
+.no-products-found .reset-link {
+  margin-top: 30px;
+}
+.no-products-found h3 {
+  font-size: 40px;
+}
 .tc-filter-wrap {
   display: flex;
   align-items: center;
@@ -973,6 +988,13 @@ span.cart-compare-price {
   /* width: 75%; */
   width: auto;
   display: inline-block;
+}
+/* Disabling Quick Filters */
+.quick-filters.is-disabled {
+  opacity: 0.5;
+  pointer-events: none; /* Prevents clicking */
+  filter: grayscale(1);
+  cursor: not-allowed;
 }
 
 /* Seo Focused Section */
