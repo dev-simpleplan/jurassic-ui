@@ -689,6 +689,7 @@ span.cart-compare-price {
 
 .collection-main {
   /* padding-top: 70px; */
+  width: 100%;
 }
 .collection-main .breadcrumbs {
   display: flex;
@@ -1234,6 +1235,12 @@ span.cart-compare-price {
     background-color: #1a1a1a;
     color: #fcf9f5;
     border: 1px solid #1a1a1a; 
+}
+.qf-wrapper .qf-pill.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  border-color: #ddd;
 }
 
 /* Collection Page Ends */

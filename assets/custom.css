@@ -388,6 +388,9 @@
   line-height: 150%;
   letter-spacing: 0em;
 }
+.fc_price_weight p br {
+  display: none;
+}
 
 .fc_price_weight p span {
   font-size: 16px;
