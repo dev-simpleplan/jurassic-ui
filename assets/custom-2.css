@@ -1108,7 +1108,7 @@ span.cart-compare-price {
   scale: 1.1;
 }
 .cb-collection a.cbcIn .cbcTxt p {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
   line-height: 150%;
   /* letter-spacing: 0.25em; */
@@ -1117,6 +1117,7 @@ span.cart-compare-price {
   text-transform: uppercase;
   color: #1a1a1a;
   position: relative;
+  white-space: nowrap;
 }
 .cb-collection a.cbcIn .cbcTxt p::after {
   content: "";
@@ -1252,6 +1253,7 @@ span.cart-compare-price {
   font-family: var(--font-primary--family);
   cursor: pointer;
   transition: .3s ease all;
+  white-space: nowrap;
 }
 .qf-wrapper .qf-pill:hover, .qf-wrapper .qf-pill.is-active {
     background-color: #1a1a1a;

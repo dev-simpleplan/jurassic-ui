@@ -986,6 +986,11 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .collection-banner {
     padding: 130px 0 38px 0;
   }
+  .quick-filters {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1582,12 +1587,12 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .collection-main .head {
     gap: 15px;
   }
-  .tc-filter-wrap {
+  /* .tc-filter-wrap {
     background-color: #fff;
     padding: 10px 8px;
     border-radius: 8px;
     margin-top: 15px;
-  }
+  } */
   .filter-sidebar {
     padding: 0;
   }
@@ -1595,6 +1600,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     padding: 30px 20px;
     max-height: 100dvh;
     height: 100dvh;
+  }
+  .filter-buttton {
+    min-width: 90px;
   }
 }
 @media(max-width:425px){
