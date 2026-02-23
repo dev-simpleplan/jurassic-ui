@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch(`/recommendations/products.json?product_id=${productId}&limit=5`)
     .then(res => res.json())
     .then(data => {
-      const filtered = data.products.filter(p => p.id !== productId).slice(0, 3);
+      const filtered = data.products.filter(p => p.id !== productId).slice(0, 4);
       container.innerHTML = ""; // Clear loader if any
 
       filtered.forEach(product => {
