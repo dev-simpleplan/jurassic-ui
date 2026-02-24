@@ -48,6 +48,7 @@ document.addEventListener('click', (e) => {
     const compareEl = priceWrap.querySelector('#compare_price');
     const unitEl = card.querySelector('.fc_weight');
 
+    // These now contain the symbol at the end because of our Liquid update above
     if (sellingPriceEl) sellingPriceEl.innerText = price;
     if (unitEl) unitEl.innerText = unit;
 
@@ -57,6 +58,7 @@ document.addEventListener('click', (e) => {
         compareEl.style.display = 'inline-block';
       } else {
         compareEl.style.display = 'none';
+        compareEl.innerText = ''; // Clear it out
       }
     }
   }

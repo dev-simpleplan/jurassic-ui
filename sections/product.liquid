@@ -196,21 +196,23 @@
                   <h1>{{ product.title }}</h1>
                     <div class="price" id="price-{{ section.id }}">
                       <div class="price-detailsss"> 
+
+                        {% assign currency_suffix = cart.currency.symbol %}
                         <div class="sell-price">
-                          {{ selected_variant.price | money }} 
+                          {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
                         </div>
-                        <div>
-                          <strike class="real-price"></strike>
-                        </div>
-                        <div class="vvv-discount" style="display:none"></div>
-                        <span class="sell-price-variant-perkg">(
+
+                        <strike class="real-price">
+                          {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
+                        </strike>
+
+                        <span class="sell-price-variant-perkg">
                           {% if selected_variant.unit_price_measurement %}
-                                          {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
-                                        {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
-                                        {% else %}
-                                          {{ selected_variant.price | money }} / unit
-                                        {% endif %}  
-                        )</span>
+                            {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                          {% else %}
+                            {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
+                          {% endif %}
+                        </span>
                         <!-- ALWAYS present -->
                       </div>
 
@@ -397,11 +399,12 @@
                                       {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
                                       
                                       {% comment %} {{ matched_variant.price | money }} {% endcomment %}
-                                       {% if matched_variant.unit_price_measurement %}
-                                          {{ matched_variant.unit_price | money }} / {{ matched_variant.unit_price_measurement.reference_unit }}
-                                        {% comment %} {{ matched_variant.unit_price_measurement.reference_value }} {% endcomment %}
+                                       {% capture currency_symbol %}{{ 0 | money | replace: '0', '' | replace: '.', '' | replace: ',', '' | strip }}{% endcapture %}
+
+                                        {% if matched_variant.unit_price_measurement %}
+                                          {{ matched_variant.unit_price | money_without_currency }} {{ currency_symbol }} / {{ matched_variant.unit_price_measurement.reference_unit }}
                                         {% else %}
-                                          {{ matched_variant.price | money }} / unit
+                                          {{ matched_variant.price | money_without_currency }} {{ currency_symbol }} / unit
                                         {% endif %}
                                     </div>
                                   </li>
@@ -1065,23 +1068,23 @@ class VariantSelector extends HTMLElement {
     const price = this.currentVariant.price;
     const compare = this.currentVariant.compare_at_price;
 
+    // Define the suffix here (e.g., "Rs." or "INR")
+    const currencySuffix = " {{ cart.currency.symbol }}";
+
     /* Selling price */
     if (sellPriceEl) {
-      sellPriceEl.textContent = formatMoneySafe(price);
+      // .replace(/[^\d.,]/g, '') removes everything EXCEPT numbers, dots, and commas
+      let cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
+      sellPriceEl.textContent = cleanPrice + currencySuffix;
     }
 
-    /* Compare-at price */
-    if (comparePriceEl) {
-      if (compare && compare > price) {
-        comparePriceEl.textContent = formatMoneySafe(compare);
-        comparePriceEl.style.display = '';
-      } else {
-        comparePriceEl.style.display = 'none';
-        comparePriceEl.textContent = '';
-      }
+    if (comparePriceEl && compare > price) {
+      let cleanCompare = formatMoneySafe(compare).replace(/[^\d.,]/g, '').trim();
+      comparePriceEl.textContent = cleanCompare + currencySuffix;
+      comparePriceEl.style.display = '';
     }
 
-    /* 🔥 DISCOUNT PERCENTAGE */
+    /* 🔥 DISCOUNT PERCENTAGE (Keep as is) */
     if (discountEl) {
       if (compare && compare > price) {
         const discountPercent = Math.round(
@@ -1132,13 +1135,24 @@ class VariantSelector extends HTMLElement {
     }
 
     // ✅ AVAILABLE STATE
+    // ✅ AVAILABLE STATE
     btn.disabled = false;
 
     const qty = parseInt(qtyInput.value, 10) || 1;
     const total = this.currentVariant.price * qty;
 
     if (label) label.textContent = 'Add to Cart';
-    if (priceEl) priceEl.textContent = formatMoneySafe(total);
+    
+    if (priceEl) {
+      // 1. Define the suffix (pulled from Liquid)
+      const currencySuffix = " {{ cart.currency.symbol }}";
+      
+      // 2. Format the total and strip the existing prefix symbol
+      let cleanTotal = formatMoneySafe(total).replace(/[^\d.,]/g, '').trim();
+      
+      // 3. Set the text with the symbol at the end
+      priceEl.textContent = cleanTotal + currencySuffix;
+    }
   }
 
 }

@@ -1,71 +1,69 @@
 <script>
   (function() {
-    // 1. Safely build the object. If Metaobjects are empty, it defaults to {}
+    // 1. Build the object with currency suffix at the end
+    {% assign suffix = cart.currency.symbol %}
     const shippingPrices = {
       {%- for rate in shop.metaobjects.shipping_rate.values -%}
         {%- if rate.market_code != blank and rate.price_value != blank -%}
-          "{{ rate.market_code | downcase | strip }}": "{{ rate.price_value | strip }}",
+          {% comment %} Remove any existing currency symbols from the metaobject value and add it to the end {% endcomment %}
+          {% assign clean_price = rate.price_value | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
+          "{{ rate.market_code | downcase | strip }}": "{{ clean_price }} {{ suffix }}",
         {%- endif -%}
       {%- endfor -%}
-      "default": "{{ shop.metafields.custom.default_shipping.value | default: '$19' }}"
+      
+      {% comment %} Handle the default value formatting {% endcomment %}
+      {% assign default_raw = shop.metafields.custom.default_shipping.value | default: '19' %}
+      {% assign clean_default = default_raw | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
+      "default": "{{ clean_default }} {{ suffix }}"
     };
 
     function updateShippingText() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlMarket = urlParams.get('country');
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlMarket = urlParams.get('country');
 
-    // 1. Detect the market from App or URL
-    let market = (window.corner?.sessionData?.market || urlMarket);
-    if (!market) return;
+        let market = (window.corner?.sessionData?.market || urlMarket);
+        if (!market) return;
 
-    let marketKey = market.toLowerCase().trim();
+        let marketKey = market.toLowerCase().trim();
 
-    // 2. AUTOMATIC MAPPING: Translate full names to short codes
-    const countryMap = {
-      "france": "fr",
-      "germany": "de",
-      "austria": "at",
-      "united kingdom": "gb",
-      "united states": "us",
-      "india": "in"
-    };
+        const countryMap = {
+          "france": "fr",
+          "germany": "de",
+          "austria": "at",
+          "united kingdom": "gb",
+          "united states": "us",
+          "india": "in"
+        };
 
-    // If the detected market is a full name (like 'france'), 
-    // change it to the code (like 'fr')
-    if (countryMap[marketKey]) {
-      marketKey = countryMap[marketKey];
+        if (countryMap[marketKey]) {
+          marketKey = countryMap[marketKey];
+        }
+
+        const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
+
+        const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+        const deliveryEl = document.getElementById('delivery-data');
+
+        if (mainEl) {
+          // Now outputs: "Shipping starts from 19 Rs."
+          const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+          if (mainEl.innerText !== text) mainEl.innerText = text;
+        }
+
+        if (deliveryEl) {
+          // Now outputs: "Free shipping from 19 Rs."
+          const text = `Free shipping from ${shippingPrice}.`;
+          if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
+        }
+
+      } catch (e) {
+        console.error("Shipping Script Error:", e);
+      }
     }
 
-    // 3. Match against your Metaobject Price Table
-    const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
-
-    const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
-    const deliveryEl = document.getElementById('delivery-data');
-
-    if (mainEl) {
-      const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
-      if (mainEl.innerText !== text) mainEl.innerText = text;
-    }
-
-    if (deliveryEl) {
-      const text = `Free shipping from ${shippingPrice}.`;
-      if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
-    }
-
-    console.log("Mapped Market:", marketKey, "| Set Price:", shippingPrice);
-  } catch (e) {
-    console.error("Shipping Script Error:", e);
-  }
-}
-
-    console.log("Detected Market:", window.corner?.sessionData?.market);
-    console.log("Current Price Table:", shippingPrices);
-
-    // Use a slightly longer interval to stay out of the way of your AJAX cart
     setInterval(updateShippingText, 1000);
 
-    // Initial check
     if (document.readyState === 'complete') {
       updateShippingText();
     } else {

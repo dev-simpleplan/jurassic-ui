@@ -542,6 +542,56 @@
         "name": "rich_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "technical_details",
+      "namespace": "custom",
+      "name": "Technical details",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "nutrition_benefits_image",
+      "namespace": "custom",
+      "name": "Nutrition & Benefits Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nutrition_benefits_content",
+      "namespace": "custom",
+      "name": "Nutrition & Benefits Content",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "origin_sourcing",
+      "namespace": "custom",
+      "name": "Origin & Sourcing",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "taste_profile_body_text",
+      "namespace": "custom",
+      "name": "Taste Profile body text",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [
