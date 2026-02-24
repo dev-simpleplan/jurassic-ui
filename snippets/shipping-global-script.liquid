@@ -1,73 +1,57 @@
 <script>
   (function() {
-    // 1. Build the object with currency suffix at the end
     {% assign suffix = cart.currency.symbol %}
     const shippingPrices = {
       {%- for rate in shop.metaobjects.shipping_rate.values -%}
         {%- if rate.market_code != blank and rate.price_value != blank -%}
-          {% comment %} Remove any existing currency symbols from the metaobject value and add it to the end {% endcomment %}
           {% assign clean_price = rate.price_value | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
           "{{ rate.market_code | downcase | strip }}": "{{ clean_price }} {{ suffix }}",
         {%- endif -%}
       {%- endfor -%}
-      
-      {% comment %} Handle the default value formatting {% endcomment %}
       {% assign default_raw = shop.metafields.custom.default_shipping.value | default: '19' %}
       {% assign clean_default = default_raw | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
       "default": "{{ clean_default }} {{ suffix }}"
     };
 
     function updateShippingText() {
+      // 1. Get elements first - if they don't exist, stop immediately
+      const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
+      const deliveryEl = document.getElementById('delivery-data');
+      if (!mainEl && !deliveryEl) return;
+
       try {
         const urlParams = new URLSearchParams(window.location.search);
-        const urlMarket = urlParams.get('country');
-
-        let market = (window.corner?.sessionData?.market || urlMarket);
-        if (!market) return;
-
+        // Prioritize session data, then URL, then default
+        let market = window.corner?.sessionData?.market || urlParams.get('country') || 'default';
         let marketKey = market.toLowerCase().trim();
 
         const countryMap = {
-          "france": "fr",
-          "germany": "de",
-          "austria": "at",
-          "united kingdom": "gb",
-          "united states": "us",
-          "india": "in"
+          "france": "fr", "germany": "de", "austria": "at",
+          "united kingdom": "gb", "united states": "us", "india": "in"
         };
 
-        if (countryMap[marketKey]) {
-          marketKey = countryMap[marketKey];
-        }
+        if (countryMap[marketKey]) marketKey = countryMap[marketKey];
 
         const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
 
-        const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
-        const deliveryEl = document.getElementById('delivery-data');
-
+        // 2. ONLY update text. DO NOT use window.location or redirects here.
         if (mainEl) {
-          // Now outputs: "Shipping starts from 19 Rs."
           const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
           if (mainEl.innerText !== text) mainEl.innerText = text;
         }
 
         if (deliveryEl) {
-          // Now outputs: "Free shipping from 19 Rs."
           const text = `Free shipping from ${shippingPrice}.`;
           if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
         }
-
       } catch (e) {
         console.error("Shipping Script Error:", e);
       }
     }
 
-    setInterval(updateShippingText, 1000);
-
-    if (document.readyState === 'complete') {
-      updateShippingText();
-    } else {
-      window.addEventListener('load', updateShippingText);
-    }
+    // Run once on load
+    updateShippingText();
+    // Check every 2 seconds instead of 1 to reduce browser load
+    setInterval(updateShippingText, 2000);
   })();
 </script>

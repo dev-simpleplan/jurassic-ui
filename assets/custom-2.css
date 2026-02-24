@@ -1325,6 +1325,10 @@ span.cart-compare-price {
   line-height: 100%;
   color: #6B6B6B;
 }
+.price-detailsss .sell-price-variant-perkg {
+  font-size: 15px;
+  line-height: 100%;
+}
 .title .price .price-txt {
   font-weight: 500;
   font-size: 12px;
@@ -1549,7 +1553,7 @@ span.cart-compare-price {
 }
 .product-info .title h1 {
   font-weight: 500;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 120%;
   letter-spacing: 0em;
   color: #202322;

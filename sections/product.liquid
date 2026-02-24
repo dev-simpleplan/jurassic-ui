@@ -206,13 +206,13 @@
                           {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
                         </strike>
 
-                        <span class="sell-price-variant-perkg">
+                        (<span class="sell-price-variant-perkg">
                           {% if selected_variant.unit_price_measurement %}
                             {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
                           {% else %}
                             {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
                           {% endif %}
-                        </span>
+                        </span>)
                         <!-- ALWAYS present -->
                       </div>
 
@@ -396,17 +396,15 @@
                                       </div>
                                     </div>
                                     <div class="vv-peices">
-                                      {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
-                                      
-                                      {% comment %} {{ matched_variant.price | money }} {% endcomment %}
-                                       {% capture currency_symbol %}{{ 0 | money | replace: '0', '' | replace: '.', '' | replace: ',', '' | strip }}{% endcapture %}
+                                        {% comment %} This gets the actual symbol ($, €, Rs.) directly from your store settings {% endcomment %}
+                                        {% assign currency_suffix = cart.currency.symbol %}
 
                                         {% if matched_variant.unit_price_measurement %}
-                                          {{ matched_variant.unit_price | money_without_currency }} {{ currency_symbol }} / {{ matched_variant.unit_price_measurement.reference_unit }}
+                                          {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
                                         {% else %}
-                                          {{ matched_variant.price | money_without_currency }} {{ currency_symbol }} / unit
+                                          {{ matched_variant.price | money_without_currency }} {{ currency_suffix }} / unit
                                         {% endif %}
-                                    </div>
+                                      </div>
                                   </li>
                                 {% endfor %}
                               </ul>
