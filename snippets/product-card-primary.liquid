@@ -92,7 +92,7 @@
             <div class="rating_info">
               <span class="dot_seperator dynamic-review-dot"></span>
               {% if product.metafields.custom.country_of_origin.value.country_name %}
-                <p>From {{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+                <p>{{ 'products.product.from' | t }} {{ product.metafields.custom.country_of_origin.value.country_name }}</p>
               {% endif %}
             </div>
           </div>

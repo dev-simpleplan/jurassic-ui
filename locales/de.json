@@ -51,5 +51,10 @@
   },
   "collections": {
     "title": "Sammlungen"
+  },
+  "products": {
+    "product": {
+      "from": "Aus"
+    }
   }
 }
