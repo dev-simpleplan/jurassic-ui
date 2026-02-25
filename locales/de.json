@@ -54,7 +54,9 @@
   },
   "products": {
     "product": {
-      "from": "Aus"
+      "from": "Aus",
+      "add_to_cart": "in den Warenkorb legen",
+      "sold_out": "Ausverkauft"
     }
   }
 }
