@@ -50,7 +50,8 @@
       "settings": {
         "banner-bg": "shopify://shop_images/Generated_Image_October_15_2025_-_10_19PM2.png",
         "head": "Your Most Delicious Adventure on Earth",
-        "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed."
+        "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed.",
+        "button_text": "View Products"
       }
     },
     "spacer0": {
