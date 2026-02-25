@@ -459,6 +459,14 @@ tl.kill();
         });
       });
     </script>
+
+    <script>
+      window.themeStrings = {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }}
+      };
+    </script>
+    
 {% render 'shipping-global-script' %}
 
     {%- render "ecom_footer" - %}
