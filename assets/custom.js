@@ -73,15 +73,17 @@ document.addEventListener('click', (e) => {
   // Update hidden ID for Add to Cart
   const addWrap = card.querySelector('.fc_add_to_cart');
   const addBtn = addWrap?.querySelector('.add-to-cart-btn');
+
   if (addWrap) {
     addWrap.dataset.variantId = id;
-    // Handle Sold Out state
+    
+    // Handle Sold Out state using the translated global variables
     if (inventory > 0) {
-       addBtn.disabled = false;
-       addBtn.innerText = 'Add to Cart';
+      addBtn.disabled = false;
+      addBtn.innerText = window.themeStrings.addToCart;
     } else {
-       addBtn.disabled = true;
-       addBtn.innerText = 'Sold Out';
+      addBtn.disabled = true;
+      addBtn.innerText = window.themeStrings.soldOut;
     }
   }
 });

@@ -201,7 +201,11 @@
                     type="button"
                     class="add-to-cart-btn"
                     {% unless current_variant.available %}disabled{% endunless %}>
-                    {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+                    {% if current_variant.available %}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {% else %}
+                      {{ 'products.product.sold_out' | t }}
+                    {% endif %}
                   </button>
                   {% comment %} {% unless product.available %}
                     <button class="open-my-form BIS_trigger">
