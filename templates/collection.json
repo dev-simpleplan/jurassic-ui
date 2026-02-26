@@ -102,11 +102,20 @@
             "answer": "<p>There are several reasons why mangosteen is a rather expensive exotic fruit. </p><ul><li>It is a very demanding fruit in terms of climate. It only grows in ultra-tropical zones within 20° latitude of the equator. It is also difficult in terms of altitude, rainfall and humidity levels. In short, you can't grow it just anywhere! </li><li>A tree produces fruit after 6 to 8 years, and yields a good crop every 2nd or 3rd year. </li><li>It doesn't ripen after harvesting, and is fragile. To be good, mangosteen must be eaten fresh, 5 to 15 days after picking. </li><li>Our growers carry out a meticulous quality sorting and cleaning of each mangosteen individually. This is for 2 reasons: </li><li>the slightest bump or hard spot on the shell can be a sign of quality that will deteriorate rapidly, so the fruit must be discarded. </li><li>No fruit can travel from Asia to Europe with traces of insects. Mealybugs, ants (which love to nest under the sepals of the mangosteen) etc.., so they must be removed from the fruit by cleaning with a brush and compressed air.</li></ul><p>Now, in relation to the pleasure (it's considered one of the best fruits on earth) and the benefits (its famous xanthones, for example) it brings, the price of the mangosteen is fair, making it one of our best-selling fruits. What's more, by ordering our mangosteen in larger quantities (whole case), you benefit from a significant discount, enabling you to enjoy all its benefits at the lowest price.</p>",
             "faq_image": "shopify://shop_images/image_8.png"
           }
+        },
+        "faq_ekKJGX": {
+          "type": "faq",
+          "settings": {
+            "question": "How can you tell if a mangosteen is ripe?",
+            "answer": "<p>You can eat it as soon as you receive it! It's picked just when it's ripe, because it doesn't ripen any more once harvested.</p>",
+            "faq_image": "shopify://shop_images/Mangosteen-Thailand-09804-JurassicFruit.jpg"
+          }
         }
       },
       "block_order": [
         "faq_kKYgTk",
-        "faq_mggA8J"
+        "faq_mggA8J",
+        "faq_ekKJGX"
       ],
       "name": "FAQ Page Section",
       "settings": {
