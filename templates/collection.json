@@ -84,14 +84,36 @@
         "spacer_height": 140
       }
     },
-    "faq_twtQG8": {
-      "type": "faq",
-      "name": "FAQ Section",
+    "faq_pages_FmiYAa": {
+      "type": "faq-pages",
+      "blocks": {
+        "faq_kKYgTk": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>You can track your order using the link provided in your shipping confirmation email.</p>",
+            "faq_image": "shopify://shop_images/3f0a5d7fb6f50877410da6e39f0e8ef9a0e5bebc_e9d143ed-6558-43c5-9539-f212b677c5a5.jpg"
+          }
+        },
+        "faq_mggA8J": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>You can track your order using the link provided in your shipping confirmation email.</p>",
+            "faq_image": "shopify://shop_images/image_8.png"
+          }
+        }
+      },
+      "block_order": [
+        "faq_kKYgTk",
+        "faq_mggA8J"
+      ],
+      "name": "FAQ Page Section",
       "settings": {
         "heading": "Frequently Asked Questions",
         "cta_url": "",
         "cta_text": "",
-        "faq_image": "shopify://shop_images/Farm-Mangosteen-JavFre-Bali-Indonesia-6334-JurassicFruit-JurassicFruit-2.jpg"
+        "fallback_image": "shopify://shop_images/image_8.png"
       }
     },
     "spacer_8WfcKj": {
@@ -107,7 +129,7 @@
     "spacer_Kqf4M3",
     "17658703763bf5fc11",
     "spacer_tafrLK",
-    "faq_twtQG8",
+    "faq_pages_FmiYAa",
     "spacer_8WfcKj"
   ]
 }
