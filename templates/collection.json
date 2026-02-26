@@ -83,12 +83,23 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "faq_twtQG8": {
+      "type": "faq",
+      "name": "FAQ Section",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "cta_url": "",
+        "cta_text": "",
+        "faq_image": "shopify://shop_images/Farm-Mangosteen-JavFre-Bali-Indonesia-6334-JurassicFruit-JurassicFruit-2.jpg"
+      }
     }
   },
   "order": [
     "main",
     "spacer_Kqf4M3",
     "17658703763bf5fc11",
-    "spacer_tafrLK"
+    "spacer_tafrLK",
+    "faq_twtQG8"
   ]
 }
