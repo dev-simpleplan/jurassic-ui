@@ -16,7 +16,7 @@
           </div>
         </div>
           <div class="brand-logo mob-none flex">
-            <a href="{{ shop.url }}">
+            <a href="{{ routes.root_url }}">
               {% if section.settings.select_logo %}
                 <img
                   src="{{ section.settings.select_logo | image_url }}"
@@ -503,7 +503,7 @@ class PredictiveSearch {
   this.viewAll.style.display = hasResults ? 'flex' : 'none';
 
   // View all link
-  this.viewAll.href = `/search?q=${encodeURIComponent(query)}`;
+  this.viewAll.href = `{{ routes.search_url }}?q=${encodeURIComponent(query)}`;
   this.viewAll.querySelector('span').textContent = query;
 
   this.open();
