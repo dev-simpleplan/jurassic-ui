@@ -1051,7 +1051,7 @@ span.cart-compare-price {
 }
 .seo-sec-wrapper {
   max-width: 90ch;
-  padding: 50px 0 60px 0;
+  /* padding: 50px 0 60px 0; */
 }
 .seo-content {
     overflow: hidden;
