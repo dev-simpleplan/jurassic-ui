@@ -438,7 +438,7 @@ class PredictiveSearch {
     this.abortController = new AbortController();
 
     fetch(
-      `/search/suggest.json?q=${encodeURIComponent(query)}`
+      `{{ routes.predictive_search_url }}.json?q=${encodeURIComponent(query)}`
       + `&resources[type]=query,product`
       + `&resources[query][limit]=6`
       + `&resources[product][limit]=6`,
