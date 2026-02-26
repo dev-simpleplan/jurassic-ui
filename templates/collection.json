@@ -61,12 +61,34 @@
     },
     "17658703763bf5fc11": {
       "type": "apps",
+      "blocks": {
+        "okendo_reviews_carousel_T9RnMR": {
+          "type": "shopify://apps/okendo/blocks/reviews-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "show_heading": false,
+            "heading": "Reviews",
+            "badge_link": "",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_carousel_T9RnMR"
+      ],
       "settings": {}
+    },
+    "spacer_tafrLK": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 140
+      }
     }
   },
   "order": [
     "main",
     "spacer_Kqf4M3",
-    "17658703763bf5fc11"
+    "17658703763bf5fc11",
+    "spacer_tafrLK"
   ]
 }
