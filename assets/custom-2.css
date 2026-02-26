@@ -764,7 +764,7 @@ span.cart-compare-price {
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 .filter-sidebar form {
   display: flex;
@@ -1053,6 +1053,31 @@ span.cart-compare-price {
   max-width: 90ch;
   padding: 50px 0 60px 0;
 }
+.seo-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6; /* Limits to exactly 6 lines */
+    line-height: 1.5;      /* Adjust based on your font */
+    transition: max-height 0.3s ease-out;
+  }
+
+  /* When expanded, remove the line clamp */
+  .seo-content.is-expanded {
+    display: block;
+    -webkit-line-clamp: none;
+  }
+
+  .seo-show-more {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: #000; /* Adjust to your brand color */
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+  }
 .filter-cross-div {
   display: none;
 }

@@ -266,8 +266,20 @@
   </div>
 </div>
 
+<section class="collection-seo-footer">
+  <div class="container">
+    <div class="seo-sec-wrapper">
+      <div class="seo-content" id="seoContent">
+        {{ collection.metafields.custom.seo_focused_paragraph | metafield_tag }}
+      </div>
+      <button type="button" class="seo-show-more" id="seoToggleButton">Show More</button>
+    </div>
+  </div>
+</section>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  
     // Selectors
     const filterForm = document.querySelector(".tc-filter-wrap form");
     const productGrid = document.querySelector("#ProductGrid");
@@ -494,6 +506,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     bindQuickPills();
     bindPaginationLinks();
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const content = document.getElementById('seoContent');
+  const button = document.getElementById('seoToggleButton');
+
+  if (content && button) {
+    // Hide button if content is already short
+    if (content.scrollHeight <= content.offsetHeight) {
+      button.style.display = 'none';
+    }
+
+    button.addEventListener('click', function() {
+      const isExpanded = content.classList.toggle('is-expanded');
+      button.textContent = isExpanded ? 'Show Less' : 'Show More';
+
+      // 1. Fix Lenis Scroll
+      if (window.lenis) {
+        window.lenis.resize();
+      }
+
+      // 2. Fix GSAP ScrollTrigger (since it's in your theme)
+      if (window.ScrollTrigger) {
+        window.ScrollTrigger.refresh();
+      }
+      
+      // Optional: Smoothly scroll to the top of the section when closing
+      if (!isExpanded) {
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
 });
 </script>
 

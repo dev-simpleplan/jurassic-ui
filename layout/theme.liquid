@@ -88,7 +88,7 @@
     {% sections 'footer-group' %}
 
     {% comment %} Dynamic SEO Content for Collection Pages {% endcomment %}
-    {% if template.name == 'collection' and collection.metafields.custom.seo_focused_paragraph != blank %}
+    {% comment %} {% if template.name == 'collection' and collection.metafields.custom.seo_focused_paragraph != blank %}
       <section class="collection-seo-footer">
         <div class="container">
           <div class="seo-sec-wrapper">
@@ -96,7 +96,7 @@
           </div>
         </div>
       </section>
-    {% endif %}
+    {% endif %} {% endcomment %}
     {% comment %} Script Tags {% endcomment %}
 
     {% comment %} Script Tags {% endcomment %}
@@ -111,165 +111,118 @@
       defer></script>
 
     <script src="{{ 'custom.js' |  asset_url }}" defer></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-          setTimeout(() => {
-            const lenis = new Lenis({
+        <script>
+          document.addEventListener("DOMContentLoaded", (event) => {
+            // 1. Initialize Lenis
+            window.lenis = new Lenis({
               duration: 1.2,
               easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });
 
             function raf(time) {
-              lenis.raf(time);
+              window.lenis.raf(time);
               requestAnimationFrame(raf);
             }
             requestAnimationFrame(raf);
 
+            // 2. Setup Header Logic
             const header = document.querySelector('header');
-
             let lastScroll = 0;
-            const BACKDROP_TRIGGER = 80; // px from top
+            const BACKDROP_TRIGGER = 80;
 
-            lenis.on('scroll', ({ scroll }) => {
-
-              /* ===============================
-                BACKDROP — position based
-                =============================== */
+            window.lenis.on('scroll', ({ scroll }) => {
               if (scroll > BACKDROP_TRIGGER) {
                 header.classList.add('backdrop');
               } else {
-                // only remove when fully back to top
                 header.classList.remove('backdrop');
               }
 
-              /* ===============================
-                ACTIVE — direction based
-                =============================== */
               if (scroll > lastScroll && scroll > BACKDROP_TRIGGER) {
-                // scrolling down
                 header.classList.add('active');
               } else {
-                // scrolling up OR near top
                 header.classList.remove('active');
               }
-
               lastScroll = scroll;
             });
 
-          }, 0);
+            // 3. THE UNIVERSAL FIX (Inside the same scope)
+            // This watches for height changes from Okendo, Instafeed, etc.
+            const scrollTarget = document.querySelector('.main');
+            if (scrollTarget) {
+              const resizeObserver = new ResizeObserver(() => {
+                window.lenis.resize();
+                if (window.ScrollTrigger) {
+                  window.ScrollTrigger.refresh();
+                }
+              });
+              resizeObserver.observe(scrollTarget);
+              resizeObserver.observe(document.body);
+            }
 
+            // 4. Initial Safety Refresh
+            let refreshCount = 0;
+            const refreshInterval = setInterval(() => {
+              window.lenis.resize();
+              refreshCount++;
+              if (refreshCount >= 5) clearInterval(refreshInterval);
+            }, 1000);
 
+            // --- GSAP Logic Starts ---
+            if (window.gsap && window.ScrollTrigger) {
+              gsap.registerPlugin(ScrollTrigger);
+              const mm = gsap.matchMedia();
 
-      
+              mm.add("(min-width: 993px)", () => {
+                const imageText = document.querySelector(".image-text-scroll");
+                if (!imageText) return;
 
-      if (window.gsap && window.ScrollTrigger) {
+                gsap.set(
+                  ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
+                  { opacity: 0 }
+                );
 
-gsap.registerPlugin(ScrollTrigger);
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: imageText,
+                    start: "top top",
+                    end: "+=150%",
+                    pin: true,
+                    scrub: 1,
+                    snap: {
+                      snapTo: "labels",
+                      duration: { min: 0.2, max: 0.5 },
+                      delay: 0.5,
+                      ease: "none"
+                    }
+                  }
+                });
 
-const mm = gsap.matchMedia();
+                tl.addLabel("step1")
+                  .to("#image1", { opacity: 1, duration: 0.8 })
+                  .addLabel("step2")
+                  .to(".dt-in.one", { opacity: 1, duration: 0.8 })
+                  .addLabel("step3")
+                  .to("#image3", { opacity: 1, duration: 0.8 })
+                  .addLabel("step4")
+                  .to(".dt-in.three", { opacity: 1, duration: 0.8 })
+                  .addLabel("step5")
+                  .to("#image2", { opacity: 1, duration: 0.8 })
+                  .addLabel("step6")
+                  .to(".dt-in.two", { opacity: 1, duration: 0.8 })
+                  .addLabel("step7")
+                  .to(".dt-in.four", { opacity: 1, duration: 0.8 });
 
+                window.addEventListener("resize", ScrollTrigger.refresh);
 
-
-mm.add("(min-width: 993px)", () => {
-
-const imageText = document.querySelector(".image-text-scroll");
-
-if (!imageText) return;
-
-
-
-gsap.set(
-
-["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
-
-{ opacity: 0 }
-
-);
-
-
-
-const tl = gsap.timeline({
-
-scrollTrigger: {
-
-trigger: imageText,
-
-start: "top top",
-
-end: "+=150%",
-
-pin: true,
-
-scrub: 1,
-
-snap: {
-
-snapTo: "labels",
-
-duration: { min: 0.2, max: 0.5 },
-
-delay: 0.5,
-
-ease: "none"
-
-}
-
-}
-
-});
-
-
-
-tl.addLabel("step1")
-
-.to("#image1", { opacity: 1, duration: 0.8 })
-
-.addLabel("step2")
-
-.to(".dt-in.one", { opacity: 1, duration: 0.8 })
-
-.addLabel("step3")
-
-.to("#image3", { opacity: 1, duration: 0.8 })
-
-.addLabel("step4")
-
-.to(".dt-in.three", { opacity: 1, duration: 0.8 })
-
-.addLabel("step5")
-
-.to("#image2", { opacity: 1, duration: 0.8 })
-
-.addLabel("step6")
-
-.to(".dt-in.two", { opacity: 1, duration: 0.8 })
-
-.addLabel("step7")
-
-.to(".dt-in.four", { opacity: 1, duration: 0.8 });
-
-
-
-window.addEventListener("resize", ScrollTrigger.refresh);
-
-
-
-return () => {
-
-window.removeEventListener("resize", ScrollTrigger.refresh);
-
-tl.scrollTrigger && tl.scrollTrigger.kill();
-
-tl.kill();
-
-};
-
-});
-
-}
-          }); /* ← missing closer added here */
-    </script>
+                return () => {
+                  window.removeEventListener("resize", ScrollTrigger.refresh);
+                  tl.scrollTrigger && tl.scrollTrigger.kill();
+                  tl.kill();
+                };
+              });
+            }
+          });
+      </script>
 
 
     <script>
