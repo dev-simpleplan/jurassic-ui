@@ -37,7 +37,7 @@
     <div class="container">
       <div class="cb-wrapper">
         <div class="breadcrumbs">
-            <a href="{{ shop.url }}">Home</a>
+            <a href="{{ routes.root_url }}">Home</a>
             <p>
               >
             </p>
@@ -57,7 +57,7 @@
           {% if collection.handle == 'all' %}
             <h1>All {{ collection.title }}</h1>
           {% else %}
-            <h2>{{ collection.title }}</h2>
+            <h1>{{ collection.title }}</h1>
           {% endif %}
         </div> 
         <div class="cb-collection">
