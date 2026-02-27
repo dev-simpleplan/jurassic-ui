@@ -13,6 +13,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="canonical" href="{{ canonical_url }}" />
+    {%- comment -%} Prevent indexing of search pages with the noindex parameter {%- endcomment -%}
+    {%- if template.name == 'search' and search.performed -%}
+      {%- if canonical_url contains 'view=noindex' or search.results_count == 0 -%}
+        <meta name="robots" content="noindex, follow">
+      {%- endif -%}
+    {%- endif -%}
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
     {{ content_for_header }}
