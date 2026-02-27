@@ -15,9 +15,14 @@
     
     <link rel="canonical" href="{{ canonical_url }}" />
     
-    {%- comment -%} Prevent indexing of search results, filtered collections, and paginated pages {%- endcomment -%}
-    {%- if template.name == 'search' or template.name == 'collection' -%}
-      {%- if canonical_url contains 'view=noindex' or current_page > 1 or search.results_count == 0 -%}
+    {%- comment -%} SEO NoIndex Logic {%- endcomment -%}
+    {%- if template.name == 'search' -%}
+      {%- comment -%} Always noindex search results {%- endcomment -%}
+      <meta name="robots" content="noindex, follow">
+
+    {%- elsif template.name == 'collection' -%}
+      {%- comment -%} Noindex collections only if filtered or on page 2+ {%- endcomment -%}
+      {%- if canonical_url contains 'view=noindex' or current_page > 1 -%}
         <meta name="robots" content="noindex, follow">
       {%- endif -%}
     {%- endif -%}
