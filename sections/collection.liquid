@@ -306,6 +306,22 @@ document.addEventListener("DOMContentLoaded", () => {
             searchParams.set(key, extraParams[key]);
         });
 
+        // --- Add NoIndex logic ---
+        // Check if any filters are active (excluding the sort_by parameter)
+        let hasFilters = false;
+        searchParams.forEach((value, key) => {
+            if (key.includes('filter.') || key === 'constraint') {
+                hasFilters = true;
+            }
+        });
+
+        // If filters are active, append the noindex view
+        if (hasFilters) {
+            searchParams.set('view', 'noindex');
+        } else {
+            searchParams.delete('view');
+        }
+
         let url = urlOverride ? urlOverride : `${window.location.pathname}?${searchParams.toString()}`;
 
         fetch(url)
