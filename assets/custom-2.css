@@ -1981,6 +1981,13 @@ li.variant-value.active .perKg {
     appearance: none;
     margin: 0; 
 }
+.variant .delivery-to {
+  margin-top: 16px!important;
+  font-size: 14px;
+}
+.variant .delivery-to span.calculated-delivery-date {
+  font-weight: 600;
+}
 #add-to-cart {
   position: relative;
   display: flex;

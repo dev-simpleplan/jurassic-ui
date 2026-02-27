@@ -17,6 +17,7 @@
       // 1. Get elements first - if they don't exist, stop immediately
       const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
       const deliveryEl = document.getElementById('delivery-data');
+      const newOuterPrice = document.getElementById('delivery-data-new');
       if (!mainEl && !deliveryEl) return;
 
       try {
@@ -43,6 +44,10 @@
         if (deliveryEl) {
           const text = `Free shipping from ${shippingPrice}.`;
           if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
+        }
+        if (newOuterPrice) {
+          const text = `Free shipping from ${shippingPrice}.`;
+          if (newOuterPrice.innerText !== text) newOuterPrice.innerText = text;
         }
       } catch (e) {
         console.error("Shipping Script Error:", e);

@@ -463,7 +463,12 @@ a:hover {
   background: #FFF2DB;
   font-weight: 600;
 }
-
+.countries-select p.selecthead {
+    overflow-wrap: break-word;
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 1.17em;
+}
 .locale-list {
   list-style: none;
   padding: 0;

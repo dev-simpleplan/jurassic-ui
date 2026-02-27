@@ -127,7 +127,7 @@
     <!-- COUNTRIES -->
     <div class="countries-select">
         {% if localization.available_countries.size > 1 %}
-        <h3>Select country</h3>
+        <p class="selecthead">Select country</p>
         <ul class="locale-list">
             {% for country in localization.available_countries %}
             <li>
@@ -152,7 +152,7 @@
     <!-- LANGUAGES -->
     <div class="language-select">
         {% if localization.available_languages.size > 1 %}
-        <h3>Select language</h3>
+        <p class="selecthead">Select language</p>
         <ul class="locale-list">
             {% for language in localization.available_languages %}
             <li>
