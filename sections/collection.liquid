@@ -442,13 +442,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function bindPaginationLinks() {
-        document.querySelectorAll(".pagination a").forEach(link => {
-            link.onclick = (e) => {
-                e.preventDefault();
-                updateProductGrid({}, link.getAttribute("href"));
-            };
-        });
-    }
+      document.querySelectorAll(".pagination a").forEach(link => {
+          link.onclick = (e) => {
+              e.preventDefault();
+              let url = link.getAttribute("href");
+              
+              // If the URL doesn't have view=noindex but we are on page 2+, 
+              // the theme.liquid logic will handle it, but adding it to the URL is cleaner.
+              if (!url.includes('view=noindex')) {
+                  url += (url.includes('?') ? '&' : '?') + 'view=noindex';
+              }
+              
+              updateProductGrid({}, url);
+          };
+      });
+  }
 
     // --- 2. SIDEBAR TOGGLE & OUTSIDE CLICK ---
     filter_button.onclick = (e) => {
