@@ -1,40 +1,43 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
 
-  <head>
-	<!-- Added by APP PLAZA -->
-	{% include 'app-plaza' %}
-	<!-- /Added by APP PLAZA -->
-    {%- render 'ecom_header' -%}
+	<head>
+  {% include 'app-plaza' %}
+  {%- render 'ecom_header' -%}
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}" />
-    {% endif %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <link rel="canonical" href="{{ canonical_url }}" />
-    
-    {%- comment -%} SEO NoIndex Logic (Advanced Detection) {%- endcomment -%}
-    {%- assign current_url = content_for_header | split:'"pageurl":"' | last | split:'"' | first | split:'?' | last -%}
-    {%- assign should_noindex = false -%}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-    {%- if template.name == 'search' -%}
+  {%- comment -%} Always output a Canonical URL {%- endcomment -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%} Advanced NoIndex Detection {%- endcomment -%}
+  {%- capture full_url -%}{{ content_for_header | split:'"pageurl":"' | last | split:'"' | first }}{%- endcapture -%}
+  {%- assign should_noindex = false -%}
+
+  {%- if template.name == 'search' -%}
+    {%- assign should_noindex = true -%}
+  {%- elsif template.name == 'collection' -%}
+    {%- if full_url contains 'view=noindex' or current_page > 1 -%}
       {%- assign should_noindex = true -%}
-
-    {%- elsif template.name == 'collection' -%}
-      {%- if current_url contains 'view=noindex' or current_page > 1 -%}
-        {%- assign should_noindex = true -%}
-      {%- endif -%}
     {%- endif -%}
+  {%- endif -%}
 
-    {%- if should_noindex -%}
-      <meta name="robots" content="noindex, follow">
-    {%- endif -%}   
+  {%- if should_noindex -%}
+    <meta name="robots" content="noindex, follow">
+  {%- else -%}
+    <meta name="robots" content="index, follow">
+  {%- endif -%}
 
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  {% # Rest of your head content (Title, description, etc.) %}
+  {% render 'meta-tags' %}
+  
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
 
-    {{ content_for_header }}
+  {{ content_for_header }}
 
     {% comment %} <lincustom.csseconnect" href="https://fonts.googleapis.com"> {% endcomment %}
     <link
