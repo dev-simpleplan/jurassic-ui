@@ -426,14 +426,14 @@
   background: none;
   border: none;
   box-shadow: none;
-  text-transform: uppercase;
+  text-transform: capitalize;
   outline: none;
   color: #2c2c2c;
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 2px;
   padding: 12px 20px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: "Inter";
   width: 100%;
   cursor: pointer;
