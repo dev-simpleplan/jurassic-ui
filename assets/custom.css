@@ -262,8 +262,12 @@
   font-size: 12px;
   white-space: nowrap;
 }
-
-.fc_variant_item p span {
+.fc_price_weight .flex-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.fc_variant_item p span, .fc_price_weight .flex-row > span {
   font-size: 10px;
   line-height: 13px;
   color: #397e1b;
@@ -276,6 +280,9 @@
   border-radius: 50px;
   background: transparent;
   transition: 0.3s ease all;
+}
+.fc_price_weight .flex-row > span {
+  margin: 0;
 }
 
 .fc_variant_item p.quantity {
@@ -670,6 +677,22 @@
 .fruits_card p.weight span {
   text-transform: capitalize;
 }
+.fruits_card .weight {
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  white-space: nowrap;
+  justify-content: center;
+  gap: 4px;
+}
+.fruits_card .weight .perKg {
+  font-size: 12px;
+  font-weight: 500;
+    line-height: 140%;
+    letter-spacing: -0.5px;
+    color: #6b6b6b;
+}
 .fc_image {
   position: relative;
   overflow: hidden;
@@ -989,6 +1012,9 @@ section.faq-page .faq-head h1 {
     padding: 12px;
     border-top: 1px solid #919191;
     border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   .fc_variant_item.active {
     border: none;

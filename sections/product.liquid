@@ -391,7 +391,7 @@
                                           {{ matched_variant.price | money }} / unit
                                         {% endif %} {% endcomment %}
                                          {% if matched_variant.metafields.custom.pieces %}
-                                            /  {{ matched_variant.metafields.custom.pieces }}
+                                            ( {{ matched_variant.metafields.custom.pieces }} )
                                           {% endif %}
                                       </div>
                                     </div>

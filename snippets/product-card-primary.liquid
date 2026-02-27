@@ -99,7 +99,6 @@
           <p class="fc_product_title">
             <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
           </p>
-          
         </div>
 
         <div class="fc_bottom_bottom">
@@ -132,28 +131,33 @@
                     {% if variant.metafields.custom.bestseller == true %}
                       <div class="vv-bestseller">Bestseller</div>
                     {% endif %}
-                    <p class="weight">
+                    <div class="weight">
                       {{ variant.title }}
-                      {% if variant.compare_at_price > variant.price %}
+                      
+                        {% if variant.metafields.custom.pieces %}
+                          <div class="perKg">
+                          ( {{ variant.metafields.custom.pieces }} )
+                          </div>
+                        {% else %}
+                          
+                        {% endif %}
+                      
+                      {% comment %} {% if variant.compare_at_price > variant.price %}
                         <span>
                           {{
                             variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
                           -}}
                           % Off
                         </span>
-                      {% endif %}
-                    </p>
+                      {% endif %} {% endcomment %}
+                    </div>
                     <p class="quantity">
-                      {% if variant.unit_price_measurement
-                        and variant.unit_price_measurement.quantity_value != blank %}
-                        
-                        {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
-                        
-                        {{ pieces }}
-                        {% if pieces == 1 %} Piece{% else %} Pieces{% endif %}
-                        
+                      {% assign currency_suffix = cart.currency.symbol %}
+
+                      {% if variant.unit_price_measurement %}
+                        {{ variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ variant.unit_price_measurement.reference_unit }}
                       {% else %}
-                        0 Pieces
+                        {{ variant.price | money_without_currency }} {{ currency_suffix }} / unit
                       {% endif %}
                     </p>
 
@@ -169,7 +173,8 @@
               {% assign current_variant = nil %}
               {% assign current_variant = default_variant %}
 
-              {% if current_variant.compare_at_price > current_variant.price %}
+              <div class="flex-row">
+                {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
                   <strike id="compare_price">{{ current_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}</strike>
                   <span class="selling_price">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
@@ -179,6 +184,16 @@
                   <span class="selling_price">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
                 </p>
               {% endif %}
+
+              {% if current_variant.compare_at_price > current_variant.price %}
+              <span>
+                {{
+                  current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round
+                -}}
+                % Off
+              </span>
+            {% endif %}
+              </div>
 
               <p class="fc_weight">
                 {% if current_variant.unit_price_measurement %}
