@@ -15,17 +15,23 @@
     
     <link rel="canonical" href="{{ canonical_url }}" />
     
-    {%- comment -%} SEO NoIndex Logic {%- endcomment -%}
+    {%- comment -%} SEO NoIndex Logic (Advanced Detection) {%- endcomment -%}
+    {%- assign current_url = content_for_header | split:'"pageurl":"' | last | split:'"' | first | split:'?' | last -%}
+    {%- assign should_noindex = false -%}
+
     {%- if template.name == 'search' -%}
-      {%- comment -%} Always noindex search results {%- endcomment -%}
-      <meta name="robots" content="noindex, follow">
+      {%- assign should_noindex = true -%}
 
     {%- elsif template.name == 'collection' -%}
-      {%- comment -%} Noindex collections only if filtered or on page 2+ {%- endcomment -%}
-      {%- if canonical_url contains 'view=noindex' or current_page > 1 -%}
-        <meta name="robots" content="noindex, follow">
+      {%- if current_url contains 'view=noindex' or current_page > 1 -%}
+        {%- assign should_noindex = true -%}
       {%- endif -%}
     {%- endif -%}
+
+    {%- if should_noindex -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}   
+
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
     {{ content_for_header }}
