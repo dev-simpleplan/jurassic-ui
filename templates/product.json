@@ -29,6 +29,7 @@
         },
         "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
           "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+          "disabled": true,
           "settings": {
             "page": ""
           }
@@ -92,8 +93,7 @@
         "description_heading": "Description",
         "howtostore_heading": "How To Eat & Store",
         "origin_heading": "Origin & Sourcing",
-        "taste_heading": "Taste Profile",
-        "taste_content": "The flesh of the mangosteen is sweet and melt-in-your-mouth, with a touch of brightness that's unmistakable. Some describe its taste as a blend of lychee, peach, strawberry and pineapple. It's one of the most popular exotic fruits."
+        "taste_heading": "Taste Profile"
       }
     },
     "spacer0": {
