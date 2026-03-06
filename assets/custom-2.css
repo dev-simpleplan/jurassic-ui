@@ -1993,6 +1993,14 @@ li.variant-value.active .perKg {
   text-decoration: underline;
   color: #6B6B6B;
 }
+#delivery-info, #delivery-info-skeleton {
+  visibility: hidden!important;
+    opacity: 0!important;
+    height: 0!important;
+    overflow: hidden!important;
+    margin-top: 0!important;
+    padding: 0!important;
+}
 #add-to-cart {
   position: relative;
   display: flex;
