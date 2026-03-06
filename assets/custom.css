@@ -56,6 +56,9 @@
   position: relative;
 }
 .fc_image .img_sizing {
+  width: 100%;
+  height: auto;
+  display: block;
   transition: opacity 0.4s ease-in-out;
 }
 .fc_image .hover-img {
@@ -66,14 +69,15 @@
   height: 100%;
   opacity: 0; /* Hidden by default */
   object-fit: cover;
+  z-index: 1;
 }
 
 /* Hover Effect: Show second image, hide first */
-.fruits_card:hover .hover-img {
+.fruits_card:hover .has-hover-img .hover-img {
   opacity: 1;
 }
 
-.fruits_card:hover .primary-img {
+.fruits_card:hover .has-hover-img .primary-img {
   opacity: 0;
 }
 .fc_top .fc_category_tags {

@@ -1295,6 +1295,14 @@ span.cart-compare-price {
   background: #f0f0f0;
   border-color: #ddd;
 }
+.qf-wrapper .qf-pill.clear-all-pill {
+  border: none;
+}
+.qf-wrapper .qf-pill.clear-all-pill:hover {
+  background-color: transparent;
+  color: #1a1a1a;
+  text-decoration: underline;
+}
 
 /* Collection Page Ends */
 
