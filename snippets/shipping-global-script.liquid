@@ -18,6 +18,8 @@
       const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
       const deliveryEl = document.getElementById('delivery-data');
       const newOuterPrice = document.getElementById('delivery-data-new');
+      const okendoSource = document.getElementById('okendo-badge-portal');
+      const okendoTarget = document.querySelector('.corner-cart-reviews-placeholder');
       if (!mainEl && !deliveryEl) return;
 
       try {
@@ -49,6 +51,17 @@
           const text = `Free shipping from ${shippingPrice}.`;
           if (newOuterPrice.innerText !== text) newOuterPrice.innerText = text;
         }
+        // --- OKENDO INTEGRATION (YOUR REFRESH FUNCTION) ---
+        // Only move if target exists and is currently empty
+        if (okendoSource && okendoTarget && okendoTarget.childElementCount === 0) {
+            okendoTarget.innerHTML = okendoSource.innerHTML;
+
+            // Tell Okendo to find and render the new badge inside the cart
+            if (window.okeReviews && typeof window.okeReviews.initWidgets === 'function') {
+                window.okeReviews.initWidgets();
+                console.log("Okendo Store Badge Initialized in Cart");
+            }
+        }
       } catch (e) {
         console.error("Shipping Script Error:", e);
       }
@@ -59,4 +72,5 @@
     // Check every 2 seconds instead of 1 to reduce browser load
     setInterval(updateShippingText, 2000);
   })();
+
 </script>

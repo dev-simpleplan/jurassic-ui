@@ -441,6 +441,11 @@
         soldOut: {{ 'products.product.sold_out' | t | json }}
       };
     </script>
+
+    <div id="okendo-badge-portal" style="display:none !important;">
+      <div class="okendo-store-badge" data-oke-reviews-badge data-oke-header-badge>
+          {% render 'okendo-reviews-badge' %} </div>
+    </div>
     
 {% render 'shipping-global-script' %}
 

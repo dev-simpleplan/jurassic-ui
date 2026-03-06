@@ -2040,6 +2040,45 @@ li.variant-value.active .perKg {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+.checkout-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  gap: 6px!important;
+}
+.checkout-data > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.checkout-data > p span svg {
+  width: 20px!important;
+}
+.corner-cart-reviews-placeholder .okeReviews {
+   display: block !important;
+}
+.corner-cart-reviews-placeholder .oke-minimalBadge {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  justify-content: center;
+}
+.corner-cart-reviews-placeholder .oke-minimalBadge .oke-stars-foreground {
+  width: 100%!important;
+}
+.corner-cart-reviews-placeholder .oke-minimalBadge-stars {
+  display: flex;
+}
+.corner-cart-reviews-placeholder .oke-minimalBadge-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 100%;
+  font-size: 14px;
+}
 
 .payment-options {
   padding: 16px;
