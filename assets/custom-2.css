@@ -1988,6 +1988,11 @@ li.variant-value.active .perKg {
 .variant .delivery-to span.calculated-delivery-date {
   font-weight: 600;
 }
+.variant .delivery-to .product_delivery_modal_opener small {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #6B6B6B;
+}
 #add-to-cart {
   position: relative;
   display: flex;
