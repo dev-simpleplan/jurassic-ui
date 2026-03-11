@@ -173,12 +173,12 @@
               <div class="flex-row">
                 {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
-                  <strike id="compare_price">{{ current_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}</strike>
                   <span class="selling_price">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
+                  <strike id="compare_price">{{ current_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}</strike>
                 </p>
               {% else %}
                 <p>
-                  <span class="selling_price">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
+                  <span class="selling_price withoutbg">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
                 </p>
               {% endif %}
 
@@ -187,7 +187,7 @@
                 {{
                   current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round
                 -}}
-                % Off
+                %
               </span>
             {% endif %}
               </div>

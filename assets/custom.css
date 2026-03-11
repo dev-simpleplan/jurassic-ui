@@ -208,7 +208,7 @@
   scroll-snap-align: start;
   position: relative;
   z-index: 1;
-  margin-top: 30px;
+  margin-top: 20px;
   transition: 0.4s ease all;
 }
 
@@ -274,13 +274,13 @@
 .fc_variant_item p span, .fc_price_weight .flex-row > span {
   font-size: 10px;
   line-height: 13px;
-  color: #397e1b;
+  color: #ff0202;
   padding: 0px 5px;
   margin-left: 5px;
   margin-bottom: 4px;
   font-weight: 600;
   display: inline-block;
-  border: 1px solid #397e1b;
+  border: 1px solid #ff0202;
   border-radius: 50px;
   background: transparent;
   transition: 0.3s ease all;
@@ -398,6 +398,9 @@
   color: #757575;
   line-height: 150%;
   letter-spacing: 0em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .fc_price_weight p br {
   display: none;
@@ -406,10 +409,21 @@
 .fc_price_weight p span {
   font-size: 16px;
   font-weight: 600;
-  color: #151515;
+  color: #fff;
   line-height: 100%;
   letter-spacing: -0.06em;
-  padding-left: 6px;
+  /* padding-left: 6px; */
+  padding: 6px 6px;
+  background-color: #151515;
+  border-radius: 8px;
+}
+.fc_price_weight p span.withoutbg {
+  background-color: transparent;
+  padding: 0;
+  color: #151515;
+}
+.fc_price_weight p strike {
+  line-height: 100%;
 }
 
 /* .fc_add_to_cart {
@@ -1055,3 +1069,5 @@ section.faq-page .faq-head h1 {
     grid-template-columns: 1fr;
   }
 }
+
+

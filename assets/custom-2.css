@@ -1297,6 +1297,7 @@ span.cart-compare-price {
 }
 .qf-wrapper .qf-pill.clear-all-pill {
   border: none;
+  text-decoration: underline;
 }
 .qf-wrapper .qf-pill.clear-all-pill:hover {
   background-color: transparent;
@@ -1342,6 +1343,13 @@ span.cart-compare-price {
 }
 .pro-desp .title .price-detailsss {
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 4px;
+} 
+.price-detailsss .pd-top {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 4px;
@@ -1359,7 +1367,7 @@ span.cart-compare-price {
   color: #6B6B6B;
 }
 .price-detailsss .sell-price-variant-perkg {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 100%;
 }
 .title .price .price-txt {
@@ -1578,7 +1586,8 @@ span.cart-compare-price {
 .product-info .title {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
+  gap: 8px;
   background: #ffffff;
   border: 1px solid #e5e3df;
   padding: 16px;
@@ -2086,6 +2095,20 @@ li.variant-value.active .perKg {
   gap: 4px;
   line-height: 100%;
   font-size: 14px;
+}
+#corner-cowi-cart-summary-card-cta-button {
+  border-radius: 35px;
+  padding: 14px 20px !important;
+  width: calc(100% - 30px)!important;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  margin-bottom: 14px!important;
+}
+#corner-cowi-related-items-card-items-wrapper button {
+  border-radius: 35px!important;
+}
+#corner-cowi-cart-apply-discount-section {
+  margin-bottom: 10px!important;
 }
 
 .payment-options {

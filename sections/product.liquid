@@ -197,22 +197,26 @@
                     <div class="price" id="price-{{ section.id }}">
                       <div class="price-detailsss"> 
 
-                        {% assign currency_suffix = cart.currency.symbol %}
-                        <div class="sell-price">
-                          {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
+                        <div class="pd-top">
+                          {% assign currency_suffix = cart.currency.symbol %}
+                          <div class="sell-price">
+                            {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
+                          </div>
+
+                          <strike class="real-price">
+                            {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
+                          </strike>
                         </div>
 
-                        <strike class="real-price">
-                          {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
-                        </strike>
-
-                        (<span class="sell-price-variant-perkg">
-                          {% if selected_variant.unit_price_measurement %}
-                            {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
-                          {% else %}
-                            {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
-                          {% endif %}
-                        </span>)
+                        <div class="pd-bottom">
+                          <span class="sell-price-variant-perkg">
+                            {% if selected_variant.unit_price_measurement %}
+                              {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                            {% else %}
+                              {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
+                            {% endif %}
+                          </span>
+                        </div>
                         <!-- ALWAYS present -->
                       </div>
 
@@ -439,7 +443,7 @@
                         >
                           <span class="btn-text">
                             <span class="btn-label">Add to Cart</span>
-                            (<span class="btn-price">—</span>)
+                            - <span class="btn-price">—</span>
                           </span>
 
                           <span class="btn-spinner" aria-hidden="true"></span>
