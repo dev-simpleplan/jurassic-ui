@@ -119,6 +119,7 @@
                     data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
                     data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
                     data-inventory="{{ variant.inventory_quantity }}"
+                    data-percent="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round }}{% else %}0{% endif %}"
                     data-unit="{% if variant.unit_price_measurement %}
                       {{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}
                     {% else %}
@@ -171,25 +172,28 @@
               {% assign current_variant = default_variant %}
 
               <div class="flex-row">
-                {% if current_variant.compare_at_price > current_variant.price %}
                 <p>
-                  <span class="selling_price">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
-                  <strike id="compare_price">{{ current_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}</strike>
-                </p>
-              {% else %}
-                <p>
-                  <span class="selling_price withoutbg">{{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}</span>
-                </p>
-              {% endif %}
+                  {% comment %} The selling price always exists {% endcomment %}
+                  <span class="selling_price {% unless current_variant.compare_at_price > current_variant.price %}withoutbg{% endunless %}">
+                    {{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }}
+                  </span>
 
-              {% if current_variant.compare_at_price > current_variant.price %}
-              <span>
-                {{
-                  current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round
-                -}}
-                %
-              </span>
-            {% endif %}
+                  {% comment %} 
+                    CRITICAL: Always render the strike tag so JS can find it. 
+                    Use inline CSS to hide it if there is no initial discount.
+                  {% endcomment %}
+                  <strike id="compare_price" style="{% unless current_variant.compare_at_price > current_variant.price %}display:none;{% endunless %}">
+                    {% if current_variant.compare_at_price > current_variant.price %}
+                      {{ current_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
+                    {% endif %}
+                  </strike>
+                </p>
+
+                <span class="off-percent-badge" data-card-off-percent style="{% unless current_variant.compare_at_price > current_variant.price %}display:none;{% endunless %}">
+                  {% if current_variant.compare_at_price > current_variant.price %}
+                    {{ current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round }}%
+                  {% endif %}
+                </span>
               </div>
 
               <p class="fc_weight">

@@ -419,7 +419,7 @@
 }
 .fc_price_weight p span.withoutbg {
   background-color: transparent;
-  padding: 0;
+  padding-left: 0;
   color: #151515;
 }
 .fc_price_weight p strike {

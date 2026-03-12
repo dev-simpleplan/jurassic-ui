@@ -208,11 +208,8 @@
                           </strike>
 
                           {% if selected_variant.compare_at_price > selected_variant.price %}
-                            <span class="off-percent">
-                              {{
-                                selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round
-                              -}}
-                              %
+                            <span class="off-percent" data-price-off-percent>
+                              {{ selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round }}%
                             </span>
                           {% endif %}
                         </div>
@@ -1084,54 +1081,42 @@ class VariantSelector extends HTMLElement {
 
     const sellPriceEl = priceWrap.querySelector('.sell-price');
     const comparePriceEl = priceWrap.querySelector('.real-price');
-    const discountEl = priceWrap.querySelector('.vvv-discount');
+    // Target the correct class name for your badge
+    const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
     const price = this.currentVariant.price;
     const compare = this.currentVariant.compare_at_price;
 
-    // Define the suffix here (e.g., "Rs." or "INR")
     const currencySuffix = " {{ cart.currency.symbol }}";
 
-    /* Selling price */
+    /* 1. Update Selling Price */
     if (sellPriceEl) {
-      // .replace(/[^\d.,]/g, '') removes everything EXCEPT numbers, dots, and commas
       let cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
       sellPriceEl.textContent = cleanPrice + currencySuffix;
     }
 
-    if (comparePriceEl && compare > price) {
-      let cleanCompare = formatMoneySafe(compare).replace(/[^\d.,]/g, '').trim();
-      comparePriceEl.textContent = cleanCompare + currencySuffix;
-      comparePriceEl.style.display = '';
-    }
-
-    /* 🔥 DISCOUNT PERCENTAGE (Keep as is) */
-    if (discountEl) {
+    /* 2. Update Compare Price */
+    if (comparePriceEl) {
       if (compare && compare > price) {
-        const discountPercent = Math.round(
-          ((compare - price) * 100) / compare
-        );
-        discountEl.textContent = `${discountPercent}% OFF`;
-        discountEl.style.display = '';
+        let cleanCompare = formatMoneySafe(compare).replace(/[^\d.,]/g, '').trim();
+        comparePriceEl.textContent = cleanCompare + currencySuffix;
+        comparePriceEl.style.display = 'inline-block';
       } else {
-        discountEl.textContent = '';
-        discountEl.style.display = 'none';
+        comparePriceEl.style.display = 'none';
       }
     }
 
-    /* Unit / kg text */
-    {% comment %} const perKg = document.querySelector('.perKg');
-    if (perKg) {
-      if (this.currentVariant.unit_price_measurement) {
-        perKg.textContent =
-          formatMoneySafe(this.currentVariant.unit_price) +
-          ' / ' +
-          this.currentVariant.unit_price_measurement.reference_unit;
+    /* 3. Update Discount Percentage */
+    if (percentBadge) {
+      if (compare && compare > price) {
+        const saving = compare - price;
+        const percentOff = Math.round((saving * 100) / compare);
+        percentBadge.textContent = `${percentOff}%`;
+        percentBadge.style.display = 'inline-block';
       } else {
-        perKg.textContent =
-          formatMoneySafe(price) + ' / unit';
+        percentBadge.style.display = 'none';
       }
-    } {% endcomment %}
+    }
   }
 
 

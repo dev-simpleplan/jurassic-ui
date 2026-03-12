@@ -47,18 +47,49 @@ document.addEventListener('click', (e) => {
     const sellingPriceEl = priceWrap.querySelector('.selling_price');
     const compareEl = priceWrap.querySelector('#compare_price');
     const unitEl = card.querySelector('.fc_weight');
+    const percentBadge = card.querySelector('[data-card-off-percent]'); // Target our badge
 
     // These now contain the symbol at the end because of our Liquid update above
     if (sellingPriceEl) sellingPriceEl.innerText = price;
     if (unitEl) unitEl.innerText = unit;
 
-    if (compareEl) {
+    //Toggle the background class based on sale status
+    if (sellingPriceEl) {
       if (compare && compare !== "") {
+        sellingPriceEl.classList.remove('withoutbg');
+      } else {
+        sellingPriceEl.classList.add('withoutbg');
+      }
+    }
+
+    // --- Update Compare Price & Percent Badge ---
+    if (compare && compare !== "") {
+      if (compareEl) {
         compareEl.innerText = compare;
         compareEl.style.display = 'inline-block';
-      } else {
+      }
+
+      if (percentBadge) {
+        // Strip symbols and commas to get raw numbers for math
+        const rawPrice = parseFloat(price.replace(/[^\d.]/g, ''));
+        const rawCompare = parseFloat(compare.replace(/[^\d.]/g, ''));
+
+        if (rawCompare > rawPrice) {
+          const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
+          percentBadge.innerText = percentOff + '%';
+          percentBadge.style.display = 'inline-block';
+        } else {
+          percentBadge.style.display = 'none';
+        }
+      }
+    } else {
+      // Hide both if no compare price exists
+      if (compareEl) {
         compareEl.style.display = 'none';
-        compareEl.innerText = ''; // Clear it out
+        compareEl.innerText = '';
+      }
+      if (percentBadge) {
+        percentBadge.style.display = 'none';
       }
     }
   }
