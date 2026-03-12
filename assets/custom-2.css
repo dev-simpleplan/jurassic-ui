@@ -1534,6 +1534,7 @@ span.cart-compare-price {
 }
 .prod-thumb-image .slick-list {
   height: 100%!important;
+  padding: 0!important;
 }
 .pro-img-wrap .pro-test {
   width: calc(100% - 129px);
