@@ -206,6 +206,15 @@
                           <strike class="real-price">
                             {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
                           </strike>
+
+                          {% if selected_variant.compare_at_price > selected_variant.price %}
+                            <span class="off-percent">
+                              {{
+                                selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round
+                              -}}
+                              %
+                            </span>
+                          {% endif %}
                         </div>
 
                         <div class="pd-bottom">
