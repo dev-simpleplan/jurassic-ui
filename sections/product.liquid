@@ -443,7 +443,7 @@
                         </div>
 
                         <button
-                          type="button"
+                          type="submit"
                           class="custom-btn filled"
                           id="add-to-cart"
                         >
@@ -922,7 +922,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 /* ======================================================
-   ADD TO CART LOADING + SUCCESS STATE
+   ADD TO CART BUTTON STATE
 ====================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('add-to-cart');
@@ -930,50 +930,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!btn || !form) return;
 
-  btn.addEventListener('click', async () => {
+  form.addEventListener('submit', () => {
     if (btn.classList.contains('loading')) return;
 
-    const variantId = form.querySelector('input[name="id"]').value;
-    const qty = form.querySelector('#Quantity')?.value || 1;
-
-    // LOADING STATE
     btn.classList.remove('success');
     btn.classList.add('loading');
+    btn.disabled = true;
 
-    try {
-      const res = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          id: variantId,
-          quantity: qty
-        })
-      });
-
-      if (!res.ok) throw new Error('Add to cart failed');
-
-      await res.json();
-
-      // SUCCESS STATE
-      btn.classList.remove('loading');
-      btn.classList.add('success');
-
-      // optional: notify cart drawer
-      document.dispatchEvent(new Event('cart:refresh'));
-
-      // reset after delay
-      setTimeout(() => {
-        btn.classList.remove('success');
-      }, 1500);
-
-    } catch (err) {
-      console.error(err);
-      btn.classList.remove('loading');
-      alert('Could not add product. Please try again.');
-    }
+    window.setTimeout(() => {
+      if (!btn.classList.contains('success')) {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }, 2500);
   });
 });
 </script>

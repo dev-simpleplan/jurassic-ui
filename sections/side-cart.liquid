@@ -84,6 +84,7 @@
   }
 
   let initialized = false;
+  let loadCartItemsPromise = null;
 
   document.addEventListener('DOMContentLoaded', initSideCart);
 
@@ -337,101 +338,103 @@
        ✅ CRITICAL FIX: SIMPLIFIED LOAD CART
     ======================= */
     window.loadCartItems = async function () {
-      console.log('🔄 [SideCart] loadCartItems called');
-      
-      // ✅ Don't check isUpdating - always allow load
-      
-      if (!canMakeRequest()) {
-        console.warn('⚠️ [SideCart] Rate limit - skipping');
-        return;
+      if (loadCartItemsPromise) {
+        return loadCartItemsPromise;
       }
-      
-      showLoader();
 
-      try {
-        console.log('📡 [SideCart] Fetching /cart.js...');
-        const res = await fetch('/cart.js');
+      loadCartItemsPromise = (async () => {
+        console.log('🔄 [SideCart] loadCartItems called');
         
-        if (res.status === 429) {
-          console.error('⚠️ [SideCart] Rate limit hit');
+        if (!canMakeRequest()) {
+          console.warn('⚠️ [SideCart] Rate limit - skipping');
           return;
         }
+        
+        showLoader();
 
-        if (!res.ok) {
-          throw new Error(`Cart fetch failed: ${res.status}`);
-        }
+        try {
+          console.log('📡 [SideCart] Fetching /cart.js...');
+          const res = await fetch('/cart.js');
+          
+          if (res.status === 429) {
+            console.error('⚠️ [SideCart] Rate limit hit');
+            return;
+          }
 
-        const cart = await res.json();
-        console.log('📦 [SideCart] Cart loaded:', cart.item_count, 'items', cart);
+          if (!res.ok) {
+            throw new Error(`Cart fetch failed: ${res.status}`);
+          }
 
-        const snapshot = JSON.stringify(
-          cart.items.map(i => ({
-            key: i.key,
-            qty: i.quantity,
-            price: i.final_line_price
-          }))
-        );
+          const cart = await res.json();
+          console.log('📦 [SideCart] Cart loaded:', cart.item_count, 'items', cart);
 
-        lastCartSnapshot = snapshot;
+          const snapshot = JSON.stringify(
+            cart.items.map(i => ({
+              key: i.key,
+              qty: i.quantity,
+              price: i.final_line_price
+            }))
+          );
 
-        const cartCount = document.getElementById('cart_item_count');
-        if (cartCount) {
-          cartCount.textContent = `(${cart.item_count} items)`;
-        }
+          lastCartSnapshot = snapshot;
 
-        document.querySelectorAll('discount-field')
-          .forEach(df => df.updateFromCart?.(cart));
+          const cartCount = document.getElementById('cart_item_count');
+          if (cartCount) {
+            cartCount.textContent = `(${cart.item_count} items)`;
+          }
 
-        await recommendedCart(cart);
+          document.querySelectorAll('discount-field')
+            .forEach(df => df.updateFromCart?.(cart));
+
+          await recommendedCart(cart);
 
         // Clear empty state
-        const emptyState = cartItemsContainer.querySelector('.side-cart-empty');
-        if (emptyState) {
-          emptyState.remove();
-          console.log('🗑️ [SideCart] Removed empty state');
-        }
+          const emptyState = cartItemsContainer.querySelector('.side-cart-empty');
+          if (emptyState) {
+            emptyState.remove();
+            console.log('🗑️ [SideCart] Removed empty state');
+          }
 
-        if (!cart.items.length) {
-          const existingWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
-          if (existingWrapper) {
-            existingWrapper.remove();
+          if (!cart.items.length) {
+            const existingWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
+            if (existingWrapper) {
+              existingWrapper.remove();
+            }
+            
+            if (cartFooter) {
+              cartFooter.style.display = 'none';
+            }
+            
+            cartItemsContainer.innerHTML = `
+              <div class="side-cart-empty">
+                <div class="jf-icon">{% render 'jf' %}</div>
+                <div class="sce-txt">
+                  <h3>uh-oh!</h3>
+                  <p>You have an empty basket.</p>
+                </div>
+              </div>`;
+            console.log('📝 [SideCart] Showing empty cart');
+            return;
+          }
+
+          console.log('🔧 [SideCart] Recreating cart items wrapper');
+          
+          const oldWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
+          if (oldWrapper) {
+            oldWrapper.remove();
           }
           
+          const newWrapper = document.createElement('div');
+          newWrapper.className = 'side-cart-with-items';
+          newWrapper.setAttribute('data-lenis-prevent', '');
+          cartItemsContainer.appendChild(newWrapper);
+
           if (cartFooter) {
-            cartFooter.style.display = 'none';
+            cartFooter.style.display = 'block';
           }
-          
-          cartItemsContainer.innerHTML = `
-            <div class="side-cart-empty">
-              <div class="jf-icon">{% render 'jf' %}</div>
-              <div class="sce-txt">
-                <h3>uh-oh!</h3>
-                <p>You have an empty basket.</p>
-              </div>
-            </div>`;
-          console.log('📝 [SideCart] Showing empty cart');
-          return;
-        }
 
-        // ✅ Force recreate wrapper
-        console.log('🔧 [SideCart] Recreating cart items wrapper');
-        
-        const oldWrapper = cartItemsContainer.querySelector('.side-cart-with-items');
-        if (oldWrapper) {
-          oldWrapper.remove();
-        }
-        
-        const newWrapper = document.createElement('div');
-        newWrapper.className = 'side-cart-with-items';
-        newWrapper.setAttribute('data-lenis-prevent', '');
-        cartItemsContainer.appendChild(newWrapper);
-
-        if (cartFooter) {
-          cartFooter.style.display = 'block';
-        }
-
-        console.log('📝 [SideCart] Rendering', cart.items.length, 'items');
-        newWrapper.innerHTML = cart.items.map((item, index) => {
+          console.log('📝 [SideCart] Rendering', cart.items.length, 'items');
+          newWrapper.innerHTML = cart.items.map((item, index) => {
           const isFreeGift =
             item.final_line_price === 0 &&
             item.original_line_price > 0;
@@ -474,39 +477,43 @@
               </div>
             </div>
           `;
-        }).join('');
+          }).join('');
 
-        const originalSubtotal = cart.items.reduce(
-          (sum, item) => sum + item.original_line_price,
-          0
-        );
+          const originalSubtotal = cart.items.reduce(
+            (sum, item) => sum + item.original_line_price,
+            0
+          );
 
-        document.querySelectorAll('.subtotal-amount')
-          .forEach(el => el.textContent = formatMoney(originalSubtotal));
+          document.querySelectorAll('.subtotal-amount')
+            .forEach(el => el.textContent = formatMoney(originalSubtotal));
 
-        document.querySelectorAll('.total-amount, .checkout-total')
-          .forEach(el => el.textContent = formatMoney(cart.total_price));
+          document.querySelectorAll('.total-amount, .checkout-total')
+            .forEach(el => el.textContent = formatMoney(cart.total_price));
 
-        const discountRow = document.querySelector('.cart-discount');
-        const discountAmountEl = document.querySelector('.discount-amount');
-        const discount = originalSubtotal - cart.total_price;
+          const discountRow = document.querySelector('.cart-discount');
+          const discountAmountEl = document.querySelector('.discount-amount');
+          const discount = originalSubtotal - cart.total_price;
 
-        if (discount > 0 && discountRow && discountAmountEl) {
-          discountRow.style.display = 'flex';
-          discountAmountEl.textContent = `- ${formatMoney(discount)}`;
-        } else if (discountRow) {
-          discountRow.style.display = 'none';
+          if (discount > 0 && discountRow && discountAmountEl) {
+            discountRow.style.display = 'flex';
+            discountAmountEl.textContent = `- ${formatMoney(discount)}`;
+          } else if (discountRow) {
+            discountRow.style.display = 'none';
+          }
+
+          attachQtyHandlers();
+          
+          console.log('✅ [SideCart] Render complete');
+
+        } catch (e) {
+          console.error('❌ [SideCart] Error loading cart', e);
+        } finally {
+          hideLoader();
+          loadCartItemsPromise = null;
         }
+      })();
 
-        attachQtyHandlers();
-        
-        console.log('✅ [SideCart] Render complete');
-
-      } catch (e) {
-        console.error('❌ [SideCart] Error loading cart', e);
-      } finally {
-        hideLoader();
-      }
+      return loadCartItemsPromise;
     };
 
     let qtyUpdateTimeout = null;

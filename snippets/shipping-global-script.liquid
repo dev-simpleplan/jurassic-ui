@@ -13,31 +13,42 @@
       "default": "{{ clean_default }} {{ suffix }}"
     };
 
-    function updateShippingText() {
-      // 1. Get elements first - if they don't exist, stop immediately
+    let lastMarketKey = null;
+
+    function resolveMarketKey() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let market = window.corner?.sessionData?.market || urlParams.get('country') || 'default';
+      let marketKey = String(market).toLowerCase().trim();
+
+      const countryMap = {
+        france: 'fr',
+        germany: 'de',
+        austria: 'at',
+        'united kingdom': 'gb',
+        'united states': 'us',
+        india: 'in'
+      };
+
+      if (countryMap[marketKey]) marketKey = countryMap[marketKey];
+      return marketKey;
+    }
+
+    function updateShippingText(force) {
       const mainEl = document.getElementById('corner-cowi-cart-custom-html-above-cta');
       const deliveryEl = document.getElementById('delivery-data');
       const newOuterPrice = document.getElementById('delivery-data-new');
-      const okendoSource = document.getElementById('okendo-badge-portal');
-      const okendoTarget = document.querySelector('.corner-cart-reviews-placeholder');
-      if (!mainEl && !deliveryEl) return;
+      if (!mainEl && !deliveryEl && !newOuterPrice) return;
 
       try {
-        const urlParams = new URLSearchParams(window.location.search);
-        // Prioritize session data, then URL, then default
-        let market = window.corner?.sessionData?.market || urlParams.get('country') || 'default';
-        let marketKey = market.toLowerCase().trim();
+        const marketKey = resolveMarketKey();
 
-        const countryMap = {
-          "france": "fr", "germany": "de", "austria": "at",
-          "united kingdom": "gb", "united states": "us", "india": "in"
-        };
+        if (!force && marketKey === lastMarketKey) {
+          return;
+        }
 
-        if (countryMap[marketKey]) marketKey = countryMap[marketKey];
+        lastMarketKey = marketKey;
+        const shippingPrice = shippingPrices[marketKey] || shippingPrices.default;
 
-        const shippingPrice = shippingPrices[marketKey] || shippingPrices['default'];
-
-        // 2. ONLY update text. DO NOT use window.location or redirects here.
         if (mainEl) {
           const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
           if (mainEl.innerText !== text) mainEl.innerText = text;
@@ -47,30 +58,44 @@
           const text = `Free shipping from ${shippingPrice}.`;
           if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
         }
+
         if (newOuterPrice) {
           const text = `Free shipping from ${shippingPrice}.`;
           if (newOuterPrice.innerText !== text) newOuterPrice.innerText = text;
         }
-        // --- OKENDO INTEGRATION (YOUR REFRESH FUNCTION) ---
-        // Only move if target exists and is currently empty
-        if (okendoSource && okendoTarget && okendoTarget.childElementCount === 0) {
-            okendoTarget.innerHTML = okendoSource.innerHTML;
 
-            // Tell Okendo to find and render the new badge inside the cart
-            if (window.okeReviews && typeof window.okeReviews.initWidgets === 'function') {
-                window.okeReviews.initWidgets();
-                console.log("Okendo Store Badge Initialized in Cart");
-            }
-        }
       } catch (e) {
-        console.error("Shipping Script Error:", e);
+        console.error('Shipping Script Error:', e);
       }
     }
 
-    // Run once on load
-    updateShippingText();
-    // Check every 2 seconds instead of 1 to reduce browser load
-    setInterval(updateShippingText, 2000);
-  })();
+    function scheduleUpdate(force) {
+      window.requestAnimationFrame(() => updateShippingText(force));
+    }
 
+    function bootShippingUpdates() {
+      scheduleUpdate(true);
+
+      let attempts = 0;
+      const retryTimer = window.setInterval(() => {
+        attempts += 1;
+        scheduleUpdate(false);
+
+        if (
+          window.corner?.sessionData?.market ||
+          attempts >= 5
+        ) {
+          window.clearInterval(retryTimer);
+        }
+      }, 700);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootShippingUpdates, { once: true });
+    } else {
+      bootShippingUpdates();
+    }
+
+    window.addEventListener('load', () => scheduleUpdate(false), { once: true });
+  })();
 </script>

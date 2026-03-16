@@ -62,8 +62,6 @@
       integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
-      <link rel="stylesheet" href="{{ 'cart-quantity-control.css' | asset_url }}">
-      <script src="{{ 'cart-quantity-control.js' | asset_url }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
 
     {% # Inlined CSS Variables %}
@@ -442,11 +440,6 @@
       };
     </script>
 
-    <div id="okendo-badge-portal" style="display:none !important;">
-      <div class="okendo-store-badge" data-oke-reviews-badge data-oke-header-badge>
-          {% render 'okendo-reviews-badge' %} </div>
-    </div>
-    
 {% render 'shipping-global-script' %}
 
     {%- render "ecom_footer" - %}

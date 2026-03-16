@@ -1,32 +1,9 @@
 /* ----------------------------------------------------------------
    GLOBAL PRODUCT CARD HANDLER
-   Handles variant switching and AJAX Add to Cart store-wide.
+   Handles variant switching store-wide.
 ------------------------------------------------------------------- */
 
-// 1. HELPER: AJAX Add to Cart
-async function globalAddToCart(id, qty = 1) {
-  return fetch('/cart/add.js', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id, quantity: qty })
-  }).then(r => r.json());
-}
-
-// 2. HELPER: Open Side Cart (Keep your specific logic)
-function globalOpenSideCart() {
-  const sideCart = document.querySelector('.sideCart');
-  if (!sideCart) return;
-
-  sideCart.classList.add('active');
-  document.body.classList.add('stay');
-  document.documentElement.classList.add('stay');
-
-  if (typeof window.loadCartItems === 'function') {
-    window.loadCartItems();
-  }
-}
-
-// 3. EVENT DELEGATION: Variant Clicking
+// 1. EVENT DELEGATION: Variant Clicking
 document.addEventListener('click', (e) => {
   const variant = e.target.closest('.fc_variant_item');
   if (!variant) return;
@@ -104,9 +81,11 @@ document.addEventListener('click', (e) => {
   // Update hidden ID for Add to Cart
   const addWrap = card.querySelector('.fc_add_to_cart');
   const addBtn = addWrap?.querySelector('.add-to-cart-btn');
+  const addFormInput = card.querySelector('.product-card-add-form input[name="id"]');
 
   if (addWrap) {
     addWrap.dataset.variantId = id;
+    if (addFormInput) addFormInput.value = id;
     
     // Handle Sold Out state using the translated global variables
     if (inventory > 0) {
@@ -116,31 +95,5 @@ document.addEventListener('click', (e) => {
       addBtn.disabled = true;
       addBtn.innerText = window.themeStrings.soldOut;
     }
-  }
-});
-
-// 4. EVENT DELEGATION: Add to Cart Button
-document.addEventListener('click', async (e) => {
-  const btn = e.target.closest('.fc_add_to_cart .add-to-cart-btn');
-  if (!btn) return;
-
-  e.preventDefault();
-  const wrap = btn.closest('.fc_add_to_cart');
-  const variantId = wrap?.dataset.variantId;
-
-  if (!variantId) return;
-
-  btn.disabled = true;
-  const originalText = btn.innerText;
-  btn.innerText = 'Adding…';
-
-  try {
-    await globalAddToCart(Number(variantId), 1);
-    globalOpenSideCart();
-  } catch (err) {
-    console.error('Add to cart failed', err);
-  } finally {
-    btn.disabled = false;
-    btn.innerText = originalText;
   }
 });
