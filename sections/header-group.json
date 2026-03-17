@@ -46,6 +46,7 @@
         },
         "nav_menu_right_tATRCL": {
           "type": "nav_menu_right",
+          "disabled": true,
           "settings": {
             "nav_items_right": "learn-more",
             "product_list_heading": "",
