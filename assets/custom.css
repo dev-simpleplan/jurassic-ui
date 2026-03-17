@@ -98,6 +98,7 @@
   letter-spacing: -0.03em;
   border-radius: 10px;
   display: inline-block;
+  text-transform: capitalize;
 }
 .fc_top .fc_bestsell_tags {
   position: absolute;
@@ -125,6 +126,7 @@
   font-family: var(--scale);
   font-weight: 500;
   letter-spacing: 0.06em;
+  text-transform: capitalize;
 }
 .fc_organic_auth {
   width: 31px;
@@ -388,7 +390,8 @@
 .fc_price_weight {
   display: flex;
   justify-content: space-between;
-  padding-right: 15px;
+  padding-right: 5px;
+  padding-left: 2px;
   align-items: center;
 }
 
@@ -409,13 +412,14 @@
 .fc_price_weight p span {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: #ff0202;
   line-height: 100%;
   letter-spacing: -0.06em;
   /* padding-left: 6px; */
-  padding: 6px 6px;
-  background-color: #151515;
-  border-radius: 8px;
+  /* padding: 6px 6px; */
+  /* background-color: #151515; */
+  /* background-color: #ff0202; */
+  /* border-radius: 8px; */
 }
 .fc_price_weight p span.withoutbg {
   background-color: transparent;
@@ -456,8 +460,8 @@
   color: #2c2c2c;
   font-size: 14px;
   line-height: 100%;
-  letter-spacing: 2px;
-  padding: 12px 20px;
+  /* letter-spacing: 2px; */
+  padding: 16px 20px;
   font-weight: 600;
   font-family: "Inter";
   width: 100%;
