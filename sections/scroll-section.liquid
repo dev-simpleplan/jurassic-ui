@@ -1,4 +1,8 @@
 <section class="scroll-sec">
+    <div class="scroll-nav">
+        <button class="scroll-arrow prev" aria-label="Scroll Left">{% render 'arrow-prev' %}</button>
+        <button class="scroll-arrow next" aria-label="Scroll Right">{% render 'arrow-next' %}</button>
+    </div>
     <div class="scrollsec-wrapper">
         {% for block in section.blocks %}
             {% if block.type == 'slide1' %}
@@ -263,6 +267,34 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.querySelector('.scrollsec-wrapper');
+    const nextBtn = document.querySelector('.scroll-arrow.next');
+    const prevBtn = document.querySelector('.scroll-arrow.prev');
+
+    if (!wrapper || !nextBtn || !prevBtn) return;
+
+    nextBtn.addEventListener('click', () => {
+        // Calculate the width of one slide
+        const slideWidth = wrapper.querySelector('.scrollsec-slide').offsetWidth;
+        wrapper.scrollBy({ left: slideWidth, behavior: 'smooth' });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        const slideWidth = wrapper.querySelector('.scrollsec-slide').offsetWidth;
+        wrapper.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+    });
+
+    // Optional: Hide/Show arrows at the start and end
+    wrapper.addEventListener('scroll', () => {
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        prevBtn.style.opacity = wrapper.scrollLeft <= 0 ? "0.3" : "1";
+        nextBtn.style.opacity = wrapper.scrollLeft >= maxScroll ? "0.3" : "1";
+    });
+});
+</script>
 
 
 {% schema %}

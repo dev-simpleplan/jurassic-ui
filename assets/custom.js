@@ -53,7 +53,10 @@ document.addEventListener('click', (e) => {
 
         if (rawCompare > rawPrice) {
           const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
-          percentBadge.innerText = percentOff + '%';
+          
+          // ADDED THE HYPHEN HERE
+          percentBadge.innerText = '-' + percentOff + '%'; 
+          
           percentBadge.style.display = 'inline-block';
         } else {
           percentBadge.style.display = 'none';

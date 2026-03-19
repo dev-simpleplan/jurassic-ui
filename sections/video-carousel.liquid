@@ -16,31 +16,36 @@
           <div class="vci-item">
             <div class="vcitem-video">
               {% if block.settings.video_link != blank %}
-                {{ block.settings.video_link | video_tag: autoplay: false, loop: true, muted: false, controls: false, playsinline: true, class: 'img ab'
-                }}
-                <button class="video-control" aria-label="Video Play Button">
-                  <span class="video-control-play">
-                    <span class="video-control-symbol" aria-hidden="true"><img
-                        width="100%"
-                        height="auto"
-                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174"
-                        alt=""></span>
-                  </span>
-                  <span class="video-control-pause">
-                    <span class="video-control-symbol" aria-hidden="true"><img
-                        width="100%"
-                        height="auto"
-                        src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102"
-                        alt=""></span>
-                  </span>
-                </button>
-              {% endif %}
-              {% if section.settings.video_img != blank %}
+  {{ block.settings.video_link | video_tag: 
+      autoplay: false, 
+      loop: true, 
+      muted: false, 
+      controls: false, 
+      playsinline: true, 
+      class: 'img ab',
+      image_size: 'master'
+  }}
+  
+  <button class="video-control" aria-label="Video Play Button">
+    <span class="video-control-play">
+      <span class="video-control-symbol" aria-hidden="true">
+        <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt="">
+      </span>
+    </span>
+    <span class="video-control-pause">
+      <span class="video-control-symbol" aria-hidden="true">
+        <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt="">
+      </span>
+    </span>
+  </button>
+{% endif %}
+              {% if block.settings.video_img != blank %}
                 <img
                   width="100%"
-                  src="{{ block.settings.video_img |  img_url: 'master' }}"
-                  alt="{{ block.settings.video_img.title }}"
-                  class="img ab">
+                  src="{{ block.settings.video_img | img_url: 'master' }}"
+                  alt="{{ block.settings.video_img.alt | default: block.settings.video_img.title }}"
+                  class="img ab"
+                  loading="lazy">
               {% endif %}
             </div>
           </div>

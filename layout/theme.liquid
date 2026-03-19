@@ -265,12 +265,14 @@
 
           $('.vc-carousel .owl-carousel').owlCarousel({
       center: true,
-      autoplay: true,
+      autoplay: false,
       autoplayTimeout: 15000,
       items: 2,
       loop: true,
       margin: 10,
       dots: false,
+      onTranslated: playCenterVideo, // Fires after the slide moves
+  onInitialized: playCenterVideo, // Fires when the carousel first loads
       responsive: {
         0: {
           items: 2,
@@ -284,6 +286,18 @@
         }
       }
           });
+
+          function playCenterVideo() {
+  // 1. Pause all videos first
+  document.querySelectorAll(".vcitem-video video").forEach(v => v.pause());
+
+  // 2. Find the video inside the current center slide and play it
+  const centerVideo = document.querySelector(".owl-item.center video");
+  if (centerVideo) {
+    centerVideo.muted = true; // Required for browser autoplay permissions
+    centerVideo.play().catch(e => console.log("Autoplay prevented:", e));
+  }
+}
 
           $('.scs-slider .owl-carousel').owlCarousel({
       items: 1,

@@ -209,7 +209,7 @@
 
                           {% if selected_variant.compare_at_price > selected_variant.price %}
                             <span class="off-percent" data-price-off-percent>
-                              {{ selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round }}%
+                              -{{ selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round }}%
                             </span>
                           {% endif %}
                         </div>
@@ -1080,7 +1080,7 @@ class VariantSelector extends HTMLElement {
       if (compare && compare > price) {
         const saving = compare - price;
         const percentOff = Math.round((saving * 100) / compare);
-        percentBadge.textContent = `${percentOff}%`;
+        percentBadge.textContent = `-${percentOff}%`;
         percentBadge.style.display = 'inline-block';
       } else {
         percentBadge.style.display = 'none';

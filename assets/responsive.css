@@ -501,6 +501,9 @@
   .scrollsec-wrapper {
     display: none;
   }
+  .scroll-sec .scroll-nav {
+    display: none;
+  }
   section.scroll-sec {
     display: block;
     height: auto;

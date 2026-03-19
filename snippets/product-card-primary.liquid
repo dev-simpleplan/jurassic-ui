@@ -191,7 +191,7 @@
 
                 <span class="off-percent-badge" data-card-off-percent style="{% unless current_variant.compare_at_price > current_variant.price %}display:none;{% endunless %}">
                   {% if current_variant.compare_at_price > current_variant.price %}
-                    {{ current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round }}%
+                    -{{ current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round }}%
                   {% endif %}
                 </span>
               </div>

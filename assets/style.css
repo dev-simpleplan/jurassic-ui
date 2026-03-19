@@ -1745,6 +1745,7 @@ section.scroll-sec {
     align-items: stretch;
     height: 90vh;
     overflow: hidden;
+    position: relative;
 }
 .scrollsec-wrapper {
     display: flex;
@@ -1754,6 +1755,14 @@ section.scroll-sec {
     align-items: stretch;
     overflow: hidden;
     overflow-x: auto;
+    overflow-x: auto;
+    scroll-behavior: smooth; /* Essential for the "carousel" jump effect */
+    scroll-snap-type: x mandatory; /* Optional: makes slides snap into place */
+    -ms-overflow-style: none;  /* Hide scrollbar IE/Edge */
+    scrollbar-width: none;  /* Hide scrollbar Firefox */
+}
+.scrollsec-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
 }
 .scrollsec-slide {
     flex: 0 0 100vw;
@@ -1761,6 +1770,27 @@ section.scroll-sec {
     display: flex;
     /* align-items: stretch; */
     padding: 60px 0;
+    scroll-snap-align: start;
+}
+.scroll-nav {
+    position: absolute;
+    bottom: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    pointer-events: none;
+    left: 40px;
+}
+.scroll-arrow {
+    pointer-events: auto;
+    background: #fff;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 50%;
+    /* margin: 0 20px; */
 }
 .scrollsec-slide.slide_1 .scrollsecslide-in {}
 .scrollsec-slide.slide_1,
