@@ -201,7 +201,11 @@
           "type": "location_point",
           "settings": {
             "country_name": "Europe",
-            "manual_products": [],
+            "manual_products": [
+              "mango-osteen",
+              "mango-nam-dok-mai",
+              "wani-white-mango"
+            ],
             "fruit_image": "shopify://shop_images/fruit-appear-2.png",
             "top_position": 30,
             "left_position": 50
@@ -211,7 +215,12 @@
           "type": "location_point",
           "settings": {
             "country_name": "Asia",
-            "manual_products": [],
+            "manual_products": [
+              "date-barhi",
+              "chirimoya",
+              "durian-mon-thong-peeled",
+              "durian-mon-thong-whole"
+            ],
             "fruit_image": "shopify://shop_images/fruit-appear-4.png",
             "top_position": 35,
             "left_position": 68
@@ -221,7 +230,12 @@
           "type": "location_point",
           "settings": {
             "country_name": "America",
-            "manual_products": [],
+            "manual_products": [
+              "avocado-fuerte",
+              "avocado-bacon",
+              "cempedak",
+              "chirimoya"
+            ],
             "fruit_image": "shopify://shop_images/fruit-appear-3.png",
             "top_position": 27,
             "left_position": 14
@@ -231,7 +245,11 @@
           "type": "location_point",
           "settings": {
             "country_name": "Africa",
-            "manual_products": [],
+            "manual_products": [
+              "mangosteen",
+              "mango-osteen",
+              "mango-nam-dok-mai"
+            ],
             "fruit_image": "shopify://shop_images/fruit-appear-1.png",
             "top_position": 42,
             "left_position": 50
