@@ -673,66 +673,6 @@
             </div>
           </div>
        </div>
-      {% comment %} Seasonal Information {% endcomment %}
-      {% comment %} <div class="pa-item">
-        <div class="pa-ques-wrap">
-          <div class="pa-ques">
-            {{ section.settings.seasonal_heading }}
-          </div>
-          <div class="pa-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none">
-              <path
-                d="M12 8V16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-horizontal"
-                stroke-linejoin="round" />
-              <path
-                d="M8 12H16"
-                stroke="#202322"
-                stroke-width="2"
-                class="plus-vertical"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-        </div>
-        <div class="pa-div">
-          <div class="pa-seasons">
-            <div class="pas-month">
-              {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
-              {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
-              {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
-              {%- for month in month_names -%}
-                {%- assign trimmed_month = month | strip -%}
-                <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
-                  <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
-                  <div class="month-pill"></div>
-                </div>
-              {%- endfor -%}
-            </div>
-            <div class="pas-country">
-              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              <div class="pas-shipping">
-                {% if product.metafields.custom.shipped_by == 'air' %}
-                  {% render 'air' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'sea' %}
-                  {% render 'sea' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'road' %}
-                  {% render 'road' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
       {% comment %} Taste Profile {% endcomment %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
@@ -838,7 +778,66 @@
           </div>
         </div>
       </div>
-      
+      {% comment %} Seasonal Information {% endcomment %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ section.settings.seasonal_heading }}
+          </div>
+          <div class="pa-icon">
+            {%- render 'product-accordian-icon' -%}
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="pa-seasons">
+            {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
+            {% comment %} 
+              We split the metafield string and then re-join/split to ensure 
+              every single month in the array is trimmed of extra spaces.
+            {% endcomment %}
+            {%- assign high_months_raw = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
+            {%- assign low_months_raw = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
+
+            <div class="pas-month">
+              {%- for month in month_names -%}
+                {%- assign current_month = month | strip -%}
+                
+                {%- assign is_high = false -%}
+                {%- for h_month in high_months_raw -%}
+                  {%- assign trimmed_h = h_month | strip -%}
+                  {%- if trimmed_h == current_month -%}{%- assign is_high = true -%}{%- endif -%}
+                {%- endfor -%}
+
+                {%- assign is_low = false -%}
+                {%- for l_month in low_months_raw -%}
+                  {%- assign trimmed_l = l_month | strip -%}
+                  {%- if trimmed_l == current_month -%}{%- assign is_low = true -%}{%- endif -%}
+                {%- endfor -%}
+
+                <div class="month-in{% if is_high %} high-season{% elsif is_low %} low-season{% endif %}">
+                  <p>{{ current_month | slice: 0, 3 }}</p>
+                  <div class="month-pill"></div>
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="pas-country">
+              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+              <div class="pas-shipping">
+                {% if product.metafields.custom.shipped_by == 'air' %}
+                  {% render 'air' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% elsif product.metafields.custom.shipped_by == 'sea' %}
+                  {% render 'sea' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% elsif product.metafields.custom.shipped_by == 'road' %}
+                  {% render 'road' %}
+                  Shipped by {{ product.metafields.custom.shipped_by }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
