@@ -2137,6 +2137,7 @@ section.scroll-sec {
 .dt-in.one {
     left: 70px;
     top: 160px;
+    opacity: 1;
 }
 .dt-in.two {
     left: 70px;
@@ -2147,7 +2148,7 @@ section.scroll-sec {
     top: 250px;
 }
 .dt-in.four {
-    right: 160px;
+    right: 220px;
     max-width: 100%;
     bottom: 50px;
 }

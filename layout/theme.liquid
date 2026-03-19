@@ -189,58 +189,64 @@
 
             // --- GSAP Logic Starts ---
             if (window.gsap && window.ScrollTrigger) {
-              gsap.registerPlugin(ScrollTrigger);
-              const mm = gsap.matchMedia();
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
 
-              mm.add("(min-width: 993px)", () => {
-                const imageText = document.querySelector(".image-text-scroll");
-                if (!imageText) return;
+  mm.add("(min-width: 993px)", () => {
+    const imageText = document.querySelector(".image-text-scroll");
+    if (!imageText) return;
 
-                gsap.set(
-                  ["#image1", "#image2", "#image3", ".dt-in.one", ".dt-in.two", ".dt-in.three", ".dt-in.four"],
-                  { opacity: 0 }
-                );
+    // 1. ONLY hide the items that should appear LATER
+    // We leave #image1 and .dt-in.one visible by default
+    gsap.set(
+      ["#image3", ".dt-in.three", "#image2", ".dt-in.two", ".dt-in.four"],
+      { opacity: 0 }
+    );
 
-                const tl = gsap.timeline({
-                  scrollTrigger: {
-                    trigger: imageText,
-                    start: "top top",
-                    end: "+=150%",
-                    pin: true,
-                    scrub: 1,
-                    snap: {
-                      snapTo: "labels",
-                      duration: { min: 0.2, max: 0.5 },
-                      delay: 0.5,
-                      ease: "none"
-                    }
-                  }
-                });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: imageText,
+        start: "top top",
+        end: "+=200%", 
+        pin: true,
+        scrub: 1,
+        snap: {
+          snapTo: "labels",
+          duration: { min: 0.2, max: 0.5 },
+          delay: 0.1,
+          ease: "power1.inOut"
+        }
+      }
+    });
 
-                tl.addLabel("step1")
-                  .to("#image1", { opacity: 1, duration: 0.8 })
-                  .addLabel("step2")
-                  .to(".dt-in.one", { opacity: 1, duration: 0.8 })
-                  .addLabel("step3")
-                  .to("#image3", { opacity: 1, duration: 0.8 })
-                  .addLabel("step4")
-                  .to(".dt-in.three", { opacity: 1, duration: 0.8 })
-                  .addLabel("step5")
-                  .to("#image2", { opacity: 1, duration: 0.8 })
-                  .addLabel("step6")
-                  .to(".dt-in.two", { opacity: 1, duration: 0.8 })
-                  .addLabel("step7")
-                  .to(".dt-in.four", { opacity: 1, duration: 0.8 });
+    // We start at Label 1 with the first items already visible
+    tl.addLabel("step1")
+      
+      // 2. Reveal Second Set (Image 3 + Text Three) TOGETHER
+      // Based on your HTML, Image 3 is "REAL"
+      .to("#image3", { opacity: 1, duration: 0.8 }, "+=0.2")
+      .to(".dt-in.three", { opacity: 1, duration: 0.8 }, "<") 
+      .addLabel("step2")
+      
+      // 3. Reveal Third Set (Image 2 + Text Two) TOGETHER
+      // Based on your HTML, Image 2 is "ROAR"
+      .to("#image2", { opacity: 1, duration: 0.8 }, "+=0.2")
+      .to(".dt-in.two", { opacity: 1, duration: 0.8 }, "<")
+      .addLabel("step3")
+      
+      // 4. Reveal Final Set (Button)
+      .to(".dt-in.four", { opacity: 1, duration: 0.8 }, "+=0.2")
+      .addLabel("step4");
 
-                window.addEventListener("resize", ScrollTrigger.refresh);
+    window.addEventListener("resize", ScrollTrigger.refresh);
 
-                return () => {
-                  window.removeEventListener("resize", ScrollTrigger.refresh);
-                  tl.scrollTrigger && tl.scrollTrigger.kill();
-                  tl.kill();
-                };
-              });
-            }
+    return () => {
+      window.removeEventListener("resize", ScrollTrigger.refresh);
+      tl.scrollTrigger && tl.scrollTrigger.kill();
+      tl.kill();
+    };
+  });
+}
           });
       </script>
 
