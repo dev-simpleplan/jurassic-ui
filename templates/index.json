@@ -153,6 +153,30 @@
     "all-categories": {
       "type": "category-grid-sec",
       "blocks": {
+        "collection_block_YFTwzL": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "mangoes"
+          }
+        },
+        "collection_block_NTCMQ8": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "honey"
+          }
+        },
+        "collection_block_9G6UBr": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "all-fruits"
+          }
+        },
+        "collection_block_fm8maA": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "dates"
+          }
+        },
         "collection_block_EDKD9p": {
           "type": "collection_block",
           "settings": {
@@ -182,42 +206,18 @@
           "settings": {
             "collection": "fruit"
           }
-        },
-        "collection_5": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "fruit-sets-gifts"
-          }
-        },
-        "collection_6": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "dried-fruit"
-          }
-        },
-        "collection_7": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "fine-food"
-          }
-        },
-        "collection_8": {
-          "type": "collection_block",
-          "settings": {
-            "collection": "fruit"
-          }
         }
       },
       "block_order": [
+        "collection_block_YFTwzL",
+        "collection_block_NTCMQ8",
+        "collection_block_9G6UBr",
+        "collection_block_fm8maA",
         "collection_block_EDKD9p",
         "collection_1",
         "collection_2",
         "collection_3",
-        "collection_4",
-        "collection_5",
-        "collection_6",
-        "collection_7",
-        "collection_8"
+        "collection_4"
       ],
       "settings": {
         "heading": "All Categories"
