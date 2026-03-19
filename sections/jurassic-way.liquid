@@ -45,8 +45,10 @@
   $(function(){
     var $carousel = $('.jurassic-way .jw-carousel');
         $carousel.slick({
-            vertical: true,
-            verticalSwiping: true,
+            fade: true, // This enables the fade effect
+            cssEase: 'linear',
+            vertical: false,
+            verticalSwiping: false,
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: true,

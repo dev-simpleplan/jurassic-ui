@@ -28,47 +28,51 @@
 <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Force scroll to top on reload to prevent calculation errors
+    // Force scroll to top on reload
     window.onbeforeunload = function() {
         window.scrollTo(0, 0);
     };
 
-    let mm = gsap.matchMedia();
+    // Use window.onload to ensure images are fully rendered before GSAP math starts
+    window.addEventListener("load", () => {
+        let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
-        const cards = gsap.utils.toArray('.scroll-image');
-        const wrapper = document.querySelector(".imagescroll");
+        mm.add("(min-width: 768px)", () => {
+            const cards = gsap.utils.toArray('.scroll-image');
+            const wrapper = document.querySelector(".imagescroll");
+            
+            if (!wrapper || cards.length === 0) return;
 
-        // 2. Wrap your sets in a context or ensure they are ready before the TL
-        gsap.set('.index-1', { yPercent: 20, rotate: -5 });
-        gsap.set('.index-2', { yPercent: 60, rotate: 8 });
-        gsap.set('.index-3', { yPercent: 40, rotate: -5 });
+            // Initial state set
+            gsap.set('.index-1', { yPercent: 20, rotate: -5 });
+            gsap.set('.index-2', { yPercent: 60, rotate: 8 });
+            gsap.set('.index-3', { yPercent: 40, rotate: -5 });
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: wrapper,
-                start: 'top top',
-                // 3. Using a relative value like '+=200%' gives more breathing room for the animation
-                end: '+=200%', 
-                scrub: 1, // Adding a small number (1) smooths out the "catch up" on reload
-                pin: true,
-                pinSpacing: true,
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-            }
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: 'top top',
+                    end: '+=100%', 
+                    scrub: 0.5, 
+                    pin: true,
+                    pinSpacing: true,
+                    invalidateOnRefresh: true, // Re-calculates if window is resized
+                    anticipatePin: 1, // Prevents slight jump when pinning starts
+                }
+            });
+
+            cards.forEach((card) => {
+                tl.to(card, {
+                    yPercent: 0,
+                    rotate: 0,
+                    ease: 'none', 
+                }, 0);
+            });
+
+            tl.from('.gallery__grid', { yPercent: 6, ease: 'none' }, 0);
         });
 
-        cards.forEach((card, i) => {
-            tl.to(card, {
-                yPercent: 0,
-                rotate: 0,
-                ease: 'none', // Use 'none' for scrubbed timelines to keep it tied to scroll
-            }, 0);
-        });
-
-        tl.from('.gallery__grid', { yPercent: 6, ease: 'none' }, 0);
-
-        // 4. Force a refresh after everything is initialized
+        // Final safety refresh
         ScrollTrigger.refresh();
     });
 </script>
