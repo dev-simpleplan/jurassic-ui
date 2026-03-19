@@ -1,26 +1,32 @@
-<!-- Swiper CSS and JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Preload Product Data for All Collections (before main JS) -->
 <script>
-  window.collectionProductsData = {
+  window.locationProductsData = {
     {% for block in section.blocks %}
-      "{{ block.settings.collection.handle }}": [
-        {% assign collection = collections[block.settings.collection.handle] %}
-        {% if collection.products_count > 0 %}
-          {% for product in collection.products %}
+      {% if block.settings.manual_products != blank %}
+        "{{ block.settings.country_name | handleize }}": [
+          {% for product in block.settings.manual_products %}
             {
+              "id": {{ product.selected_or_first_available_variant.id | json }},
               "title": {{ product.title | json }},
               "image_url": {{ product.featured_image | img_url: 'medium' | json }},
               "product_url": {{ product.url | json }},
-              "price": {{ product.price | money | json }},
-              "vendor": {{ product.vendor | json }},
-              "tags": {{ product.tags | json }}
+              "tags": {{ product.tags | json }},
+              "certificates": [
+                {% if product.metafields.custom.certificate != blank %}
+                  {% for item in product.metafields.custom.certificate.value %}
+                    {
+                      "image": {{ item.badge_image | img_url: 'master' | json }},
+                      "name": {{ item.display_name | json }}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                {% endif %}
+              ]
             }{% unless forloop.last %},{% endunless %}
           {% endfor %}
-        {% endif %}
-      ]{% unless forloop.last %},{% endunless %}
+        ]{% unless forloop.last %},{% endunless %}
+      {% endif %}
     {% endfor %}
   };
 </script>
@@ -47,11 +53,9 @@
                     <div class="cards-slider">
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper">
-                              <!-- Slides dynamically inserted here -->
-                            </div>
+                              </div>
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
-                            {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -63,12 +67,10 @@
                 </div>
                 <div class="map-points">
                   {% for block in section.blocks %}
-                    {% comment %} Normalize the name for matching {% endcomment %}
-                    {% assign country_slug = block.settings.country_name | downcase | escape %}
-                    
+                    {% assign country_slug = block.settings.country_name | handleize %}
                     <div class="map-items{% if forloop.first %} active{% endif %}" 
                         style="top:{{ block.settings.top_position }}%;left:{{ block.settings.left_position }}%" 
-                        data-country="{{ country_slug }}"> {% comment %} THIS LINE IS CRITICAL {% endcomment %}
+                        data-country="{{ country_slug }}">
                         
                         <div class="dot"></div>
                         <div class="mapitem-image">
@@ -85,65 +87,29 @@
     </div>
 </section>
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+<script>
+let swiperInstance = null;
+=======
+>>>>>>> Stashed changes
 
 <script> 
 // 1. GLOBAL SCOPE VARIABLES & UTILITIES
 window.locationProductsData = window.locationProductsData || {};
 let swiperInstance = null; // Renamed to avoid conflicts with the Swiper library name
+>>>>>>> 3377220a4f422e4e246768b7be3b3772533ad187
 
-// 2. PRODUCT DATA PRELOAD
-{% for product in collections.all.products %}
-  {% assign country_obj = product.metafields.custom.country_of_origin.value %}
-  {% assign country_name = country_obj.country_name | default: country_obj.name | default: country_obj | downcase | strip %}
-  
-  {% if country_name != blank %}
-    if (!window.locationProductsData["{{ country_name }}"]) {
-      window.locationProductsData["{{ country_name }}"] = [];
-    }
-
-    {% comment %} Pre-verify certificates to avoid empty arrays {% endcomment %}
-    {% assign has_certs = false %}
-    {% if product.metafields.custom.certificate != blank %}
-      {% assign has_certs = true %}
-    {% endif %}
-
-    window.locationProductsData["{{ country_name }}"].push({
-      "id": {{ product.selected_or_first_available_variant.id | json }},
-      "title": {{ product.title | json }},
-      "image_url": {{ product.featured_image | img_url: 'medium' | json }},
-      "product_url": {{ product.url | json }},
-      "tags": {{ product.tags | json }},
-      "certificates": [
-        {% if has_certs %}
-          {% for item in product.metafields.custom.certificate.value %}
-            {
-              "image": {{ item.badge_image | img_url: 'master' | json }},
-              "name": {{ item.display_name | json }}
-            }{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        {% endif %}
-      ]
-    });
-  {% endif %}
-{% endfor %}
-
-// 3. UI RENDER FUNCTIONS
 function renderProductCard(product) {
-  // Safe Check: Only generate HTML if certificates exist and are not empty
   let certificateHtml = '';
-  
   if (product.certificates && product.certificates.length > 0) {
     const certItems = product.certificates.map(cert => `
       <div class="fc_organic_auth">
         <img src="${cert.image}" alt="${cert.name}" class="img_sizing" onerror="this.style.display='none'">
       </div>
     `).join('');
-
-    certificateHtml = `
-      <div class="certificates-wrapper" style="display:flex; gap:5px; z-index:10;">
-        ${certItems}
-      </div>
-    `;
+    certificateHtml = `<div class="certificates-wrapper" style="display:flex; gap:5px; z-index:10;">${certItems}</div>`;
   }
 
   return `
@@ -151,26 +117,18 @@ function renderProductCard(product) {
       <a href="${product.product_url}">
         <div class="ri-img" style="position:relative;">
           <img src="${product.image_url}" alt="${product.title}" class="product-card__image">
-          
           ${product.tags && product.tags.includes('Best Seller') ? `
-            <div class="fc_bestsell_tags" style="position:absolute;top:15px;right:0px;z-index:9">
-              <span>Bestseller</span>
-            </div>
+            <div class="fc_bestsell_tags" style="position:absolute;top:15px;right:0px;z-index:9"><span>Bestseller</span></div>
           ` : ''}
-
           ${certificateHtml} 
         </div>
       </a>
-      <div class="ri-txt">
-        <p class="rit-title">${product.title}</p>
-      </div>
+      <div class="ri-txt"><p class="rit-title">${product.title}</p></div>
       <div class="ri-form">
-        <form action="/cart/add" method="post" enctype="multipart/form-data">
+        <form action="/cart/add" method="post">
           <input type="hidden" name="id" value="${product.id}">
           <input type="hidden" name="quantity" value="1">
-          <div class="fc_add_to_cart">
-            <button type="submit" class="add-to-cart">Add to Cart</button>
-          </div>
+          <div class="fc_add_to_cart"><button type="submit" class="add-to-cart">Add to Cart</button></div>
         </form>
       </div>
     </div>
@@ -190,17 +148,15 @@ function initializeSwiper() {
   });
 }
 
-function fetchProductsByCountry(countryName) {
-  const name = countryName.toLowerCase();
-  const products = window.locationProductsData[name] || [];
+function fetchProductsByCountry(countrySlug) {
+  const products = window.locationProductsData[countrySlug] || [];
   const swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
-  
   if (!swiperWrapper) return;
   
   swiperWrapper.innerHTML = "";
 
   if (products.length === 0) {
-    swiperWrapper.innerHTML = `<p style="padding:20px">No products found from <b>${countryName}</b></p>`;
+    swiperWrapper.innerHTML = `<p style="padding:20px">No products assigned to this location.</p>`;
   } else {
     products.forEach(product => {
       const slide = document.createElement('div');
@@ -210,41 +166,31 @@ function fetchProductsByCountry(countryName) {
     });
   }
 
-  if (swiperInstance) {
-    swiperInstance.destroy(true, true);
-  }
+  if (swiperInstance) swiperInstance.destroy(true, true);
   initializeSwiper();
 }
 
-// 4. EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', function () {
-  // Map Points Click Listener
   const mapPoints = document.querySelector('.map-points');
   if (mapPoints) {
     mapPoints.addEventListener('click', function(e) {
       const item = e.target.closest('.map-items');
       if (!item) return;
 
-      const country = item.getAttribute('data-country');
-      if (country) {
-        fetchProductsByCountry(country);
-        
-        // Active State UI
-        document.querySelectorAll('.map-items').forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-      }
+      const countrySlug = item.getAttribute('data-country');
+      fetchProductsByCountry(countrySlug);
+      
+      document.querySelectorAll('.map-items').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
     });
   }
 
-  // Load the first country from the blocks on initial load
   const firstItem = document.querySelector('.map-items');
   if (firstItem) {
-    const initialCountry = firstItem.getAttribute('data-country');
-    fetchProductsByCountry(initialCountry);
+    fetchProductsByCountry(firstItem.getAttribute('data-country'));
   }
 });
 </script>
-
 
 {% schema %}
 {
@@ -262,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
       "type": "text",
       "id": "subheading",
       "label": "Section subheading",
-      "default": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
+      "default": "Follow the trail of flavor across the globe."
     }
   ],
   "blocks": [
@@ -273,8 +219,19 @@ document.addEventListener('DOMContentLoaded', function () {
         {
           "type": "text",
           "id": "country_name",
-          "label": "Country Name",
-          "info": "Must match the 'Country Of Origin' metafield value exactly (e.g. Thailand)"
+          "label": "Country/Location Name"
+        },
+        {
+          "type": "product_list",
+          "id": "manual_products",
+          "label": "Select Products for this Location",
+          "limit": 20
+        },
+        {
+          "type": "product_list",
+          "id": "manual_products",
+          "label": "Select Products for this Location",
+          "limit": 20
         },
         {
           "type": "product_list",
@@ -290,247 +247,16 @@ document.addEventListener('DOMContentLoaded', function () {
         {
           "type": "range",
           "id": "top_position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Top Position",
-          "default": 0
+          "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Top Position", "default": 50
         },
         {
           "type": "range",
           "id": "left_position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Left Position",
-          "default": 0
+          "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Left Position", "default": 50
         }
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "map",
-      "settings": {}
-    }
-  ]
+  "presets": [{ "name": "map" }]
 }
 {% endschema %}
-
-{% comment %} <script>
-    return `
-      <div class="product-card-primary">
-  <div class="fruits_card">
-    <div class="fc_top">
-      {% assign images = product.images %}
-
-      <div class="fc_image">
-        {% if images.size > 0 %}
-          <img
-            src="${images.first}"
-            alt="{{ product.title | escape }}"
-            class="img_sizing primary-img">
-
-          {% if images.size > 1 %}
-            <img
-              src="{{ images[1] | img_url: 'master' }}"
-              alt="${product.title}"
-              class="img_sizing hover-img">
-          {% endif %}
-        {% else %}
-          <img
-            src="{{ 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/placeholder.jpg?v=1760532683' }}"
-            alt="No Image Available"
-            class="img_sizing primary-img">
-        {% endif %}
-      </div>
-
-      {% assign product_tags = product.tags | downcase %}
-      {% if product.tags.size > 0 %}
-        <div class="fc_category_tags">
-          {% for tag in product.tags %}
-            {% unless tag == 'Best Seller' %}
-              <span>{{ tag }}</span>
-            {% endunless %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% if product.tags contains 'Best Seller' %}
-        <div class="fc_bestsell_tags">
-          <span>Bestseller</span>
-        </div>
-      {% endif %}
-
-      {% if product.metafields.custom.certificate %}
-        {% assign certificate = product.metafields.custom.certificate.value %}
-        {% for item in product.metafields.custom.certificate.value %}
-          <div class="fc_organic_auth">
-            <img
-              src="{{ item.badge_image | img_url:'master' }}"
-              alt="{{ item.display_name }}"
-              class="img_sizing">
-          </div>
-        {% endfor %}
-      {% endif %}
-    </div>
-
-    <div class="fc_bottom_outer">
-      <div class="fc_bottom">
-          
-          <div class="fc_bottom_top">
-              <div class="star_review">
-                  <div class="star_rating">
-                      <img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Frame_427320495.svg?v=1760528002" alt="Star Rating">
-                  </div>
-                  <div class="rating_info">
-                      <p>4.9 (200)</p>
-                      {% if product.metafields.custom.country_of_origin %}
-                      <span class="dot_seperator"></span>
-                      <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-                      {% endif %}
-                  </div>
-              </div>
-              <p class="fc_product_title">
-                  <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
-              </p>
-          </div>
-
-          <div class="fc_bottom_bottom">
-              <div class="fc_bottom_center">
-                <div class="fc_variant_outer">
-                    <div class="fc_variant_wrap">
-                        {% for variant in product.variants %}
-                        <div class="fc_variant_item {% if forloop.first %}active{% endif %}" data-id="{{ variant.id }}" data-price="{{ variant.price | money }}" data-compare="{{ variant.compare_at_price | money }}" data-inventory="{{ variant.inventory_quantity }}" data-image="{{ variant.image | img_url: 'master' }}">
-                            <p class="weight">
-                                {{ variant.title }}
-                                {% if variant.compare_at_price > variant.price %}
-                                <span>
-                                    {{
-                                variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
-                              -}}
-                                    % Off
-                                </span>
-                                {% endif %}
-                            </p>
-                            <p class="quantity">
-                                {% if variant.metafields.custom.pieces %}
-                                {{ variant.metafields.custom.pieces }} Piece
-                                {% else %}
-                                by weight
-                                {% endif %}
-                            </p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="selected_variant_dropdown"></div>
-                </div>
-            </div>
-
-            <div class="fc_bottom_end">
-                <div class="fc_price_weight">
-                    {% assign current_variant = product.selected_or_first_available_variant %}
-                    {% if current_variant.compare_at_price > current_variant.price %}
-                    <p>
-                        <strike id="compare_price">{{ current_variant.compare_at_price | money }}</strike>
-                        <span class="selling_price">{{ current_variant.price | money }}</span>
-                    </p>
-                    {% else %}
-                    <p>
-                        <span class="selling_price">{{ current_variant.price | money }}</span>
-                    </p>
-                    {% endif %}
-                    {% assign current_variant = product.selected_or_first_available_variant %}
-                    <p class="fc_weight">
-                        {{ product.metafields.custom.per_kg_price | times: 100 | money_with_currency | remove: '.00' }}/Kg
-                    </p>
-                </div>
-                <div class="fc_add_to_cart_outer">
-                    <form action="/cart/add" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="{{ current_variant.id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <div class="fc_add_to_cart">
-                            <span class="remove_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.09961 11.3408H17.8457" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                            <button type="submit" id="add-to-cart" {% unless product.available %} {% endunless %}>
-                                {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
-                            </button>
-                            <span class="add_product">
-                                <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.5645 4.96582V17.7119" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M5.19727 11.3408H17.9434" stroke="#151515" stroke-width="1.82087" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-                <div class="fc_trust_text">
-                    <p>Only {{ current_variant.inventory_quantity }} Left</p>
-                    <span class="dot_seperator"></span>
-                    <p>Ships in 24 hrs</p>
-                    <span class="dot_seperator"></span>
-                    <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
-                </div>
-            </div>
-          </div>
-
-
-      </div>
-  </div>
-  </div>
-</div>`;
-
-  var swiper;
-
-  function initializeSwiper() {
-    swiper = new Swiper(".mySwiper", {
-      effect: "cards",
-      grabCursor: true,
-      slidesPerView: 'auto'
-    });
-  }
-
-  function fetchProductsAndUpdateSwiper(collectionHandle) {
-    var products = window.collectionProductsData[collectionHandle] || [];
-    if (swiper) {
-      swiper.destroy(true, true);
-      swiper = null;
-    }
-    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
-    swiperWrapper.innerHTML = "";
-
-    if (products.length === 0) {
-      swiperWrapper.innerHTML = '<p style="padding:20px">No products found in this collection.</p>';
-    } else {
-      products.forEach(function(product) {
-        var slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        slide.innerHTML = renderProductCard(product);
-        swiperWrapper.appendChild(slide);
-      });
-    }
-    initializeSwiper();
-  }
-
-  // Setup initial slider with first collection (if any)
-  var firstCollection = Object.keys(window.collectionProductsData)[0];
-  if (firstCollection) {
-    fetchProductsAndUpdateSwiper(firstCollection);
-  } else {
-    // No collections configured
-    var swiperWrapper = document.querySelector('.mySwiper .swiper-wrapper');
-    swiperWrapper.innerHTML = '<p style="padding:20px">No collections configured yet.</p>';
-  }
-
-  // Event delegation for all collection images
-  document.querySelector('.map-points').addEventListener('click', function(e) {
-    if (e.target.classList.contains('collection-img')) {
-      var collectionHandle = e.target.dataset.collectionHandle;
-      fetchProductsAndUpdateSwiper(collectionHandle);
-    }
-</script> {% endcomment %}
