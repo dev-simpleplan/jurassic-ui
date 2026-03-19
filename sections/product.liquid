@@ -812,7 +812,8 @@
                 <p class="tp-profile">Smooth</p>
                 <div class="tp-pill-in sourness">
                   {% for i in (1..5) %}
-                    <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
+                    {% comment %} Changed sweetness_limit to sourness_limit below {% endcomment %}
+                    <div class="taste-pill {% if i <= sourness_limit %}active{% endif %}"></div>
                   {% endfor %}
                 </div>
                 <p class="tp-profile">Zesty</p>
