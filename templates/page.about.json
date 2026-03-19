@@ -197,10 +197,41 @@
     "map": {
       "type": "map",
       "blocks": {
+        "location_point_F8AmCb": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Europe",
+            "manual_products": [],
+            "fruit_image": "shopify://shop_images/fruit-appear-2.png",
+            "top_position": 30,
+            "left_position": 50
+          }
+        },
+        "location_point_JAteTd": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "Asia",
+            "manual_products": [],
+            "fruit_image": "shopify://shop_images/fruit-appear-4.png",
+            "top_position": 35,
+            "left_position": 68
+          }
+        },
+        "location_point_YHJFwV": {
+          "type": "location_point",
+          "settings": {
+            "country_name": "America",
+            "manual_products": [],
+            "fruit_image": "shopify://shop_images/fruit-appear-3.png",
+            "top_position": 27,
+            "left_position": 14
+          }
+        },
         "location_point_LMQBiB": {
           "type": "location_point",
           "settings": {
             "country_name": "Africa",
+            "manual_products": [],
             "fruit_image": "shopify://shop_images/fruit-appear-1.png",
             "top_position": 42,
             "left_position": 50
@@ -208,6 +239,9 @@
         }
       },
       "block_order": [
+        "location_point_F8AmCb",
+        "location_point_JAteTd",
+        "location_point_YHJFwV",
         "location_point_LMQBiB"
       ],
       "settings": {

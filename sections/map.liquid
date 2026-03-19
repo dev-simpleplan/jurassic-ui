@@ -86,7 +86,7 @@
 </section>
 
 
-<script>
+<script> 
 // 1. GLOBAL SCOPE VARIABLES & UTILITIES
 window.locationProductsData = window.locationProductsData || {};
 let swiperInstance = null; // Renamed to avoid conflicts with the Swiper library name
@@ -275,6 +275,12 @@ document.addEventListener('DOMContentLoaded', function () {
           "id": "country_name",
           "label": "Country Name",
           "info": "Must match the 'Country Of Origin' metafield value exactly (e.g. Thailand)"
+        },
+        {
+          "type": "product_list",
+          "id": "manual_products",
+          "label": "Select Products for this Location",
+          "limit": 20
         },
         {
           "type": "image_picker",
