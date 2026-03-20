@@ -230,7 +230,7 @@
   will-change: transform;
   user-select: none;
   position: relative;
-  z-index: 9999;
+  z-index: 9;
 }
 .fc_variant_wrap.active {
   cursor: grabbing;

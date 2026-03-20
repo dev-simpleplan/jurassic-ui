@@ -115,6 +115,7 @@
           class="dropdown-item"
           data-id="{{ variant.id }}"
           data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
+          data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
           data-unit="{% if variant.unit_price_measurement %}{{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}{% endif %}"
           data-inventory="{{ variant.inventory_quantity }}"
         >

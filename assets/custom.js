@@ -4,7 +4,6 @@ document.addEventListener('click', (e) => {
 
   // 1. Toggle Open/Close
   if (dropdownWrap && !item) {
-    // Close other open dropdowns
     document.querySelectorAll('.wrapper-dropdown.active').forEach(d => {
       if (d !== dropdownWrap) d.classList.remove('active');
     });
@@ -18,62 +17,70 @@ document.addEventListener('click', (e) => {
     const card = item.closest('.product-card-primary');
     const display = parent.querySelector('.selected-display');
     const hiddenInput = parent.querySelector('.custom-variant-id');
-    // Get the Title and Pieces from the clicked item
+    
+    // Update Display Text in Dropdown
     const titleText = item.querySelector('.item-title').innerText;
     const priceText = item.querySelector('.pull-right').innerText;
-
-    // Update Dropdown Visuals
     display.innerText = `${titleText} — ${priceText}`;
     parent.classList.remove('active');
 
-    // Extract Data
+    // Extract Data from LI
     const { id, price, compare, unit, inventory } = item.dataset;
 
-    // Update Hidden Form ID
     if (hiddenInput) hiddenInput.value = id;
 
-    // --- YOUR EXISTING PRICE/INVENTORY LOGIC ---
+    // --- UPDATE PRICE & DISCOUNT UI ---
     const priceWrap = card.querySelector('.fc_price_weight');
     if (priceWrap) {
       const sellingPriceEl = priceWrap.querySelector('.selling_price');
       const compareEl = priceWrap.querySelector('#compare_price');
-      const unitEl = card.querySelector('.fc_weight');
+      const unitEl = priceWrap.querySelector('.fc_weight');
       const percentBadge = card.querySelector('[data-card-off-percent]');
-      const unitPriceEl = card.querySelector('.fc_weight');
 
+      // Update Selling Price
       if (sellingPriceEl) sellingPriceEl.innerText = price;
-      if (unitPriceEl) {
-        // If the unit data is empty (because we fixed the Liquid above), hide the element
+
+      // Update Unit Price (per kg) logic
+      if (unitEl) {
         if (unit && unit.trim() !== "") {
-          unitPriceEl.innerText = unit;
-          unitPriceEl.style.display = 'block';
+          unitEl.innerText = unit;
+          unitEl.style.display = 'inline-block';
         } else {
-          unitPriceEl.style.display = 'none'; // Hides it if it's just repeating the main price
+          unitEl.style.display = 'none';
         }
       }
-      if (unitEl) unitEl.innerText = unit;
 
-      if (compare && compare !== "") {
+      // Handle Sale/Discount Logic
+      if (compare && compare.trim() !== "" && compare !== price) {
+        // We have a sale
         if (sellingPriceEl) sellingPriceEl.classList.remove('withoutbg');
+        
         if (compareEl) {
           compareEl.innerText = compare;
           compareEl.style.display = 'inline-block';
         }
+
         if (percentBadge) {
           const rawPrice = parseFloat(price.replace(/[^\d.]/g, ''));
           const rawCompare = parseFloat(compare.replace(/[^\d.]/g, ''));
-          const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
-          percentBadge.innerText = '-' + percentOff + '%';
-          percentBadge.style.display = 'inline-block';
+          
+          if (rawCompare > rawPrice) {
+            const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
+            percentBadge.innerText = '-' + percentOff + '%';
+            percentBadge.style.display = 'inline-block';
+          } else {
+            percentBadge.style.display = 'none';
+          }
         }
       } else {
+        // NO SALE - This is the fix you needed
         if (sellingPriceEl) sellingPriceEl.classList.add('withoutbg');
         if (compareEl) compareEl.style.display = 'none';
         if (percentBadge) percentBadge.style.display = 'none';
       }
     }
 
-    // Update Add to Cart Button & Inventory
+    // Update Inventory & Add to Cart
     const trustText = card.querySelector('.fc_trust_text p:first-child');
     if (trustText) {
       trustText.innerText = `Only ${inventory} Left`;
@@ -82,6 +89,7 @@ document.addEventListener('click', (e) => {
 
     const addBtn = card.querySelector('.add-to-cart-btn');
     const addFormInput = card.querySelector('.product-card-add-form input[name="id"]');
+    
     if (addFormInput) addFormInput.value = id;
     
     if (addBtn) {
