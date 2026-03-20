@@ -5204,3 +5204,127 @@ section.imagescroll {
         height: 90%;
     }
 }
+
+
+.wrapper-dropdown {
+    position: relative;
+    width: 100%;
+    padding: 12px 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-out;
+}
+.wrapper-dropdown .selected-display {
+    font-size: 14px;
+}
+.wrapper-dropdown:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -3px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #333 transparent;
+}
+
+.wrapper-dropdown.active {
+    border-radius: 8px 8px 0 0;
+    background: #f8f8f8;
+}
+
+.wrapper-dropdown.active:after {
+    border-width: 0 6px 6px 6px;
+}
+
+.wrapper-dropdown .dropdown {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    right: 0;
+    width: calc(100% + 2px);
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    list-style: none;
+    transition: all 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+    z-index: 99;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    
+}
+
+.wrapper-dropdown.active .dropdown {
+    max-height: 130px;
+    visibility: inherit;
+    overflow-y: auto;
+}
+
+.wrapper-dropdown .dropdown li {
+    padding: 10px 15px;
+    transition: all 0.3s ease-out;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.wrapper-dropdown .dropdown li a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.wrapper-dropdown .dropdown li:hover {
+    background: #f0f0f0;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.item-details .item-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #151515;
+    font-weight: 700;
+}
+.item-pieces {
+    font-size: 12px;
+    line-height: 140%;
+    letter-spacing: -0.5px;
+    color: #6b6b6b;
+    margin-left: 4px;
+}
+
+.item-unit-price {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 116%;
+    letter-spacing: 0.02em;
+    text-align: left;
+    color: #151515;
+    margin-top: 2px;
+}
+
+.wrapper-dropdown .dropdown li a {
+    align-items: center; /* Keeps the total price aligned with the multi-line text */
+}
+
+.selected-display {
+    font-size: 14px;
+    color: #151515;
+    font-weight: 500;
+}
+
+.pull-right { font-weight: bold; }

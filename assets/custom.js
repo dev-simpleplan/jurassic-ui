@@ -1,102 +1,102 @@
-/* ----------------------------------------------------------------
-   GLOBAL PRODUCT CARD HANDLER
-   Handles variant switching store-wide.
-------------------------------------------------------------------- */
-
-// 1. EVENT DELEGATION: Variant Clicking
 document.addEventListener('click', (e) => {
-  const variant = e.target.closest('.fc_variant_item');
-  if (!variant) return;
+  const dropdownWrap = e.target.closest('.wrapper-dropdown');
+  const item = e.target.closest('.dropdown-item');
 
-  const card = variant.closest('.product-card-primary');
-  if (!card) return;
+  // 1. Toggle Open/Close
+  if (dropdownWrap && !item) {
+    // Close other open dropdowns
+    document.querySelectorAll('.wrapper-dropdown.active').forEach(d => {
+      if (d !== dropdownWrap) d.classList.remove('active');
+    });
+    dropdownWrap.classList.toggle('active');
+    return;
+  }
 
-  // Update UI: Active state
-  variant.parentElement.querySelectorAll('.fc_variant_item').forEach(v => v.classList.remove('active'));
-  variant.classList.add('active');
+  // 2. Handle Selection
+  if (item) {
+    const parent = item.closest('.wrapper-dropdown');
+    const card = item.closest('.product-card-primary');
+    const display = parent.querySelector('.selected-display');
+    const hiddenInput = parent.querySelector('.custom-variant-id');
+    // Get the Title and Pieces from the clicked item
+    const titleText = item.querySelector('.item-title').innerText;
+    const priceText = item.querySelector('.pull-right').innerText;
 
-  // Extract Data from dataset
-  const { id, price, compare, unit, inventory } = variant.dataset;
+    // Update Dropdown Visuals
+    display.innerText = `${titleText} — ${priceText}`;
+    parent.classList.remove('active');
 
-  // Update Price Wrap
-  const priceWrap = card.querySelector('.fc_price_weight');
-  if (priceWrap) {
-    const sellingPriceEl = priceWrap.querySelector('.selling_price');
-    const compareEl = priceWrap.querySelector('#compare_price');
-    const unitEl = card.querySelector('.fc_weight');
-    const percentBadge = card.querySelector('[data-card-off-percent]'); // Target our badge
+    // Extract Data
+    const { id, price, compare, unit, inventory } = item.dataset;
 
-    // These now contain the symbol at the end because of our Liquid update above
-    if (sellingPriceEl) sellingPriceEl.innerText = price;
-    if (unitEl) unitEl.innerText = unit;
+    // Update Hidden Form ID
+    if (hiddenInput) hiddenInput.value = id;
 
-    //Toggle the background class based on sale status
-    if (sellingPriceEl) {
-      if (compare && compare !== "") {
-        sellingPriceEl.classList.remove('withoutbg');
-      } else {
-        sellingPriceEl.classList.add('withoutbg');
-      }
-    }
+    // --- YOUR EXISTING PRICE/INVENTORY LOGIC ---
+    const priceWrap = card.querySelector('.fc_price_weight');
+    if (priceWrap) {
+      const sellingPriceEl = priceWrap.querySelector('.selling_price');
+      const compareEl = priceWrap.querySelector('#compare_price');
+      const unitEl = card.querySelector('.fc_weight');
+      const percentBadge = card.querySelector('[data-card-off-percent]');
+      const unitPriceEl = card.querySelector('.fc_weight');
 
-    // --- Update Compare Price & Percent Badge ---
-    if (compare && compare !== "") {
-      if (compareEl) {
-        compareEl.innerText = compare;
-        compareEl.style.display = 'inline-block';
-      }
-
-      if (percentBadge) {
-        // Strip symbols and commas to get raw numbers for math
-        const rawPrice = parseFloat(price.replace(/[^\d.]/g, ''));
-        const rawCompare = parseFloat(compare.replace(/[^\d.]/g, ''));
-
-        if (rawCompare > rawPrice) {
-          const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
-          
-          // ADDED THE HYPHEN HERE
-          percentBadge.innerText = '-' + percentOff + '%'; 
-          
-          percentBadge.style.display = 'inline-block';
+      if (sellingPriceEl) sellingPriceEl.innerText = price;
+      if (unitPriceEl) {
+        // If the unit data is empty (because we fixed the Liquid above), hide the element
+        if (unit && unit.trim() !== "") {
+          unitPriceEl.innerText = unit;
+          unitPriceEl.style.display = 'block';
         } else {
-          percentBadge.style.display = 'none';
+          unitPriceEl.style.display = 'none'; // Hides it if it's just repeating the main price
         }
       }
-    } else {
-      // Hide both if no compare price exists
-      if (compareEl) {
-        compareEl.style.display = 'none';
-        compareEl.innerText = '';
-      }
-      if (percentBadge) {
-        percentBadge.style.display = 'none';
+      if (unitEl) unitEl.innerText = unit;
+
+      if (compare && compare !== "") {
+        if (sellingPriceEl) sellingPriceEl.classList.remove('withoutbg');
+        if (compareEl) {
+          compareEl.innerText = compare;
+          compareEl.style.display = 'inline-block';
+        }
+        if (percentBadge) {
+          const rawPrice = parseFloat(price.replace(/[^\d.]/g, ''));
+          const rawCompare = parseFloat(compare.replace(/[^\d.]/g, ''));
+          const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
+          percentBadge.innerText = '-' + percentOff + '%';
+          percentBadge.style.display = 'inline-block';
+        }
+      } else {
+        if (sellingPriceEl) sellingPriceEl.classList.add('withoutbg');
+        if (compareEl) compareEl.style.display = 'none';
+        if (percentBadge) percentBadge.style.display = 'none';
       }
     }
-  }
 
-  // Update Inventory Text (The "Only X Left" logic)
-  const trustText = card.querySelector('.fc_trust_text p:first-child');
-  if (trustText) {
-    trustText.innerText = `Only ${inventory} Left`;
-    inventory < 10 ? trustText.classList.add('low-stock') : trustText.classList.remove('low-stock');
-  }
+    // Update Add to Cart Button & Inventory
+    const trustText = card.querySelector('.fc_trust_text p:first-child');
+    if (trustText) {
+      trustText.innerText = `Only ${inventory} Left`;
+      parseInt(inventory) < 10 ? trustText.classList.add('low-stock') : trustText.classList.remove('low-stock');
+    }
 
-  // Update hidden ID for Add to Cart
-  const addWrap = card.querySelector('.fc_add_to_cart');
-  const addBtn = addWrap?.querySelector('.add-to-cart-btn');
-  const addFormInput = card.querySelector('.product-card-add-form input[name="id"]');
-
-  if (addWrap) {
-    addWrap.dataset.variantId = id;
+    const addBtn = card.querySelector('.add-to-cart-btn');
+    const addFormInput = card.querySelector('.product-card-add-form input[name="id"]');
     if (addFormInput) addFormInput.value = id;
     
-    // Handle Sold Out state using the translated global variables
-    if (inventory > 0) {
-      addBtn.disabled = false;
-      addBtn.innerText = window.themeStrings.addToCart;
-    } else {
-      addBtn.disabled = true;
-      addBtn.innerText = window.themeStrings.soldOut;
+    if (addBtn) {
+      if (parseInt(inventory) > 0) {
+        addBtn.disabled = false;
+        addBtn.innerText = window.themeStrings.addToCart;
+      } else {
+        addBtn.disabled = true;
+        addBtn.innerText = window.themeStrings.soldOut;
+      }
     }
+  }
+
+  // 3. Close if clicking outside
+  if (!dropdownWrap) {
+    document.querySelectorAll('.wrapper-dropdown.active').forEach(d => d.classList.remove('active'));
   }
 });

@@ -102,67 +102,43 @@
           <div class="fc_bottom_center">
             <div class="fc_variant_outer">
               <div class="fc_variant_wrap">
-                {% for variant in product.variants %}
-                  <script type="application/JSON">
-                    {{ variant | json }}
-                  </script>
-
-                  {% assign pieces = 0 %}
-                  {% if variant.unit_price_measurement
-                    and variant.unit_price_measurement.quantity_value != blank %}
-                    {% assign pieces = variant.unit_price_measurement.quantity_value | round %}
-                  {% endif %}
-
-                  <div
-                    class="fc_variant_item {% if variant.id == default_variant.id %}active{% endif %}"
-                    data-id="{{ variant.id }}"
-                    data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
-                    data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
-                    data-inventory="{{ variant.inventory_quantity }}"
-                    data-percent="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round }}{% else %}0{% endif %}"
-                    data-unit="{% if variant.unit_price_measurement %}
-                      {{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}
-                    {% else %}
-                      {{ variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
-                    {% endif %}"
-                    data-image="{{ variant.image | img_url: 'master' }}">
-                    {% if variant.metafields.custom.bestseller == true %}
-                      <div class="vv-bestseller">Bestseller</div>
-                    {% endif %}
-                    <div class="weight">
-                      {{ variant.title }}
-                      
-                        {% if variant.metafields.custom.pieces %}
-                          <div class="perKg">
-                          ( {{ variant.metafields.custom.pieces }} )
-                          </div>
-                        {% else %}
-                          
-                        {% endif %}
-                      
-                      {% comment %} {% if variant.compare_at_price > variant.price %}
-                        <span>
-                          {{
-                            variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round
-                          -}}
-                          % Off
-                        </span>
-                      {% endif %} {% endcomment %}
-                    </div>
-                    <p class="quantity">
-                      {% assign currency_suffix = cart.currency.symbol %}
-
-                      {% if variant.unit_price_measurement %}
-                        {{ variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ variant.unit_price_measurement.reference_unit }}
-                      {% else %}
-                        {{ variant.price | money_without_currency }} {{ currency_suffix }} / unit
-                      {% endif %}
-                    </p>
-
-                  </div>
-                {% endfor %}
-              </div>
-              <div class="selected_variant_dropdown"></div>
+  <div class="wrapper-dropdown" id="dropdown-{{ product.id }}">
+    <span class="selected-display">
+      <b>{{ default_variant.title }} </b>
+      {% if default_variant.metafields.custom.pieces %}({{ default_variant.metafields.custom.pieces }}){% endif %}
+      — {{ default_variant.price | money }}
+    </span>
+    
+    <ul class="dropdown" data-lenis-prevent>
+      {% for variant in product.variants %}
+        <li 
+          class="dropdown-item"
+          data-id="{{ variant.id }}"
+          data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
+          data-unit="{% if variant.unit_price_measurement %}{{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}{% endif %}"
+          data-inventory="{{ variant.inventory_quantity }}"
+        >
+          <a href="javascript:void(0)">
+            <div class="item-details">
+              <span class="item-title">
+                {{ variant.title }} 
+                {% if variant.metafields.custom.pieces %}
+                  <span class="item-pieces">( {{ variant.metafields.custom.pieces }} )</span>
+                {% endif %}
+              </span>
+              {% if variant.unit_price_measurement %}
+                <span class="item-unit-price">{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}</span>
+              {% endif %}
+            </div>
+            <span class="pull-right">{{ variant.price | money }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    <input type="hidden" name="id" value="{{ default_variant.id }}" class="custom-variant-id">
+  </div>
+</div>
+              <div class="selected_variant_dropdown" data-lenis-prevent></div>
             </div>
           </div>
 
