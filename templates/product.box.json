@@ -155,6 +155,7 @@
         "ugc_videos_R3WRXz",
         "ugc_videos_QhrUaJ"
       ],
+      "disabled": true,
       "name": "Video-Section",
       "settings": {
         "heading_top": "Bite into the",
@@ -165,6 +166,7 @@
     },
     "spacer_BmkhaA": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -172,6 +174,7 @@
     },
     "order_sample_4EfCUL": {
       "type": "order-sample",
+      "disabled": true,
       "name": "order-sample",
       "settings": {
         "heading": "Your First Bite of the Wild",
@@ -184,6 +187,7 @@
     },
     "spacer_tVjKyf": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -232,6 +236,7 @@
     },
     "spacer_D4C9kF": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -309,6 +314,7 @@
         "review_item_WciDXg",
         "review_item_hmEGFf"
       ],
+      "disabled": true,
       "name": "Reviews Section",
       "settings": {
         "heading": "What Explorers Are Saying"
@@ -360,6 +366,7 @@
     },
     "image_text_scroll_zrKkRq": {
       "type": "image-text-scroll",
+      "disabled": true,
       "name": "Durian Shape",
       "settings": {
         "heading": "Our story started with a durian",
@@ -379,6 +386,7 @@
     },
     "spacer_1": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -462,6 +470,7 @@
         "cards_gKwDPP",
         "cards_PcKgVt"
       ],
+      "disabled": true,
       "settings": {}
     },
     "spacer_Nh7Bjn": {
