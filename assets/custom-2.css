@@ -2381,6 +2381,9 @@ li.variant-value.active .perKg {
   width: 20px;
   height: 20px;
 }
+.pas-shipping .pas-shipping-text {
+  text-transform: capitalize;
+}
 .pa-seasons {
   display: flex;
   align-items: center;

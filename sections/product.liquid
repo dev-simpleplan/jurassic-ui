@@ -422,7 +422,18 @@
                           {% endfor %}
 
                           <script type="application/json">
-                            {{ product.variants | json }}
+                            [
+                              {% for variant in product.variants %}
+                                {
+                                  "id": {{ variant.id | json }},
+                                  "available": {{ variant.available | json }},
+                                  "price": {{ variant.price | json }},
+                                  "compare_at_price": {{ variant.compare_at_price | json }},
+                                  "options": {{ variant.options | json }},
+                                  "shipped_by": {{ variant.metafields.custom.shipped_by.value | default: variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | json }}
+                                }{% unless forloop.last %},{% endunless %}
+                              {% endfor %}
+                            ]
                           </script>
                         </variant-selector>
                       {% endunless %}
@@ -821,18 +832,35 @@
               {%- endfor -%}
             </div>
             <div class="pas-country">
-              <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              <div class="pas-shipping">
-                {% if product.metafields.custom.shipped_by == 'air' %}
-                  {% render 'air' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'sea' %}
-                  {% render 'sea' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% elsif product.metafields.custom.shipped_by == 'road' %}
-                  {% render 'road' %}
-                  Shipped by {{ product.metafields.custom.shipped_by }}
-                {% endif %}
+              {% comment %} <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p> {% endcomment %}
+              {% assign shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
+              {% assign shipped_by_key = shipped_by %}
+              {% if shipped_by == 'luft' or shipped_by == 'air' %}
+                {% assign shipped_by_key = 'air' %}
+              {% elsif shipped_by == 'see' or shipped_by == 'sea' %}
+                {% assign shipped_by_key = 'sea' %}
+              {% elsif shipped_by == 'straße' or shipped_by == 'strasse' or shipped_by == 'road' %}
+                {% assign shipped_by_key = 'road' %}
+              {% endif %}
+              <div
+                class="pas-shipping"
+                data-product-shipping
+                data-shipping-value="{{ shipped_by_key }}"
+                data-shipping-label="{{ shipped_by }}">
+                <span class="pas-shipping-icon" data-shipping-icon>
+                  {% if shipped_by_key == 'air' %}
+                    {% render 'air' %}
+                  {% elsif shipped_by_key == 'sea' %}
+                    {% render 'sea' %}
+                  {% elsif shipped_by_key == 'road' %}
+                    {% render 'road' %}
+                  {% endif %}
+                </span>
+                <span class="pas-shipping-text" data-shipping-text>
+                  {% if shipped_by != blank %}
+                    Shipped by {{ shipped_by }}
+                  {% endif %}
+                </span>
               </div>
             </div>
           </div>
@@ -952,6 +980,22 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ======================================================
    VARIANT SELECTOR (SINGLE SOURCE OF TRUTH)
 ====================================================== */
+const SHIPPING_ICONS = {
+  air: `{% capture shipping_air_icon %}{% render 'air' %}{% endcapture %}{{ shipping_air_icon | strip_newlines | replace: '`', '\\`' }}`,
+  sea: `{% capture shipping_sea_icon %}{% render 'sea' %}{% endcapture %}{{ shipping_sea_icon | strip_newlines | replace: '`', '\\`' }}`,
+  road: `{% capture shipping_road_icon %}{% render 'road' %}{% endcapture %}{{ shipping_road_icon | strip_newlines | replace: '`', '\\`' }}`
+};
+
+function normalizeShippingMethod(value) {
+  const normalized = String(value || '').toLowerCase().trim();
+
+  if (normalized === 'air' || normalized === 'luft') return 'air';
+  if (normalized === 'sea' || normalized === 'see') return 'sea';
+  if (normalized === 'road' || normalized === 'strasse' || normalized === 'straße') return 'road';
+
+  return normalized;
+}
+
 class VariantSelector extends HTMLElement {
   constructor() {
     super();
@@ -978,6 +1022,7 @@ class VariantSelector extends HTMLElement {
 
     this.updateFormID();
     this.updatePriceInstant();
+    this.updateShippingInfo();
     this.updateAddToCartButton();
 
     document.addEventListener('quantity:change', () => {
@@ -1002,6 +1047,7 @@ class VariantSelector extends HTMLElement {
     this.updateURL();
     this.updateFormID();
     this.updatePriceInstant();
+    this.updateShippingInfo();
     this.updateAddToCartButton();
   }
 
@@ -1085,6 +1131,31 @@ class VariantSelector extends HTMLElement {
       } else {
         percentBadge.style.display = 'none';
       }
+    }
+  }
+
+  updateShippingInfo() {
+    const shippingWrap = document.querySelector('[data-product-shipping]');
+    if (!shippingWrap || !this.currentVariant) return;
+
+    const iconEl = shippingWrap.querySelector('[data-shipping-icon]');
+    const textEl = shippingWrap.querySelector('[data-shipping-text]');
+    const shippingLabel = String(this.currentVariant.shipped_by || '')
+      .toLowerCase()
+      .trim();
+    const shippingValue = normalizeShippingMethod(shippingLabel);
+
+    shippingWrap.dataset.shippingValue = shippingValue;
+    shippingWrap.dataset.shippingLabel = shippingLabel;
+
+    if (iconEl) {
+      iconEl.innerHTML = SHIPPING_ICONS[shippingValue] || '';
+    }
+
+    if (textEl) {
+      textEl.textContent = shippingLabel
+        ? `Shipped by ${shippingLabel}`
+        : '';
     }
   }
 
