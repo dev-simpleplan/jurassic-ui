@@ -7,6 +7,9 @@
   src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
   defer></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
 <div class="pro-breadcrumbs">
   <div class="container">
       <div class="bcrum-in">
@@ -27,8 +30,29 @@
   </div>
 </div>
 
+{% assign default_variant = nil %}
 
-{% assign selected_variant = product.selected_or_first_available_variant %}
+{% for variant in product.variants %}
+  {% if variant.metafields.custom.is_prior == true and variant.available %}
+    {% assign default_variant = variant %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if default_variant == nil %}
+  {% for variant in product.variants %}
+    {% if variant.available %}
+      {% assign default_variant = variant %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if default_variant == nil %}
+  {% assign default_variant = product.variants.first %}
+{% endif %}
+
+{% assign selected_variant = default_variant %}
 <div class="product-info">
   <div class="container">
     <div class="pro-grid">
@@ -57,7 +81,9 @@
                   {% for media in product.media %}
                     <div class="item">
                       <div class="prod-main">
-                        {% render 'product-media', media: media %}
+                        <a href="{{ media | img_url: 'master' }}" data-fancybox="gallery-box" class="zoom-wrapper">
+                          {% render 'product-media', media: media %}
+                        </a>
                       </div>
                     </div>
                   {% endfor %}
@@ -162,20 +188,38 @@
                   <h1>{{ product.title }}</h1>
                     <div class="price" id="price-{{ section.id }}">
                       <div class="price-detailsss"> 
-                        <div class="sell-price">
-                          {{ selected_variant.price | money }}
+
+                        <div class="pd-top">
+                          {% assign currency_suffix = cart.currency.symbol %}
+                          <div class="sell-price">
+                            {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
+                          </div>
+
+                          <strike class="real-price">
+                            {{ selected_variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}
+                          </strike>
+
+                          {% if selected_variant.compare_at_price > selected_variant.price %}
+                            <span class="off-percent" data-price-off-percent>
+                              -{{ selected_variant.compare_at_price | minus: selected_variant.price | times: 100 | divided_by: selected_variant.compare_at_price | round }}%
+                            </span>
+                          {% endif %}
                         </div>
 
-                        <div>
-                          <strike class="real-price"></strike>
+                        <div class="pd-bottom">
+                          <span class="sell-price-variant-perkg">
+                            {% if selected_variant.unit_price_measurement %}
+                              {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
+                            {% else %}
+                              {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
+                            {% endif %}
+                          </span>
                         </div>
-
                         <!-- ALWAYS present -->
-                        <div class="vvv-discount" style="display:none"></div>
                       </div>
 
                       <span class="price-txt">
-                        VAT, Taxes, Excl. shipping
+                        Prices include VAT, excluding <a href="javascript:void()" >shipping costs.</a>
                       </span>
                     </div>
 
@@ -268,11 +312,9 @@
                           <div class="sv-perKg">
                             <p>Select variant</p>
                             <div class="perKg">
-                              {% if selected_variant.unit_price_measurement %}
-                                {{ selected_variant.unit_price | money }} / {{ selected_variant.unit_price_measurement.reference_unit }}
-                              {% comment %} {{ selected_variant.unit_price_measurement.reference_value }} {% endcomment %}
-                              {% else %}
-                                {{ selected_variant.price | money }} / unit
+                              {% comment %} Kept for layout parity; button state below becomes the source of truth. {% endcomment %}
+                              {% if selected_variant.metafields.custom.pieces %}
+                                ( {{ selected_variant.metafields.custom.pieces }} )
                               {% endif %}
                             </div>
                           </div>
@@ -322,15 +364,18 @@
                                         {% else %}
                                           {{ matched_variant.price | money }} / unit
                                         {% endif %} {% endcomment %}
-                                         {% if matched_variant.metafields.custom.pieces %}
-                                            /  {{ matched_variant.metafields.custom.pieces }}
-                                          {% endif %}
+                                        {% if matched_variant.metafields.custom.pieces %}
+                                          ( {{ matched_variant.metafields.custom.pieces }} )
+                                        {% endif %}
                                       </div>
                                     </div>
                                     <div class="vv-peices">
-                                      {% comment %} <pre>{{ matched_variant.metafields.custom.pieces.value | json }}</pre> {% endcomment %}
-                                      
-                                      {{ matched_variant.price | money }}
+                                      {% assign currency_suffix = cart.currency.symbol %}
+                                      {% if matched_variant.unit_price_measurement %}
+                                        {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
+                                      {% else %}
+                                        {{ matched_variant.price | money_without_currency }} {{ currency_suffix }} / unit
+                                      {% endif %}
                                     </div>
                                   </li>
                                 {% endfor %}
@@ -360,13 +405,13 @@
                         </div>
 
                         <button
-                          type="button"
+                          type="submit"
                           class="custom-btn filled"
                           id="add-to-cart"
                         >
                           <span class="btn-text">
                             <span class="btn-label">Add to Cart</span>
-                            <span class="btn-price">—</span>
+                            - <span class="btn-price">—</span>
                           </span>
 
                           <span class="btn-spinner" aria-hidden="true"></span>
@@ -708,11 +753,104 @@
     </div>
   </div>
 
+  <script>
+  /* ======================================================
+     GLOBAL MONEY FORMATTER (USED EVERYWHERE)
+  ====================================================== */
+  window.formatMoneySafe = function (cents) {
+    if (typeof cents !== 'number') return '';
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: Shopify?.currency?.active || '{{ shop.currency }}',
+      minimumFractionDigits: 2
+    }).format(cents / 100);
+  };
+  </script>
+
+  <script>
+  /* ======================================================
+     QUANTITY CONTROLLER (NO PRICE LOGIC HERE)
+  ====================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    const qtyInput = document.getElementById('Quantity');
+    if (!qtyInput) return;
+
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let qty = parseInt(qtyInput.value, 10) || 1;
+        qty = btn.dataset.action === 'increase' ? qty + 1 : Math.max(1, qty - 1);
+        qtyInput.value = qty;
+        document.dispatchEvent(new Event('quantity:change'));
+      });
+    });
+
+    qtyInput.addEventListener('change', () => {
+      document.dispatchEvent(new Event('quantity:change'));
+    });
+  });
+  </script>
+
+  <script>
+  /* ======================================================
+     ADD TO CART BUTTON STATE
+  ====================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('add-to-cart');
+    const form = document.getElementById('product-form');
+
+    if (!btn || !form) return;
+
+    form.addEventListener('submit', () => {
+      if (btn.classList.contains('loading')) return;
+
+      btn.classList.remove('success');
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      window.setTimeout(() => {
+        if (!btn.classList.contains('success')) {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      }, 2500);
+    });
+  });
+  </script>
+
   <script defer>
-      class VariantSelector extends HTMLElement {
+  /* ======================================================
+     VARIANT SELECTOR (SINGLE SOURCE OF TRUTH)
+  ====================================================== */
+  class VariantSelector extends HTMLElement {
     constructor() {
       super();
       this.addEventListener('click', this.onVariantClick.bind(this));
+    }
+
+    connectedCallback() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialVariantId =
+        Number(urlParams.get('variant')) || {{ selected_variant.id }};
+
+      const variants = this.getVariantJSON();
+      this.currentVariant = variants.find(v => v.id === initialVariantId);
+      if (!this.currentVariant) return;
+
+      this.currentVariant.options.forEach((value, index) => {
+        const ul = this.querySelectorAll('.variant-values')[index];
+        if (!ul) return;
+        ul.querySelectorAll('.variant-value').forEach(li => {
+          li.classList.toggle('active', li.dataset.value === value);
+        });
+      });
+
+      this.updateFormID();
+      this.updatePriceInstant();
+      this.updateAddToCartButton();
+
+      document.addEventListener('quantity:change', () => {
+        this.updateAddToCartButton();
+      });
     }
 
     onVariantClick(e) {
@@ -720,83 +858,147 @@
       if (!clickedLi) return;
 
       const parentUl = clickedLi.closest('.variant-values');
-      if (!parentUl) return;
-
-      // Remove active class from all siblings
-      parentUl.querySelectorAll('.variant-value').forEach((li) => li.classList.remove('active'));
+      parentUl.querySelectorAll('.variant-value').forEach(li =>
+        li.classList.remove('active')
+      );
       clickedLi.classList.add('active');
 
-      // Proceed with variant logic
       this.getSelectedOptions();
       this.getSelectedVariant();
+      if (!this.currentVariant) return;
 
-      if (this.currentVariant) {
-        this.updateURL();
-        this.updateFormID();
-        this.updatePrice();
-      }
-    }
-
-    getSelectedOptions() {
-      this.options = Array.from(this.querySelectorAll('.variant-values'), (ul) => {
-        const activeLi = ul.querySelector('.variant-value.active');
-        return activeLi ? activeLi.dataset.value : null;
-      }).filter(Boolean);
-
-      console.log('Selected options:', this.options);
+      this.updateURL();
+      this.updateFormID();
+      this.updatePriceInstant();
+      this.updateAddToCartButton();
     }
 
     getVariantJSON() {
-      this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
-      return this.variantData;
+      return (
+        this.variantData ||
+        (this.variantData = JSON.parse(
+          this.querySelector('[type="application/json"]').textContent
+        ))
+      );
+    }
+
+    getSelectedOptions() {
+      this.options = Array.from(this.querySelectorAll('.variant-values'))
+        .map(ul => ul.querySelector('.variant-value.active')?.dataset.value)
+        .filter(Boolean);
     }
 
     getSelectedVariant() {
       const variants = this.getVariantJSON();
-      this.currentVariant = variants.find((variant) =>
-        variant.options.every((opt, index) => opt === this.options[index])
+      this.currentVariant = variants.find(v =>
+        v.options.every((opt, i) => opt === this.options[i])
       );
-
-      console.log('Selected Variant:', this.currentVariant);
     }
 
     updateURL() {
-      if (!this.currentVariant) return;
-      window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
+      window.history.replaceState(
+        {},
+        '',
+        `${this.dataset.url}?variant=${this.currentVariant.id}`
+      );
     }
 
     updateFormID() {
-      const formInput = document.querySelector('#product-form')?.querySelector('input[name="id"]');
-      if (formInput && this.currentVariant) {
-        formInput.value = this.currentVariant.id;
-      }
+      const input = document.querySelector('#product-form input[name="id"]');
+      if (input) input.value = this.currentVariant.id;
     }
 
-    updatePrice() {
+    updatePriceInstant() {
       if (!this.currentVariant) return;
-      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const oldPrice = document.getElementById('price-{{ section.id }}');
-          const newPrice = html.getElementById('price-{{ section.id }}');
-          const newData = html.querySelector(".product-info-block");
 
-          const oldData = document.querySelector(".product-info-block");
+      const priceWrap = document.getElementById('price-{{ section.id }}');
+      if (!priceWrap) return;
 
-          const oldPerkg = document.querySelector(".perKg");
-          const newPerkg = html.querySelector(".perKg");
+      const sellPriceEl = priceWrap.querySelector('.sell-price');
+      const comparePriceEl = priceWrap.querySelector('.real-price');
+      const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
-          if (oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
-          if (oldPerkg && newPerkg) oldPerkg.innerHTML = newPerkg.innerHTML;
-          if (oldData && newData) oldData.innerHTML = newData.innerHTML;
-        });
-    }
+      const price = this.currentVariant.price;
+      const compare = this.currentVariant.compare_at_price;
+      const currencySuffix = " {{ cart.currency.symbol }}";
+
+      if (sellPriceEl) {
+        let cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
+        sellPriceEl.textContent = cleanPrice + currencySuffix;
       }
 
-      
+      if (comparePriceEl) {
+        if (compare && compare > price) {
+          let cleanCompare = formatMoneySafe(compare).replace(/[^\d.,]/g, '').trim();
+          comparePriceEl.textContent = cleanCompare + currencySuffix;
+          comparePriceEl.style.display = 'inline-block';
+        } else {
+          comparePriceEl.style.display = 'none';
+        }
+      }
 
-      customElements.define('variant-selector', VariantSelector);
+      if (percentBadge) {
+        if (compare && compare > price) {
+          const saving = compare - price;
+          const percentOff = Math.round((saving * 100) / compare);
+          percentBadge.textContent = `-${percentOff}%`;
+          percentBadge.style.display = 'inline-block';
+        } else {
+          percentBadge.style.display = 'none';
+        }
+      }
+    }
+
+    updateAddToCartButton() {
+      const btn = document.getElementById('add-to-cart');
+      const qtyInput = document.getElementById('Quantity');
+      if (!btn || !qtyInput || !this.currentVariant) return;
+
+      const label = btn.querySelector('.btn-label');
+      const priceEl = btn.querySelector('.btn-price');
+
+      if (!this.currentVariant.available) {
+        btn.classList.remove('loading', 'success');
+        btn.disabled = true;
+
+        if (label) label.textContent = 'Sold Out';
+        if (priceEl) priceEl.textContent = '';
+
+        return;
+      }
+
+      btn.disabled = false;
+
+      const qty = parseInt(qtyInput.value, 10) || 1;
+      const total = this.currentVariant.price * qty;
+
+      if (label) label.textContent = 'Add to Cart';
+
+      if (priceEl) {
+        const currencySuffix = " {{ cart.currency.symbol }}";
+        let cleanTotal = formatMoneySafe(total).replace(/[^\d.,]/g, '').trim();
+        priceEl.textContent = cleanTotal + currencySuffix;
+      }
+    }
+  }
+
+  customElements.define('variant-selector', VariantSelector);
+  </script>
+
+  <script>
+  /* ======================================================
+     URL FALLBACK (KEEP YOUR EXISTING BEHAVIOR)
+  ====================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    const hasVariant = new URLSearchParams(window.location.search).has('variant');
+    const defaultVariantId = {{ default_variant.id }};
+
+    if (!hasVariant) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('variant', defaultVariantId);
+      window.history.replaceState({}, '', url.toString());
+    }
+  });
   </script>
 
   <script>
@@ -816,28 +1018,29 @@
       centerMode: false,
       vertical: true,
       arrows: false,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            vertical: false,
+            slidesToShow: 5,
+            focusOnSelect: false,
+            centerMode: false,
+          }
+        }
+      ]
     });
-    $(".custom-prev").click(function () {
-          $(".prod-main-image").slick("slickPrev");
-        });
 
-        $(".custom-next").click(function () {
-          $(".prod-main-image").slick("slickNext");
-        });
-        $(".custom-prev").addClass("slick-disabled");
-        $(".prod-main-image").on("afterChange", function () {
-          if ($(".slick-prev").hasClass("slick-disabled")) {
-            $(".custom-prev").addClass("slick-disabled");
-          } else {
-            $(".custom-prev").removeClass("slick-disabled");
-          }
-          if ($(".slick-next").hasClass("slick-disabled")) {
-            $(".custom-next").addClass("slick-disabled");
-          } else {
-            $(".custom-next").removeClass("slick-disabled");
-          }
-        });
+    $('.custom-prev').click(() => $('.prod-main-image').slick('slickPrev'));
+    $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
       });
+
+    Fancybox.bind("[data-fancybox='gallery-box']", {
+      Hash: false,
+      Thumbs: {
+        autoStart: false,
+      },
+    });
   </script>
 
   <script>
@@ -866,15 +1069,18 @@
   </script>
 
   <script>
-    document.querySelectorAll('.offer-copy-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const code = this.getAttribute('data-code');
-        navigator.clipboard.writeText(code).then(() => {
-          const originalText = this.innerHTML;
-          this.innerText = 'COPIED!';
-          setTimeout(() => { this.innerHTML = originalText; }, 2000);
-        });
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.offer-copy-btn');
+      if (!btn) return;
+
+      navigator.clipboard.writeText(btn.dataset.code).then(() => {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
       });
     });
   </script>
