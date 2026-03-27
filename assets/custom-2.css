@@ -2293,6 +2293,9 @@ li.variant-value.active .perKg {
   grid-template-columns: 1fr 1fr;
   gap: 50px;
 }
+.nutri-image p {
+  font-size: 15px;
+}
 .nutri-image img {
   width: 100%;
 }

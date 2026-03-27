@@ -645,7 +645,8 @@
         <div class="pa-div">
           <div class="nutrition-info">
             <div class="nutri-image">
-                <img src="{{ product.metafields.custom.nutrition_benefits_image |  img_url: 'master' }}" alt="">
+                {% comment %} <img src="{{ product.metafields.custom.nutrition_benefits_image |  img_url: 'master' }}" alt=""> {% endcomment %}
+                 {{ product.metafields.custom.nutrition_details | metafield_tag }}
             </div>
             <div class="nutri-info">
               {{ product.metafields.custom.nutrition_benefits_content | metafield_tag }}
