@@ -19,10 +19,6 @@
             "title_testimonial": ""
           }
         },
-        "product_info": {
-          "type": "product_info",
-          "settings": {}
-        },
         "box_content": {
           "type": "box_content",
           "settings": {}
@@ -30,6 +26,14 @@
         "variant_selector": {
           "type": "variant_selector",
           "settings": {}
+        },
+        "delivery_info_WFVGrD": {
+          "type": "delivery-info",
+          "settings": {
+            "delivery_message": "Max. freshness, min. waste — we harvest after you order.",
+            "popup_button": "click here to get delivery information (cost, delay)",
+            "page": "delivery-popup"
+          }
         },
         "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
           "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
@@ -49,27 +53,9 @@
             "payment_usp_text": "Secure Payment"
           }
         },
-        "delivery_info_WFVGrD": {
-          "type": "delivery-info",
-          "settings": {
-            "delivery_message": "Max. freshness, min. waste — we harvest after you order.",
-            "popup_button": "click here to get delivery information (cost, delay)",
-            "page": "delivery-popup"
-          }
-        },
-        "offer_yEMChf": {
-          "type": "offer",
-          "settings": {
-            "code": "JURASSIC222",
-            "text": "Buy 3 @ $350 + Free Gifts"
-          }
-        },
-        "offer_8RjLwe": {
-          "type": "offer",
-          "settings": {
-            "code": "JURASSIC222",
-            "text": "Buy 3 @ $350 + Free Gifts"
-          }
+        "product_info": {
+          "type": "product_info",
+          "settings": {}
         },
         "pair_with_UwJtYY": {
           "type": "pair_with",
@@ -80,14 +66,12 @@
       },
       "block_order": [
         "title",
-        "product_info",
         "box_content",
         "variant_selector",
+        "delivery_info_WFVGrD",
         "staging_delivery_date_app_product_delivery_info_jGcmjQ",
         "store_usp",
-        "delivery_info_WFVGrD",
-        "offer_yEMChf",
-        "offer_8RjLwe",
+        "product_info",
         "pair_with_UwJtYY"
       ],
       "settings": {
@@ -482,6 +466,7 @@
     },
     "spacer_Nh7Bjn": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
@@ -525,6 +510,7 @@
         "cards_eGXAwz",
         "cards_Mi37EN"
       ],
+      "disabled": true,
       "name": "left-image-with-items",
       "settings": {
         "video_img": "shopify://shop_images/76278d276a8a940ed77edfd1f1af3a8abade21cd.jpg",
