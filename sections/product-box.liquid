@@ -227,17 +227,55 @@
 
               {% when 'product_info' %}
                 <div class="product-info-block">
+                  <div class="pro-test formobile">
+                    {% for block in section.blocks %}
+                      {% if block.settings.show_testimonial 
+                        and product.metafields.custom.title_testimonial != blank %}
+                        {% comment %} <div class="tr-okendo">
+                          <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
+                        </div> {% endcomment %}
+                        <div class="tr-testimonial">
+                          {% render 'testimonial-icon' %}
+                          {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  {% comment %} For Origin {% endcomment %}
+                  {% comment %} <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      <p>
+                        <strong>Origin:</strong>
+                        {{ product.metafields.custom.country_of_origin.value.country_name }}
+                      </p>
+                    </div>
+                  </div> {% endcomment %}
+                  {% comment %} Seasonality {% endcomment %}
+                  {% comment %} <div class="pi-item">
+                    {% render 'green-tick' %}
+                    <div class="pii-info">
+                      <p>
+                        <strong>Seasonality:</strong>
+                        {{ product.metafields.custom.country_season.value.season.value.seasonality }}
+                      </p>
+                    </div>
+                  </div> {% endcomment %}
+
                   {% comment %} Additional Information {% endcomment %}
-                  {% for item in selected_variant.metafields.custom.box_information.value %}
+
+                  {% for item in product.metafields.custom.additional_information.value %}
                     <div class="pi-item">
                       {% render 'green-tick' %}
                       <div class="pii-info">
                         <p>
-                          {{ item }}
+                          <strong>{{ item.inforamation_title }}</strong>
+                          {{ item.information_paragraph }}
                         </p>
                       </div>
                     </div>
                   {% endfor %}
+
                 </div>
 
               {% when 'box_content' %}
