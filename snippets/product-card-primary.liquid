@@ -102,43 +102,49 @@
           <div class="fc_bottom_center">
             <div class="fc_variant_outer">
               <div class="fc_variant_wrap">
-  <div class="wrapper-dropdown" id="dropdown-{{ product.id }}">
-    <span class="selected-display">
-      <b>{{ default_variant.title }} </b>
-      {% if default_variant.metafields.custom.pieces %}({{ default_variant.metafields.custom.pieces }}){% endif %}
-      — {{ default_variant.price | money }}
-    </span>
-    
-    <ul class="dropdown" data-lenis-prevent>
-      {% for variant in product.variants %}
-        <li 
-          class="dropdown-item"
-          data-id="{{ variant.id }}"
-          data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
-          data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
-          data-unit="{% if variant.unit_price_measurement %}{{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}{% endif %}"
-          data-inventory="{{ variant.inventory_quantity }}"
-        >
-          <a href="javascript:void(0)">
-            <div class="item-details">
-              <span class="item-title">
-                {{ variant.title }} 
-                {% if variant.metafields.custom.pieces %}
-                  <span class="item-pieces">( {{ variant.metafields.custom.pieces }} )</span>
-                {% endif %}
-              </span>
-              {% if variant.unit_price_measurement %}
-                <span class="item-unit-price">{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}</span>
-              {% endif %}
-            </div>
-            <span class="pull-right">{{ variant.price | money }}</span>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-    <input type="hidden" name="id" value="{{ default_variant.id }}" class="custom-variant-id">
-  </div>
-</div>
+                <div class="wrapper-dropdown" id="dropdown-{{ product.id }}">
+                  <span class="selected-display">
+                    <b>{{ default_variant.title }} </b>
+                    {% comment %} {% if default_variant.metafields.custom.pieces %}({{ default_variant.metafields.custom.pieces }}){% endif %}
+                    — {{ default_variant.price | money }} {% endcomment %}
+                  </span>
+                  
+                  <ul class="dropdown" data-lenis-prevent>
+                    {% for variant in product.variants %}
+                      <li 
+                        class="dropdown-item"
+                        data-id="{{ variant.id }}"
+                        data-selected-title="{{ variant.title | escape }}"
+                        data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
+                        data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
+                        data-unit="{% if variant.unit_price_measurement %}{{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}{% endif %}"
+                        data-inventory="{{ variant.inventory_quantity }}"
+                      >
+                        <a href="javascript:void(0)">
+                          {% if variant.metafields.custom.bestseller == true %}
+                              <div class="vv-bestseller">best seller</div>
+                            {% endif %}
+                          <div class="item-details">
+                            <span class="item-title">
+                              {{ variant.title }} 
+                            </span>
+                            {% if variant.metafields.custom.pieces %}
+                                <span class="item-pieces">( {{ variant.metafields.custom.pieces }} )</span>
+                              {% endif %}
+                          </div>
+                          <span class="pull-right">
+                            {{ variant.price | money }}
+                            {% if variant.unit_price_measurement %}
+                              <span class="item-unit-price">{{ variant.unit_price | money }} / {{ variant.unit_price_measurement.reference_unit }}</span>
+                            {% endif %}
+                          </span>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <input type="hidden" name="id" value="{{ default_variant.id }}" class="custom-variant-id">
+                </div>
+              </div>
               <div class="selected_variant_dropdown" data-lenis-prevent></div>
             </div>
           </div>

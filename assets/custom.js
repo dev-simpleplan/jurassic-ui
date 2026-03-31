@@ -59,9 +59,8 @@ document.addEventListener('click', (e) => {
     const display = parent.querySelector('.selected-display');
     const hiddenInput = parent.querySelector('.custom-variant-id');
 
-    const titleText = item.querySelector('.item-title').innerText;
-    const priceText = item.querySelector('.pull-right').innerText;
-    display.innerText = `${titleText} — ${priceText}`;
+    const selectedTitle = (item.dataset.selectedTitle || item.querySelector('.item-title')?.childNodes[0]?.textContent || item.querySelector('.item-title')?.textContent || '').trim();
+    display.innerHTML = `<b>${selectedTitle}</b>`;
 
     const { id, price, compare, unit, inventory } = item.dataset;
 

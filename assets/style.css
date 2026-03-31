@@ -907,7 +907,9 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  right: 0;
+  margin: 0 auto;
+  width: 75%;
   background: var(--body-bg);
   border: 1px solid #ddd;
   z-index: 100;
@@ -942,6 +944,23 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     overflow: hidden;
     overflow-y: auto;
 }
+/* .ps-list.ps-products-list {
+    gap: 0;
+}
+.ps-list .ps-product-item {
+    padding: 8px 0;
+    transition: .3s ease all;
+} */
+/* .ps-list .ps-product-item:hover {
+    background-color: #ece7e7;
+} */
+ .ps-product-item span {
+    border-bottom: 1px solid transparent;
+ }
+ .ps-product-item:hover span {
+    transition: .3s ease all;
+    border-color:#000;
+ }
 
 .ps-suggestions-list li a {
   display: block;
@@ -967,6 +986,10 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
   width: 48px;
   height: 48px;
   object-fit: cover;
+  transition: .3s ease all;
+}
+.ps-product-item:hover img {
+
 }
 
 .ps-view-all {
@@ -5274,6 +5297,7 @@ section.imagescroll {
     padding: 10px 15px;
     transition: all 0.3s ease-out;
     border-bottom: 1px solid #f1f1f1;
+    position: relative;
 }
 
 .wrapper-dropdown .dropdown li a {
@@ -5310,6 +5334,28 @@ section.imagescroll {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
+    gap: 4px;
+}
+
+.wrapper-dropdown .dropdown .vv-bestseller {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 8px;
+    border: 1px solid #99bd0f66;
+    border-radius: 999px;
+    background: #f6fbdf;
+    color: #516500;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
 }
 .item-details .item-title {
     font-size: 13px;
@@ -5322,7 +5368,7 @@ section.imagescroll {
     line-height: 140%;
     letter-spacing: -0.5px;
     color: #6b6b6b;
-    margin-left: 4px;
+    /* margin-left: 4px; */
 }
 
 .item-unit-price {
@@ -5337,6 +5383,11 @@ section.imagescroll {
 
 .wrapper-dropdown .dropdown li a {
     align-items: center; /* Keeps the total price aligned with the multi-line text */
+}
+.wrapper-dropdown .pull-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .selected-display {
