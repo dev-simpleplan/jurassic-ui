@@ -199,7 +199,7 @@
 
                         <div class="pd-top">
                           {% assign currency_suffix = cart.currency.symbol %}
-                          <div class="sell-price">
+                          <div class="sell-price {% unless selected_variant.compare_at_price > selected_variant.price %}withoutbg{% endunless %}">
                             {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
                           </div>
 
@@ -1109,6 +1109,7 @@ class VariantSelector extends HTMLElement {
     if (sellPriceEl) {
       let cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
       sellPriceEl.textContent = cleanPrice + currencySuffix;
+      sellPriceEl.classList.toggle('withoutbg', !(compare && compare > price));
     }
 
     /* 2. Update Compare Price */
