@@ -476,6 +476,7 @@ class PredictiveSearch {
   const suggestions = data.resources.results.queries || [];
   const products = data.resources.results.products || [];
   const emptyState = this.container.querySelector('.ps-empty-state');
+  const placeholderImage = 'https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647';
 
   // Clear first
   this.suggestionsList.innerHTML = '';
@@ -508,7 +509,7 @@ class PredictiveSearch {
       .map(product => `
         <li class="ps-product-item">
           <a href="${product.url}">
-            <img src="${product.image}" alt="${product.title}">
+            <img src="${product.image || placeholderImage}" alt="${product.title}">
             <span>${highlightMatch(product.title, query)}</span>
 
           </a>
