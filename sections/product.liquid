@@ -543,11 +543,56 @@
   </script>
 </div>
 
+{% assign technical_details_data = product.metafields.custom.technical_details %}
+{% assign description_data = product.metafields.custom.new_description %}
+{% assign how_to_store_items = product.metafields.custom.how_to_store_eat.value %}
+{% assign nutrition_details_data = product.metafields.custom.nutrition_details %}
+{% assign nutrition_content_data = product.metafields.custom.nutrition_benefits_content %}
+{% assign origin_sourcing_items = product.metafields.custom.origin_sourcing.value %}
+{% assign taste_profile_data = product.metafields.custom.taste_profile.value %}
+{% assign taste_profile_body = product.metafields.custom.taste_profile_body_text %}
+{% assign country_season_data = product.metafields.custom.country_season.value %}
+{% assign season_meta = country_season_data.season.value %}
+{% assign product_shipped_by = product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
+{% assign show_technical_details = false %}
+{% if technical_details_data != blank %}
+  {% assign show_technical_details = true %}
+{% endif %}
+{% assign show_description = false %}
+{% if description_data != blank %}
+  {% assign show_description = true %}
+{% endif %}
+{% assign show_how_to_store = false %}
+{% if how_to_store_items != blank %}
+  {% assign show_how_to_store = true %}
+{% endif %}
+{% assign show_nutrition = false %}
+{% if nutrition_details_data != blank or nutrition_content_data != blank %}
+  {% assign show_nutrition = true %}
+{% endif %}
+{% assign show_origin = false %}
+{% if origin_sourcing_items != blank %}
+  {% assign show_origin = true %}
+{% endif %}
+{% assign show_taste_profile = false %}
+{% if taste_profile_data != blank or taste_profile_body != blank %}
+  {% assign show_taste_profile = true %}
+{% endif %}
+{% assign show_seasonal = false %}
+{% if season_meta != blank or product_shipped_by != blank %}
+  {% assign show_seasonal = true %}
+{% endif %}
+{% assign show_product_accordion = false %}
+{% if show_technical_details or show_description or show_how_to_store or show_nutrition or show_origin or show_taste_profile or show_seasonal %}
+  {% assign show_product_accordion = true %}
+{% endif %}
+
+{% if show_product_accordion %}
 <div class="product-accordion">
   <div class="container">
     <div class="pa-wrapper">
       {% comment %} Technical Details {% endcomment %}
-       {% if product.metafields.custom.technical_details %}
+       {% if show_technical_details %}
        <div class="pa-item">
           <div class="pa-ques-wrap">
               <div class="pa-ques">
@@ -566,7 +611,7 @@
        {% endif %}
 
       {% comment %} Description {% endcomment %}
-       {% if product.metafields.custom.new_description %}
+       {% if show_description %}
        <div class="pa-item">
           <div class="pa-ques-wrap">
               <div class="pa-ques">
@@ -586,7 +631,7 @@
        {% endif %}
 
       {% comment %} How to Store {% endcomment %}
-       {% if product.metafields.custom.how_to_store_eat.value %}
+       {% if show_how_to_store %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
@@ -632,7 +677,7 @@
       {% endif %}
 
       {% comment %} Nutrition & Benefits {% endcomment %}
-       {% if product.metafields.custom.nutrition_benefits_image %}
+       {% if show_nutrition %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
@@ -658,6 +703,7 @@
 
       {% comment %} Origin & Sourcing {% endcomment %}
 
+       {% if show_origin %}
        <div class="pa-item">
           <div class="pa-ques-wrap">
               <div class="pa-ques">
@@ -669,7 +715,7 @@
           </div>
           <div class="pa-div">
             <div class="pa-eat-store">
-              {% for item in product.metafields.custom.origin_sourcing.value %}
+              {% for item in origin_sourcing_items %}
                 <div class="paes-item">
                   <div class="paes-icon square">
                       <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
@@ -685,7 +731,9 @@
             </div>
           </div>
        </div>
+       {% endif %}
       {% comment %} Taste Profile {% endcomment %}
+      {% if show_taste_profile %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
@@ -715,7 +763,7 @@
         </div>
         <div class="pa-div">
           <div class="padiv-para">
-            <p>{{ product.metafields.custom.taste_profile_body_text }}</p>
+            <p>{{ taste_profile_body }}</p>
           </div>
           <div class="pad-taste-profile">
             {% comment %} Texture {% endcomment %}
@@ -724,7 +772,7 @@
                 Texture
               </p>
               <div class="tp-wrap">
-                {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
+                {% assign texture_limit = taste_profile_data.texture %}
                 <p class="tp-profile">
                   Silky
                 </p>
@@ -744,7 +792,7 @@
                 Sweetness
               </p>
               <div class="tp-wrap">
-                {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
+                {% assign sweetness_limit = taste_profile_data.sweetness %}
                 <p class="tp-profile">Delicate</p>
                 <div class="tp-pill-in sweetness">
                   {% for i in (1..5) %}
@@ -760,7 +808,7 @@
                 Sourness
               </p>
               <div class="tp-wrap">
-                {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
+                {% assign sourness_limit = taste_profile_data.sourness %}
                 <p class="tp-profile">Smooth</p>
                 <div class="tp-pill-in sourness">
                   {% for i in (1..5) %}
@@ -777,7 +825,7 @@
                 Juiciness
               </p>
               <div class="tp-wrap">
-                {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
+                {% assign juiciness_limit = taste_profile_data.juiciness %}
                 <p class="tp-profile">Firm</p>
                 <div class="tp-pill-in juiciness">
                   {% for i in (1..5) %}
@@ -790,7 +838,9 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% comment %} Seasonal Information {% endcomment %}
+      {% if show_seasonal %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
@@ -807,8 +857,8 @@
               We split the metafield string and then re-join/split to ensure 
               every single month in the array is trimmed of extra spaces.
             {% endcomment %}
-            {%- assign high_months_raw = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
-            {%- assign low_months_raw = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
+            {%- assign high_months_raw = season_meta.high_season_month | default: '' | split: ',' -%}
+            {%- assign low_months_raw = season_meta.low_season_month | default: '' | split: ',' -%}
 
             <div class="pas-month">
               {%- for month in month_names -%}
@@ -867,9 +917,11 @@
           </div>
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
+{% endif %}
 
 {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
   <div class="product_delivery_modal_container modal fade">

@@ -418,6 +418,8 @@ class PredictiveSearch {
     this.productsList = this.container.querySelector('.ps-products-list');
     this.viewAll = this.container.querySelector('.ps-view-all');
     this.abortController = null;
+    this.cache = new Map();
+    this.lastRequestedQuery = '';
 
     this.input.addEventListener('input', this.onChange.bind(this));
     document.addEventListener('click', this.onOutsideClick.bind(this));
@@ -426,7 +428,7 @@ class PredictiveSearch {
   onChange() {
     const query = this.input.value.trim();
 
-    if (query.length < 2) {
+    if (query.length < 1) {
       this.close();
       return;
     }
@@ -435,8 +437,20 @@ class PredictiveSearch {
   }
 
   fetchResults(query) {
+    if (query === this.lastRequestedQuery && this.cache.has(query)) {
+      this.render(this.cache.get(query), query);
+      return;
+    }
+
+    if (this.cache.has(query)) {
+      this.lastRequestedQuery = query;
+      this.render(this.cache.get(query), query);
+      return;
+    }
+
     if (this.abortController) this.abortController.abort();
     this.abortController = new AbortController();
+    this.lastRequestedQuery = query;
 
     fetch(
       `{{ routes.predictive_search_url }}.json?q=${encodeURIComponent(query)}`
@@ -447,7 +461,14 @@ class PredictiveSearch {
     )
 
       .then(res => res.json())
-      .then(data => this.render(data, query))
+      .then(data => {
+        this.cache.set(query, data);
+        if (this.cache.size > 20) {
+          const firstKey = this.cache.keys().next().value;
+          this.cache.delete(firstKey);
+        }
+        this.render(data, query);
+      })
       .catch(() => {});
   }
 
@@ -519,6 +540,7 @@ class PredictiveSearch {
   close() {
     this.container.hidden = true;
     this.input.setAttribute('aria-expanded', 'false');
+    this.lastRequestedQuery = '';
   }
 
   onOutsideClick(e) {
