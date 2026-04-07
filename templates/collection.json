@@ -12,41 +12,72 @@
     "main": {
       "type": "collection",
       "blocks": {
-        "collection_fzjyp7": {
+        "collection_fMayaE": {
           "type": "collection",
           "settings": {
-            "col": "mangoes",
+            "col": "fruit",
+            "col_name": "Fruits"
+          }
+        },
+        "collection_rxVwVF": {
+          "type": "collection",
+          "settings": {
+            "col": "fruit-boxes",
+            "col_name": "Boxes"
+          }
+        },
+        "collection_NUyX4d": {
+          "type": "collection",
+          "settings": {
+            "col": "dates",
             "col_name": ""
           }
         },
-        "collection_TGXNHp": {
+        "collection_XAzdgK": {
           "type": "collection",
           "settings": {
-            "col": "farmer-box",
-            "col_name": "",
-            "col_img": "shopify://shop_images/Farmer_Box.jpg"
-          }
-        },
-        "collection_PpEayN": {
-          "type": "collection",
-          "settings": {
-            "col": "avocados",
+            "col": "dried-fruit",
             "col_name": ""
           }
         },
-        "collection_WbpNNG": {
+        "collection_m7RmEV": {
           "type": "collection",
           "settings": {
-            "col": "coconuts",
+            "col": "nuts",
+            "col_name": "Nuts"
+          }
+        },
+        "collection_Hixxmw": {
+          "type": "collection",
+          "settings": {
+            "col": "honey",
+            "col_name": ""
+          }
+        },
+        "collection_nnUfpe": {
+          "type": "collection",
+          "settings": {
+            "col": "fine-food-1",
+            "col_name": ""
+          }
+        },
+        "collection_JiN3yp": {
+          "type": "collection",
+          "settings": {
+            "col": "all-products",
             "col_name": ""
           }
         }
       },
       "block_order": [
-        "collection_fzjyp7",
-        "collection_TGXNHp",
-        "collection_PpEayN",
-        "collection_WbpNNG"
+        "collection_fMayaE",
+        "collection_rxVwVF",
+        "collection_NUyX4d",
+        "collection_XAzdgK",
+        "collection_m7RmEV",
+        "collection_Hixxmw",
+        "collection_nnUfpe",
+        "collection_JiN3yp"
       ],
       "settings": {
         "head": "Exotic fruits in season"
