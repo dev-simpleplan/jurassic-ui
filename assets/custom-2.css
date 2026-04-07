@@ -2568,14 +2568,22 @@ p.product-description-metafield {
   display: flex;
   align-items: stretch;
   gap: 6px;
-  overflow: hidden;
   overflow-x: auto;
-  scroll-behavior: smooth;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-x;
 }
 .box-content-in::-webkit-scrollbar {
   display: none;
+}
+.box-content-in.dragging {
+  cursor: grabbing;
+}
+.box-content-in.dragging .cotent-item {
+  pointer-events: none;
 }
 .box-content-in .cotent-item {
   font-size: 12px;

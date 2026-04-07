@@ -292,16 +292,18 @@
                     </div>
                   </div>
                   {% comment %} Additional Box Content {% endcomment %}
-                  <div class="box-content">
-                    <div class="box-content-title">
-                      Additional Fruits
+                  {% if product.metafields.custom.additional_box_content.value != blank %}
+                    <div class="box-content">
+                      <div class="box-content-title">
+                        Additional Fruits
+                      </div>
+                      <div class="box-content-in">
+                        {% for item in product.metafields.custom.additional_box_content.value %}
+                          <div class="cotent-item">{{ item.title }}</div>
+                        {% endfor %}
+                      </div>
                     </div>
-                    <div class="box-content-in">
-                      {% for item in product.metafields.custom.additional_box_content.value %}
-                        <div class="cotent-item">{{ item.title }}</div>
-                      {% endfor %}
-                    </div>
-                  </div>
+                  {% endif %}
                 </div>
 
               {% when 'store_usp' %}
@@ -1036,6 +1038,64 @@
       url.searchParams.set('variant', defaultVariantId);
       window.history.replaceState({}, '', url.toString());
     }
+  });
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.box-content-in').forEach((slider) => {
+      let isDragging = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let dragMoved = false;
+
+      const stopDragging = () => {
+        isDragging = false;
+        slider.classList.remove('dragging');
+        document.body.classList.remove('box-dragging');
+      };
+
+      const onPointerMove = (event) => {
+        if (!isDragging) return;
+
+        const delta = event.clientX - startX;
+        if (Math.abs(delta) > 3) {
+          dragMoved = true;
+        }
+
+        event.preventDefault();
+        slider.scrollLeft = scrollLeft - delta;
+      };
+
+      const onPointerUp = () => {
+        stopDragging();
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('pointercancel', onPointerUp);
+      };
+
+      slider.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+        isDragging = true;
+        dragMoved = false;
+        startX = event.clientX;
+        scrollLeft = slider.scrollLeft;
+        slider.classList.add('dragging');
+        document.body.classList.add('box-dragging');
+
+        window.addEventListener('pointermove', onPointerMove, { passive: false });
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+      });
+
+      slider.addEventListener('click', (event) => {
+        if (!dragMoved) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragMoved = false;
+      }, true);
+    });
   });
   </script>
 

@@ -17,12 +17,12 @@
                                     </div>
                                 </div>
                                 <div class="bcgitem-back">
-                                    <div class="bcgback-top">
+                                    {% comment %} <div class="bcgback-top">
                                         <p>Era</p>
                                         <span>{{ item.era }}</span>
-                                    </div>
+                                    </div> {% endcomment %}
                                     <div class="bcgback-bottom">
-                                        <h6>{{ item.description_heading }}</h6>
+                                        {% comment %} <h6>{{ item.description_heading }}</h6> {% endcomment %}
                                         <div>{{ item.description_pointers | metafield_tag }}</div>
                                     </div>
                                 </div>
