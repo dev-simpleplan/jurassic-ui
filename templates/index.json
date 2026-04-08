@@ -51,7 +51,8 @@
         "banner-bg": "shopify://shop_images/Farm-Durian-Kane-Mon-Thong-JavFre-Bali-Indonesia-6116-JurassicFruit-JurassicFruit.jpg",
         "head": "Your Most Delicious Adventure on Earth",
         "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed.",
-        "button_text": "View Products"
+        "button_text": "View Products",
+        "button_link": "shopify://collections/all-products"
       }
     },
     "spacer0": {
