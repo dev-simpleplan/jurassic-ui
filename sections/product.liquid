@@ -460,7 +460,7 @@
                         >
                           <span class="btn-text">
                             <span class="btn-label">Add to Cart</span>
-                            - <span class="btn-price">—</span>
+                            <span class="btn-separator"> - </span><span class="btn-price">—</span>
                           </span>
 
                           <span class="btn-spinner" aria-hidden="true"></span>
@@ -1222,6 +1222,7 @@ class VariantSelector extends HTMLElement {
 
     const label = btn.querySelector('.btn-label');
     const priceEl = btn.querySelector('.btn-price');
+    const separatorEl = btn.querySelector('.btn-separator');
 
     // 🛑 SOLD OUT STATE
     if (!this.currentVariant.available) {
@@ -1230,6 +1231,7 @@ class VariantSelector extends HTMLElement {
 
       if (label) label.textContent = 'Sold Out';
       if (priceEl) priceEl.textContent = '';
+      if (separatorEl) separatorEl.style.display = 'none';
 
       return;
     }
@@ -1242,6 +1244,7 @@ class VariantSelector extends HTMLElement {
     const total = this.currentVariant.price * qty;
 
     if (label) label.textContent = 'Add to Cart';
+    if (separatorEl) separatorEl.style.display = '';
     
     if (priceEl) {
       // 1. Define the suffix (pulled from Liquid)

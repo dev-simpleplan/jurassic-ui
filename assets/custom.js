@@ -75,6 +75,9 @@ document.addEventListener('click', (e) => {
       const compareEl = priceWrap.querySelector('#compare_price');
       const unitEl = priceWrap.querySelector('.fc_weight');
       const percentBadge = card.querySelector('[data-card-off-percent]');
+      const topBadge = card.querySelector('[data-card-top-badge]');
+      const topBadgeText = card.querySelector('[data-card-top-badge-text]');
+      const isBestsellerProduct = topBadge?.dataset.isBestseller === 'true';
 
       if (sellingPriceEl) sellingPriceEl.innerText = price;
 
@@ -103,14 +106,20 @@ document.addEventListener('click', (e) => {
             const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
             percentBadge.innerText = '-' + percentOff + '%';
             percentBadge.style.display = 'inline-block';
+            if (topBadge && topBadgeText && !isBestsellerProduct) {
+              topBadgeText.innerText = '-' + percentOff + '%';
+              topBadge.style.display = 'block';
+            }
           } else {
             percentBadge.style.display = 'none';
+            if (topBadge && !isBestsellerProduct) topBadge.style.display = 'none';
           }
         }
       } else {
         if (sellingPriceEl) sellingPriceEl.classList.add('withoutbg');
         if (compareEl) compareEl.style.display = 'none';
         if (percentBadge) percentBadge.style.display = 'none';
+        if (topBadge && !isBestsellerProduct) topBadge.style.display = 'none';
       }
     }
 

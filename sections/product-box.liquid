@@ -451,7 +451,7 @@
                         >
                           <span class="btn-text">
                             <span class="btn-label">Add to Cart</span>
-                            - <span class="btn-price">—</span>
+                            <span class="btn-separator"> - </span><span class="btn-price">—</span>
                           </span>
 
                           <span class="btn-spinner" aria-hidden="true"></span>
@@ -510,22 +510,20 @@
 
               {% when 'pair_with' %}
                 {% assign paired_product = product.metafields.custom.pair_with_product.value %}
-                <div class="pair-with">
-                  <div class="freqIn">
-                      <div class="heading">
-                        <h3>{{ block.settings.head }}</h3>
-                      </div>
-                      <div class="freq-wrap">
-                        {% if paired_product != blank %}
+                {% if paired_product != blank %}
+                  <div class="pair-with">
+                    <div class="freqIn">
+                        <div class="heading">
+                          <h3>{{ block.settings.head }}</h3>
+                        </div>
+                        <div class="freq-wrap">
                           <div class="paired-item-container">
                             {% render 'product-card-primary', product: paired_product %}
                           </div>
-                        {% else %}
-                          <p class="no-selection-msg">No product selected to pair with this box.</p>
-                        {% endif %}
+                        </div>
                       </div>
                     </div>
-                </div>
+                {% endif %}
 
               {% when '@app' %}
                 <div class="app-block">{% render block %}</div>
@@ -996,6 +994,7 @@
 
       const label = btn.querySelector('.btn-label');
       const priceEl = btn.querySelector('.btn-price');
+      const separatorEl = btn.querySelector('.btn-separator');
 
       if (!this.currentVariant.available) {
         btn.classList.remove('loading', 'success');
@@ -1003,6 +1002,7 @@
 
         if (label) label.textContent = 'Sold Out';
         if (priceEl) priceEl.textContent = '';
+        if (separatorEl) separatorEl.style.display = 'none';
 
         return;
       }
@@ -1013,6 +1013,7 @@
       const total = this.currentVariant.price * qty;
 
       if (label) label.textContent = 'Add to Cart';
+      if (separatorEl) separatorEl.style.display = '';
 
       if (priceEl) {
         const currencySuffix = " {{ cart.currency.symbol }}";

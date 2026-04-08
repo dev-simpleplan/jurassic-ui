@@ -3689,6 +3689,9 @@ section.imagescroll {
     line-height: 140%;
     color: var(--grey-black);
 }
+.faq-sec {
+    margin-bottom: 140px;
+}
 .faq-sec .faq-wrap {
     margin-top: 70px;
     display: grid;

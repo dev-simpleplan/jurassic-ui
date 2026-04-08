@@ -128,6 +128,9 @@
   letter-spacing: 0.06em;
   text-transform: capitalize;
 }
+.fc_bestsell_tags.red span {
+  background-color: #ff0202;
+}
 .fc_organic_auth {
   width: 31px;
   height: 21px;
