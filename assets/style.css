@@ -4284,6 +4284,10 @@ section.imagescroll {
     width: 10px!important;
     height: 10px!important;
 }
+#corner-cowi-cart-item-adder-option-selector-wrapper label {
+    margin-bottom: 6px !important;
+    display: inline-block;
+}
 /* Cart Page CSS Ends */
 
 /* Blog Page CSS Starts */

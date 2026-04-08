@@ -1890,6 +1890,7 @@ li.variant-value .vvv-value {
   line-height: 100%;
   text-transform: uppercase;
   color: #151515;
+  text-align: center;
 }
 li.variant-value .perKg {
   font-weight: 500;
