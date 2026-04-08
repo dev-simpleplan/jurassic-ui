@@ -146,7 +146,8 @@
           "type": "faq",
           "settings": {
             "question": "Must I be at home to receive the delivery?",
-            "answer": "<p>It is the best, but it is not mandatory! If you are not at home, you have different options:</p><p>You can deliver to another address, such as your office, a small local store, a neighbour's home, a relative's home, etc.</p><p>You can set that when you are not at home, you want the parcel to be delivered to another address or to be left at your doorstep. To set your personal options, you just have to sign in at <strong>UPS My Choice</strong>.</p>"
+            "answer": "<p>It is the best, but it is not mandatory! If you are not at home, you have different options:</p><p>You can deliver to another address, such as your office, a small local store, a neighbour's home, a relative's home, etc.</p><p>You can set that when you are not at home, you want the parcel to be delivered to another address or to be left at your doorstep. To set your personal options, you just have to sign in at <strong>UPS My Choice</strong>.</p>",
+            "faq_image": "shopify://shop_images/Fig_20white_20half-fresh_hash_escaped_04.webp"
           }
         },
         "faq_LV6Jjz": {
