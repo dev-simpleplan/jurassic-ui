@@ -429,6 +429,8 @@
                                   "available": {{ variant.available | json }},
                                   "price": {{ variant.price | json }},
                                   "compare_at_price": {{ variant.compare_at_price | json }},
+                                  "unit_price": {{ variant.unit_price | json }},
+                                  "unit_price_reference_unit": {{ variant.unit_price_measurement.reference_unit | json }},
                                   "options": {{ variant.options | json }},
                                   "shipped_by": {{ variant.metafields.custom.shipped_by.value | default: variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | json }}
                                 }{% unless forloop.last %},{% endunless %}
@@ -1149,6 +1151,7 @@ class VariantSelector extends HTMLElement {
 
     const sellPriceEl = priceWrap.querySelector('.sell-price');
     const comparePriceEl = priceWrap.querySelector('.real-price');
+    const unitPriceEl = priceWrap.querySelector('.sell-price-variant-perkg');
     // Target the correct class name for your badge
     const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
@@ -1184,6 +1187,17 @@ class VariantSelector extends HTMLElement {
         percentBadge.style.display = 'inline-block';
       } else {
         percentBadge.style.display = 'none';
+      }
+    }
+
+    /* 4. Update Unit Price / Per Unit Line */
+    if (unitPriceEl) {
+      if (this.currentVariant.unit_price_reference_unit) {
+        const cleanUnitPrice = formatMoneySafe(this.currentVariant.unit_price).replace(/[^\d.,]/g, '').trim();
+        unitPriceEl.textContent = `${cleanUnitPrice}${currencySuffix} / ${this.currentVariant.unit_price_reference_unit}`;
+      } else {
+        const cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
+        unitPriceEl.textContent = `${cleanPrice}${currencySuffix} / unit`;
       }
     }
   }
