@@ -118,35 +118,52 @@
     "faq_pages_FmiYAa": {
       "type": "faq-pages",
       "blocks": {
-        "faq_kKYgTk": {
+        "faq_LcRUbQ": {
           "type": "faq",
           "settings": {
-            "question": "What are the health benefits of mangosteen?",
-            "answer": "<p>Mangosteen is well known for its antioxidants. These include vitamin C, manganese and, above all, its xanthones. The latter has been the subject of recent studies, revealing numerous properties. It is said to have an anti-inflammatory effect, have anti-ageing properties, help combat diabetes and even fight cancer. However, further studies are needed to confirm these results.</p><p>Mangosteen is also interesting for the fiber it contains; which contributes to a healthy gut and weight regulation. It also provides you with copper. This mineral is involved in the production of energy and connective tissue, and in the maintenance of the immune and nervous systems. Finally, mangosteen is a source of vitamin B9 (folates). This is essential for healthy metabolic function.</p><p>Reference: <a href=\"https://pubmed.ncbi.nlm.nih.gov/28842267/\" target=\"_blank\">https://pubmed.ncbi.nlm.nih.gov/28842267/</a></p>",
-            "faq_image": "shopify://shop_images/3f0a5d7fb6f50877410da6e39f0e8ef9a0e5bebc_e9d143ed-6558-43c5-9539-f212b677c5a5.jpg"
+            "question": "Where do you deliver? ",
+            "answer": "<p>We deliver to Austria, Belgium, Bulgaria, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Switzerland.<br/>Contact us if your country is not in this list.</p>",
+            "faq_image": "shopify://shop_images/Dragonfruits-Thailand-09989-JurassicFruit.jpg"
           }
         },
-        "faq_mggA8J": {
+        "faq_gBpRfJ": {
           "type": "faq",
           "settings": {
-            "question": "Why is the mangosteen so expensive?",
-            "answer": "<p>There are several reasons why mangosteen is a rather expensive exotic fruit. </p><ul><li>It is a very demanding fruit in terms of climate. It only grows in ultra-tropical zones within 20° latitude of the equator. It is also difficult in terms of altitude, rainfall and humidity levels. In short, you can't grow it just anywhere! </li><li>A tree produces fruit after 6 to 8 years, and yields a good crop every 2nd or 3rd year. </li><li>It doesn't ripen after harvesting, and is fragile. To be good, mangosteen must be eaten fresh, 5 to 15 days after picking. </li><li>Our growers carry out a meticulous quality sorting and cleaning of each mangosteen individually. This is for 2 reasons: </li><li>the slightest bump or hard spot on the shell can be a sign of quality that will deteriorate rapidly, so the fruit must be discarded. </li><li>No fruit can travel from Asia to Europe with traces of insects. Mealybugs, ants (which love to nest under the sepals of the mangosteen) etc.., so they must be removed from the fruit by cleaning with a brush and compressed air.</li></ul><p>Now, in relation to the pleasure (it's considered one of the best fruits on earth) and the benefits (its famous xanthones, for example) it brings, the price of the mangosteen is fair, making it one of our best-selling fruits. What's more, by ordering our mangosteen in larger quantities (whole case), you benefit from a significant discount, enabling you to enjoy all its benefits at the lowest price.</p>",
-            "faq_image": "shopify://shop_images/image_8.png"
+            "question": "How much does delivery cost and how long does it take?",
+            "answer": "<p>Find all shipping options here:<a href=\"https://www.jurassicfruit.com/en/policies/shipping-policy\" title=\"Shipping policy\">Shipping policy</a>The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.</p>",
+            "faq_image": "shopify://shop_images/Discovery_20Date_20Gift_hash_escaped_06.jpg"
           }
         },
-        "faq_ekKJGX": {
+        "faq_ACCaTB": {
           "type": "faq",
           "settings": {
-            "question": "How can you tell if a mangosteen is ripe?",
-            "answer": "<p>You can eat it as soon as you receive it! It's picked just when it's ripe, because it doesn't ripen any more once harvested.</p>",
-            "faq_image": "shopify://shop_images/Mangosteen-Thailand-09804-JurassicFruit.jpg"
+            "question": "When will it be delivered?",
+            "answer": "<p>It depends on when you pass your order.</p><p>Order <strong>until Thursday 20:00</strong> so that your fruits will be shipped the next Monday, Tuesday or Wednesday (delivery one to two days after). If you order after Thursday 19:00 (and before Thursday 20:00 the next week) your fruits will be shipped the second next Monday, Tuesday or Wednesday.</p><p>This weekly schedule allows us to have minimum waste (we ask our producers to gather the exact quantities our customers need) and to have the freshest fruits possible (our producers pick the fruits at the very last minute).<br/><br/>Please note that the shipping delay indicated by your chosen carrier affects only the delivery time, not the shipping day itself. We do not store fruits; they are harvested once a week. Therefore, even if you select express shipping, the shipment will not leave earlier than the date indicated at checkout.</p>",
+            "faq_image": "shopify://shop_images/Mango_20Kafro_hash_escaped_02.webp"
+          }
+        },
+        "faq_kEbLiV": {
+          "type": "faq",
+          "settings": {
+            "question": "Must I be at home to receive the delivery?",
+            "answer": "<p>It is the best, but it is not mandatory! If you are not at home, you have different options:</p><p>You can deliver to another address, such as your office, a small local store, a neighbour's home, a relative's home, etc.</p><p>You can set that when you are not at home, you want the parcel to be delivered to another address or to be left at your doorstep. To set your personal options, you just have to sign in at <strong>UPS My Choice</strong>.</p>"
+          }
+        },
+        "faq_LV6Jjz": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I come and pick up my order?",
+            "answer": "<p>Yes, you can pick up your order in Essen and save on shipping costs.</p><p>As we do not have a physical store, orders must still be <strong>placed online</strong> so you can choose your payment method and so we can pre-order the fresh fruits. We order everything fresh each week and do not sell from stock.<br/>For the best availability, we recommend placing your order by Thursday at 8:00 PM.</p><p>Pickup is possible once you receive the <strong>shipping confirmation email</strong> (this is sent automatically and <strong>looks the same as for regular shipping orders</strong>). After that, you can collect your package:<br/>Monday to Sunday (except Thursday), ideally as soon as possible, between 8:00 AM and 12:00 PM.</p>",
+            "faq_image": "shopify://shop_images/Mango-Gedong-Indonesia-beach-4.jpg"
           }
         }
       },
       "block_order": [
-        "faq_kKYgTk",
-        "faq_mggA8J",
-        "faq_ekKJGX"
+        "faq_LcRUbQ",
+        "faq_gBpRfJ",
+        "faq_ACCaTB",
+        "faq_kEbLiV",
+        "faq_LV6Jjz"
       ],
       "name": "FAQ Page Section",
       "settings": {
