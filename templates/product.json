@@ -525,13 +525,6 @@
         "faq_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg"
       }
     },
-    "spacer_awrgBz": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
     "bestseller_carousel_QwPdDB": {
       "type": "bestseller-carousel",
       "name": "BestsellerCarousel",
@@ -598,7 +591,6 @@
     "177139754036d00b41",
     "spacer_7pD8rp",
     "faq",
-    "spacer_awrgBz",
     "bestseller_carousel_QwPdDB",
     "17639905082e7548ae",
     "spacer_8i3aQR"
