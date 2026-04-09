@@ -2366,7 +2366,7 @@ footer::before {
 .footer-shipping .partner-wrap {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 12px;
     justify-content: flex-start;
 }
 .partner-wrap .footer_title {

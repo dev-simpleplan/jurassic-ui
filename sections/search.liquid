@@ -17,6 +17,7 @@
             action="{{ routes.search_url }}"
             method="get"
             role="search">
+            <input type="hidden" name="type" value="product">
             <input
               type="search"
               size="50"
@@ -26,10 +27,12 @@
             <button type="submit"class="custom-btn black">{{ 'search.submit' | t }}</button>
           </form>
           <div class="search-results">
-            {% if search.results_count == 0 %}
-              <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+            {% if search.performed %}
+              {% if search.results_count == 0 %}
+                <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
               {% else %}
-              <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+                <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+              {% endif %}
             {% endif %}
           </div>
         </div>
@@ -40,15 +43,17 @@
   <div class="container">
     <div class="sr-in">
       <div class="collection-wrapper" id="ProductGrid">
-      {% if search.performed %}
-            {% paginate search.results by section.settings.number_of_product %}
-                {% for results in search.results %}
-                  {% render 'product-card-primary' | product: results %}
-                {% endfor %}
-                {% render 'pagination' | pagination: paginate %}
-              {% endpaginate %}
-            </div>
-      {% endif %}
+        {% if search.performed %}
+          {% if search.results_count > 0 %}
+            {% paginate search.results by 24 %}
+              {% for result in search.results %}
+                {% render 'product-card-primary', product: result %}
+              {% endfor %}
+              {% render 'pagination', pagination: paginate %}
+            {% endpaginate %}
+          {% endif %}
+        {% endif %}
+      </div>
       </div>
     </div>
   </div>

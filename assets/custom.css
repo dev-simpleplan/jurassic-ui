@@ -136,9 +136,9 @@
   height: 21px;
   border: 1px solid #fff;
   border-radius: 2px;
-  position: absolute;
+  /* position: absolute;
   left: 15px;
-  bottom: 15px;
+  bottom: 15px; */
 }
 .certificates-wrapper .fc_organic_auth {
   bottom: auto;

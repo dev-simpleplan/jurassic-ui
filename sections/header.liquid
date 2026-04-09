@@ -234,9 +234,9 @@
                     {% render 'icon-search' %}
                   </div>
                   <input
-                    name="options[prefix]"
+                    name="type"
                     type="hidden"
-                    value="last">
+                    value="product">
 
                   <div id="predictive-search" class="predictive-search" hidden>
                     <div class="ps-grid">
@@ -526,7 +526,7 @@ class PredictiveSearch {
   this.viewAll.style.display = hasResults ? 'flex' : 'none';
 
   // View all link
-  this.viewAll.href = `{{ routes.search_url }}?q=${encodeURIComponent(query)}&view=noindex`;
+  this.viewAll.href = `{{ routes.search_url }}?q=${encodeURIComponent(query)}&view=noindex&type=product`;
   this.viewAll.querySelector('span').textContent = query;
 
   this.open();
