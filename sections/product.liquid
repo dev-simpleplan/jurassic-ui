@@ -63,13 +63,31 @@
           <div class="pro-img">
             <div class="pro-right-side">
               <div class="prs-data">
-                {% if product.tags.size > 0 %}
+                {% if product.tags.size > 0 or product.metafields.custom.certificate or product.metafields.custom.quality_label != blank %}
                     <div class="fc_category_tags">
-                      {% for tag in product.tags %}
-                        {% unless tag == 'Best Seller' %}
-                          <span>{{ tag }}</span>
-                        {% endunless %}
-                      {% endfor %}
+                      {% if product.metafields.custom.certificate %}
+                        {% assign certificate = product.metafields.custom.certificate.value %}
+                        {% for item in product.metafields.custom.certificate.value %}
+                          <div class="fc_organic_auth">
+                            <img
+                              src="{{ item.badge_image | img_url:'master' }}"
+                              alt="{{ item.display_name }}"
+                              class="img_sizing">
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+
+                      {% if product.metafields.custom.quality_label != blank %}
+                        <span>{{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}</span>
+                      {% endif %}
+
+                      {% comment %}
+                        {% for tag in product.tags %}
+                          {% unless tag == 'Best Seller' %}
+                            <span>{{ tag }}</span>
+                          {% endunless %}
+                        {% endfor %}
+                      {% endcomment %}
                     </div>
                   {% endif %}
 
