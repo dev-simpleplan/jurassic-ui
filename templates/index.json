@@ -77,6 +77,17 @@
         "spacer_height": 140
       }
     },
+    "bestseller_MEec7q": {
+      "type": "bestseller",
+      "name": "Bestseller",
+      "settings": {
+        "collection": "new",
+        "heading": "What's New",
+        "subheading": "Seasonal favorites",
+        "cta_url": "shopify://collections",
+        "cta_text": "Explore Fresh Picks, Just In"
+      }
+    },
     "discovery-box": {
       "type": "discovery-box",
       "settings": {
@@ -574,6 +585,7 @@
     "spacer0",
     "bestseller",
     "spacer",
+    "bestseller_MEec7q",
     "discovery-box",
     "spacer7",
     "video-carousel",
