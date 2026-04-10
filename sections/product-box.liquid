@@ -839,15 +839,6 @@
     if (!btn || !form) return;
 
     form.addEventListener('submit', async (event) => {
-      const cornerCartActive = Boolean(
-        window.corner ||
-        document.querySelector('.corner-widget, #corner-widget-page-wrapper, #corner-cowi-cart-wrapper, #corner-cowi-header')
-      );
-
-      if (cornerCartActive) {
-        return;
-      }
-
       event.preventDefault();
       event.stopPropagation();
 
@@ -876,7 +867,9 @@
         btn.classList.add('success');
 
         document.dispatchEvent(new CustomEvent('cart:updated'));
-        document.querySelector('.cart-open')?.click();
+        window.setTimeout(() => {
+          document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
+        }, 100);
       } catch (error) {
         console.error('Product box add to cart failed', error);
         btn.classList.remove('loading');
