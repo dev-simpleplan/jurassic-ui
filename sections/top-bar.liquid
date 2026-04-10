@@ -8,7 +8,14 @@
                 <div class="tbr-text">{{ section.settings.rating_text }}</div>
             </div>
             <div class="tb-text">
-                <p>{{ section.settings.tbtext_text }}</p>
+                <p
+                  data-top-bar-shipping
+                  data-prefix="{{ section.settings.tbtext_prefix | default: 'Free shipping on orders above' | escape }}"
+                  data-default-amount="{{ section.settings.tbtext_amount | default: 450 }}"
+                  data-default-currency="{{ localization.country.currency.iso_code | default: cart.currency.iso_code | default: shop.currency }}"
+                >
+                  {{ section.settings.tbtext_prefix | default: 'Free shipping on orders above' }}
+                </p>
             </div>
             {% comment %} <div class="tb-lang-wrap">
                 {% if localization.available_countries.size > 1 %}
@@ -315,8 +322,83 @@ document.addEventListener('click', function (e) {
       }
     });
 
-    window.location.href = finalUrl.toString();
+window.location.href = finalUrl.toString();
   }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const topBarShipping = document.querySelector('[data-top-bar-shipping]');
+  if (!topBarShipping) return;
+
+  const marketThresholds = {
+    {% for block in section.blocks %}
+      {% if block.type == 'market_threshold' and block.settings.market_code != blank and block.settings.amount != blank %}
+        "{{ block.settings.market_code | downcase | strip }}": {{ block.settings.amount | json }},
+      {% endif %}
+    {% endfor %}
+  };
+
+  function resolveMarketKey() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let market = window.corner?.sessionData?.market || urlParams.get('country') || '{{ localization.country.iso_code }}';
+    let marketKey = String(market || '').toLowerCase().trim();
+
+    const countryMap = {
+      france: 'fr',
+      germany: 'de',
+      austria: 'at',
+      'united kingdom': 'gb',
+      'united states': 'us',
+      india: 'in'
+    };
+
+    if (countryMap[marketKey]) {
+      marketKey = countryMap[marketKey];
+    }
+
+    return marketKey;
+  }
+
+  function formatThreshold(amount) {
+    const currencyCode =
+      window.activeCurrency ||
+      topBarShipping.dataset.defaultCurrency ||
+      '{{ shop.currency }}';
+
+    const numericAmount = Number(amount);
+    if (Number.isNaN(numericAmount)) {
+      return amount;
+    }
+
+    return new Intl.NumberFormat(document.documentElement.lang || undefined, {
+      style: 'currency',
+      currency: currencyCode,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }).format(numericAmount);
+  }
+
+  function updateTopBarShipping() {
+    const prefix = topBarShipping.dataset.prefix || 'Free shipping on orders above';
+    const marketKey = resolveMarketKey();
+    const amount = marketThresholds[marketKey] ?? topBarShipping.dataset.defaultAmount;
+
+    topBarShipping.textContent = `${prefix} ${formatThreshold(amount)}`;
+  }
+
+  updateTopBarShipping();
+
+  let attempts = 0;
+  const retryTimer = window.setInterval(() => {
+    attempts += 1;
+    updateTopBarShipping();
+
+    if (window.corner?.sessionData?.market || attempts >= 5) {
+      window.clearInterval(retryTimer);
+    }
+  }, 700);
 });
 </script>
 
@@ -345,10 +427,36 @@ document.addEventListener('click', function (e) {
         },
         {
             "type": "text",
-            "id": "tbtext_text",
-            "label": "Announcement Text"
+            "id": "tbtext_prefix",
+            "label": "Announcement Prefix",
+            "default": "Free shipping on orders above"
+        },
+        {
+            "type": "number",
+            "id": "tbtext_amount",
+            "label": "Free Shipping Threshold",
+            "default": 450
         }
 
+    ],
+    "blocks": [
+        {
+            "type": "market_threshold",
+            "name": "Market Threshold",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "market_code",
+                    "label": "Country / Market Code",
+                    "info": "Use country codes like DE, IN, US, FR, GB"
+                },
+                {
+                    "type": "number",
+                    "id": "amount",
+                    "label": "Threshold Amount"
+                }
+            ]
+        }
     ],
     "presets": [
         {
