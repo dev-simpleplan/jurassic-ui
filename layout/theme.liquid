@@ -39,6 +39,70 @@
 
   {{ content_for_header }}
 
+    {% if template.name == 'index' %}
+      <script>
+        (function() {
+          try {
+            if (!sessionStorage.getItem('homepageLoaderSeen')) {
+              document.documentElement.classList.add('show-home-loader');
+            }
+          } catch (e) {}
+        })();
+      </script>
+      <style>
+        .homepage-loader {
+          position: fixed;
+          inset: 0;
+          z-index: 2147483647;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #000;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.45s ease, visibility 0.45s ease;
+          pointer-events: none;
+        }
+
+        .homepage-loader__media {
+          width: min(76vw, 520px);
+          max-width: 520px;
+        }
+
+        .homepage-loader__media img {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+
+        html.show-home-loader .homepage-loader {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        html.show-home-loader,
+        html.show-home-loader body {
+          overflow: hidden;
+          height: 100%;
+          overscroll-behavior: none;
+        }
+
+        html.show-home-loader body {
+          position: fixed;
+          width: 100%;
+          inset: 0;
+          touch-action: none;
+        }
+
+        html.home-loader-done .homepage-loader {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+        }
+      </style>
+    {% endif %}
+
     {% comment %} <lincustom.csseconnect" href="https://fonts.googleapis.com"> {% endcomment %}
     <link
       rel="preconnect"
@@ -95,7 +159,17 @@
     
   </head>
 
-  <body>
+  <body{% if template.name == 'index' %} class="template-index"{% endif %}>
+    {% if template.name == 'index' %}
+      <div class="homepage-loader" id="homepage-loader" aria-hidden="true">
+        <div class="homepage-loader__media">
+          <img
+            src="{{ 'home-loader.gif' | asset_url }}"
+            alt="Loading"
+            loading="eager">
+        </div>
+      </div>
+    {% endif %}
     {% section 'top-bar' %}
     {% sections 'header-group' %}
     {% comment %} Disabled - Using corner cart app now {% endcomment %}
@@ -252,6 +326,38 @@
 
 
     <script>
+      {% if template.name == 'index' %}
+        (function() {
+          let loaderDismissed = false;
+
+          const hideLoader = () => {
+            if (loaderDismissed) return;
+            loaderDismissed = true;
+
+            document.documentElement.classList.remove('show-home-loader');
+            document.documentElement.classList.add('home-loader-done');
+
+            try {
+              sessionStorage.setItem('homepageLoaderSeen', 'true');
+            } catch (e) {}
+
+            window.setTimeout(() => {
+              const loader = document.getElementById('homepage-loader');
+              if (loader) {
+                loader.remove();
+              }
+            }, 500);
+          };
+
+          const shouldShowLoader = document.documentElement.classList.contains('show-home-loader');
+
+          if (shouldShowLoader) {
+            window.addEventListener('load', hideLoader, { once: true });
+            window.setTimeout(hideLoader, 5000);
+          }
+        })();
+      {% endif %}
+
           AOS.init();
     </script>
 
