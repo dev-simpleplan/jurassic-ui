@@ -12,6 +12,13 @@ function canOpenOnHover(dropdown) {
   return !dropdown?.dataset.hoverLocked;
 }
 
+function isCornerCartActive() {
+  return Boolean(
+    window.corner ||
+    document.querySelector('.corner-widget, #corner-widget-page-wrapper, #corner-cowi-cart-wrapper, #corner-cowi-header')
+  );
+}
+
 function syncSelectedDropdownItem(parent) {
   if (!parent) return;
 
@@ -158,4 +165,58 @@ document.addEventListener('click', (e) => {
   if (!dropdownWrap) {
     closeAllDropdowns();
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.product-card-add-form').forEach((form) => {
+    if (form.dataset.ajaxBound === 'true') return;
+    form.dataset.ajaxBound = 'true';
+
+    form.addEventListener('submit', async (e) => {
+      if (isCornerCartActive()) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (form.dataset.submitting === 'true') return;
+      form.dataset.submitting = 'true';
+
+      const submitButton = form.querySelector('.add-to-cart-btn');
+      const originalLabel = submitButton ? submitButton.innerText : '';
+
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Add to cart failed: ${response.status}`);
+        }
+
+        await response.json();
+
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+        document.querySelector('.cart-open')?.click();
+      } catch (error) {
+        console.error('Product card add to cart failed', error);
+      } finally {
+        form.dataset.submitting = 'false';
+
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerText = originalLabel;
+        }
+      }
+    }, true);
+  });
 });

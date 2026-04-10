@@ -838,19 +838,56 @@
 
     if (!btn || !form) return;
 
-    form.addEventListener('submit', () => {
+    form.addEventListener('submit', async (event) => {
+      const cornerCartActive = Boolean(
+        window.corner ||
+        document.querySelector('.corner-widget, #corner-widget-page-wrapper, #corner-cowi-cart-wrapper, #corner-cowi-header')
+      );
+
+      if (cornerCartActive) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
       if (btn.classList.contains('loading')) return;
 
       btn.classList.remove('success');
       btn.classList.add('loading');
       btn.disabled = true;
 
-      window.setTimeout(() => {
-        if (!btn.classList.contains('success')) {
-          btn.classList.remove('loading');
-          btn.disabled = false;
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Add to cart failed: ${response.status}`);
         }
-      }, 2500);
+
+        await response.json();
+
+        btn.classList.remove('loading');
+        btn.classList.add('success');
+
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+        document.querySelector('.cart-open')?.click();
+      } catch (error) {
+        console.error('Product box add to cart failed', error);
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        return;
+      }
+
+      window.setTimeout(() => {
+        btn.classList.remove('loading', 'success');
+        btn.disabled = false;
+      }, 1200);
     });
   });
   </script>

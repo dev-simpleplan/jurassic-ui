@@ -1146,7 +1146,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
     flex-wrap: wrap;
   }
   .mega-menu-split {
-    padding: 30px 0 20px 10px;
+    padding: 10px 0 10px 10px;
   }
   .mega-menu-split .mms-left {
     gap: 20px;
@@ -1609,6 +1609,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   }
   .filter-buttton {
     min-width: 90px;
+  }
+  .child-block.non-sublink > ul {
+    grid-template-columns: 1fr;
   }
 }
 @media(max-width:425px){
