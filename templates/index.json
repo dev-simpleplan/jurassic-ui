@@ -71,14 +71,9 @@
         "cta_text": "Explore Fresh Picks, Just In"
       }
     },
-    "spacer": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
     "bestseller_MEec7q": {
       "type": "bestseller",
+      "disabled": true,
       "name": "Bestseller",
       "settings": {
         "collection": "new",
@@ -86,6 +81,12 @@
         "subheading": "Seasonal favorites",
         "cta_url": "shopify://collections",
         "cta_text": "Explore Fresh Picks, Just In"
+      }
+    },
+    "spacer": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 140
       }
     },
     "discovery-box": {
@@ -584,8 +585,8 @@
     "banner",
     "spacer0",
     "bestseller",
-    "spacer",
     "bestseller_MEec7q",
+    "spacer",
     "discovery-box",
     "spacer7",
     "video-carousel",
