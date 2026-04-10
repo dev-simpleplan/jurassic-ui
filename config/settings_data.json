@@ -30,10 +30,29 @@
       },
       "top-bar": {
         "type": "top-bar",
+        "blocks": {
+          "market_threshold_BBWJHb": {
+            "type": "market_threshold",
+            "settings": {
+              "market_code": "IN",
+              "amount": 13085
+            }
+          },
+          "market_threshold_L4ncwW": {
+            "type": "market_threshold",
+            "settings": {
+              "market_code": "DE",
+              "amount": 120
+            }
+          }
+        },
+        "block_order": [
+          "market_threshold_BBWJHb",
+          "market_threshold_L4ncwW"
+        ],
         "settings": {
           "rating_image": "shopify://shop_images/image_306.png",
-          "rating_text": "(4.7/5) “excellent”",
-          "tbtext_text": "Free Shipping from 120 €"
+          "rating_text": "(4.7/5) “excellent”"
         }
       }
     },
