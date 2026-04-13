@@ -42,6 +42,12 @@
 
                 {%- if selected_menu and selected_menu.links and selected_menu.links.size > 0 -%}
                   {%- assign nav_links = selected_menu.links -%}
+                  {%- assign selected_menu_title_downcase = selected_menu.title | downcase | strip -%}
+                  {%- assign selected_menu_url = selected_menu.url | default: 'javascript:void()' -%}
+
+                  {%- if selected_menu_title_downcase == 'wieder kaufen' or selected_menu_title_downcase == 'buy again' -%}
+                    {%- assign selected_menu_url = routes.account_url -%}
+                  {%- endif -%}
 
                   {%- comment -%} Determine if we need a dropdown {%- endcomment -%}
                   {%- assign top_count   = nav_links.size -%}
@@ -61,7 +67,7 @@
                   {%- if needs_dropdown -%}
                     <li class="nav-item has-mega-menu">
                       <div class="arrow">
-                        <a href="{{ selected_menu.url | default: 'javascript:void()' }}" class="nav-link">
+                        <a href="{{ selected_menu_url }}" class="nav-link">
                           {{ selected_menu.title | default: 'Menu' }}
                         </a>
                         <span class="nav_arrow_down">{% render 'icon-arrow_down' %}</span>
@@ -149,8 +155,13 @@
                                         <ul>
                                           {%- for link in nav_links -%}
                                             {%- if link.links == blank -%}
+                                              {%- assign nav_link_title_downcase = link.title | downcase | strip -%}
+                                              {%- assign nav_link_url = link.url -%}
+                                              {%- if nav_link_title_downcase == 'wieder kaufen' or nav_link_title_downcase == 'buy again' -%}
+                                                {%- assign nav_link_url = routes.account_url -%}
+                                              {%- endif -%}
                                               <li>
-                                                <a href="{{ link.url }}">{{ link.title }}</a>
+                                                <a href="{{ nav_link_url }}">{{ link.title }}</a>
                                               </li>
                                             {%- endif -%}
                                           {%- endfor -%}
@@ -190,8 +201,13 @@
                     {%- comment -%} Exactly one top-level link and no children → simple item {%- endcomment -%}
                     {%- assign single_link = nav_links.first -%}
                     {%- if single_link -%}
+                      {%- assign single_link_title_downcase = single_link.title | downcase | strip -%}
+                      {%- assign single_link_url = single_link.url -%}
+                      {%- if single_link_title_downcase == 'wieder kaufen' or single_link_title_downcase == 'buy again' -%}
+                        {%- assign single_link_url = routes.account_url -%}
+                      {%- endif -%}
                       <li class="nav-item no-mega-menu">
-                        <a href="{{ single_link.url }}" class="nav-link">{{ single_link.title }}</a>
+                        <a href="{{ single_link_url }}" class="nav-link">{{ single_link.title }}</a>
                       </li>
                     {%- endif -%}
                   {%- endif -%}

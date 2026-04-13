@@ -2395,7 +2395,16 @@ footer::before {
 .footer-bottom-in {
     display: flex;
     align-items: center;
+    /* justify-content: space-between; */
+    flex-direction: column;
+    gap: 15px;
+}
+.footer-base {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 40px;
+    width: 100%;
 }
 .footer-payment {
     display: flex;

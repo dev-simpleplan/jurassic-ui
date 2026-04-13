@@ -238,10 +238,30 @@
               <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
                 Only {{ current_variant.inventory_quantity }} Left
               </p>
-              <span class="dot_seperator"></span>
-              <p>Ships in 24 hrs</p>
-              <span class="dot_seperator"></span>
-              <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p>
+              {% comment %} <span class="dot_seperator"></span>
+              <p>Ships in 24 hrs</p> {% endcomment %}
+              
+              {% comment %} <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p> {% endcomment %}
+               {%- capture benefit_text -%}
+                {%- if product.tags contains 'Fresh fruit' -%}
+                  Freshly Picked
+                {%- elsif product.tags contains 'New' -%}
+                  Rare & Handpicked
+                {%- elsif product.tags contains 'Dried Fruit' or product.tags contains 'Date' -%}
+                  Pure & Raw
+                {%- elsif product.tags contains 'Fine food' or product.tags contains 'Honey' -%}
+                  Small-Batch · Artisanal
+                {%- else -%}
+                  {{ product.metafields.custom.benefit }}
+                {%- endif -%}
+              {%- endcapture -%}
+
+              {%- assign benefit_text = benefit_text | strip -%}
+
+              {%- if benefit_text != blank -%}
+                <span class="dot_seperator"></span>
+                <p>{{ benefit_text }}</p>
+              {%- endif -%}
             </div>
           </div>
         </div>

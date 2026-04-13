@@ -150,14 +150,6 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="footer-bottom-in">
-                <div class="footer__copyright">
-                    <p class="copyright-text">
-                        &copy;
-                        {{ shop.name | link_to: routes.root_url }}
-                        {{ 'now' | date: '%Y' }}
-                    </p>
-                    <p class="reserved"><span> | </span>All rights reserved.</p>
-                </div>
                 <div class="footer-links">
                     {% assign bottom_menu = linklists[section.settings.bottom_menu] %}
                     {% if bottom_menu == blank %}
@@ -175,9 +167,20 @@
                         {% endfor %}
                       </div>
                     {% endif %}
-                  </div>
+                </div>
+                <div class="footer-base">
+                  <div class="footer__copyright">
+                    <p class="copyright-text">
+                        &copy;
+                        {{ shop.name | link_to: routes.root_url }}
+                        {{ 'now' | date: '%Y' }}
+                    </p>
+                    <p class="reserved"><span> | </span>All rights reserved.</p>
+                </div>
+                
                 <div class="footer-made-with">
                     <p>Made with {% render 'red-heart' %} by <a href="https://www.simpleplanmedia.com/" target="_blank">SimplePlan</a></p>
+                </div>
                 </div>
             </div>
         </div>
