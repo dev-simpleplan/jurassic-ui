@@ -624,7 +624,37 @@
           </div>
           <div class="pa-div">
               <div class="product-desc">
-                {{ product.metafields.custom.technical_details | metafield_tag }}
+                {% comment %} {{ product.metafields.custom.technical_details | metafield_tag }} {% endcomment %}
+                 <div class="tech-list">
+                    {%- if product.metafields.custom.alternative_name != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">Scientific Name:</div>
+                        <div class="ti-data">{{ product.metafields.custom.alternative_name }}</div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if product.metafields.custom.country_of_origin.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">Origin:</div>
+                        <div class="ti-data">{{ product.metafields.custom.country_of_origin.value.country_name }}</div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if product.metafields.custom.weight_per_piece != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">Weight per piece:</div>
+                        <div class="ti-data">{{ product.metafields.custom.weight_per_piece }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.quality_label != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">Certification:</div>
+                        <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
+                    </div>
+                    {%- endif -%}
+
+                 </div>
               </div>
           </div>
        </div>

@@ -4549,6 +4549,13 @@ section.imagescroll {
     flex-direction: column;
     gap: 10px;
 }
+.bcw-content p a {
+    color: #fa8e29;
+    transition: .2s ease all;
+}
+.bcw-content p a:hover {
+    text-decoration: underline;
+}
 .article-share p {
     font-weight: 500;
     font-size: 10px;
@@ -4561,6 +4568,13 @@ section.imagescroll {
     align-items: center;
     justify-content: flex-start;
     gap: 18px;
+}
+.article-share .share-wrap img {
+    width: 20px;
+    transition: .2s ease all;
+}
+.article-share .share-wrap img:hover {
+    transform: scale(1.12);
 }
 .bcw-right {
     

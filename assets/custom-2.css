@@ -2222,6 +2222,28 @@ li.variant-value.active .perKg {
 .pa-div .product-desc p {
   font-size: 15px;
 }
+.product-desc .tech-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tech-list .tech-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.tech-item .ti-name {
+  font-weight: 700;
+  line-height: 150%;
+  font-size: 15px;
+}
+.tech-item .ti-data {
+  font-weight: 400;
+  line-height: 150%;
+  font-size: 15px;
+  text-transform: capitalize;
+}
 .pa-item {
   padding: 20px 0;
   border-bottom: 1px solid #e0e0e0;
