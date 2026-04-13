@@ -2237,6 +2237,7 @@ li.variant-value.active .perKg {
   font-weight: 700;
   line-height: 150%;
   font-size: 15px;
+  white-space: nowrap;
 }
 .tech-item .ti-data {
   font-weight: 400;
