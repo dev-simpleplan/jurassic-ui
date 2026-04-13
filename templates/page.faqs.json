@@ -48,7 +48,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Find all shipping options here:Shipping policy. The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.",
-            "answer": "<p>Answer to the frequently asked question goes here.</p>",
+            "answer": "<p>Find all shipping options here:</p><p>Shipping policy. </p><p></p><p>The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).</p><p>The delivery delays are not guaranteed except for Express.</p>",
             "category_number": 1
           }
         },
