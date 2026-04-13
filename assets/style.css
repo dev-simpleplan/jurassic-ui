@@ -5435,3 +5435,7 @@ section.imagescroll {
 }
 
 .pull-right { font-weight: bold; }
+.okeReviews.oke-w {
+    padding-left: 40px!important;
+    padding-right: 40px!important;
+}
