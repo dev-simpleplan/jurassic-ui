@@ -668,7 +668,7 @@
   }
   .footer-bottom-in {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
   .image-text-scroll {
     display: flex;
@@ -997,9 +997,15 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   #predictive-search {
     width: 100%;
   }
+  .footer-bottom-in .footer-links .blocks {
+    gap: 20px;
+  }
 }
 
 @media (max-width: 767px) {
+  .footer-base {
+    flex-direction: column;
+  }
   .hnav-menu {
     width: 85%;
     padding: 30px 20px 40px 20px;
