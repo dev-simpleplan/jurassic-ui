@@ -285,13 +285,13 @@
   }
   .hiw-search .search-input-bar input {
     background-color: #fff;
-    padding-left: 20px;
+    padding-left: 35px;
     width: 100%;
   }
   .hiw-search .search-input-bar svg {
-    right: 35px;
+    /* right: 35px; */
     top: 22px;
-    left: auto;
+    left: 35px;
   }
   .hiw-search .search-input-bar.active {
     width: 100%;
@@ -1243,9 +1243,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .scrollimg-wrap .scroll-image img {
     object-fit: cover;
   }
-  .worldMap {
+  /* .worldMap {
     padding-bottom: 80px;
-  }
+  } */
   .jn-in {
     gap: 130px;
   }
@@ -1628,6 +1628,12 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
 @media(max-width:400px) {
   .fruits_card {
     min-width: inherit;
+  }
+  .ps-grid {
+    grid-template-columns: 1fr;
+  }
+  .ps-grid .ps-suggestions {
+    display: none;
   }
 }
 @media(max-width:350px){

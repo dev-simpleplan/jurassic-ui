@@ -917,13 +917,14 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 #predictive-search {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: auto;
   right: 0;
   margin: 0 auto;
-  width: 75%;
+  max-width: 840px;
   background: var(--body-bg);
   border: 1px solid #ddd;
   z-index: 100;
+  width: 100%;
 }
 
 .ps-grid {
