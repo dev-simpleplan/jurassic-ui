@@ -47,33 +47,33 @@
         "faq_item_dwyJXq": {
           "type": "faq_item",
           "settings": {
-            "question": "Find all shipping options here:Shipping policy. The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.",
-            "answer": "<p>Find all shipping options here:</p><p>Shipping policy. </p><p></p><p>The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).</p><p>The delivery delays are not guaranteed except for Express.</p>",
+            "question": "How much does delivery cost and how long does it take?",
+            "answer": "<p>Find all shipping options here:</p><p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\">Shipping policy. </a></p><p></p><p>The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).</p><p>The delivery delays are not guaranteed except for Express.</p>",
             "category_number": 1
           }
         },
         "faq_item_9dY96R": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question",
-            "answer": "<p>Answer to the frequently asked question goes here.</p>",
+            "question": "When will it be delivered?",
+            "answer": "<p>It depends on when you pass your order.</p><p>Order <strong>until Thursday 20:00</strong> so that your fruits will be shipped the next Monday, Tuesday or Wednesday (delivery one to two days after). If you order after Thursday 19:00 (and before Thursday 20:00 the next week) your fruits will be shipped the second next Monday, Tuesday or Wednesday.</p><p>This weekly schedule allows us to have minimum waste (we ask our producers to gather the exact quantities our customers need) and to have the freshest fruits possible (our producers pick the fruits at the very last minute).<br/><br/>Please note that the shipping delay indicated by your chosen carrier affects only the delivery time, not the shipping day itself. We do not store fruits; they are harvested once a week. Therefore, even if you select express shipping, the shipment will not leave earlier than the date indicated at checkout.</p>",
             "category_number": 1
           }
         },
         "faq_item_L6kMhr": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question",
-            "answer": "<p>Answer to the frequently asked question goes here.</p>",
-            "category_number": 2
+            "question": "Must I be at home to receive the delivery?",
+            "answer": "<p>It is the best but it is not mandatory! If you are not at home you have different options:</p><p>You can deliver to another address such as your office, a small local store, a neighbour's home, a relative's home, etc.</p><p>You can set that when you are not at home you want the parcel to be delivered to another address or to be left at your doorstep. To set your personal options, you just have to sign in at <strong>UPS My Choice</strong>.</p>",
+            "category_number": 1
           }
         },
         "faq_item_FpgG3R": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question",
-            "answer": "<p>Answer to the frequently asked question goes here.</p>",
-            "category_number": 3
+            "question": "Can I come and pick up my order?",
+            "answer": "<p>Yes, you can pick up your order in Essen and save on shipping costs.</p><p>As we do not have a physical store, orders must still be <strong>placed online</strong> so you can choose your payment method and so we can pre-order the fresh fruits. We order everything fresh each week and do not sell from stock.<br/>For the best availability, we recommend placing your order by Thursday at 8:00 PM.</p><p>Pickup is possible once you receive the <strong>shipping confirmation email</strong> (this is sent automatically and <strong>looks the same as for regular shipping orders</strong>). After that, you can collect your package:<br/>Monday to Sunday (except Thursday), ideally as soon as possible, between 8:00 AM and 12:00 PM.</p>",
+            "category_number": 1
           }
         }
       },
