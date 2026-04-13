@@ -1005,6 +1005,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
 @media (max-width: 767px) {
   .footer-base {
     flex-direction: column;
+    gap: 15px;
   }
   .hnav-menu {
     width: 85%;
