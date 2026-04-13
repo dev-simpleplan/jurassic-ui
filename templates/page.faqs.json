@@ -15,33 +15,39 @@
         "faq_category_r9dyJK": {
           "type": "faq_category",
           "settings": {
-            "category_name": "Category 1"
+            "category_name": "Shipping & Delivery"
           }
         },
         "faq_category_JCyg4Q": {
           "type": "faq_category",
           "settings": {
-            "category_name": "Category 2"
+            "category_name": "Order"
           }
         },
         "faq_category_zM8QB3": {
           "type": "faq_category",
           "settings": {
-            "category_name": "Category 3"
+            "category_name": "Products"
+          }
+        },
+        "faq_category_ceEWFq": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "Payment"
           }
         },
         "faq_item_FdB7dk": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question",
-            "answer": "<p>Answer to the frequently asked question goes here.</p>",
+            "question": "Where do you deliver? ",
+            "answer": "<p>We deliver to Austria, Belgium, Bulgaria, Croatia, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Switzerland.<br/><em>Contact us if your country is not in this list.</em></p>",
             "category_number": 1
           }
         },
         "faq_item_dwyJXq": {
           "type": "faq_item",
           "settings": {
-            "question": "Frequently asked question",
+            "question": "Find all shipping options here:Shipping policy. The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.",
             "answer": "<p>Answer to the frequently asked question goes here.</p>",
             "category_number": 1
           }
@@ -75,6 +81,7 @@
         "faq_category_r9dyJK",
         "faq_category_JCyg4Q",
         "faq_category_zM8QB3",
+        "faq_category_ceEWFq",
         "faq_item_FdB7dk",
         "faq_item_dwyJXq",
         "faq_item_9dY96R",
