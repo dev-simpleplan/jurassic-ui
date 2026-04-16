@@ -47,7 +47,8 @@
     "placeholder": "Artikel, Seiten oder Produkte suchen",
     "no_results_html": "Für {{ terms }} wurden keine Ergebnisse gefunden.",
     "title": "Suchen",
-    "submit": "Suchen"
+    "submit": "Suchen",
+    "placeholder_fruits": "Suche nach Früchten"
   },
   "collections": {
     "title": "Sammlungen"
@@ -56,7 +57,21 @@
     "product": {
       "from": "Aus",
       "add_to_cart": "in den Warenkorb legen",
-      "sold_out": "Ausverkauft"
+      "sold_out": "Ausverkauft",
+      "inventory_status": "Nur noch {{ count }} verfügbar"
     }
+  },
+  "shopify": {
+    "checkout": {
+      "payment": {
+        "multiple_primary_payment_not_allowed": "Ungültige Zahlungsmethoden"
+      }
+    }
+  },
+  "benefits": {
+    "freshly_picked": "Frisch gepflückt",
+    "rare_handpicked": "Selten & Handverlesen",
+    "pure_raw": "Pur & Unverarbeitet",
+    "artisanal": "Kleinserie · Handgefertigt"
   }
 }
