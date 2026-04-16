@@ -1,129 +1,82 @@
 <section class="newsletter">
-  <div class="newsletter-top">
-    <div class="nlt-image-wrap">
-      <div class="nlt-left">
-        <img src="{{ section.settings.left-image |img_url: 'master' }}" alt="Logo">
-      </div>
-      <div class="nlt-right">
-        <img src="{{ section.settings.right-image |img_url: 'master' }}" alt="Logo">
-      </div>
-    </div>
-  </div>
-  <div class="newsletter-bottom">
-    <div class="container">
-      <div class="nl-in">
-        <div class="nli-headings">
-          <div class="heading center">
-            <h2 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.heading }}</h2>
-            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">{{ section.settings.text }}</p>
-          </div>
-        </div>
-        <div class="nl-form">
-          {% form 'customer' %}
-            <div class="form-in">
-              <div class="email_input">
-                <input
-                  type="email"
-                  name="contact[email]"
-                  class=""
-                  placeholder="Enter Email Address"
-                  required
-                >
-              </div>
-              <div class="submit_btn">
-                <input type="submit" class="custom-btn black" value="Subscribe">
-              </div>
+    <div class="newsletter-top">
+        <div class="nlt-image-wrap">
+            <div class="nlt-left">
+                <img src="{{ section.settings.left-image |img_url: 'master' }}" alt="Logo">
             </div>
-            {% comment %} {% if form.posted_successfully? %}
-              <script>
-                window.location.href = '/pages/thank-you';
-              </script>
-            {% elsif form.errors %}
-              <div class="form-error">
-                <p>There was an error submitting the form. Please check your email address and try again.</p>
-              </div>
-            {% endif %} {% endcomment %}
-          {% endform %}
+            <div class="nlt-right">
+                <img src="{{ section.settings.right-image |img_url: 'master' }}" alt="Logo">
+            </div>
         </div>
-        <div class="newsletter-success" style="display:none;">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="green">
-            <path d="M7.629 13.233L4.396 10l-1.414 1.414 4.647 4.647L17.02 6.67l-1.414-1.414z" />
-          </svg>
-          <span>Subscribed successfully!</span>
-        </div>
-      </div>
     </div>
-  </div>
+    <div class="newsletter-bottom">
+        <div class="container">
+            <div class="nl-in">
+                <div class="nli-headings">
+                    <div class="heading center">
+                        <h2 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.heading }}</h2>
+                        <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">{{ section.settings.text }}</p>
+                      </div>
+                </div>
+                <div class="nl-form">
+                    {% form 'customer' %}
+                    <div class="form-in">
+                        <div class="email_input">
+                        <input
+                            type="email"
+                            name="contact[email]"
+                            class=""
+                            placeholder="Enter Email Address"
+                            required>
+                        </div>
+                        <div class="submit_btn">
+                        <input
+                            type="submit"
+                            class="custom-btn black"
+                            value="Subscribe">
+                        </div>
+                    </div>
+                    {% if form.posted_successfully? %}
+                        <script>
+                        window.location.href = '/pages/thank-you';
+                        </script>
+                    {% elsif form.errors %}
+                        <div class="form-error">
+                        <p>There was an error submitting the form. Please check your email address and try again.</p>
+                        </div>
+                    {% endif %}
+                    {% endform %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </section>
 
 {% schema %}
-{
-  "name": "Newsletter",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "left-image",
-      "label": "Left Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "right-image",
-      "label": "Right Image"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "text",
-      "label": "Text"
-    }
-  ]
-}
-{% endschema %}
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector('.nl-form form');
-  const successBox = document.querySelector('.newsletter-success');
-
-  if (!form) return;
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const action = form.action;
-
-    fetch(action, {
-      method: "POST",
-      body: formData,
-      redirect: "follow"
-    })
-    .then((response) => {
-      // Shopify usually redirects on success
-      if (response.redirected || response.url.includes("contact")) {
-        form.reset();
-        successBox.style.display = "flex";
-      } else {
-        throw new Error("Submission failed");
+  {
+    "name": "Newsletter",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "left-image",
+        "label": "Left Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "right-image",
+        "label": "Right Image"
+      }, 
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      }, 
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text"
       }
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("Something went wrong. Please try again.");
-    });
-  });
-});
-</script>
-<style>
-    .newsletter-success {
-  margin-top: 15px;
-  color: green;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
-</style>
+    ]
+  }
+{% endschema %}
