@@ -13,7 +13,8 @@
     "submit": "Recherche",
     "placeholder": "Rechercher des articles, des pages ou des produits",
     "placeholder_fruits": "Rechercher des fruits",
-    "no_results_html": "Aucun résultat trouvé pour {{ terms }}"
+    "no_results_html": "Aucun résultat trouvé pour {{ terms }}",
+    "results_for_html": "{{ count }} résultats trouvés pour {{ terms }}"
   },
   "shopify": {
     "checkout": {
