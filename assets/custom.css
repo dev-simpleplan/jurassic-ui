@@ -583,6 +583,7 @@
   align-items: center;
   gap: 5px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .fc_trust_text p {

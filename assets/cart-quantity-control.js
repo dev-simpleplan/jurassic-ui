@@ -42,11 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Update inventory text
       const inventoryQty = parseInt(inventory, 10) || 0;
+      const inventoryTemplate = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
       const inventoryText = inventoryQty <= 0
-        ? 'Out of stock'
+        ? (window.themeStrings?.outOfStock || 'Out of stock')
         : inventoryQty < 100
-          ? `Only ${inventoryQty} left`
-          : 'In stock';
+          ? inventoryTemplate.replace('__COUNT__', inventoryQty)
+          : (window.themeStrings?.inStock || 'In stock');
       card.querySelector('.fc_trust_text p').textContent = inventoryText;
       card.querySelector('.fc_trust_text p').classList.toggle('low-stock', inventoryQty > 0 && inventoryQty < 100);
       

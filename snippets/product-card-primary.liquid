@@ -237,11 +237,11 @@
             <div class="fc_trust_text">
               <p class="{% if current_variant.available and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity < 100 %}low-stock{% endif %}">
                 {% if current_variant.available == false or current_variant.inventory_quantity <= 0 %}
-                  Out of stock
+                  {{ 'products.product.out_of_stock' | t }}
                 {% elsif current_variant.inventory_quantity < 100 %}
-                  Only {{ current_variant.inventory_quantity }} left
+                  {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
                 {% else %}
-                  In stock
+                  {{ 'products.product.in_stock' | t }}
                 {% endif %}
               </p>
               {% comment %} <span class="dot_seperator"></span>

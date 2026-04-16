@@ -21,10 +21,11 @@ function isCornerCartActive() {
 
 function getInventoryMessage(inventory, isAvailable = true) {
   const qty = parseInt(inventory, 10) || 0;
+  const template = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
 
-  if (!isAvailable || qty <= 0) return 'Out of stock';
-  if (qty < 100) return `Only ${qty} left`;
-  return 'In stock';
+  if (!isAvailable || qty <= 0) return window.themeStrings?.outOfStock || 'Out of stock';
+  if (qty < 100) return template.replace('__COUNT__', qty);
+  return window.themeStrings?.inStock || 'In stock';
 }
 
 function syncSelectedDropdownItem(parent) {
@@ -176,8 +177,8 @@ document.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.product-card-add-form').forEach((form) => {
+window.bindProductCardAddForms = function (scope = document) {
+  scope.querySelectorAll('.product-card-add-form').forEach((form) => {
     if (form.dataset.ajaxBound === 'true') return;
     form.dataset.ajaxBound = 'true';
 
@@ -228,5 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, true);
   });
-});
+};
 
+document.addEventListener('DOMContentLoaded', () => {
+  window.bindProductCardAddForms(document);
+});

@@ -64,10 +64,9 @@
       "from": "From",
       "add_to_cart": "Add to Cart",
       "sold_out": "Sold Out",
-      // "inventory_status": "Only {{ count }} Left"
-      "in_stock": "In Stock",
-      "out_of_stock": "Out of Stock",
-      "inventory_status": "Only {{ count }} Left"
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "inventory_status": "Only {{ count }} left"
     }
   },
   "benefits": {

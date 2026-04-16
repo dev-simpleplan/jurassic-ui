@@ -59,6 +59,8 @@
       "from": "Aus",
       "add_to_cart": "in den Warenkorb legen",
       "sold_out": "Ausverkauft",
+      "in_stock": "Auf Lager",
+      "out_of_stock": "Nicht auf Lager",
       "inventory_status": "Nur noch {{ count }} verfügbar"
     }
   },

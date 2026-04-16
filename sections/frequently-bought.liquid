@@ -36,7 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (card) {
               container.appendChild(card);
-              
+
+              if (typeof window.bindProductCardAddForms === 'function') {
+                window.bindProductCardAddForms(card);
+              }
+
               initVariantLogic(card);
             }
           })
@@ -88,11 +92,12 @@ function initVariantLogic(card) {
 
       if (inventoryText) {
         const inventoryQty = parseInt(variant.dataset.inventory, 10) || 0;
+        const inventoryTemplate = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
         inventoryText.textContent = inventoryQty <= 0
-          ? 'Out of stock'
+          ? (window.themeStrings?.outOfStock || 'Out of stock')
           : inventoryQty < 100
-            ? `Only ${inventoryQty} left`
-            : 'In stock';
+            ? inventoryTemplate.replace('__COUNT__', inventoryQty)
+            : (window.themeStrings?.inStock || 'In stock');
         inventoryText.classList.toggle('low-stock', inventoryQty > 0 && inventoryQty < 100);
       }
 

@@ -89,9 +89,10 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
   function getInventoryMessage(inventory) {
     const qty = parseInt(inventory, 10) || 0;
-    if (qty <= 0) return "Out of stock";
-    if (qty < 100) return `Only ${qty} left`;
-    return "In stock";
+    const template = window.themeStrings?.inventoryStatus || "Only __COUNT__ left";
+    if (qty <= 0) return window.themeStrings?.outOfStock || "Out of stock";
+    if (qty < 100) return template.replace("__COUNT__", qty);
+    return window.themeStrings?.inStock || "In stock";
   }
 
   document.querySelectorAll(".product-card-primary").forEach((card) => {

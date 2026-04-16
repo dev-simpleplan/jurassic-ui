@@ -5095,6 +5095,10 @@ section.imagescroll {
 .fc_add_to_cart:has(> .add-to-cart-btn:disabled) {
   background: none;
     border: 1px solid #f7a816;
+    cursor: not-allowed;
+}
+.add-to-cart-btn:disabled {
+    cursor: not-allowed;
 }
 .product_delivery_modal_container.show {
     display: flex!important;

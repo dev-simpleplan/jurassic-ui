@@ -67,6 +67,8 @@
       "from": "De",
       "add_to_cart": "Ajouter au panier",
       "sold_out": "Épuisé",
+      "in_stock": "En stock",
+      "out_of_stock": "Rupture de stock",
       "inventory_status": "Plus que {{ count }} disponible"
     }
   },
