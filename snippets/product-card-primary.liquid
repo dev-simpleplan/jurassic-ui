@@ -235,8 +235,17 @@
               </form>
             </div>
             <div class="fc_trust_text">
-              <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
+              {% comment %} <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
                 {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
+              </p> {% endcomment %}
+              <p class="{% if current_variant.inventory_quantity < 100 %}low-stock{% endif %}">
+                {%- if current_variant.inventory_quantity <= 0 -%}
+                  {{ 'products.product.out_of_stock' | t }}
+                {%- elsif current_variant.inventory_quantity < 100 -%}
+                  {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
+                {%- else -%}
+                  {{ 'products.product.in_stock' | t }}
+                {%- endif -%}
               </p>
               {% comment %} <span class="dot_seperator"></span>
               <p>Ships in 24 hrs</p> {% endcomment %}

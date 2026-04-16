@@ -16,18 +16,46 @@
   <div class="container">
       <div class="bcrum-in">
         <ul>
-          <li><a href="{{ routes.root_url }}">Home</a></li>
-          {% comment %} <li><a href="/collections/all">Shop All</a></li> {% endcomment %}
-          {% assign current_collection = collection | default: product.collections.first %}
-          {% if current_collection %}
-            <li>
-              <a href="{{ current_collection.url }}">
-                {{ current_collection.title }}
-              </a>
-            </li>
-          {% endif %}
-          {% comment %} <li><span>{{ product.title }}</span></li> {% endcomment %}
-        </ul>
+  <li><a href="{{ routes.root_url }}">Home</a></li>
+
+  {%- liquid
+    assign selected_col = nil
+    # Define the handles you want to skip
+    assign generic_handles = "all,all-products,all-fruits,all-fruit,frontpage,best-seller" | split: ","
+    
+    # 1. Check if we are currently in a valid collection
+    if collection
+      assign is_generic = false
+      if generic_handles contains collection.handle
+        assign is_generic = true
+      endif
+
+      if is_generic == false
+        assign selected_col = collection
+      endif
+    endif
+
+    # 2. If no collection selected yet, loop through product collections
+    if selected_col == nil
+      for col in product.collections
+        if generic_handles contains col.handle
+          continue
+        else
+          assign selected_col = col
+          break
+        endif
+      endfor
+    endif
+  -%}
+
+  {%- if selected_col -%}
+    <li>
+      <a href="{{ selected_col.url }}">
+        {{ selected_col.title }}
+      </a>
+    </li>
+  {%- endif -%}
+</ul>
       </div>
   </div>
 </div>
@@ -266,14 +294,12 @@
                 </div>
 
               {% when 'product_info' %}
+                {%- if product.metafields.custom.additional_information.value != blank -%}
                 <div class="product-info-block">
+                  {%- comment -%} Testimonials will still show here if they exist {%- endcomment -%}
                   <div class="pro-test formobile">
                     {% for block in section.blocks %}
-                      {% if block.settings.show_testimonial 
-                        and product.metafields.custom.title_testimonial != blank %}
-                        {% comment %} <div class="tr-okendo">
-                          <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-                        </div> {% endcomment %}
+                      {% if block.settings.show_testimonial and product.metafields.custom.title_testimonial != blank %}
                         <div class="tr-testimonial">
                           {% render 'testimonial-icon' %}
                           {{ product.metafields.custom.title_testimonial | metafield_tag }}
@@ -281,28 +307,6 @@
                       {% endif %}
                     {% endfor %}
                   </div>
-                  {% comment %} For Origin {% endcomment %}
-                  {% comment %} <div class="pi-item">
-                    {% render 'green-tick' %}
-                    <div class="pii-info">
-                      <p>
-                        <strong>Origin:</strong>
-                        {{ product.metafields.custom.country_of_origin.value.country_name }}
-                      </p>
-                    </div>
-                  </div> {% endcomment %}
-                  {% comment %} Seasonality {% endcomment %}
-                  {% comment %} <div class="pi-item">
-                    {% render 'green-tick' %}
-                    <div class="pii-info">
-                      <p>
-                        <strong>Seasonality:</strong>
-                        {{ product.metafields.custom.country_season.value.season.value.seasonality }}
-                      </p>
-                    </div>
-                  </div> {% endcomment %}
-
-                  {% comment %} Additional Information {% endcomment %}
 
                   {% for item in product.metafields.custom.additional_information.value %}
                     <div class="pi-item">
@@ -315,8 +319,8 @@
                       </div>
                     </div>
                   {% endfor %}
-
                 </div>
+              {%- endif -%}
 
               {% when 'store_usp' %}
                 <div class="store-usp">
