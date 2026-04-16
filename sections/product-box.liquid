@@ -313,9 +313,14 @@
                     <div class="sui-icon">
                       <img src="{{ block.settings.shipping_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.shipping_usp_text }}">
                     </div>
-                    <div class="sui-txt">
+                    {% comment %} <div class="sui-txt">
                       <a href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
-                    </div>
+                    </div> {% endcomment %}
+                    <div class="sui-txt">
+  <a href="{{ shop.shipping_policy.url }}">
+    {{ block.settings.shipping_usp_text }}
+  </a>
+</div>
                   </div>
 
                   {% comment %} For Freshness USP {% endcomment %}
