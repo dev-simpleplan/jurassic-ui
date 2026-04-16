@@ -94,14 +94,16 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const action = form.getAttribute("action");
+    const action = form.action;
 
     fetch(action, {
       method: "POST",
-      body: formData
+      body: formData,
+      redirect: "follow"
     })
     .then((response) => {
-      if (response.ok) {
+      // Shopify usually redirects on success
+      if (response.redirected || response.url.includes("contact")) {
         form.reset();
         successBox.style.display = "flex";
       } else {
