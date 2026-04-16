@@ -92,8 +92,8 @@
     "discovery-box": {
       "type": "discovery-box",
       "settings": {
-        "product": "discovery-box",
-        "bg-image": "shopify://shop_images/66e9e4d3ba7ae3073620862b14be69db63c97069.png",
+        "product": "exotic-fruit-discovery-box",
+        "bg-image": "shopify://shop_images/Rectangle_25273.png",
         "heading": "Embark on a Flavor Adventure with Discovery Box",
         "para": "New to Jurassic? This Discovery Box is your perfect start.",
         "user_image": "shopify://shop_images/5LAB10.jpg",
