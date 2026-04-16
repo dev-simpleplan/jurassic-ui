@@ -1078,8 +1078,3 @@ section.faq-page .faq-head h1 {
     grid-template-columns: 1fr;
   }
 }
-
-
-.scroll-sec .scroll-nav{
-  display: none !important;
-}
