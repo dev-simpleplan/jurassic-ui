@@ -23,14 +23,14 @@
           "type": "reviews",
           "settings": {
             "review-top": "Facebook",
-            "review_star": 4
+            "review_star": 4.3
           }
         },
         "reviews_EEYp6c": {
           "type": "reviews",
           "settings": {
             "review-top": "Trustpilot",
-            "review_star": 4.4
+            "review_star": 4.5
           }
         },
         "reviews_FXWz8j": {
