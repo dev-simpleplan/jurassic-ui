@@ -1080,3 +1080,6 @@ section.faq-page .faq-head h1 {
     grid-template-columns: 1fr;
   }
 }
+.owl-theme .owl-dots .owl-dot span{
+  background-color: #f4f2f2 !important;
+}
