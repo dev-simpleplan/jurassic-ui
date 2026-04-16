@@ -61,6 +61,13 @@
             "col_name": ""
           }
         },
+        "collection_C7k3BY": {
+          "type": "collection",
+          "settings": {
+            "col": "new",
+            "col_name": "New"
+          }
+        },
         "collection_JiN3yp": {
           "type": "collection",
           "settings": {
@@ -77,6 +84,7 @@
         "collection_m7RmEV",
         "collection_Hixxmw",
         "collection_nnUfpe",
+        "collection_C7k3BY",
         "collection_JiN3yp"
       ],
       "settings": {
