@@ -1248,6 +1248,7 @@ span.cart-compare-price {
 .filter-cross-div .filter-close-mob {
   width: 18px;
   height: 18px;
+  cursor: pointer;
 }
 .filter-cross-div .filter-close-mob svg {
   width: 100%;
