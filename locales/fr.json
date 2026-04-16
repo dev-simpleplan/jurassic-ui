@@ -10,6 +10,68 @@
 {
   "search": {
     "title": "Recherche",
-    "submit": "Recherche"
+    "submit": "Recherche",
+    "placeholder": "Rechercher des articles, des pages ou des produits",
+    "placeholder_fruits": "Rechercher des fruits",
+    "no_results_html": "Aucun résultat trouvé pour {{ terms }}"
+  },
+  "shopify": {
+    "checkout": {
+      "payment": {
+        "multiple_primary_payment_not_allowed": "Modes de paiement non valides"
+      }
+    }
+  },
+  "404": {
+    "not_found": "Page introuvable.",
+    "back_to_shopping": "De retour au magasinage"
+  },
+  "blog": {
+    "article_comments": "Commentaires",
+    "comment_form_body": "Commentaire",
+    "comment_form_email": "Courriel",
+    "comment_form_name": "Nom",
+    "comment_form_submit": "Publier",
+    "comment_form_title": "Ajouter un commentaire"
+  },
+  "cart": {
+    "checkout": "Paiement",
+    "title": "Panier",
+    "update": "Mettre à jour",
+    "remove": "Supprimer"
+  },
+  "customers": {
+    "login": {
+      "email": "Courriel",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "title": "Connexion"
+    }
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Ajouter à Cartes",
+    "card": "Carte cadeau",
+    "expired": "Cette carte-cadeau a expiré",
+    "expires_on": "Expire le {{ expires_on }}",
+    "use_at_checkout": "Utilisez cette carte-cadeau lors du paiement"
+  },
+  "password": {
+    "title": "Ce magasin est privé.",
+    "password": "Mot de passe",
+    "enter": "Entrer"
+  },
+  "products": {
+    "product": {
+      "from": "De",
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "inventory_status": "Plus que {{ count }} disponible"
+    }
+  },
+  "benefits": {
+    "freshly_picked": "Fraîchement cueillis",
+    "rare_handpicked": "Rares et triés sur le volet",
+    "pure_raw": "Pur & Brut",
+    "artisanal": "En petite quantité · Artisanal"
   }
 }
