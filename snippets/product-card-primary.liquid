@@ -235,17 +235,14 @@
               </form>
             </div>
             <div class="fc_trust_text">
-              {% comment %} <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
-                {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
-              </p> {% endcomment %}
-              <p class="{% if current_variant.inventory_quantity < 100 %}low-stock{% endif %}">
-                {%- if current_variant.inventory_quantity <= 0 -%}
-                  {{ 'products.product.out_of_stock' | t }}
-                {%- elsif current_variant.inventory_quantity < 100 -%}
-                  {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
-                {%- else -%}
-                  {{ 'products.product.in_stock' | t }}
-                {%- endif -%}
+              <p class="{% if current_variant.available and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity < 100 %}low-stock{% endif %}">
+                {% if current_variant.available == false or current_variant.inventory_quantity <= 0 %}
+                  Out of stock
+                {% elsif current_variant.inventory_quantity < 100 %}
+                  Only {{ current_variant.inventory_quantity }} left
+                {% else %}
+                  In stock
+                {% endif %}
               </p>
               {% comment %} <span class="dot_seperator"></span>
               <p>Ships in 24 hrs</p> {% endcomment %}
@@ -264,6 +261,13 @@
                   {{ product.metafields.custom.benefit }}
                 {%- endif -%}
               {%- endcapture -%}
+
+              {%- assign benefit_text = benefit_text | strip -%}
+
+              {%- if benefit_text != blank -%}
+                <span class="dot_seperator"></span>
+                <p>{{ benefit_text }}</p>
+              {%- endif -%}
 
               {%- assign benefit_text = benefit_text | strip -%}
 

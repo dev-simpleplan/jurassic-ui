@@ -60,29 +60,44 @@
             <h1>{{ collection.title }}</h1>
           {% endif %}
         </div> 
-        <div class="cb-collection">
-          {% for block in section.blocks %}
-            {% assign collection_item = block.settings.col %}
-            <a href="{{ collection_item.url }}" class="cbcIn">
-              <div class="cbcImg">
-                {% if collection_item.featured_image %}
-                  <img src="{{ collection_item.featured_image | img_url: 'master' }}" alt="{{ collection_item.title }}">
-                {% elsif block.settings.col_img %}
-                  <img src="{{ block.settings.col_img | img_url: 'master' }}" alt="{{ collection_item.title }}">
-                {% endif %}
-              </div>
+        {%- liquid 
+  # 1. Define where the section IS allowed to show
+  assign allowed_collections = "all-fruits,new,all-products" | split: ","
+-%}
 
-              <div class="cbcTxt">
-                {% assign collection_title = block.settings.col_name %}
-                {% if collection_title == '' %}
-                  <p>{{ collection_item.title | strip_html | strip }}</p>
-                {% else %}
-                  <p>{{ block.settings.col_name }}</p>
-                {% endif %}
-              </div>
-            </a>
-          {% endfor %}
+{%- if allowed_collections contains collection.handle -%}
+  <div class="cb-collection">
+    {% for block in section.blocks %}
+      {% assign collection_item = block.settings.col %}
+      
+      {%- comment -%} 
+        2. SKIP the block if it matches the current collection handle
+      {%- endcomment -%}
+      {% if collection_item.handle == collection.handle %}
+        {% continue %}
+      {% endif %}
+
+      <a href="{{ collection_item.url }}" class="cbcIn">
+        <div class="cbcImg">
+          {% if collection_item.featured_image %}
+            <img src="{{ collection_item.featured_image | img_url: 'master' }}" alt="{{ collection_item.title }}">
+          {% elsif block.settings.col_img %}
+            <img src="{{ block.settings.col_img | img_url: 'master' }}" alt="{{ collection_item.title }}">
+          {% endif %}
         </div>
+
+        <div class="cbcTxt">
+          {% assign collection_title = block.settings.col_name %}
+          {% if collection_title == blank %}
+            <p>{{ collection_item.title | strip_html | strip }}</p>
+          {% else %}
+            <p>{{ block.settings.col_name }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{%- endif -%}
       </div>
       <div class="cm-wrapper">
         {% comment %} <div class="head">

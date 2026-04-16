@@ -939,7 +939,7 @@ span.cart-compare-price {
   text-transform: uppercase;
   border-radius: 0;
 }
-.collection-wrapper nav.pagination .pag-numbers span.active {
+.collection-wrapper nav.pagination .pag-numbers span.active:first-of-type {
   font-weight: 500;
   font-size: 14px;
   line-height: 88%;

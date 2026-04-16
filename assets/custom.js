@@ -19,6 +19,14 @@ function isCornerCartActive() {
   );
 }
 
+function getInventoryMessage(inventory, isAvailable = true) {
+  const qty = parseInt(inventory, 10) || 0;
+
+  if (!isAvailable || qty <= 0) return 'Out of stock';
+  if (qty < 100) return `Only ${qty} left`;
+  return 'In stock';
+}
+
 function syncSelectedDropdownItem(parent) {
   if (!parent) return;
 
@@ -132,8 +140,9 @@ document.addEventListener('click', (e) => {
 
     const trustText = card.querySelector('.fc_trust_text p:first-child');
     if (trustText) {
-      trustText.innerText = `Only ${inventory} Left`;
-      parseInt(inventory, 10) < 10
+      const inventoryQty = parseInt(inventory, 10) || 0;
+      trustText.innerText = getInventoryMessage(inventoryQty, inventoryQty > 0);
+      inventoryQty > 0 && inventoryQty < 100
         ? trustText.classList.add('low-stock')
         : trustText.classList.remove('low-stock');
     }
@@ -220,3 +229,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }, true);
   });
 });
+

@@ -87,6 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  function getInventoryMessage(inventory) {
+    const qty = parseInt(inventory, 10) || 0;
+    if (qty <= 0) return "Out of stock";
+    if (qty < 100) return `Only ${qty} left`;
+    return "In stock";
+  }
+
   document.querySelectorAll(".product-card-primary").forEach((card) => {
     const variantItems = card.querySelectorAll(".fc_variant_item");
     const priceContainer = card.querySelector(".fc_price_weight p");
@@ -124,8 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (addToCartInput) addToCartInput.value = variantId;
 
-        if (trustText && inventory)
-          trustText.textContent = `Only ${inventory} Left`;
+        if (trustText) {
+          const inventoryQty = parseInt(inventory, 10) || 0;
+          trustText.textContent = getInventoryMessage(inventoryQty);
+          trustText.classList.toggle("low-stock", inventoryQty > 0 && inventoryQty < 100);
+        }
 
         if (image && mainImg) mainImg.src = image;
 
@@ -168,4 +178,3 @@ sliders.forEach((slider) => {
     slider.scrollLeft = scrollLeft - walk;
   });
 });
-

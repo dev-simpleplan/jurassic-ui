@@ -41,7 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
       card.querySelector('.fc_weight').textContent = unitPrice;
       
       // Update inventory text
-      card.querySelector('.fc_trust_text p').textContent = `Only ${inventory} Left`;
+      const inventoryQty = parseInt(inventory, 10) || 0;
+      const inventoryText = inventoryQty <= 0
+        ? 'Out of stock'
+        : inventoryQty < 100
+          ? `Only ${inventoryQty} left`
+          : 'In stock';
+      card.querySelector('.fc_trust_text p').textContent = inventoryText;
+      card.querySelector('.fc_trust_text p').classList.toggle('low-stock', inventoryQty > 0 && inventoryQty < 100);
       
       // Update image if available
       if (image && image !== 'null') {

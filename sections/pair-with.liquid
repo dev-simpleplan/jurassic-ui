@@ -88,8 +88,15 @@
       }
 
       if (addToCartInput) addToCartInput.value = variantId;
-      if (trustText && inventory)
-        trustText.textContent = `Only ${inventory} Left`;
+      if (trustText) {
+        const inventoryQty = parseInt(inventory, 10) || 0;
+        trustText.textContent = inventoryQty <= 0
+          ? 'Out of stock'
+          : inventoryQty < 100
+            ? `Only ${inventoryQty} left`
+            : 'In stock';
+        trustText.classList.toggle("low-stock", inventoryQty > 0 && inventoryQty < 100);
+      }
       if (image && mainImg) mainImg.src = image;
       if (perKgfinal && perKg) perKg.textContent = perKgfinal;
     });

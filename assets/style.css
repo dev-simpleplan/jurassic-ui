@@ -5092,9 +5092,9 @@ section.imagescroll {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
-.add-to-cart-btn:disabled {
-  opacity: 0.6;
-  pointer-events: none;
+.fc_add_to_cart:has(> .add-to-cart-btn:disabled) {
+  background: none;
+    border: 1px solid #f7a816;
 }
 .product_delivery_modal_container.show {
     display: flex!important;
