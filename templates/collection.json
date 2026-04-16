@@ -90,6 +90,21 @@
         "spacer_height": 50
       }
     },
+    "headingsec_ATiVep": {
+      "type": "headingsec",
+      "name": "headingsec",
+      "settings": {
+        "heading": "What Explorers Are Saying",
+        "para": ""
+      }
+    },
+    "spacer_E3UqMA": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 50
+      }
+    },
     "17658703763bf5fc11": {
       "type": "apps",
       "blocks": {
@@ -185,6 +200,8 @@
   "order": [
     "main",
     "spacer_Kqf4M3",
+    "headingsec_ATiVep",
+    "spacer_E3UqMA",
     "17658703763bf5fc11",
     "spacer_tafrLK",
     "faq_pages_FmiYAa",
