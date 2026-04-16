@@ -48,7 +48,8 @@
     "no_results_html": "Für {{ terms }} wurden keine Ergebnisse gefunden.",
     "title": "Suchen",
     "submit": "Suchen",
-    "placeholder_fruits": "Suche nach Früchten"
+    "placeholder_fruits": "Suche nach Früchten",
+    "results_for_html": "{{ count }} Ergebnisse für {{ terms }} gefunden"
   },
   "collections": {
     "title": "Sammlungen"
