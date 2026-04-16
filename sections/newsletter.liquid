@@ -34,7 +34,7 @@
                 <input type="submit" class="custom-btn black" value="Subscribe">
               </div>
             </div>
-            {% if form.posted_successfully? %}
+            {% comment %} {% if form.posted_successfully? %}
               <script>
                 window.location.href = '/pages/thank-you';
               </script>
@@ -42,7 +42,7 @@
               <div class="form-error">
                 <p>There was an error submitting the form. Please check your email address and try again.</p>
               </div>
-            {% endif %}
+            {% endif %} {% endcomment %}
           {% endform %}
         </div>
         <div class="newsletter-success" style="display:none;">
@@ -88,28 +88,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector('.nl-form form');
   const successBox = document.querySelector('.newsletter-success');
 
+  if (!form) return;
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const formData = new FormData(form);
+    const action = form.getAttribute("action");
 
-    fetch('/contact#contact_form', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
+    fetch(action, {
+      method: "POST",
+      body: formData
     })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         form.reset();
         successBox.style.display = "flex";
       } else {
-        alert("Something went wrong. Try again.");
+        throw new Error("Submission failed");
       }
     })
-    .catch(() => {
-      alert("Error submitting form.");
+    .catch((error) => {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
     });
   });
 });
