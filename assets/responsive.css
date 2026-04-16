@@ -1623,6 +1623,9 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .child-block.non-sublink > ul {
     grid-template-columns: 1fr;
   }
+  .bdil-top .heading h2 {
+    max-width: 16ch;
+  }
 }
 @media(max-width:425px){
   footer::before {

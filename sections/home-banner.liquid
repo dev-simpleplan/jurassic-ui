@@ -20,7 +20,7 @@
           <div class="bcb-reviews-wrap">
             {% for block in section.blocks %}
               <div class="bcbr-item" {{ block.shopify_attributes }}>
-                <div class="bcbri-top">{{ block.settings['review-top'] }}</div>
+                <div class="bcbri-top">{{ block.settings.review-top }}</div>
                 <div class="bcbri-bottom">
                   {% render 'rating-stars-fa', rating: block.settings.review_star %}
                   <div class="rating-text" aria-hidden="true">{{ block.settings.review_star }}</div>
