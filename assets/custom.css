@@ -1083,3 +1083,9 @@ section.faq-page .faq-head h1 {
 .owl-theme .owl-dots .owl-dot span{
   background-color: #f4f2f2 !important;
 }
+.oke-sr-label-text{
+  display: none !important;
+}
+.oke-sr-total-text{
+  padding-left: 3px !important;
+}
