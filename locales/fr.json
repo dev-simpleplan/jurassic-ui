@@ -33,7 +33,8 @@
     "comment_form_email": "Courriel",
     "comment_form_name": "Nom",
     "comment_form_submit": "Publier",
-    "comment_form_title": "Ajouter un commentaire"
+    "comment_form_title": "Ajouter un commentaire",
+    "article_metadata_html": "{{ date }} par {{ author }}"
   },
   "cart": {
     "checkout": "Paiement",
