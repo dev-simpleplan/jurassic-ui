@@ -54,6 +54,7 @@
   "search": {
     "title": "Search",
     "placeholder": "Search articles, pages, or products",
+    "placeholder_fruits": "Search for fruits",
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
@@ -62,7 +63,14 @@
     "product": {
       "from": "From",
       "add_to_cart": "Add to Cart",
-      "sold_out": "Sold Out"
+      "sold_out": "Sold Out",
+      "inventory_status": "Only {{ count }} Left"
     }
+  },
+  "benefits": {
+    "freshly_picked": "Freshly Picked",
+    "rare_handpicked": "Rare & Handpicked",
+    "pure_raw": "Pure & Raw",
+    "artisanal": "Small-Batch · Artisanal"
   }
 }

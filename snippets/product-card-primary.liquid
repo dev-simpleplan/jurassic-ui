@@ -236,7 +236,7 @@
             </div>
             <div class="fc_trust_text">
               <p class="{% if current_variant.inventory_quantity < 10 %}low-stock{% endif %}">
-                Only {{ current_variant.inventory_quantity }} Left
+                {{ 'products.product.inventory_status' | t: count: current_variant.inventory_quantity }}
               </p>
               {% comment %} <span class="dot_seperator"></span>
               <p>Ships in 24 hrs</p> {% endcomment %}
@@ -244,13 +244,13 @@
               {% comment %} <p>{{ product.metafields.custom.benefit | default: 'Product Benefit' }}</p> {% endcomment %}
                {%- capture benefit_text -%}
                 {%- if product.tags contains 'Fresh fruit' -%}
-                  Freshly Picked
+                  {{ 'benefits.freshly_picked' | t }}
                 {%- elsif product.tags contains 'New' -%}
-                  Rare & Handpicked
+                  {{ 'benefits.rare_handpicked' | t }}
                 {%- elsif product.tags contains 'Dried Fruit' or product.tags contains 'Date' -%}
-                  Pure & Raw
+                  {{ 'benefits.pure_raw' | t }}
                 {%- elsif product.tags contains 'Fine food' or product.tags contains 'Honey' -%}
-                  Small-Batch · Artisanal
+                  {{ 'benefits.artisanal' | t }}
                 {%- else -%}
                   {{ product.metafields.custom.benefit }}
                 {%- endif -%}
