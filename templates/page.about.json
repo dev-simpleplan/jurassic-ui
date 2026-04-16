@@ -286,6 +286,21 @@
       "settings": {
         "spacer_height": 140
       }
+    },
+    "headingsec_Qm6TzV": {
+      "type": "headingsec",
+      "name": "headingsec",
+      "settings": {
+        "heading": "A Growing Tribe of 50,000+ Fruit Explorers",
+        "para": "What started with just a few fruit fanatics has grown into a bold community of flavor seekers across Europe."
+      }
+    },
+    "spacer_mrapm9": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 50
+      }
     }
   },
   "order": [
@@ -301,6 +316,8 @@
     "map",
     "spacer_hF47x4",
     "image_scroll_dTgDqW",
-    "spacer_gKLbBq"
+    "spacer_gKLbBq",
+    "headingsec_Qm6TzV",
+    "spacer_mrapm9"
   ]
 }
