@@ -5453,3 +5453,7 @@ section.imagescroll {
     padding-left: 40px!important;
     padding-right: 40px!important;
 }
+.video-control-play{
+    margin-left: 7px;
+    margin-top: 4px;
+}

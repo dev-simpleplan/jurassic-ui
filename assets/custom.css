@@ -1080,3 +1080,6 @@ section.faq-page .faq-head h1 {
 }
 
 
+.scroll-sec .scroll-nav{
+  display: none !important;
+}
