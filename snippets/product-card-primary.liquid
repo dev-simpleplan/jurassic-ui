@@ -382,3 +382,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script> {% endcomment %}
+<script>
+  document.querySelectorAll('.fc_add_to_cart').forEach(function(el) {
+  const btn = el.querySelector('button');
+  
+  if (btn && btn.disabled) {
+    el.classList.add('out-of-stock');
+  }
+});
+</script>

@@ -1089,3 +1089,7 @@ section.faq-page .faq-head h1 {
 .oke-sr-total-text{
   padding-left: 3px !important;
 }
+.fc_add_to_cart.out-of-stock{
+  background: none;
+  border: 1px solid #f7a816;
+}
