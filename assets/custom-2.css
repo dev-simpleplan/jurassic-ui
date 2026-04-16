@@ -1195,7 +1195,7 @@ span.cart-compare-price {
   z-index: 9999999999;
   padding: 30px 20px 40px 20px;
   width: 100%;
-  transition: 0.2s all ease;
+  /* transition: 0.2s all ease; */
   clip-path: inset(0 100% 0 0);
   display: flex;
   align-items: center;
@@ -1216,7 +1216,7 @@ span.cart-compare-price {
   position: relative;
 }
 .filter-sidebar.active {
-  transition: 1s all ease;
+  /* transition: 1s all ease; */
   clip-path: inset(0 0% 0 0);
 }
 .filter-sidebar form {
