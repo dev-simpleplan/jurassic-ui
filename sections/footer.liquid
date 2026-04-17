@@ -32,6 +32,9 @@
                             <div class="email-link">
                                 <a href="mailto:{{ section.settings.email_link }}">{{ section.settings.email_link }}</a>
                             </div>
+                            <div class="email-link">
+                                <a href="tel:{{ section.settings.mob_number }}">{{ section.settings.mob_number }}</a>
+                            </div>
                             <div class="social-icons">
                               <ul class="social-list">
                                 {%- assign facebook_link = section.settings.facebook_url | default: settings.social_facebook_link -%}
@@ -84,6 +87,14 @@
                                   <li>
                                     <a href="{{ whatsapp_link }}" target="_blank" rel="noopener" aria-label="WhatsApp">
                                       {% render 'icon-social', name: 'whatsapp' %}
+                                    </a>
+                                  </li>
+                                {% endif %}
+                                {%- assign telegram_link = section.settings.telegram_url -%}
+                                {% if section.settings.show_telegram and telegram_link != blank %}
+                                  <li>
+                                    <a href="{{ telegram_link }}" target="_blank" rel="noopener" aria-label="Telegram">
+                                      {% render 'icon-social', name: 'telegram' %}
                                     </a>
                                   </li>
                                 {% endif %}
@@ -217,6 +228,11 @@
         "id": "email_link",
         "label": "Email Link"
     },
+    {
+        "type": "number",
+        "id": "mob_number",
+        "label": "Contanct Number"
+    },
     { "type": "header", "content": "Social links" },
     { "type": "checkbox", "id": "show_facebook", "label": "Show Facebook", "default": true },
     { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
@@ -234,7 +250,10 @@
     { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
 
     { "type": "checkbox", "id": "show_whatsapp", "label": "Show WhatsApp", "default": false },
-    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp URL (e.g., https://wa.me/91XXXXXXXXXX)" }
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp URL (e.g., https://wa.me/91XXXXXXXXXX)" },
+
+    { "type": "checkbox", "id": "show_telegram", "label": "Show Telegram", "default": false },
+    { "type": "url", "id": "telegram_url", "label": "Telegram URL" }
   ],
   "blocks": [
     {
