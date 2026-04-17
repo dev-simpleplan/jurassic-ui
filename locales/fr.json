@@ -77,5 +77,42 @@
     "rare_handpicked": "Rares et triés sur le volet",
     "pure_raw": "Pur & Brut",
     "artisanal": "En petite quantité · Artisanal"
+  },
+  "sections": {
+    "frequently_bought": {
+      "heading_html": "Fréquemment achetés<br>avec {{ product_title }}"
+    },
+    "product": {
+      "price_includes_vat": "Les prix incluent la TVA, hors",
+      "shipping_costs": "frais de livraison.",
+      "select_variant": "Choisir une variante",
+      "best_seller": "Best-seller",
+      "deliver_to": "Livrer à",
+      "details": "Détails",
+      "technical_details": "Détails techniques",
+      "description": "Description",
+      "how_to_eat_store": "Comment manger et conserver",
+      "nutrition_benefits": "Nutrition et bienfaits",
+      "origin_sourcing": "Origine et approvisionnement",
+      "taste_profile": "Profil gustatif",
+      "seasonal_calendar_sourcing": "Calendrier saisonnier et provenance",
+      "scientific_name": "Nom scientifique",
+      "origin": "Origine",
+      "weight_per_piece": "Poids par pièce",
+      "certification": "Certification",
+      "texture": "Texture",
+      "sweetness": "Douceur",
+      "sourness": "Acidité",
+      "juiciness": "Jutosité",
+      "texture_low": "Soyeux",
+      "texture_high": "Croquant",
+      "sweetness_low": "Délicat",
+      "sweetness_high": "Sirupeux",
+      "sourness_low": "Doux",
+      "sourness_high": "Vif",
+      "juiciness_low": "Ferme",
+      "juiciness_high": "Juteux",
+      "order_today_delivery_from": "Commandez aujourd'hui pour une livraison à partir du"
+    }
   }
 }

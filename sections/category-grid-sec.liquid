@@ -24,7 +24,7 @@
                 {% endfor %}
             </div> {% endcomment %}
             <div class="category-slider slider_container">
-              <div class="owl-carousel category-carousel">
+              <div class="owl-carousel owl-theme category-carousel">
 
                 {% for block in section.blocks %}
                   {% assign collection = block.settings.collection %}
@@ -48,8 +48,8 @@
                     </div>
                   {% endif %}
                 {% endfor %}
-
               </div>
+              <div class="slider-counter"></div>
             </div>
 
         </div>
@@ -74,7 +74,9 @@
       responsive: {
         0: {
           items: 1.2,
-          center: false
+          center: false,
+          onInitialized: counter,
+  onChanged: counter,
         },
         700: {
           items: 4,
@@ -89,6 +91,13 @@
         }
       },
     });
+    function counter(event) {
+  if (!event.namespace) {
+    return;
+  }
+  var slides = event.relatedTarget;
+  $('.slider-counter').text(slides.relative(slides.current()) + 1 + '/' + slides.items().length);
+}
   });
 </script>
 

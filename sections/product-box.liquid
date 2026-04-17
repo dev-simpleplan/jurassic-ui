@@ -15,16 +15,44 @@
       <div class="bcrum-in">
         <ul>
           <li><a href="{{ routes.root_url }}">Home</a></li>
-          <li><a href="/collections/all">Shop All</a></li>
-          {% assign current_collection = collection | default: product.collections.first %}
-          {% if current_collection %}
+
+          {%- liquid
+            assign selected_col = nil
+            # Define the handles you want to skip
+            assign generic_handles = "all,all-products,all-fruits,all-fruit,frontpage,best-seller" | split: ","
+            
+            # 1. Check if we are currently in a valid collection
+            if collection
+              assign is_generic = false
+              if generic_handles contains collection.handle
+                assign is_generic = true
+              endif
+
+              if is_generic == false
+                assign selected_col = collection
+              endif
+            endif
+
+            # 2. If no collection selected yet, loop through product collections
+            if selected_col == nil
+              for col in product.collections
+                if generic_handles contains col.handle
+                  continue
+                else
+                  assign selected_col = col
+                  break
+                endif
+              endfor
+            endif
+          -%}
+
+          {%- if selected_col -%}
             <li>
-              <a href="{{ current_collection.url }}">
-                {{ current_collection.title }}
+              <a href="{{ selected_col.url }}">
+                {{ selected_col.title }}
               </a>
             </li>
-          {% endif %}
-          <li><span>{{ product.title }}</span></li>
+          {%- endif -%}
         </ul>
       </div>
   </div>
@@ -62,11 +90,29 @@
               <div class="prs-data">
                 {% if product.tags.size > 0 %}
                     <div class="fc_category_tags">
-                      {% for tag in product.tags %}
-                        {% unless tag == 'Best Seller' %}
-                          <span>{{ tag }}</span>
-                        {% endunless %}
-                      {% endfor %}
+                      {% if product.metafields.custom.certificate %}
+                        {% assign certificate = product.metafields.custom.certificate.value %}
+                        {% for item in product.metafields.custom.certificate.value %}
+                          <div class="fc_organic_auth">
+                            <img
+                              src="{{ item.badge_image | img_url:'master' }}"
+                              alt="{{ item.display_name }}"
+                              class="img_sizing">
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+
+                      {% if product.metafields.custom.quality_label != blank %}
+                        <span>{{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}</span>
+                      {% endif %}
+
+                      {% comment %}
+                        {% for tag in product.tags %}
+                          {% unless tag == 'Best Seller' %}
+                            <span>{{ tag }}</span>
+                          {% endunless %}
+                        {% endfor %}
+                      {% endcomment %}
                     </div>
                   {% endif %}
 
@@ -191,7 +237,7 @@
 
                         <div class="pd-top">
                           {% assign currency_suffix = cart.currency.symbol %}
-                          <div class="sell-price">
+                         <div class="sell-price {% unless selected_variant.compare_at_price > selected_variant.price %}withoutbg{% endunless %}">
                             {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }}
                           </div>
 
@@ -219,7 +265,7 @@
                       </div>
 
                       <span class="price-txt">
-                        Prices include VAT, excluding <a href="javascript:void()" >shipping costs.</a>
+                        {{ 'sections.product.price_includes_vat' | t }} <a href="javascript:void()">{{ 'sections.product.shipping_costs' | t }}</a>
                       </span>
                     </div>
 
@@ -355,7 +401,7 @@
                       {% unless product.has_only_default_variant %}
                         <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                           <div class="sv-perKg">
-                            <p>Select variant</p>
+                            <p>{{ 'sections.product.select_variant' | t }}</p>
                             <div class="perKg">
                               {% comment %} Kept for layout parity; button state below becomes the source of truth. {% endcomment %}
                               {% if selected_variant.metafields.custom.pieces %}
@@ -390,13 +436,14 @@
                                   {% endfor %}
 
                                   <li
-                                    class="variant-value {% if option.selected_value == value %}active{% endif %}"
+                                    class="variant-value {% if option.selected_value == value %}active{% endif %}{% unless matched_variant.available %} is-sold-out{% endunless %}"
                                     data-value="{{ value | escape }}"
+                                    data-available="{{ matched_variant.available }}"
                                     {% if matched_variant.metafields.custom.bestseller == true %}
                                     data-best="bestseller"
                                     {% endif %}>
                                     {% if matched_variant.metafields.custom.bestseller == true %}
-                                      <div class="vv-bestseller">best seller</div>
+                                      <div class="vv-bestseller">{{ 'sections.product.best_seller' | t }}</div>
                                     {% endif %}
                                     <div class="vv-value">
                                       <div class="vvv-value">
@@ -781,12 +828,12 @@
         <div class="modal-body" data-load="/en/_faq/42/delivery-cost">
           <div>
             <p style='margin:0;'>
-              <span class="product_delivery_modal_deliver_to">Deliver to</span>
+              <span class="product_delivery_modal_deliver_to">{{ 'sections.product.deliver_to' | t }}</span>
               {{ localization.country }}:
               <span class="calculated-delivery-date-price">9,90 €</span>
             </p>
             <p style='margin:0;'>
-              <span class="product_delivery_modal_order_today">Order today to get it from</span>
+              <span class="product_delivery_modal_order_today">{{ 'sections.product.order_today_delivery_from' | t }}</span>
               <span class="calculated-delivery-date"></span>
             </p>
           </div>

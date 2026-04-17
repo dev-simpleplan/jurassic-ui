@@ -76,5 +76,42 @@
     "rare_handpicked": "Selten & Handverlesen",
     "pure_raw": "Pur & Unverarbeitet",
     "artisanal": "Kleinserie · Handgefertigt"
+  },
+  "sections": {
+    "frequently_bought": {
+      "heading_html": "Wird oft zusammen gekauft<br>mit {{ product_title }}"
+    },
+    "product": {
+      "price_includes_vat": "Preise inkl. MwSt., zzgl.",
+      "shipping_costs": "Versandkosten.",
+      "select_variant": "Variante wählen",
+      "best_seller": "Bestseller",
+      "deliver_to": "Liefern nach",
+      "details": "Details",
+      "technical_details": "Technische Details",
+      "description": "Beschreibung",
+      "how_to_eat_store": "So isst & lagerst du sie",
+      "nutrition_benefits": "Nährwerte & Vorteile",
+      "origin_sourcing": "Herkunft & Beschaffung",
+      "taste_profile": "Geschmacksprofil",
+      "seasonal_calendar_sourcing": "Saisonkalender und Herkunft",
+      "scientific_name": "Wissenschaftlicher Name",
+      "origin": "Herkunft",
+      "weight_per_piece": "Gewicht pro Stück",
+      "certification": "Zertifizierung",
+      "texture": "Textur",
+      "sweetness": "Süße",
+      "sourness": "Säure",
+      "juiciness": "Saftigkeit",
+      "texture_low": "Seidig",
+      "texture_high": "Knackig",
+      "sweetness_low": "Fein",
+      "sweetness_high": "Sirupartig",
+      "sourness_low": "Mild",
+      "sourness_high": "Spritzig",
+      "juiciness_low": "Fest",
+      "juiciness_high": "Saftig",
+      "order_today_delivery_from": "Bestelle heute für die Lieferung ab"
+    }
   }
 }

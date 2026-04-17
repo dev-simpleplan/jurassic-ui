@@ -17,6 +17,7 @@
   document.addEventListener("DOMContentLoaded", function () {
   const productId = {{ product.id }};
   const container = document.querySelector(".freq-wrap");
+  const shopRoot = window.Shopify?.routes?.root || '/';
 
   if (!container) return;
 
@@ -31,7 +32,10 @@
       container.innerHTML = "";
 
       filteredProducts.forEach((product) => {
-        fetch(`/products/${product.handle}?section_id=product-card-primary`)
+        const localizedProductUrl = new URL(`${shopRoot}products/${product.handle}`, window.location.origin);
+        localizedProductUrl.searchParams.set('section_id', 'product-card-primary');
+
+        fetch(localizedProductUrl.toString())
           .then((res) => res.text())
           .then((html) => {
             const parser = new DOMParser();

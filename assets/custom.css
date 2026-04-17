@@ -450,7 +450,7 @@
   transition: 0.4s ease all;
   cursor: pointer;
   position: relative;
-  border: 1px solid #ffc761;
+  /* border: 1px solid #ffc761; */
 }
 
 .fc_add_to_cart:hover {
@@ -694,7 +694,7 @@
 }
 .fruits_card {
   width: 100%;
-  min-width: 300px;
+  /* min-width: 300px; */
   height: 100%;
 }
 .product-card-primary a {

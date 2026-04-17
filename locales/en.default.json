@@ -74,5 +74,42 @@
     "rare_handpicked": "Rare & Handpicked",
     "pure_raw": "Pure & Raw",
     "artisanal": "Small-Batch · Artisanal"
+  },
+  "sections": {
+    "frequently_bought": {
+      "heading_html": "Frequently Bought<br>Together With {{ product_title }}"
+    },
+    "product": {
+      "price_includes_vat": "Prices include VAT, excluding",
+      "shipping_costs": "shipping costs.",
+      "select_variant": "Select variant",
+      "best_seller": "Best seller",
+      "deliver_to": "Deliver to",
+      "details": "Details",
+      "technical_details": "Technical Details",
+      "description": "Description",
+      "how_to_eat_store": "How To Eat & Store",
+      "nutrition_benefits": "Nutrition & Benefits",
+      "origin_sourcing": "Origin & Sourcing",
+      "taste_profile": "Taste Profile",
+      "seasonal_calendar_sourcing": "Seasonal Calendar And Sourcing",
+      "scientific_name": "Scientific Name",
+      "origin": "Origin",
+      "weight_per_piece": "Weight per piece",
+      "certification": "Certification",
+      "texture": "Texture",
+      "sweetness": "Sweetness",
+      "sourness": "Sourness",
+      "juiciness": "Juiciness",
+      "texture_low": "Silky",
+      "texture_high": "Crunchy",
+      "sweetness_low": "Delicate",
+      "sweetness_high": "Syrupy",
+      "sourness_low": "Smooth",
+      "sourness_high": "Zesty",
+      "juiciness_low": "Firm",
+      "juiciness_high": "Bursty",
+      "order_today_delivery_from": "Order today to get it from"
+    }
   }
 }

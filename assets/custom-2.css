@@ -1939,6 +1939,10 @@ li.variant-value.active .vvv-value {
 li.variant-value.active .perKg {
   font-weight: 700;
 }
+li.variant-value.is-sold-out {
+  background: #f3f3f3;
+  opacity: 0.5;
+}
 .priceCheckout {
   margin-top: 28px;
   display: flex;

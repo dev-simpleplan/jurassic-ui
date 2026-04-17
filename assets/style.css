@@ -3044,15 +3044,17 @@ footer::before {
     margin-top: 20px;
     /* left: -17px; */
     position: relative;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s ease all;
+    /* opacity: 0;
+    visibility: hidden; */
     z-index: 2;
-}
-.map-items .mapitem-image:hover{
-transform: scale(1.3);
     cursor: pointer;
-    transition: .4s ease all;
+    overflow: hidden;
+}
+.mapitem-image img {
+    transition: 0.3s ease all;
+}
+.map-items .mapitem-image img:hover{
+    transform: scale(1.2);
 }
 .mapitem-image img {
     width: 100%;
@@ -5386,7 +5388,7 @@ section.imagescroll {
     }
 
     .wrapper-dropdown:hover .dropdown {
-        max-height: 130px;
+        max-height: 170px;
         visibility: inherit;
         overflow-y: auto;
     }

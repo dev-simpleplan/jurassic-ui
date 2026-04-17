@@ -17,6 +17,11 @@
     left: calc(100% - 51.85%);
   }
 }
+@media(max-width:1400px){
+  .missionin-content {
+    height: 55%;
+  }
+}
 
 @media (max-width: 1300px) {
   .home-banner {
@@ -24,6 +29,15 @@
   }
   .db-tw-content p {
     font-size: 22px;
+  }
+   .missionin-content .mic-data {
+    padding: 20px 10px 40px 10px;
+  }
+  .mic-data .micd-icon {
+    width: 32px;
+  }
+  .mic-data .micd-heading {
+    gap: 11px;
   }
 }
 
@@ -207,7 +221,7 @@
   .bcgitem-back .bcgback-bottom {
     gap: 16px;
   }
-  .freq-wrap {
+  .freq-wrap, .fruits_cards_wrapper {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .liwi-wrap {
@@ -554,6 +568,9 @@
     left: 0;
     right: 0;
     margin: 0 auto;
+  }
+  .scs-slider .owl-dot.active span {
+    background-color: #ffc761!important;
   }
   .scs-slider .scsslider-heading {
     margin-bottom: 30px;
@@ -910,7 +927,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   p.tp-head {
     font-size: 12px;
   }
-  .freq-wrap {
+  .freq-wrap, .fruits_cards_wrapper {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .cart-recommendation-wrapper {
@@ -1059,6 +1076,19 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .category-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px 9px;
+  }
+  .category-grid .owl-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .category-slider .slider-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 14px;
   }
   .c-item .citem-in {
     gap: 10px;
@@ -1393,7 +1423,7 @@ background: linear-gradient(0deg, rgba(26, 26, 26, 1) 23%, rgba(26, 26, 26, 0.67
   .container-fluid.custom-right {
       padding-right: 20px;
   }
-  .freq-wrap {
+  .freq-wrap, .fruits_cards_wrapper {
       grid-template-columns: repeat(1, minmax(0, 1fr));
   }
   .side-cart {
