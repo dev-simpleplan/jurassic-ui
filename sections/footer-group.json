@@ -29,7 +29,7 @@
         "partner_logo_XzkVyW": {
           "type": "partner-logo",
           "settings": {
-            "t-icon": "shopify://shop_images/dhl_logo_svg.png"
+            "t-icon": "shopify://shop_images/shipping-services.webp"
           }
         },
         "trust_logos_FKDq8p": {
@@ -67,8 +67,7 @@
         "jf-mark": "shopify://shop_images/Group_427321593.svg",
         "bottom_menu": "footer-nav-menu",
         "show_payment_icons": true,
-        "email_link": "support@jurassicfruit.com",
-        "mob_number": "+49 20175899650",
+        "email_link": "hello@jurassicfruit",
         "show_facebook": true,
         "facebook_url": "https://www.facebook.com/jurassicfruit/",
         "show_instagram": true,
@@ -80,9 +79,7 @@
         "show_youtube": true,
         "youtube_url": "https://www.youtube.com/c/jurassicfruit",
         "show_whatsapp": false,
-        "whatsapp_url": "",
-        "show_telegram": true,
-        "telegram_url": "https://t.me/JurassicFruitOfficial"
+        "whatsapp_url": ""
       }
     }
   },
