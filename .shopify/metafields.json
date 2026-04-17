@@ -1,39 +1,102 @@
 {
-  "article": [],
-  "blog": [],
-  "collection": [],
+  "article": [
+    {
+      "key": "read_time",
+      "namespace": "custom",
+      "name": "read time",
+      "description": "Add blog read time",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    }
+  ],
+  "blog": [
+    {
+      "key": "read_time",
+      "namespace": "custom",
+      "name": "read time",
+      "description": "Add the read time in minutes",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    }
+  ],
+  "collection": [
+    {
+      "key": "short_description",
+      "namespace": "custom",
+      "name": "Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "collections",
+      "namespace": "ecomposer",
+      "name": "Define sub collections for current collection",
+      "description": "Set the sub collection for curernt collection.",
+      "type": {
+        "name": "list.collection_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "seo_focused_paragraph",
+      "namespace": "custom",
+      "name": "Seo Focused Paragraph",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "company": [],
   "company_location": [],
   "location": [],
   "market": [],
-  "order": [],
-  "page": [
+  "order": [
     {
-      "key": "header_paragraph",
+      "key": "mdi_data",
       "namespace": "custom",
-      "name": "Header Paragraph",
-      "description": "",
+      "name": "MDI Data",
+      "description": "MDI data. Used by the M&D Integrações APP.",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
+        "name": "json",
+        "category": "JSON"
       }
     },
     {
-      "key": "faq",
+      "key": "shipped_products_certificate",
       "namespace": "custom",
-      "name": "FAQ",
+      "name": "Shipped Products Certificate",
       "description": "",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "addresshero_address_suggestion",
+      "namespace": "addresshero_address_suggestion",
+      "name": "Address suggestion",
+      "description": "Address suggestion for incorrect address",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
+  "page": [],
   "product": [
     {
-      "key": "pack_size",
+      "key": "alternative_name",
       "namespace": "custom",
-      "name": "Pack Size",
+      "name": "Alternative name",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -41,9 +104,29 @@
       }
     },
     {
-      "key": "quantity",
+      "key": "eating_information",
       "namespace": "custom",
-      "name": "Quantity",
+      "name": "Eating information",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "testimony",
+      "namespace": "custom",
+      "name": "Testimony",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "youtube_id",
+      "namespace": "custom",
+      "name": "Youtube ID",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -51,9 +134,259 @@
       }
     },
     {
-      "key": "product_details",
+      "key": "_location_name",
       "namespace": "custom",
-      "name": "Product Details",
+      "name": "__location_name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "country_season",
+      "namespace": "custom",
+      "name": "Country Season",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "allergen-information",
+      "namespace": "shopify",
+      "name": "Allergen information",
+      "description": "Indicates potential allergens present in food or beverages, such as wheat or peanuts",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "dietary-preferences",
+      "namespace": "shopify",
+      "name": "Dietary preferences",
+      "description": "Helps identify products suitable for specific diets, e.g. vegan, nut free",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nut-processing-method",
+      "namespace": "shopify",
+      "name": "Nut processing method",
+      "description": "Defines how nuts or seeds are prepared, e.g. candied, raw",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nut-seed-type",
+      "namespace": "shopify",
+      "name": "Nut/Seed type",
+      "description": "Identifies the specific type of nut or seed in a product, such as almonds or chia seeds",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "short_description1",
+      "namespace": "custom",
+      "name": "Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "description",
+      "namespace": "custom",
+      "name": "Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "certificate",
+      "namespace": "custom",
+      "name": "Certificate",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "quality_label",
+      "namespace": "custom",
+      "name": "Quality label",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "weight_per_piece",
+      "namespace": "custom",
+      "name": "Weight per piece",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "country_of_origin",
+      "namespace": "custom",
+      "name": "Country Of Origin",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "food-product-form",
+      "namespace": "shopify",
+      "name": "Food product form",
+      "description": "Specifies the form in which the food product is presented, such as dried or frozen",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "fresh_product",
+      "namespace": "custom",
+      "name": "Fresh Product",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "per_kg_price",
+      "namespace": "custom",
+      "name": "Per KG Price",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "url",
+      "namespace": "_easifyBoxBuilder",
+      "name": "EasifyBoxBuilderUrl",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "hidden",
+      "namespace": "seo",
+      "name": "Hidden from store search & search engines",
+      "description": "",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "countdown",
+      "namespace": "ecomposer",
+      "name": "EComposer product countdown end at",
+      "description": "Set date and time countdown end at",
+      "type": {
+        "name": "date_time",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "countdown_from",
+      "namespace": "ecomposer",
+      "name": "EComposer product countdown start at",
+      "description": "Set date and time countdown start at",
+      "type": {
+        "name": "date_time",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "queries",
+      "namespace": "shopify--discovery--product_search_boost",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "complementary_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "product_usp",
+      "namespace": "custom",
+      "name": "Product USP",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "store_usp",
+      "namespace": "custom",
+      "name": "Store USP",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "title_testimonial",
+      "namespace": "custom",
+      "name": "Title Testimonial",
       "description": "",
       "type": {
         "name": "rich_text_field",
@@ -61,9 +394,109 @@
       }
     },
     {
-      "key": "how_to_use",
+      "key": "additional_information",
       "namespace": "custom",
-      "name": "How To Use",
+      "name": "Additional Information",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "how_to_store_eat",
+      "namespace": "custom",
+      "name": "How to Store & Eat",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "timeline",
+      "namespace": "custom",
+      "name": "Timeline",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "shipped_by",
+      "namespace": "custom",
+      "name": "Shipped By",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "taste_profile",
+      "namespace": "custom",
+      "name": "Taste Profile",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "faqs",
+      "namespace": "custom",
+      "name": "Faqs",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "main_box_content",
+      "namespace": "custom",
+      "name": "Main Box Content",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "additional_box_content",
+      "namespace": "custom",
+      "name": "Additional Box Content",
+      "description": "",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "box_paired_product",
+      "namespace": "custom",
+      "name": "Box Paired Product",
+      "description": "",
+      "type": {
+        "name": "product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "box_products",
+      "namespace": "custom",
+      "name": "Box Products",
+      "description": "Add Products for the box (Meet Wild Ones)",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "product_description",
+      "namespace": "custom",
+      "name": "Product Description",
       "description": "",
       "type": {
         "name": "rich_text_field",
@@ -71,39 +504,241 @@
       }
     },
     {
-      "key": "age-group",
-      "namespace": "shopify",
-      "name": "Age group",
-      "description": "Defines the target age range for a product, such as adults or kids",
+      "key": "rating",
+      "namespace": "reviews",
+      "name": "Product rating",
+      "description": "Average rating from customers",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "rating",
+        "category": "RATING"
       }
     },
     {
-      "key": "flavor",
-      "namespace": "shopify",
-      "name": "Flavor",
-      "description": "Specifies the taste or flavor of a product, e.g. vanilla, mint",
+      "key": "rating_count",
+      "namespace": "reviews",
+      "name": "Product rating count",
+      "description": "Total number of ratings from customers",
       "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
+        "name": "number_integer",
+        "category": "NUMBER"
       }
     },
     {
-      "key": "detailed-ingredients",
-      "namespace": "shopify",
-      "name": "Detailed ingredients",
-      "description": "Lists specific components used in health and beauty, e.g. Vitamin C, probiotics",
-      "type": {
-        "name": "list.metaobject_reference",
-        "category": "REFERENCE"
-      }
-    },
-    {
-      "key": "key_features",
+      "key": "pair_with_product",
       "namespace": "custom",
-      "name": "Key Features",
+      "name": "Pair With Product",
+      "description": "",
+      "type": {
+        "name": "product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "new_description",
+      "namespace": "custom",
+      "name": "New Description",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "technical_details",
+      "namespace": "custom",
+      "name": "Technical details",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "nutrition_benefits_image",
+      "namespace": "custom",
+      "name": "Nutrition & Benefits Image",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "nutrition_benefits_content",
+      "namespace": "custom",
+      "name": "Nutrition & Benefits Content",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "origin_sourcing",
+      "namespace": "custom",
+      "name": "Origin & Sourcing",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "taste_profile_body_text",
+      "namespace": "custom",
+      "name": "Taste Profile body text",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "nutrition_details",
+      "namespace": "custom",
+      "name": "Nutrition Details",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
+  "variant": [
+    {
+      "key": "quality_label",
+      "namespace": "custom",
+      "name": "Variant Quality label",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "shipped_by",
+      "namespace": "custom",
+      "name": "Variant Shipped by",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "weight_per_piece",
+      "namespace": "custom",
+      "name": "Variant Weight per piece",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "short_description1",
+      "namespace": "custom",
+      "name": "Variant Short description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "description",
+      "namespace": "custom",
+      "name": "Variant Description",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "salable_after",
+      "namespace": "custom",
+      "name": "Variant Next available date",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "_location_name",
+      "namespace": "custom",
+      "name": "__location_name",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "country_season",
+      "namespace": "custom",
+      "name": "Variant Country Season",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "certificate",
+      "namespace": "custom",
+      "name": "Variant Certificate",
+      "description": "",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "country_of_origin",
+      "namespace": "custom",
+      "name": "Variant Country Of Origin",
+      "description": "",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pieces",
+      "namespace": "custom",
+      "name": "Pieces",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "is_prior",
+      "namespace": "custom",
+      "name": "Is Prior",
+      "description": "Allows you to specify which option will be preselected.",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "bestseller",
+      "namespace": "custom",
+      "name": "Bestseller",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
+      }
+    },
+    {
+      "key": "box_information",
+      "namespace": "custom",
+      "name": "Box Information",
       "description": "",
       "type": {
         "name": "list.single_line_text_field",
@@ -111,16 +746,136 @@
       }
     },
     {
-      "key": "return_policy",
-      "namespace": "custom",
-      "name": "Return Policy",
-      "description": "",
+      "key": "preorder_count",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Count",
+      "description": "Current preorder count for the variant",
       "type": {
-        "name": "rich_text_field",
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "preorder_max_count",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Max Count",
+      "description": "Maximum preorder count allowed for the variant",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "shipping_text",
+      "namespace": "restockrocket_production",
+      "name": "Shipping Text",
+      "description": "Custom shipping text for the variant",
+      "type": {
+        "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "market_preorder_count",
+      "namespace": "restockrocket_production",
+      "name": "Market Preorder Count",
+      "description": "Market-specific preorder counts for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "market_preorder_max_count",
+      "namespace": "restockrocket_production",
+      "name": "Market Preorder Max Count",
+      "description": "Market-specific preorder max counts for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "market_shipping_text",
+      "namespace": "restockrocket_production",
+      "name": "Market Shipping Text",
+      "description": "Market-specific shipping text for the variant",
+      "type": {
+        "name": "json",
+        "category": "JSON"
       }
     }
   ],
-  "variant": [],
-  "shop": []
+  "shop": [
+    {
+      "key": "blocks_list_checkout_static_content",
+      "namespace": "checkoutblocks",
+      "name": "Checkout Blocks: Blocks List for: checkout_static_content",
+      "description": null,
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "settings",
+      "namespace": "restockrocket_production",
+      "name": "Settings",
+      "description": "Settings for the app",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "selling_plans",
+      "namespace": "restockrocket_production",
+      "name": "Selling Plans",
+      "description": "Settings and variant IDs for preorder offers",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "out_of_stock_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "Out of Stock Variant IDs",
+      "description": "List of variant IDs that are currently out of stock",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "in_stock_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "In Stock Variant IDs",
+      "description": "List of variant IDs that are currently in stock",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "preorder_variant_ids",
+      "namespace": "restockrocket_production",
+      "name": "Preorder Variant IDs",
+      "description": "List of variant IDs that are available for preorder",
+      "type": {
+        "name": "json",
+        "category": "JSON"
+      }
+    },
+    {
+      "key": "default_shipping",
+      "namespace": "custom",
+      "name": "Default Shipping Price",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ]
 }

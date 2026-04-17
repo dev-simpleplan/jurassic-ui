@@ -1095,3 +1095,8 @@ section.faq-page .faq-head h1 {
   background: none;
   border: 1px solid #f7a816;
 }
+.priceCheckout .out-of-stock.out-of-stock{
+  background: none;
+  border: 1px solid #f7a816;
+  cursor: not-allowed;
+}
