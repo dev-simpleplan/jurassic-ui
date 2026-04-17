@@ -68,6 +68,7 @@
         "bottom_menu": "footer-nav-menu",
         "show_payment_icons": true,
         "email_link": "hello@jurassicfruit",
+        "mob_number": 4920175899650,
         "show_facebook": true,
         "facebook_url": "https://www.facebook.com/jurassicfruit/",
         "show_instagram": true,
@@ -79,7 +80,9 @@
         "show_youtube": true,
         "youtube_url": "https://www.youtube.com/c/jurassicfruit",
         "show_whatsapp": false,
-        "whatsapp_url": ""
+        "whatsapp_url": "",
+        "show_telegram": true,
+        "telegram_url": "https://t.me/JurassicFruitOfficial"
       }
     }
   },
