@@ -1194,7 +1194,7 @@ span.cart-compare-price {
   background-color: oklab(0% none none/.6);
   z-index: 9999999999;
   padding: 30px 20px 40px 20px;
-  width: 100%;
+  width: 85%;
   /* transition: 0.2s all ease; */
   clip-path: inset(0 100% 0 0);
   display: flex;

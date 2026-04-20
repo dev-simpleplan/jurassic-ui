@@ -234,3 +234,35 @@ window.bindProductCardAddForms = function (scope = document) {
 document.addEventListener('DOMContentLoaded', () => {
   window.bindProductCardAddForms(document);
 });
+
+const sidebar = document.querySelector('.filter-sidebar');
+const closeBtn = document.querySelector('.filter-close-mob');
+const body = document.body;
+
+// Function to sync body state
+function syncBodyState() {
+  if (sidebar.classList.contains('active')) {
+    body.setAttribute('data-lenis-prevent', '');
+    body.classList.add('backdrop');
+  } else {
+    body.removeAttribute('data-lenis-prevent');
+    body.classList.remove('backdrop');
+  }
+}
+
+// Watch for class changes (in case it's toggled elsewhere)
+const observer = new MutationObserver(syncBodyState);
+
+observer.observe(sidebar, {
+  attributes: true,
+  attributeFilter: ['class']
+});
+
+// Close button click
+closeBtn.addEventListener('click', () => {
+  sidebar.classList.remove('active');
+  syncBodyState(); // ensure cleanup immediately
+});
+
+// Run once on load
+syncBodyState();

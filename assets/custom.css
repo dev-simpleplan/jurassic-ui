@@ -1100,3 +1100,32 @@ section.faq-page .faq-head h1 {
   border: 1px solid #f7a816;
   cursor: not-allowed;
 }
+/* Prevent scroll when sidebar is open */
+body[data-lenis-prevent] {
+  overflow: hidden;
+}
+
+/* Backdrop effect */
+body.backdrop::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+/* Sidebar (example) */
+.filter-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 320px;
+  height: 100%;
+  background: #fff;
+  z-index: 100;
+  transition: right 0.3s ease;
+}
+
+.filter-sidebar.active {
+  right: 0;
+}
