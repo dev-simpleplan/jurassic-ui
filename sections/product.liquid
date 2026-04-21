@@ -1325,17 +1325,32 @@ class VariantSelector extends HTMLElement {
     const separatorEl = btn.querySelector('.btn-separator');
 
     // 🛑 SOLD OUT STATE
+    // if (!this.currentVariant.available) {
+    //   btn.classList.remove('loading', 'success');
+    //   btn.disabled = true;
+
+    //   if (label) label.textContent = 'Sold Out';
+    //   if (priceEl) priceEl.textContent = '';
+    //   if (separatorEl) separatorEl.style.display = 'none';
+
+    //   return;
+    // }
+
     if (!this.currentVariant.available) {
-      btn.classList.remove('loading', 'success');
-      btn.disabled = true;
+  btn.classList.remove('loading', 'success');
+  btn.disabled = true;
 
-      if (label) label.textContent = 'Sold Out';
-      if (priceEl) priceEl.textContent = '';
-      if (separatorEl) separatorEl.style.display = 'none';
+  btn.classList.add('out-of-stock'); // ✅ ADD HERE
 
-      return;
-    }
+  if (label) label.textContent = 'Sold Out';
+  if (priceEl) priceEl.textContent = '';
+  if (separatorEl) separatorEl.style.display = 'none';
 
+  return;
+}
+
+// ✅ REMOVE class when available
+btn.classList.remove('out-of-stock');
     // ✅ AVAILABLE STATE
     // ✅ AVAILABLE STATE
     btn.disabled = false;
@@ -1639,10 +1654,4 @@ document.addEventListener('click', function (e) {
     ]
   }
 {% endschema %}
-<script>
-document.querySelectorAll('.priceCheckout .custom-btn').forEach(function(btn) {
-  if (btn.disabled) {
-    btn.classList.add('out-of-stock');
-  }
-});
-</script>
+
