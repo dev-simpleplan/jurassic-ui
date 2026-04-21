@@ -1839,6 +1839,7 @@ li.variant-value {
   gap: 4px;
   cursor: pointer;
   min-width: 130px;
+  width: 100%;
 }
 li.variant-value::after {
   width: 100%;
