@@ -396,11 +396,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script> {% endcomment %}
 <script>
-  document.querySelectorAll('.fc_add_to_cart').forEach(function(el) {
-  const btn = el.querySelector('button');
-  
-  if (btn && btn.disabled) {
-    el.classList.add('out-of-stock');
+  document.addEventListener('DOMContentLoaded', () => {
+
+  function updateCardButtonState(card) {
+    const wrap = card.querySelector('.fc_add_to_cart');
+    const btn = card.querySelector('.add-to-cart-btn');
+
+    if (!wrap || !btn) return;
+
+    const available = wrap.dataset.available === 'true';
+
+    if (!available) {
+      btn.disabled = true;
+      btn.classList.add('out-of-stock');   // ✅ ADD CLASS
+      btn.textContent = 'Sold Out';
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('out-of-stock'); // ✅ REMOVE CLASS
+      btn.textContent = 'Add to Cart';
+    }
   }
+
+  // 🔁 Run on page load
+  document.querySelectorAll('.product-card-primary').forEach(card => {
+    updateCardButtonState(card);
+  });
+
 });
 </script>
