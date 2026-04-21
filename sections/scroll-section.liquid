@@ -267,8 +267,43 @@
         </div>
     </div>
 </section>
-
-<script>
+<div class="custom-scrollbar-track">
+    <div class="custom-scrollbar-thumb"></div>
+</div>
+<style>
+    .scrollsec-wrapper {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.scrollsec-wrapper::-webkit-scrollbar {
+    display: none;
+}
+.custom-scrollbar-track {
+    width: 80%;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: relative;
+    cursor: pointer;
+}
+.custom-scrollbar-thumb {
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: grab;
+}
+@media screen and (max-width: 991px) {
+    .custom-scrollbar-track{
+        display: none;
+    }
+}
+</style>
+{% comment %} <script>
     document.addEventListener("DOMContentLoaded", () => {
     const wrapper = document.querySelector('.scrollsec-wrapper');
     const nextBtn = document.querySelector('.scroll-arrow.next');
@@ -294,8 +329,66 @@
         nextBtn.style.opacity = wrapper.scrollLeft >= maxScroll ? "0.3" : "1";
     });
 });
-</script>
+</script> {% endcomment %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.querySelector('.scrollsec-wrapper');
+    const nextBtn = document.querySelector('.scroll-arrow.next');
+    const prevBtn = document.querySelector('.scroll-arrow.prev');
+    const track = document.querySelector('.custom-scrollbar-track');
+    const thumb = document.querySelector('.custom-scrollbar-thumb');
 
+    if (!wrapper || !nextBtn || !prevBtn || !track || !thumb) return;
+
+    function updateThumb() {
+        const ratio = wrapper.clientWidth / wrapper.scrollWidth;
+        const thumbWidth = Math.max(ratio * track.clientWidth, 30);
+        thumb.style.width = thumbWidth + 'px';
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        const maxThumbLeft = track.clientWidth - thumbWidth;
+        thumb.style.left = maxScroll > 0 ? (wrapper.scrollLeft / maxScroll) * maxThumbLeft + 'px' : '0px';
+    }
+
+    wrapper.addEventListener('scroll', () => {
+        updateThumb();
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        prevBtn.style.opacity = wrapper.scrollLeft <= 0 ? "0.3" : "1";
+        nextBtn.style.opacity = wrapper.scrollLeft >= maxScroll ? "0.3" : "1";
+    });
+
+    track.addEventListener('click', (e) => {
+        if (e.target === thumb) return;
+        const rect = track.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / track.clientWidth;
+        wrapper.scrollTo({ left: ratio * (wrapper.scrollWidth - wrapper.clientWidth), behavior: 'smooth' });
+    });
+
+    let isDragging = false, startX = 0, startScrollLeft = 0;
+    thumb.addEventListener('mousedown', (e) => {
+        isDragging = true; startX = e.clientX; startScrollLeft = wrapper.scrollLeft;
+        document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const maxThumbLeft = track.clientWidth - thumb.clientWidth;
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        wrapper.scrollLeft = startScrollLeft + ((e.clientX - startX) / maxThumbLeft) * maxScroll;
+    });
+    document.addEventListener('mouseup', () => {
+        isDragging = false; document.body.style.userSelect = '';
+    });
+
+    nextBtn.addEventListener('click', () => {
+        wrapper.scrollBy({ left: wrapper.querySelector('.scrollsec-slide').offsetWidth, behavior: 'smooth' });
+    });
+    prevBtn.addEventListener('click', () => {
+        wrapper.scrollBy({ left: -wrapper.querySelector('.scrollsec-slide').offsetWidth, behavior: 'smooth' });
+    });
+
+    updateThumb();
+    window.addEventListener('resize', updateThumb);
+});
+</script>
 {% schema %}
 {
   "name": "Scroll Section",
