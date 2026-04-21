@@ -16,7 +16,10 @@
     "article_comments": "Kommentare",
     "comment_form_body": "Kommentar",
     "comment_form_email": "E-Mail",
-    "comment_form_title": "Einen Kommentar hinzufügen"
+    "comment_form_title": "Einen Kommentar hinzufügen",
+    "article_metadata_html": "{{ date }} von {{ author }}",
+    "comment_form_name": "Name",
+    "comment_form_submit": "Beitrag"
   },
   "cart": {
     "checkout": "Kasse",
@@ -28,7 +31,8 @@
     "login": {
       "email": "E-Mail",
       "password": "Passwort",
-      "submit": "anmelden"
+      "submit": "anmelden",
+      "title": "Anmelden"
     }
   },
   "gift_card": {
