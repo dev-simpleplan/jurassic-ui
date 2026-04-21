@@ -1886,7 +1886,7 @@ li.variant-value .vv-value {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  white-space: no-wrap;
+  white-space: nowrap;
 }
 li.variant-value .vvv-value {
   font-size: 13px;
@@ -1901,7 +1901,7 @@ li.variant-value .perKg {
     line-height: 140%;
     letter-spacing: -0.5px;
     color: #6b6b6b;
-      white-space: no-wrap;
+    white-space: nowrap;
 }
 li.variant-value .vvv-discount {
   padding: 4px;
