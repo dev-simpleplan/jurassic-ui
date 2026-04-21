@@ -2710,3 +2710,8 @@ p.product-description-metafield {
   z-index: 99999999999!important;
 }
 /* Product Page Ends */
+@media screen and (min-width: 768px) {
+.filter-sidebar{
+  width: 100%;
+}  
+}
