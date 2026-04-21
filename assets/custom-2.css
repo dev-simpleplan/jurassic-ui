@@ -1884,7 +1884,7 @@ li.variant-value:hover::after {
   border-color: transparent;
 }
 li.variant-value .vv-value {
-  /* display: flex; */
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
