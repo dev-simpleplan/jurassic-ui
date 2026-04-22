@@ -30,7 +30,7 @@
         "staging_delivery_date_app_product_delivery_info_jGcmjQ": {
           "type": "shopify://apps/staging-delivery-date-app/blocks/product-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
           "settings": {
-            "page": "shipping-policy"
+            "page": ""
           }
         },
         "store_usp": {
