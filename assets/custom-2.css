@@ -2716,3 +2716,20 @@ p.product-description-metafield {
   width: 100%;
 }  
 }
+.modal.fade .modal-dialog {
+  border-radius: 0px;
+}
+.modal.fade .modal-dialog .modal-header h5{
+font-size: 1.6rem;
+font-weight: 500;
+margin-bottom: 20px;
+}
+.modal-header button{
+     padding-left: 20px;
+    margin-bottom: auto;
+    padding-top: 10px;
+}
+.modal-body p{
+  font-size: 14px;
+  padding-bottom: 5px;
+}
