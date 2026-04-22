@@ -140,6 +140,11 @@
         "type": "shopify://apps/omnisend-email-marketing-sms/blocks/app-embed/44704aa2-794f-4c5d-8c8e-039c841158e9",
         "disabled": false,
         "settings": {}
+      },
+      "12793297677437526120": {
+        "type": "shopify://apps/t-lab-ai-language-translate/blocks/custom_translations/b5b83690-efd4-434d-8c6a-a5cef4019faf",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
