@@ -37,7 +37,7 @@
           "type": "store_usp",
           "settings": {
             "shipping_usp_icon": "shopify://shop_images/truck.svg",
-            "shipping_usp_page": "shipping-policy",
+            "shipping_usp_page": "",
             "shipping_usp_text": "Free shipping from 99 €",
             "freshness_icon": "shopify://shop_images/box.svg",
             "freshness_text": "Arrives fresh or refunded",
