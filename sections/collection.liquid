@@ -209,53 +209,50 @@
 
           {% comment %} Manual Filter with condition {% endcomment %}
            <div class="quick-filters">
-              <div class="qf-wrapper">
-                  {%- comment -%} 1. Availability (Hardcoded - Always Visible) {%- endcomment -%}
-                  <button type="button" class="qf-pill" data-name="filter.v.availability" data-value="1">In Stock</button>
-                  <button type="button" class="qf-pill" data-name="filter.v.availability" data-value="0">Out Of Stock</button>
+  <div class="qf-wrapper">
+    
+    {%- comment -%} 1. Organic (From Certificate Metafield) {%- endcomment -%}
+    {%- assign certificate_filter = collection.filters | where: "param_name", "filter.p.m.custom.certificate" | first -%}
+    {%- if certificate_filter -%}
+      {%- for value in certificate_filter.values -%}
+        {%- if value.label == "Organic" -%}
+          <button type="button" 
+                  class="qf-pill {% if value.active %}is-active{% endif %}" 
+                  data-name="{{ value.param_name }}" 
+                  data-value="{{ value.value }}">
+            {{ value.label }}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
 
-                  {%- comment -%} 2. Country of Origin (Dynamic Curated List) {%- endcomment -%}
-                  {%- assign origin_filter = collection.filters | where: "param_name", "filter.p.m.custom.country_of_origin" | first -%}
-                  
-                  {%- if origin_filter -%}
-                    {%- for value in origin_filter.values -%}
-                      {%- comment -%} 
-                        Check if the current filter value is "Spain". 
-                        This is safer because it iterates through actual available values.
-                      {%- endcomment -%}
-                      {%- if value.label contains "Spain" -%}
-                        {%- if value.count > 0 or value.active -%}
-                          <button type="button" class="qf-pill" 
-                                  data-name="{{ value.param_name }}" 
-                                  data-value="{{ value.value }}">
-                            Spain {% if value.count > 0 %}({{ value.count }}){% endif %}
-                          </button>
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                  {%- endif -%}
+    {%- comment -%} 2. Bestseller (From your 'Best Seller' Tag Filter) {%- endcomment -%}
+    {%- comment -%} We look for the label "Best Seller" because that is what you named it in the App {%- endcomment -%}
+    {%- assign bestseller_tag_filter = collection.filters | where: "label", "Best Seller" | first -%}
+    
+    {%- if bestseller_tag_filter -%}
+      {%- for value in bestseller_tag_filter.values -%}
+        {%- comment -%} 
+          This loop finds the specific tag value "Best Seller" within that filter 
+        {%- endcomment -%}
+        {%- if value.label == "Best Seller" -%}
+          <button type="button" 
+                  class="qf-pill {% if value.active %}is-active{% endif %}" 
+                  data-name="{{ value.param_name }}" 
+                  data-value="{{ value.value }}">
+            Bestseller
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
 
-                  {%- comment -%} 3. Category (Mangoes) {%- endcomment -%}
-                  {%- assign cat_filter = collection.filters | where: "label", "Category" | first -%}
-                  {%- if cat_filter -%}
-                    {%- for value in cat_filter.values -%}
-                      {%- if value.label contains "Mango" -%}
-                        {%- if value.count > 0 or value.active -%}
-                          <button type="button" class="qf-pill" 
-                                  data-name="{{ value.param_name }}" 
-                                  data-value="{{ value.value }}">
-                            Mangoes
-                          </button>
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                  {%- endif -%}
-
-                  <button type="button" class="qf-pill clear-all-pill" style="display: none;">
-                    Clear All ✕
-                  </button>
-                </div>
-            </div>
+    {%- comment -%} 3. Clear All Button {%- endcomment -%}
+    <button type="button" class="qf-pill clear-all-pill" style="display: none;">
+      Clear All ✕
+    </button>
+    
+  </div>
+</div>
         </div>
         <div class="collection-wrapper" id="ProductGrid">
           <div class="cart-loader">

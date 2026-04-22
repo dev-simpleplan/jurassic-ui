@@ -487,7 +487,13 @@
                           id="add-to-cart"
                         >
                           <span class="btn-text">
-                            <span class="btn-label">Add to Cart</span>
+                            <span class="btn-label">
+                              {%- if selected_variant.available -%}
+                                {{ 'products.product.add_to_cart' | t }}
+                              {%- else -%}
+                                {{ 'products.product.sold_out' | t }}
+                              {%- endif -%}
+                            </span>
                             <span class="btn-separator"> - </span><span class="btn-price">—</span>
                           </span>
 
