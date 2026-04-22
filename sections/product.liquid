@@ -347,9 +347,9 @@
 <div id="shipping-modal" class="shipping-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="shipping-modal-title">
   <div class="shipping-modal-container">
     <div class="shipping-modal-header">
-      <h2 id="shipping-modal-title">{{ 'general.shipping_policy' | t | default: 'Shipping Policy' }}</h2>
-      <button class="shipping-modal-close" aria-label="Close modal">&times;</button>
-    </div>
+  <h2 id="shipping-modal-title">{{ shop.shipping_policy.title }}</h2>
+  <button class="shipping-modal-close" aria-label="Close modal">&times;</button>
+</div>
     <div class="shipping-modal-body" data-lenis-prevent>
       <div class="shipping-modal-content">
         {{ shop.shipping_policy.body }}
