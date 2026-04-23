@@ -111,17 +111,21 @@
       <div class="fc_bottom">
 
         <div class="fc_bottom_top">
-          <div class="star_review">
-            <div class="star_rating">
-              <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-            </div>
-            <div class="rating_info">
-              <span class="dot_seperator dynamic-review-dot"></span>
-              {% if product.metafields.custom.country_of_origin.value.country_name %}
-                <p>{{ 'products.product.from' | t }} {{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              {% endif %}
-            </div>
-          </div>
+
+          {% assign country = product.metafields.custom.country_of_origin.value.country_name %}
+
+<div class="star_review">
+  <div class="star_rating">
+    <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
+  </div>
+
+  <div class="rating_info">
+    {% if country %}
+      <span class="dot_seperator dynamic-review-dot"></span>
+      <p>{{ 'products.product.from' | t }} {{ country }}</p>
+    {% endif %}
+  </div>
+</div>
           <p class="fc_product_title">
             <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
           </p>
