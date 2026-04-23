@@ -2394,7 +2394,7 @@ li.variant-value.is-sold-out {
 .pas-month .month-in.low-season .month-pill {
   background-color: #ffc761;
   border: 1px solid #ffc761;
-}
+} 
 .pas-country {
   display: flex;
   align-items: center;
