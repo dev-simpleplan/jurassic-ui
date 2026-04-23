@@ -784,76 +784,8 @@
 <div class="product-accordion">
   <div class="container">
     <div class="pa-wrapper">
-      {% comment %} Technical Details {% endcomment %}
-       {% if show_technical_details %}
-       <div class="pa-item">
-          <div class="pa-ques-wrap">
-              <div class="pa-ques">
-                {{ 'sections.product.technical_details' | t }}
-              </div>
-              <div class="pa-icon">
-                {%- render 'product-accordian-icon' -%}
-              </div>
-          </div>
-          <div class="pa-div">
-              <div class="product-desc">
-                {% comment %} {{ product.metafields.custom.technical_details | metafield_tag }} {% endcomment %}
-                 <div class="tech-list">
-                    {%- if product.metafields.custom.alternative_name != blank -%}
-                      <div class="tech-item">
-                        <div class="ti-name">{{ 'sections.product.scientific_name' | t }}:</div>
-                        <div class="ti-data">{{ product.metafields.custom.alternative_name }}</div>
-                      </div>
-                    {%- endif -%}
-                    
-                    {%- if product.metafields.custom.country_of_origin.value != blank -%}
-                      <div class="tech-item">
-                        <div class="ti-name">{{ 'sections.product.origin' | t }}:</div>
-                        <div class="ti-data">{{ product.metafields.custom.country_of_origin.value.country_name }}</div>
-                      </div>
-                    {%- endif -%}
-                    
-                    {%- if product.metafields.custom.weight_per_piece != blank -%}
-                    <div class="tech-item">
-                        <div class="ti-name">{{ 'sections.product.weight_per_piece' | t }}:</div>
-                        <div class="ti-data">{{ product.metafields.custom.weight_per_piece }}</div>
-                    </div>
-                    {%- endif -%}
 
-                    {%- if product.metafields.custom.quality_label != blank -%}
-                    <div class="tech-item">
-                        <div class="ti-name">{{ 'sections.product.certification' | t }}:</div>
-                        <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
-                    </div>
-                    {%- endif -%}
-
-                 </div>
-              </div>
-          </div>
-       </div>
-       {% endif %}
-
-      {% comment %} Description {% endcomment %}
-       {% if show_description %}
-       <div class="pa-item">
-          <div class="pa-ques-wrap">
-              <div class="pa-ques">
-                {{ 'sections.product.description' | t }}
-              </div>
-              <div class="pa-icon">
-                {%- render 'product-accordian-icon' -%}
-              </div>
-          </div>
-          <div class="pa-div">
-            {% comment %} <p class="product-description-metafield">{{ product.metafields.custom.description }}</p> {% endcomment %}
-            <div class="product-desc">
-              {{ product.metafields.custom.new_description | metafield_tag }}
-            </div>
-          </div>
-       </div>
-       {% endif %}
-
-      {% comment %} How to Store {% endcomment %}
+      {% comment %} How to Store and eat {% endcomment %}
        {% if show_how_to_store %}
       <div class="pa-item">
         <div class="pa-ques-wrap">
@@ -899,62 +831,6 @@
       </div>
       {% endif %}
 
-      {% comment %} Nutrition & Benefits {% endcomment %}
-       {% if show_nutrition %}
-      <div class="pa-item">
-        <div class="pa-ques-wrap">
-          <div class="pa-ques">
-            {{ 'sections.product.nutrition_benefits' | t }}
-          </div>
-          <div class="pa-icon">
-            {%- render 'product-accordian-icon' -%}
-          </div>
-        </div>
-        <div class="pa-div">
-          <div class="nutrition-info">
-            <div class="nutri-image">
-                {% comment %} <img src="{{ product.metafields.custom.nutrition_benefits_image |  img_url: 'master' }}" alt=""> {% endcomment %}
-                 {{ product.metafields.custom.nutrition_details | metafield_tag }}
-            </div>
-            <div class="nutri-info">
-              {{ product.metafields.custom.nutrition_benefits_content | metafield_tag }}
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      {% comment %} Origin & Sourcing {% endcomment %}
-
-       {% if show_origin %}
-       <div class="pa-item">
-          <div class="pa-ques-wrap">
-              <div class="pa-ques">
-                {{ 'sections.product.origin_sourcing' | t }}
-              </div>
-              <div class="pa-icon">
-                {%- render 'product-accordian-icon' -%}
-              </div>
-          </div>
-          <div class="pa-div">
-            <div class="pa-eat-store">
-              {% for item in origin_sourcing_items %}
-                <div class="paes-item">
-                  <div class="paes-icon square">
-                      <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
-                  </div>
-                  <div class="paes-content">
-                    {% if item.origin_label != blank %}
-                      <h3>{{ item.origin_label }}</h3>
-                    {% endif %}
-                    {{ item.origin_content | metafield_tag }}
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-       </div>
-       {% endif %}
       {% comment %} Taste Profile {% endcomment %}
       {% if show_taste_profile %}
       <div class="pa-item">
@@ -1062,6 +938,83 @@
         </div>
       </div>
       {% endif %}
+
+      {% comment %} Origin & Sourcing {% endcomment %}
+       {% if show_origin %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+                {{ 'sections.product.origin_sourcing' | t }}
+              </div>
+              <div class="pa-icon">
+                {%- render 'product-accordian-icon' -%}
+              </div>
+          </div>
+          <div class="pa-div">
+            <div class="pa-eat-store">
+              {% for item in origin_sourcing_items %}
+                <div class="paes-item">
+                  <div class="paes-icon square">
+                      <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
+                  </div>
+                  <div class="paes-content">
+                    {% if item.origin_label != blank %}
+                      <h3>{{ item.origin_label }}</h3>
+                    {% endif %}
+                    {{ item.origin_content | metafield_tag }}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+       </div>
+       {% endif %}
+
+       {% comment %} Nutrition & Benefits {% endcomment %}
+       {% if show_nutrition %}
+      <div class="pa-item">
+        <div class="pa-ques-wrap">
+          <div class="pa-ques">
+            {{ 'sections.product.nutrition_benefits' | t }}
+          </div>
+          <div class="pa-icon">
+            {%- render 'product-accordian-icon' -%}
+          </div>
+        </div>
+        <div class="pa-div">
+          <div class="nutrition-info">
+            <div class="nutri-image">
+                {% comment %} <img src="{{ product.metafields.custom.nutrition_benefits_image |  img_url: 'master' }}" alt=""> {% endcomment %}
+                 {{ product.metafields.custom.nutrition_details | metafield_tag }}
+            </div>
+            <div class="nutri-info">
+              {{ product.metafields.custom.nutrition_benefits_content | metafield_tag }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% comment %} Description {% endcomment %}
+       {% if show_description %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+                {{ 'sections.product.description' | t }}
+              </div>
+              <div class="pa-icon">
+                {%- render 'product-accordian-icon' -%}
+              </div>
+          </div>
+          <div class="pa-div">
+            {% comment %} <p class="product-description-metafield">{{ product.metafields.custom.description }}</p> {% endcomment %}
+            <div class="product-desc">
+              {{ product.metafields.custom.new_description | metafield_tag }}
+            </div>
+          </div>
+       </div>
+       {% endif %}
+
       {% comment %} Seasonal Information {% endcomment %}
       {% if show_seasonal %}
       <div class="pa-item">
@@ -1075,77 +1028,75 @@
         </div>
         <div class="pa-div">
           <div class="pa-seasons">
-
-            
             {%- assign months_en = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
-{%- assign months_de = "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember" | split: ',' -%}
-{%- assign months_fr = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre" | split: ',' -%}
+            {%- assign months_de = "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember" | split: ',' -%}
+            {%- assign months_fr = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre" | split: ',' -%}
 
-{%- assign high_raw = season_meta.high_season_month.value | default: '' | split: ',' -%}
-{%- assign low_raw = season_meta.low_season_month.value | default: '' | split: ',' -%}
+            {%- assign high_raw = season_meta.high_season_month.value | default: '' | split: ',' -%}
+            {%- assign low_raw = season_meta.low_season_month.value | default: '' | split: ',' -%}
 
-{%- assign high_indexes = '' -%}
-{% for h in high_raw %}
-  {% assign h_clean = h | strip %}
+            {%- assign high_indexes = '' -%}
+            {% for h in high_raw %}
+              {% assign h_clean = h | strip %}
 
-  {% for m in months_en %}
-    {% assign m_index = forloop.index %}
+              {% for m in months_en %}
+                {% assign m_index = forloop.index %}
 
-    {% if m == h_clean %}
-      {% assign high_indexes = high_indexes | append: m_index | append: ',' %}
-    {% endif %}
-  {% endfor %}
+                {% if m == h_clean %}
+                  {% assign high_indexes = high_indexes | append: m_index | append: ',' %}
+                {% endif %}
+              {% endfor %}
 
-{% endfor %}
+            {% endfor %}
 
-{%- assign low_indexes = '' -%}
-{% for l in low_raw %}
-  {% assign l_clean = l | strip %}
+            {%- assign low_indexes = '' -%}
+            {% for l in low_raw %}
+              {% assign l_clean = l | strip %}
 
-  {% for m in months_en %}
-    {% assign m_index = forloop.index %}
+              {% for m in months_en %}
+                {% assign m_index = forloop.index %}
 
-    {% if m == l_clean %}
-      {% assign low_indexes = low_indexes | append: m_index | append: ',' %}
-    {% endif %}
-  {% endfor %}
+                {% if m == l_clean %}
+                  {% assign low_indexes = low_indexes | append: m_index | append: ',' %}
+                {% endif %}
+              {% endfor %}
 
-{% endfor %}
+            {% endfor %}
 
-<div class="pas-month">
-  {%- for month in months_en -%}
+            <div class="pas-month">
+              {%- for month in months_en -%}
 
-    {%- assign index0 = forloop.index0 -%}
-    {%- assign index = forloop.index -%}
+                {%- assign index0 = forloop.index0 -%}
+                {%- assign index = forloop.index -%}
 
-    {%- case request.locale.iso_code -%}
-      {%- when 'de' -%}
-        {%- assign display_month = months_de[index0] -%}
-      {%- when 'fr' -%}
-        {%- assign display_month = months_fr[index0] -%}
-      {%- else -%}
-        {%- assign display_month = months_en[index0] -%}
-    {%- endcase -%}
+                {%- case request.locale.iso_code -%}
+                  {%- when 'de' -%}
+                    {%- assign display_month = months_de[index0] -%}
+                  {%- when 'fr' -%}
+                    {%- assign display_month = months_fr[index0] -%}
+                  {%- else -%}
+                    {%- assign display_month = months_en[index0] -%}
+                {%- endcase -%}
 
-    {%- assign index_key = index | append: ',' -%}
+                {%- assign index_key = index | append: ',' -%}
 
-{%- assign is_high = false -%}
-{%- if high_indexes contains index_key -%}
-  {%- assign is_high = true -%}
-{%- endif -%}
+            {%- assign is_high = false -%}
+            {%- if high_indexes contains index_key -%}
+              {%- assign is_high = true -%}
+            {%- endif -%}
 
-{%- assign is_low = false -%}
-{%- if low_indexes contains index_key -%}
-  {%- assign is_low = true -%}
-{%- endif -%}
+            {%- assign is_low = false -%}
+            {%- if low_indexes contains index_key -%}
+              {%- assign is_low = true -%}
+            {%- endif -%}
 
-    <div class="month-in{% if is_high %} high-season{% elsif is_low %} low-season{% endif %}">
-      <p>{{ display_month | slice: 0, 3 }}</p>
-      <div class="month-pill"></div>
-    </div>
+                <div class="month-in{% if is_high %} high-season{% elsif is_low %} low-season{% endif %}">
+                  <p>{{ display_month | slice: 0, 3 }}</p>
+                  <div class="month-pill"></div>
+                </div>
 
-  {%- endfor -%}
-</div>
+              {%- endfor -%}
+            </div>
             <div class="pas-country">
               {% comment %} <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p> {% endcomment %}
               {% assign shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
@@ -1182,6 +1133,55 @@
         </div>
       </div>
       {% endif %}
+
+      {% comment %} Technical Details {% endcomment %}
+       {% if show_technical_details %}
+       <div class="pa-item">
+          <div class="pa-ques-wrap">
+              <div class="pa-ques">
+                {{ 'sections.product.technical_details' | t }}
+              </div>
+              <div class="pa-icon">
+                {%- render 'product-accordian-icon' -%}
+              </div>
+          </div>
+          <div class="pa-div">
+              <div class="product-desc">
+                {% comment %} {{ product.metafields.custom.technical_details | metafield_tag }} {% endcomment %}
+                 <div class="tech-list">
+                    {%- if product.metafields.custom.alternative_name != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.scientific_name' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.alternative_name }}</div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if product.metafields.custom.country_of_origin.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.origin' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.country_of_origin.value.country_name }}</div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- if product.metafields.custom.weight_per_piece != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.weight_per_piece' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.weight_per_piece }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.quality_label != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.certification' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
+                    </div>
+                    {%- endif -%}
+
+                 </div>
+              </div>
+          </div>
+       </div>
+       {% endif %}
     </div>
   </div>
 </div>
