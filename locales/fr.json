@@ -50,6 +50,11 @@
       "title": "Connexion"
     }
   },
+  "quick_filters": {
+    "organic": "Biologique",
+    "bestseller": "Meilleures ventes",
+    "clear_all": "Tout effacer"
+  },
   "gift_card": {
     "add_to_apple_wallet": "Ajouter à Cartes",
     "card": "Carte cadeau",
