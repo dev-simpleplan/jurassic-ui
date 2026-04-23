@@ -916,46 +916,77 @@
         </div>
         <div class="pa-div">
           <div class="pa-seasons">
-            {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
 
-            {%- comment %}
-              Normalize metafield values:
-              - downcase → avoid case mismatch
-              - remove spaces → avoid " May" issues
-            {% endcomment -%}
+            
+            {%- assign months_en = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
+{%- assign months_de = "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember" | split: ',' -%}
+{%- assign months_fr = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre" | split: ',' -%}
 
-            {%- assign high_months_string = season_meta.high_season_month | default: '' | downcase | replace: ' ', '' -%}
-            {%- assign low_months_string = season_meta.low_season_month | default: '' | downcase | replace: ' ', '' -%}
+{%- assign high_raw = season_meta.high_season_month.value | default: '' | split: ',' -%}
+{%- assign low_raw = season_meta.low_season_month.value | default: '' | split: ',' -%}
 
-            <div class="pas-month">
-              {%- for month in month_names -%}
-                
-                {%- assign current_month = month | strip -%}
-                {%- assign current_normalized = current_month | downcase -%}
+{%- assign high_indexes = '' -%}
+{% for h in high_raw %}
+  {% assign h_clean = h | strip %}
 
-                {%- comment %}
-                  Check using "contains"
-                  Example:
-                  "april,may,june" contains "may" → true
-                {% endcomment -%}
+  {% for m in months_en %}
+    {% assign m_index = forloop.index %}
 
-                {%- assign is_high = false -%}
-                {%- if high_months_string contains current_normalized -%}
-                  {%- assign is_high = true -%}
-                {%- endif -%}
+    {% if m == h_clean %}
+      {% assign high_indexes = high_indexes | append: m_index | append: ',' %}
+    {% endif %}
+  {% endfor %}
 
-                {%- assign is_low = false -%}
-                {%- if low_months_string contains current_normalized -%}
-                  {%- assign is_low = true -%}
-                {%- endif -%}
+{% endfor %}
 
-                <div class="month-in{% if is_high %} high-season{% elsif is_low %} low-season{% endif %}">
-                  <p>{{ current_month | slice: 0, 3 }}</p>
-                  <div class="month-pill"></div>
-                </div>
+{%- assign low_indexes = '' -%}
+{% for l in low_raw %}
+  {% assign l_clean = l | strip %}
 
-              {%- endfor -%}
-            </div>
+  {% for m in months_en %}
+    {% assign m_index = forloop.index %}
+
+    {% if m == l_clean %}
+      {% assign low_indexes = low_indexes | append: m_index | append: ',' %}
+    {% endif %}
+  {% endfor %}
+
+{% endfor %}
+
+<div class="pas-month">
+  {%- for month in months_en -%}
+
+    {%- assign index0 = forloop.index0 -%}
+    {%- assign index = forloop.index -%}
+
+    {%- case request.locale.iso_code -%}
+      {%- when 'de' -%}
+        {%- assign display_month = months_de[index0] -%}
+      {%- when 'fr' -%}
+        {%- assign display_month = months_fr[index0] -%}
+      {%- else -%}
+        {%- assign display_month = months_en[index0] -%}
+    {%- endcase -%}
+
+    {%- assign index_key = index | append: ',' -%}
+
+{%- assign is_high = false -%}
+{%- if high_indexes contains index_key -%}
+  {%- assign is_high = true -%}
+{%- endif -%}
+
+{%- assign is_low = false -%}
+{%- if low_indexes contains index_key -%}
+  {%- assign is_low = true -%}
+{%- endif -%}
+
+    <div class="month-in{% if is_high %} high-season{% elsif is_low %} low-season{% endif %}">
+      <p>{{ display_month | slice: 0, 3 }}</p>
+      <div class="month-pill"></div>
+    </div>
+
+  {%- endfor -%}
+</div>
             <div class="pas-country">
               {% comment %} <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p> {% endcomment %}
               {% assign shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
