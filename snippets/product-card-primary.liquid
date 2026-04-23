@@ -411,6 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script> {% endcomment %}
+
+<script>
+  window.themeStrings = {
+    addToCart: "{{ 'products.product.add_to_cart' | t }}",
+    soldOut: "{{ 'products.product.sold_out' | t }}"
+  };
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -424,12 +431,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!available) {
       btn.disabled = true;
-      btn.classList.add('out-of-stock');   // ✅ ADD CLASS
-      btn.textContent = 'Sold Out';
+      btn.classList.add('out-of-stock');
+      btn.textContent = window.themeStrings.soldOut;   // ✅ dynamic
     } else {
       btn.disabled = false;
-      btn.classList.remove('out-of-stock'); // ✅ REMOVE CLASS
-      btn.textContent = 'Add to Cart';
+      btn.classList.remove('out-of-stock');
+      btn.textContent = window.themeStrings.addToCart; // ✅ dynamic
     }
   }
 
