@@ -163,6 +163,7 @@
     },
     "spacer3": {
       "type": "Spacer",
+      "disabled": true,
       "settings": {
         "spacer_height": 140
       }
@@ -235,6 +236,7 @@
         "location_point_YHJFwV",
         "location_point_LMQBiB"
       ],
+      "disabled": true,
       "settings": {
         "heading": "A World of Flavor in Your Hands",
         "subheading": "Follow the trail of flavor across the globe. We trace every fruit back to its origin, so you can trace every bite back to trust."
@@ -242,6 +244,7 @@
     },
     "spacer_hF47x4": {
       "type": "spacer",
+      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
