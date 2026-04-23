@@ -163,6 +163,9 @@
 .star_review .star_rating > p {
   display: flex;
 }
+.star_review .star_rating > p .okeReviews > div {
+  display: flex;
+}
 .star_review .star_rating > p div.okeReviews > div:nth-child(1) {
   display: flex;
 }
