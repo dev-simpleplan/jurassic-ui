@@ -463,6 +463,9 @@ a:hover {
   background: #FFF2DB;
   font-weight: 600;
 }
+.fancybox__slide.is-selected {
+    background-color: #fcf9f5;
+}
 .countries-select p.selecthead {
     overflow-wrap: break-word;
     font-family: var(--scale);

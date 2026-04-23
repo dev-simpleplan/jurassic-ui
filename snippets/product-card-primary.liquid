@@ -80,7 +80,7 @@
         {% if product.tags contains 'Best Seller' %}
           {% assign is_bestseller_product = true %}
         {% endif %}
-        <div
+        {% comment %} <div
           class="fc_bestsell_tags{% unless is_bestseller_product %} red{% endunless %}"
           data-card-top-badge
           data-is-bestseller="{% if is_bestseller_product %}true{% else %}false{% endif %}"
@@ -90,6 +90,18 @@
               Bestseller
             {% elsif default_variant.compare_at_price > default_variant.price %}
               -{{ default_variant.compare_at_price | minus: default_variant.price | times: 100 | divided_by: default_variant.compare_at_price | round }}%
+            {% endif %}
+          </span>
+        </div> {% endcomment %}
+        <div
+          class="fc_bestsell_tags"
+          data-card-top-badge
+          data-is-bestseller="{% if is_bestseller_product %}true{% else %}false{% endif %}"
+          style="{% unless is_bestseller_product %}display:none;{% endunless %}">
+          <span data-card-top-badge-text>
+            {% if is_bestseller_product %}
+              Bestseller
+            
             {% endif %}
           </span>
         </div>

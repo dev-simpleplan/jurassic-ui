@@ -187,9 +187,9 @@
             {% for block in section.blocks %}
               {% if block.settings.show_testimonial 
                 and product.metafields.custom.title_testimonial != blank %}
-                <div class="tr-okendo">
+                {% comment %} <div class="tr-okendo">
                   <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-                </div>
+                </div> {% endcomment %}
                 <div class="tr-testimonial">
                   {% render 'testimonial-icon' %}
                   {{ product.metafields.custom.title_testimonial | metafield_tag }}
