@@ -266,3 +266,19 @@ closeBtn.addEventListener('click', () => {
 
 // Run once on load
 syncBodyState();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('.review-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // 👇 use your actual class here
+      const target = document.querySelector('.okeReviews');
+
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+});

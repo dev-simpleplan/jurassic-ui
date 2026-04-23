@@ -36,6 +36,11 @@
       "title": "Login"
     }
   },
+    "quick_filters": {
+    "organic": "Organic",
+    "bestseller": "Bestseller",
+    "clear_all": "Clear All"
+  },
   "collections": {
     "title": "Collections"
   },

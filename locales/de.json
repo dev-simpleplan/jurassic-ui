@@ -35,6 +35,11 @@
       "title": "Anmelden"
     }
   },
+  "quick_filters": {
+    "organic": "Bio",
+    "bestseller": "Bestseller",
+    "clear_all": "Alle löschen"
+  },
   "gift_card": {
     "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",
     "card": "Geschenkgutschein",
