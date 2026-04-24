@@ -184,6 +184,12 @@
   </div>
 </div>
 
+{% form 'localization', id: 'LocaleSwitchForm', class: 'visually-hidden' %}
+  <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}" data-locale-country-input>
+  <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}" data-locale-language-input>
+  <input type="hidden" name="return_to" value="{{ request.path }}" data-locale-return-input>
+{% endform %}
+
 
 {% comment %} <script>
 document.addEventListener('click', function (e) {
@@ -281,48 +287,21 @@ document.addEventListener('click', function (e) {
   if (e.target.closest('[data-locale-apply]')) {
     const country = modal.dataset.selectedCountry;
     const languageCode = modal.dataset.selectedLanguage;
-    
-    // 1. Get current path (e.g., /products/mango)
-    let currentPath = window.location.pathname;
-    
-    // 2. Remove existing language prefix from path if necessary
-    // Shopify handles language roots like /en, /fr, etc.
-    const availableLanguages = [];
-    {% for language in localization.available_languages %}
-      availableLanguages.push('{{ language.iso_code }}');
-    {% endfor %}
-    
-    const pathParts = currentPath.split('/');
-    if (pathParts[1] && availableLanguages.includes(pathParts[1])) {
-      pathParts.splice(1, 1); // Remove the old language code
-      currentPath = pathParts.join('/') || '/';
-    }
+    const localeForm = document.getElementById('LocaleSwitchForm');
+    const countryInput = localeForm?.querySelector('[data-locale-country-input]');
+    const languageInput = localeForm?.querySelector('[data-locale-language-input]');
+    const returnInput = localeForm?.querySelector('[data-locale-return-input]');
 
-    // 3. Build the new URL
-    // If language is not the default, add it to the path
-    let newPath = (languageCode === '{{ shop.published_locales.first.iso_code }}') 
-                  ? currentPath 
-                  : '/' + languageCode + currentPath;
+    if (!localeForm || !countryInput || !languageInput || !returnInput) return;
 
-    // Clean up double slashes
-    newPath = newPath.replace(/\/+/g, '/');
+    countryInput.value = country || modal.dataset.currentCountry;
+    languageInput.value = languageCode || modal.dataset.currentLanguage;
 
-    const finalUrl = new URL(newPath, window.location.origin);
-    
-    // 4. Set the country parameter
-    if (country) {
-      finalUrl.searchParams.set('country', country);
-    }
-    
-    // Keep existing search params (like variants) if you want
-    const currentParams = new URLSearchParams(window.location.search);
-    currentParams.forEach((value, key) => {
-      if (key !== 'country') { // Don't overwrite our new country
-        finalUrl.searchParams.set(key, value);
-      }
-    });
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete('country');
+    returnInput.value = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
 
-window.location.href = finalUrl.toString();
+    localeForm.submit();
   }
 });
 </script>
