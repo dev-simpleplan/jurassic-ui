@@ -153,7 +153,7 @@
           "type": "faq",
           "settings": {
             "question": "How much does delivery cost and how long does it take?",
-            "answer": "<p>Find all shipping options here: <a href=\"https://www.jurassicfruit.com/en/policies/shipping-policy\" title=\"Shipping policy\">Shipping policy </a>The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.</p>",
+            "answer": "<p>Find all shipping options here: Shipping policy The indicated delivery times start from the shipping date (not the order date, due to our weekly schedule).The delivery delays are not guaranteed except for Express.</p>",
             "faq_image": "shopify://shop_images/Discovery_20Date_20Gift_hash_escaped_06.jpg"
           }
         },
