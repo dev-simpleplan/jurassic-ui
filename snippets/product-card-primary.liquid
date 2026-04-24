@@ -94,15 +94,19 @@
           </span>
         </div> {% endcomment %}
         <div
-          class="fc_bestsell_tags"
+          class="fc_bestsell_tags{% unless is_bestseller_product %} red{% endunless %}"
           data-card-top-badge
           data-is-bestseller="{% if is_bestseller_product %}true{% else %}false{% endif %}"
           style="{% unless is_bestseller_product %}display:none;{% endunless %}">
           <span data-card-top-badge-text>
             {% if is_bestseller_product %}
-              Bestseller
-            
+              {{ 'products.product.best_seller' | t }}
             {% endif %}
+            {% comment %}
+              Future use:
+              {% elsif default_variant.compare_at_price > default_variant.price %}
+                -{{ default_variant.compare_at_price | minus: default_variant.price | times: 100 | divided_by: default_variant.compare_at_price | round }}%
+            {% endcomment %}
           </span>
         </div>
       </div>
@@ -145,7 +149,7 @@
                   <ul class="dropdown" data-lenis-prevent>
                     {% for variant in product.variants %}
                       <li 
-                        class="dropdown-item"
+                        class="dropdown-item{% if variant.id == default_variant.id %} is-selected{% endif %}"
                         data-id="{{ variant.id }}"
                         data-selected-title="{{ variant.title | escape }}"
                         data-price="{{ variant.price | money_without_currency }} {{ cart.currency.symbol }}"
@@ -155,7 +159,7 @@
                       >
                         <a href="javascript:void(0)">
                           {% if variant.metafields.custom.bestseller == true %}
-                              <div class="vv-bestseller">best seller</div>
+                              <div class="vv-bestseller">{{ 'products.product.best_seller' | t }}</div>
                             {% endif %}
                           <div class="item-details">
                             <span class="item-title">
@@ -414,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
   window.themeStrings = {
+    ...(window.themeStrings || {}),
     addToCart: "{{ 'products.product.add_to_cart' | t }}",
     soldOut: "{{ 'products.product.sold_out' | t }}"
   };

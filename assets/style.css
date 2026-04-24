@@ -2005,7 +2005,7 @@ section.scroll-sec {
 .swsfruits-item {
     position: absolute;
     transition: 0.3s ease all;
-    opacity: 0;
+    opacity: 1;
     /* visibility: hidden; */
     z-index: 3;
 }

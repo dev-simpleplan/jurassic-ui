@@ -121,6 +121,14 @@
                 </div>
                 <div class="filter-sidebar-form">
                   <form>
+                    {%- assign bestseller_active = false -%}
+                    {%- for tag in current_tags -%}
+                      {%- assign tag_handle = tag | handleize -%}
+                      {%- if tag == 'Best Seller' or tag_handle == 'best-seller' -%}
+                        {%- assign bestseller_active = true -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
                     <div class="form-filter-wrap list">
                       <div class="ff-head">
                         <p>Sort By</p>
@@ -180,6 +188,24 @@
                         </div>
                       </div>
                     {%- endfor -%}
+                    {%- if collection.all_tags contains 'Best Seller' or bestseller_active -%}
+                      <div class="form-filter-wrap list">
+                        <div class="ff-head">
+                          <p>{{ 'quick_filters.bestseller' | t }}</p>
+                          <div class="filter-down-arrow">{% render "icon-arrow_down" %}</div>
+                        </div>
+                        <div class="ff-in">
+                          <ul>
+                            <li>
+                              <label for="Filter-constraint-bestseller">
+                                <input type="checkbox" name="constraint" value="best-seller" id="Filter-constraint-bestseller" {% if bestseller_active %}checked{% endif %}>
+                                {{ 'quick_filters.bestseller' | t }}
+                              </label>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    {%- endif -%}
                     <div class="clear-filter">
                       <a href="{{ collection.url }}" class="reset-btn">Reset</a>
                       <button type="submit" class="apply-filter-btn custom-btn black">Apply Filters</button>
@@ -210,45 +236,43 @@
           {% comment %} Manual Filter with condition {% endcomment %}
            <div class="quick-filters">
   <div class="qf-wrapper">
+    {%- assign bestseller_active = false -%}
+    {%- for tag in current_tags -%}
+      {%- assign tag_handle = tag | handleize -%}
+      {%- if tag == 'Best Seller' or tag_handle == 'best-seller' -%}
+        {%- assign bestseller_active = true -%}
+      {%- endif -%}
+    {%- endfor -%}
     
     {%- comment -%} 1. Organic (From Certificate Metafield) {%- endcomment -%}
     {%- assign certificate_filter = collection.filters | where: "param_name", "filter.p.m.custom.certificate" | first -%}
     {%- if certificate_filter -%}
       {%- for value in certificate_filter.values -%}
-        {%- if value.label == "Organic" -%}
+        {%- assign organic_handle = value.label | handleize -%}
+        {%- if organic_handle == 'organic' or organic_handle == 'bio' or organic_handle == 'biologique' -%}
           <button type="button" 
                   class="qf-pill {% if value.active %}is-active{% endif %}" 
                   data-name="{{ value.param_name }}" 
                   data-value="{{ value.value }}">
-            {{ value.label }}
+            {{ 'quick_filters.organic' | t }}
           </button>
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
 
     {%- comment -%} 2. Bestseller (From your 'Best Seller' Tag Filter) {%- endcomment -%}
-    {%- comment -%} We look for the label "Best Seller" because that is what you named it in the App {%- endcomment -%}
-    {%- assign bestseller_tag_filter = collection.filters | where: "label", "Best Seller" | first -%}
-    
-    {%- if bestseller_tag_filter -%}
-      {%- for value in bestseller_tag_filter.values -%}
-        {%- comment -%} 
-          This loop finds the specific tag value "Best Seller" within that filter 
-        {%- endcomment -%}
-        {%- if value.label == "Best Seller" -%}
-          <button type="button" 
-                  class="qf-pill {% if value.active %}is-active{% endif %}" 
-                  data-name="{{ value.param_name }}" 
-                  data-value="{{ value.value }}">
-            Bestseller
-          </button>
-        {%- endif -%}
-      {%- endfor -%}
+    {%- if collection.all_tags contains 'Best Seller' or bestseller_active -%}
+      <button type="button" 
+              class="qf-pill {% if bestseller_active %}is-active{% endif %}" 
+              data-name="constraint" 
+              data-value="best-seller">
+        {{ 'quick_filters.bestseller' | t }}
+      </button>
     {%- endif -%}
 
     {%- comment -%} 3. Clear All Button {%- endcomment -%}
     <button type="button" class="qf-pill clear-all-pill" style="display: none;">
-      Clear All ✕
+      {{ 'quick_filters.clear_all' | t }} ✕
     </button>
     
   </div>
@@ -295,6 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Selectors
     const filterForm = document.querySelector(".tc-filter-wrap form");
     const productGrid = document.querySelector("#ProductGrid");
+    const collectionBaseUrl = {{ collection.url | json }};
     const filter_sidebar = document.querySelector('.filter-sidebar');
     const filter_button = document.querySelector('.filter-buttton');
     const filter_close = document.querySelector('.filter-close-mob');
@@ -318,6 +343,9 @@ document.addEventListener("DOMContentLoaded", () => {
             searchParams.set(key, extraParams[key]);
         });
 
+        const constraints = searchParams.getAll('constraint').filter(Boolean);
+        searchParams.delete('constraint');
+
         // --- Add NoIndex logic ---
         // Check if any filters are active (excluding the sort_by parameter)
         let hasFilters = false;
@@ -334,7 +362,15 @@ document.addEventListener("DOMContentLoaded", () => {
             searchParams.delete('view');
         }
 
-        let url = urlOverride ? urlOverride : `${window.location.pathname}?${searchParams.toString()}`;
+        let url;
+
+        if (urlOverride) {
+            url = urlOverride;
+        } else {
+            const constraintPath = constraints.length ? `/${constraints.join('+')}` : '';
+            const queryString = searchParams.toString();
+            url = `${collectionBaseUrl}${constraintPath}${queryString ? `?${queryString}` : ''}`;
+        }
 
         fetch(url)
             .then(res => res.text())
@@ -446,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   clearBtn.onclick = (e) => {
                       e.preventDefault();
                       // Redirect to the clean collection URL to strip all filters
-                      window.location.href = window.location.pathname;
+                      window.location.href = collectionBaseUrl;
                   };
               }
 
