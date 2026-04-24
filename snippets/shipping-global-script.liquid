@@ -1,29 +1,35 @@
 <script>
   (function() {
-    {% assign suffix = cart.currency.symbol %}
-    const shippingPrices = {
-      {%- for rate in shop.metaobjects.shipping_rate.values -%}
-        {%- if rate.market_code != blank and rate.price_value != blank -%}
-          {% assign clean_price = rate.price_value | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
-          "{{ rate.market_code | downcase | strip }}": "{{ clean_price }} {{ suffix }}",
-        {%- endif -%}
-      {%- endfor -%}
-      {% assign default_raw = shop.metafields.custom.default_shipping.value | default: '19' %}
-      {% assign clean_default = default_raw | replace: '$', '' | replace: 'Rs.', '' | replace: '€', '' | strip %}
-      "default": "{{ clean_default }} {{ suffix }}"
+    const freeShippingThresholds = {
+      de: '99 €',
+      fr: '120 €',
+      be: '120 €',
+      nl: '120 €',
+      dk: '120 €',
+      at: '120 €',
+      default: '99 €'
+    };
+
+    const translations = {
+      freeShippingFrom: {{ 'sections.product.free_shipping_from' | t | json }},
+      shippingStartsFrom: {{ 'sections.product.shipping_starts_from' | t | json }},
+      finalPricesCheckout: {{ 'sections.product.final_prices_checkout' | t | json }}
     };
 
     let lastMarketKey = null;
 
     function resolveMarketKey() {
       const urlParams = new URLSearchParams(window.location.search);
-      let market = window.corner?.sessionData?.market || urlParams.get('country') || 'default';
+      let market = window.corner?.sessionData?.market || urlParams.get('country') || '{{ localization.country.iso_code }}' || 'default';
       let marketKey = String(market).toLowerCase().trim();
 
       const countryMap = {
         france: 'fr',
         germany: 'de',
         austria: 'at',
+        belgium: 'be',
+        netherlands: 'nl',
+        denmark: 'dk',
         'united kingdom': 'gb',
         'united states': 'us',
         india: 'in'
@@ -47,20 +53,20 @@
         }
 
         lastMarketKey = marketKey;
-        const shippingPrice = shippingPrices[marketKey] || shippingPrices.default;
+        const shippingPrice = freeShippingThresholds[marketKey] || freeShippingThresholds.default;
 
         if (mainEl) {
-          const text = `Shipping starts from ${shippingPrice}.\n Final prices will be calculated at checkout.`;
+          const text = `${translations.shippingStartsFrom} ${shippingPrice}.\n${translations.finalPricesCheckout}`;
           if (mainEl.innerText !== text) mainEl.innerText = text;
         }
 
         if (deliveryEl) {
-          const text = `Free shipping from ${shippingPrice}.`;
+          const text = `${translations.freeShippingFrom} ${shippingPrice}.`;
           if (deliveryEl.innerText !== text) deliveryEl.innerText = text;
         }
 
         if (newOuterPrice) {
-          const text = `Free shipping from ${shippingPrice}.`;
+          const text = `${translations.freeShippingFrom} ${shippingPrice}.`;
           if (newOuterPrice.innerText !== text) newOuterPrice.innerText = text;
         }
 

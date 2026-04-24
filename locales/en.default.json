@@ -51,6 +51,9 @@
     "expires_on": "Expires on {{ expires_on }}",
     "use_at_checkout": "Use this gift card at checkout"
   },
+  "general": {
+    "shipping_policy": "Shipping Policy"
+  },
   "password": {
     "title": "This shop is private",
     "password": "Password",
@@ -94,7 +97,13 @@
       "select_variant": "Select variant",
       "best_seller": "Bestseller",
       "deliver_to": "Deliver to",
+      "delivery_by": "by",
       "details": "Details",
+      "free_shipping_from": "Free shipping from",
+      "shipping_starts_from": "Shipping starts from",
+      "final_prices_checkout": "Final prices will be calculated at checkout.",
+      "freshness_usp": "Arrives fresh or refunded",
+      "payment_usp": "Pay after 30 days",
       "technical_details": "Technical Details",
       "description": "Description",
       "how_to_eat_store": "How To Eat & Store",

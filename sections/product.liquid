@@ -353,7 +353,7 @@
                         <div class="shipping-modal-container">
                           <div class="shipping-modal-header">
                             <h2 id="shipping-modal-title">{{ 'general.shipping_policy' | t | default: 'Shipping Policy' }}</h2>
-                            <button class="shipping-modal-close" aria-label="Close modal">&times;</button>
+                            <span class="shipping-modal-close" aria-label="Close modal" role="button" tabindex="0">&times;</span>
                           </div>
                           <div class="shipping-modal-body" data-lenis-prevent>
                             <div class="shipping-modal-content">
@@ -502,10 +502,10 @@
                   {% else %}
                     <div class="su-item">
                       <div class="sui-icon">
-                        <img src="{{ block.settings.freshness_icon |  img_url: 'master' }}" alt="{{ block.settings.freshness_text }}">
+                        <img src="{{ block.settings.freshness_icon |  img_url: 'master' }}" alt="{{ 'sections.product.freshness_usp' | t | default: block.settings.freshness_text }}">
                       </div>
                       <div class="sui-txt">
-                        <p id="delivered-fresh">{{ block.settings.freshness_text }}</p>
+                        <p id="delivered-fresh">{{ 'sections.product.freshness_usp' | t | default: block.settings.freshness_text }}</p>
                       </div>
                     </div>
                   {% endif %}
@@ -513,10 +513,10 @@
                   {% comment %} For Payment USP {% endcomment %}
                   <div class="su-item">
                     <div class="sui-icon">
-                      <img src="{{ block.settings.payment_usp_icon |  img_url: 'master' }}" alt="{{ block.settings.payment_usp_text }}">
+                      <img src="{{ block.settings.payment_usp_icon |  img_url: 'master' }}" alt="{{ 'sections.product.payment_usp' | t | default: block.settings.payment_usp_text }}">
                     </div>
                     <div class="sui-txt">
-                      <p id="delivered-fresh">{{ block.settings.payment_usp_text }}</p>
+                      <p id="delivered-fresh">{{ 'sections.product.payment_usp' | t | default: block.settings.payment_usp_text }}</p>
                     </div>
                   </div>
                 </div>
@@ -666,7 +666,7 @@
                     </div>
                     <p style='margin:0;' class="delivery-to">
                       <span class="product_delivery_modal_deliver_to">{{ 'sections.product.deliver_to' | t }}</span>
-                      {{ localization.country }} by :
+                      {{ localization.country }} {{ 'sections.product.delivery_by' | t }} :
                       <span class="calculated-delivery-date"></span>
                         <span class="product_delivery_modal_opener" data-popup-delivery-cost-title="Wie viel kostet die Lieferung und wie lange dauert sie?" data-popup-delivery-country="Liefern nach" data-popup-calculated-delivery-date="Bestelle heute für die Lieferung ab">
                           <small>{{ 'sections.product.details' | t }}</small>
