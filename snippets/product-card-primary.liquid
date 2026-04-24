@@ -100,7 +100,7 @@
           style="{% unless is_bestseller_product %}display:none;{% endunless %}">
           <span data-card-top-badge-text>
             {% if is_bestseller_product %}
-              {{ 'products.product.best_seller' | t }}
+              {{ 'sections.product.best_seller' | t }}
             {% endif %}
             {% comment %}
               Future use:
@@ -159,7 +159,7 @@
                       >
                         <a href="javascript:void(0)">
                           {% if variant.metafields.custom.bestseller == true %}
-                              <div class="vv-bestseller">{{ 'products.product.best_seller' | t }}</div>
+                              <div class="vv-bestseller">{{ 'sections.product.best_seller' | t }}</div>
                             {% endif %}
                           <div class="item-details">
                             <span class="item-title">
