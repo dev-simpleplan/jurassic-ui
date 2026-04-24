@@ -47,6 +47,11 @@
               card.setAttribute("data-product-id", product.id);
               container.appendChild(card);
 
+              if (typeof syncSelectedDropdownItem === 'function') {
+                const dropdown = card.querySelector('.wrapper-dropdown');
+                if (dropdown) syncSelectedDropdownItem(dropdown);
+              }
+
               initVariantLogic(card);
               window.initializeCartFunction();
             }

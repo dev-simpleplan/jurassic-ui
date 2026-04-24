@@ -1525,6 +1525,7 @@ class VariantSelector extends HTMLElement {
   updateAddToCartButton() {
 
     window.themeStrings = {
+      ...(window.themeStrings || {}),
       addToCart: "{{ 'products.product.add_to_cart' | t }}",
       soldOut: "{{ 'products.product.sold_out' | t }}"
     };
@@ -1883,4 +1884,3 @@ document.addEventListener("DOMContentLoaded", function () {
     ]
   }
 {% endschema %}
-

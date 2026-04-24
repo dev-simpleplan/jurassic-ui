@@ -122,10 +122,11 @@ document.addEventListener('click', (e) => {
             const percentOff = Math.round(((rawCompare - rawPrice) * 100) / rawCompare);
             percentBadge.innerText = '-' + percentOff + '%';
             percentBadge.style.display = 'inline-block';
-            if (topBadge && topBadgeText && !isBestsellerProduct) {
-              topBadgeText.innerText = '-' + percentOff + '%';
-              topBadge.style.display = 'block';
-            }
+            // Future use:
+            // if (topBadge && topBadgeText && !isBestsellerProduct) {
+            //   topBadgeText.innerText = '-' + percentOff + '%';
+            //   topBadge.style.display = 'block';
+            // }
           } else {
             percentBadge.style.display = 'none';
             if (topBadge && !isBestsellerProduct) topBadge.style.display = 'none';
