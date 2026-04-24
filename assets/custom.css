@@ -334,6 +334,7 @@
   letter-spacing: -0.02em;
   line-height: 120%;
   color: #151515;
+  text-transform: capitalize;
 }
 
 .fc_bottom_outer {
