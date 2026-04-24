@@ -26,14 +26,14 @@
                             type="email"
                             name="contact[email]"
                             class=""
-                            placeholder="Enter Email Address"
+                            placeholder="{{ 'sections.newsletter.email_placeholder' | t }}"
                             required>
                         </div>
                         <div class="submit_btn">
                         <input
                             type="submit"
                             class="custom-btn black"
-                            value="Subscribe">
+                            value="{{ 'sections.newsletter.subscribe' | t }}">
                         </div>
                     </div>
                     {% if form.posted_successfully? %}

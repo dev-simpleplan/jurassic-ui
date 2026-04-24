@@ -87,6 +87,10 @@
     "artisanal": "Kleinserie · Handgefertigt"
   },
   "sections": {
+    "newsletter": {
+      "email_placeholder": "E-Mail-Adresse eingeben",
+      "subscribe": "Abonnieren"
+    },
     "frequently_bought": {
       "heading_html": "Wird oft zusammen gekauft<br>mit {{ product_title }}"
     },

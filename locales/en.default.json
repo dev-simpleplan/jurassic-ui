@@ -81,6 +81,10 @@
     "artisanal": "Small-Batch · Artisanal"
   },
   "sections": {
+    "newsletter": {
+      "email_placeholder": "Enter Email Address",
+      "subscribe": "Subscribe"
+    },
     "frequently_bought": {
       "heading_html": "Frequently Bought<br>Together With {{ product_title }}"
     },

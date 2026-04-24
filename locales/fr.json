@@ -84,6 +84,10 @@
     "artisanal": "En petite quantité · Artisanal"
   },
   "sections": {
+    "newsletter": {
+      "email_placeholder": "Entrez votre adresse e-mail",
+      "subscribe": "S’abonner"
+    },
     "frequently_bought": {
       "heading_html": "Fréquemment achetés<br>avec {{ product_title }}"
     },
