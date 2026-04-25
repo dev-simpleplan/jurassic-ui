@@ -14,7 +14,7 @@
       "settings": {
         "head": "Thank you",
         "subhead": "your form is successfully submitted.",
-        "text": "<p>Lorem ipsum dolor sit amet consectetur. Nulla morbi blandit quis scelerisque elementum enim a pulvinar elit. Ante arcu feugiat sit turpis commodo faucibus non rhoncus potenti. Nunc posuere tempus sagittis nisl pulvinar aliquam sit commodo. Egestas vestibulum laoreet odio duis nisi.</p>",
+        "text": "<p><strong>Welcome in. </strong>You’ll now hear about rare finds, fresh arrivals, and what’s truly worth trying. We’ll only reach out when it matters.</p>",
         "cta-txt": "Go back to homepage",
         "cta-url": ""
       }
