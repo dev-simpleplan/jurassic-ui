@@ -57,7 +57,7 @@
         "collection_nnUfpe": {
           "type": "collection",
           "settings": {
-            "col": "fine-food-1",
+            "col": "fine-food",
             "col_name": ""
           }
         },
