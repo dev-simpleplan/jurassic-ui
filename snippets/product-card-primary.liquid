@@ -289,12 +289,12 @@
                 <p>{{ benefit_text }}</p>
               {%- endif -%}
 
-              {%- assign benefit_text = benefit_text | strip -%}
+              {% comment %} {%- assign benefit_text = benefit_text | strip -%}
 
               {%- if benefit_text != blank -%}
                 <span class="dot_seperator"></span>
                 <p>{{ benefit_text }}</p>
-              {%- endif -%}
+              {%- endif -%} {% endcomment %}
             </div>
           </div>
         </div>

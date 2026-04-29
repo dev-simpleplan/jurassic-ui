@@ -2216,6 +2216,11 @@ li.variant-value.is-sold-out {
   object-fit: cover;
   object-position: center;
 }
+.paes-icon.square > a, .paes-icon.square > a {
+  aspect-ratio: 8 / 7;
+    overflow: hidden;
+}
+
 .paes-icon.square video  {
   object-fit: contain;
 }

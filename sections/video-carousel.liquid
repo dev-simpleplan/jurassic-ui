@@ -16,29 +16,46 @@
           <div class="vci-item">
             <div class="vcitem-video">
               {% if block.settings.video_link != blank %}
-  {{ block.settings.video_link | video_tag: 
-      autoplay: false, 
-      loop: true, 
-      muted: false, 
-      controls: false, 
-      playsinline: true, 
-      class: 'img ab',
-      image_size: 'master'
-  }}
-  
-  <button class="video-control" aria-label="Video Play Button">
-    <span class="video-control-play">
-      <span class="video-control-symbol" aria-hidden="true">
-        <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt="">
-      </span>
-    </span>
-    <span class="video-control-pause">
-      <span class="video-control-symbol" aria-hidden="true">
-        <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt="">
-      </span>
-    </span>
-  </button>
-{% endif %}
+              {{ block.settings.video_link | video_tag: 
+                  autoplay: false, 
+                  loop: true, 
+                  muted: true, 
+                  controls: false, 
+                  playsinline: true, 
+                  class: 'img ab',
+                  image_size: 'master'
+              }}
+              
+              <div class="video-control-group">
+                <button class="video-control" aria-label="Video Play Button">
+                  <span class="video-control-play">
+                    <span class="video-control-symbol" aria-hidden="true">
+                      <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt="">
+                    </span>
+                  </span>
+                  <span class="video-control-pause">
+                    <span class="video-control-symbol" aria-hidden="true">
+                      <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt="">
+                    </span>
+                  </span>
+                </button>
+
+                <button class="video-audio-control is-muted" aria-label="Unmute video" aria-pressed="false" type="button">
+                  <span class="video-audio-on" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M5 9V15H9L14 19V5L9 9H5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <path d="M18 9C19.3333 10.2 20 11.5333 20 13C20 14.4667 19.3333 15.8 18 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  <span class="video-audio-off" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M5 9V15H9L14 19V5L9 9H5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <path d="M17 9L21 13M21 9L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            {% endif %}
               {% if block.settings.video_img != blank %}
                 <img
                   width="100%"
@@ -62,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   wraps.forEach((wrap) => {
     const video = wrap.querySelector("video");
     const btn = wrap.querySelector("button.video-control");
+    const audioBtn = wrap.querySelector("button.video-audio-control");
     if (!video || !btn) return;
 
     let hideTimer = null;
@@ -86,12 +104,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if (playing) scheduleHide(); else showBtn();
     };
 
+    const syncAudioState = () => {
+      if (!audioBtn) return;
+      const muted = video.muted;
+      audioBtn.classList.toggle("is-muted", muted);
+      audioBtn.classList.toggle("is-unmuted", !muted);
+      audioBtn.setAttribute("aria-pressed", muted ? "false" : "true");
+      audioBtn.setAttribute("aria-label", muted ? "Unmute video" : "Mute video");
+    };
+
     // Click to play/pause
     btn.addEventListener("click", () => {
       if (video.paused || video.ended) {
         // optional: pause others
         document.querySelectorAll(".vcitem-video video").forEach((v) => {
           if (v !== video && !v.paused) v.pause();
+          if (v !== video) v.muted = true;
+        });
+        document.querySelectorAll(".vcitem-video .video-audio-control").forEach((control) => {
+          control.classList.add("is-muted");
+          control.classList.remove("is-unmuted");
+          control.setAttribute("aria-pressed", "false");
+          control.setAttribute("aria-label", "Unmute video");
         });
         video.play().catch(() => {});
       } else {
@@ -99,10 +133,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    if (audioBtn) {
+      audioBtn.addEventListener("click", () => {
+        const shouldUnmute = video.muted;
+        video.muted = !shouldUnmute ? true : false;
+
+        if (shouldUnmute && (video.paused || video.ended)) {
+          video.play().catch(() => {});
+        }
+
+        syncAudioState();
+        showBtn();
+      });
+    }
+
     // Sync state with native controls/autoplay
     video.addEventListener("play",   () => setState(true));
     video.addEventListener("pause",  () => setState(false));
     video.addEventListener("ended",  () => setState(false));
+    video.addEventListener("volumechange", syncAudioState);
 
     // Show on hover/move; re-hide after mouse leaves if still playing
     wrap.addEventListener("mouseenter", showBtn);
@@ -116,6 +165,15 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("focusout", () => {
       if (!video.paused && !video.ended) scheduleHide();
     });
+
+    if (audioBtn) {
+      audioBtn.addEventListener("focusin", showBtn);
+      audioBtn.addEventListener("focusout", () => {
+        if (!video.paused && !video.ended) scheduleHide();
+      });
+    }
+
+    syncAudioState();
   });
 });
 </script>

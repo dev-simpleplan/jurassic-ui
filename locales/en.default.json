@@ -89,7 +89,7 @@
       "subscribe": "Subscribe"
     },
     "frequently_bought": {
-      "heading_html": "Frequently Bought<br>Together With {{ product_title }}"
+      "heading_html": "Frequently Bought Together"
     },
     "product": {
       "price_includes_vat": "Prices include VAT, excluding",

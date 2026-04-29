@@ -812,7 +812,12 @@
                     
                     {% elsif item.icon.value != blank %}
                       {% comment %} Fallback to the image icon if no video exists {% endcomment %}
-                      <img src="{{ item.icon | img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                      <a
+                        href="{{ item.icon | img_url: 'master' }}"
+                        data-fancybox="how-to-store-gallery"
+                        class="zoom-wrapper">
+                        <img src="{{ item.icon | img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                      </a>
                     {% endif %}
 
                   </div>
@@ -955,7 +960,16 @@
               {% for item in origin_sourcing_items %}
                 <div class="paes-item">
                   <div class="paes-icon square">
-                      <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
+                      {% if item.origin_video.value != blank %}
+                        {{ item.origin_video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+                      {% elsif item.origin_image != blank %}
+                        <a
+                          href="{{ item.origin_image | img_url: 'master' }}"
+                          data-fancybox="origin-sourcing-gallery"
+                          class="zoom-wrapper">
+                          <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
+                        </a>
+                      {% endif %}
                   </div>
                   <div class="paes-content">
                     {% if item.origin_label != blank %}
@@ -1647,7 +1661,7 @@ $(document).ready(function () {
   $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
 });
 
-Fancybox.bind("[data-fancybox='gallery']", {
+Fancybox.bind("[data-fancybox='gallery'], [data-fancybox='how-to-store-gallery'], [data-fancybox='origin-sourcing-gallery']", {
   // Optional: Customization options
   Hash: false,
   Thumbs: {

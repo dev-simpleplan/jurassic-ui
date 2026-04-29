@@ -95,7 +95,7 @@
       "subscribe": "Abonnieren"
     },
     "frequently_bought": {
-      "heading_html": "Wird oft zusammen gekauft<br>mit {{ product_title }}"
+      "heading_html": "Wird oft zusammen gekauft"
     },
     "product": {
       "price_includes_vat": "Preise inkl. MwSt., zzgl.",
