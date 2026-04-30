@@ -23,6 +23,16 @@ function wait(ms) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
+function setCardButtonLabel(button, text) {
+  if (!button) return;
+  const label = button.querySelector('.card-btn-label');
+  if (label) {
+    label.textContent = text;
+  } else {
+    button.textContent = text;
+  }
+}
+
 function getInventoryMessage(inventory, isAvailable = true) {
   const qty = parseInt(inventory, 10) || 0;
   const template = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
@@ -162,12 +172,12 @@ document.addEventListener('click', (e) => {
       if (parseInt(inventory, 10) > 0) {
         addBtn.disabled = false;
         addBtn.classList.remove('loading', 'success', 'out-of-stock');
-        addBtn.innerText = window.themeStrings.addToCart;
+        setCardButtonLabel(addBtn, window.themeStrings.addToCart);
       } else {
         addBtn.disabled = true;
         addBtn.classList.remove('loading', 'success');
         addBtn.classList.add('out-of-stock');
-        addBtn.innerText = window.themeStrings.soldOut;
+        setCardButtonLabel(addBtn, window.themeStrings.soldOut);
       }
     }
 
@@ -194,11 +204,11 @@ async function handleProductCardAddForm(form) {
   const card = form.closest('.product-card-primary');
   const variantInput = form.querySelector('input[name="id"]');
 
-  if (submitButton) {
-    submitButton.classList.remove('success');
-    submitButton.classList.add('loading');
-    submitButton.disabled = true;
-  }
+    if (submitButton) {
+      submitButton.classList.remove('success');
+      submitButton.classList.add('loading');
+      submitButton.disabled = true;
+    }
 
   try {
     await wait(250);
@@ -221,7 +231,7 @@ async function handleProductCardAddForm(form) {
     if (submitButton) {
       submitButton.classList.remove('loading');
       submitButton.classList.add('success');
-      submitButton.textContent = window.themeStrings?.added || 'Added';
+      setCardButtonLabel(submitButton, window.themeStrings?.added || 'Added');
     }
 
     document.dispatchEvent(new CustomEvent('cart:updated'));
@@ -234,9 +244,12 @@ async function handleProductCardAddForm(form) {
       const isOutOfStock = submitButton.classList.contains('out-of-stock');
       submitButton.classList.remove('loading', 'success');
       submitButton.disabled = isOutOfStock;
-      submitButton.textContent = isOutOfStock
-        ? (window.themeStrings?.soldOut || 'Unavailable')
-        : (window.themeStrings?.addToCart || 'Add to Cart');
+      setCardButtonLabel(
+        submitButton,
+        isOutOfStock
+          ? (window.themeStrings?.soldOut || 'Unavailable')
+          : (window.themeStrings?.addToCart || 'Add to Cart')
+      );
     }
     form.dataset.submitting = 'false';
     return;
@@ -257,9 +270,12 @@ async function handleProductCardAddForm(form) {
 
     submitButton.classList.toggle('out-of-stock', !isAvailable);
     submitButton.disabled = !isAvailable;
-    submitButton.textContent = isAvailable
-      ? (window.themeStrings?.addToCart || 'Add to Cart')
-      : (window.themeStrings?.soldOut || 'Unavailable');
+    setCardButtonLabel(
+      submitButton,
+      isAvailable
+        ? (window.themeStrings?.addToCart || 'Add to Cart')
+        : (window.themeStrings?.soldOut || 'Unavailable')
+    );
   }, 1200);
 }
 
@@ -298,14 +314,17 @@ document.addEventListener('click', (event) => {
   window.setTimeout(() => {
     cardButton.classList.remove('loading');
     cardButton.classList.add('success');
-    cardButton.textContent = window.themeStrings?.added || 'Added';
+    setCardButtonLabel(cardButton, window.themeStrings?.added || 'Added');
 
     window.setTimeout(() => {
       const isOutOfStock = cardButton.classList.contains('out-of-stock');
       cardButton.classList.remove('success');
-      cardButton.textContent = isOutOfStock
-        ? (window.themeStrings?.soldOut || 'Unavailable')
-        : (window.themeStrings?.addToCart || 'Add to Cart');
+      setCardButtonLabel(
+        cardButton,
+        isOutOfStock
+          ? (window.themeStrings?.soldOut || 'Unavailable')
+          : (window.themeStrings?.addToCart || 'Add to Cart')
+      );
       cardButton.dataset.collectionFeedbackRunning = 'false';
     }, 1200);
   }, 350);

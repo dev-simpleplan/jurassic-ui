@@ -483,26 +483,30 @@
   width: 100%;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.2s ease;
 }
 
+.fc_add_to_cart button .card-btn-spinner,
+.fc_add_to_cart button .card-btn-check {
+  display: none;
+}
+
 .fc_add_to_cart button.loading {
-  color: transparent;
-  font-size: 0;
-  line-height: 0;
   pointer-events: none;
 }
 
-.fc_add_to_cart button.loading::after {
-  content: "";
-  display: block;
+.fc_add_to_cart button.loading .card-btn-label {
+  opacity: 0;
+}
+
+.fc_add_to_cart button.loading .card-btn-spinner {
+  display: inline-block;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 18px;
   height: 18px;
-  z-index: 2;
   border: 2.5px solid #2c2c2c;
   border-top-color: transparent;
   border-radius: 50%;
@@ -511,6 +515,17 @@
 
 .fc_add_to_cart button.success {
   pointer-events: none;
+}
+
+.fc_add_to_cart button.success .card-btn-label {
+  opacity: 1;
+}
+
+.fc_add_to_cart button.success .card-btn-check {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .fc_add_to_cart:has(> .add-to-cart-btn.loading),

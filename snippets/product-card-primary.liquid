@@ -240,11 +240,15 @@
                     type="submit"
                     class="add-to-cart-btn"
                     {% unless current_variant.available %}disabled{% endunless %}>
-                    {% if current_variant.available %}
-                      {{ 'products.product.add_to_cart' | t }}
-                    {% else %}
-                      {{ 'products.product.sold_out' | t }}
-                    {% endif %}
+                    <span class="card-btn-label">
+                      {% if current_variant.available %}
+                        {{ 'products.product.add_to_cart' | t }}
+                      {% else %}
+                        {{ 'products.product.sold_out' | t }}
+                      {% endif %}
+                    </span>
+                    <span class="card-btn-spinner" aria-hidden="true"></span>
+                    <span class="card-btn-check" aria-hidden="true">✓</span>
                   </button>
                   {% comment %} {% unless product.available %}
                     <button class="open-my-form BIS_trigger">
@@ -439,12 +443,14 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = true;
       btn.classList.add('out-of-stock');
       btn.classList.remove('loading', 'success');
-      btn.textContent = window.themeStrings.soldOut;   // ✅ dynamic
+      const label = btn.querySelector('.card-btn-label');
+      if (label) label.textContent = window.themeStrings.soldOut;   // ✅ dynamic
     } else {
       btn.disabled = false;
       btn.classList.remove('out-of-stock');
       btn.classList.remove('loading', 'success');
-      btn.textContent = window.themeStrings.addToCart; // ✅ dynamic
+      const label = btn.querySelector('.card-btn-label');
+      if (label) label.textContent = window.themeStrings.addToCart; // ✅ dynamic
     }
   }
 
