@@ -286,6 +286,31 @@ document.addEventListener('DOMContentLoaded', () => {
   window.bindProductCardAddForms(document);
 });
 
+document.addEventListener('click', (event) => {
+  const cardButton = event.target.closest('.product-card-primary .product-card-add-form .add-to-cart-btn');
+  if (!cardButton || cardButton.disabled) return;
+  if (cardButton.dataset.collectionFeedbackRunning === 'true') return;
+
+  cardButton.dataset.collectionFeedbackRunning = 'true';
+  cardButton.classList.remove('success');
+  cardButton.classList.add('loading');
+
+  window.setTimeout(() => {
+    cardButton.classList.remove('loading');
+    cardButton.classList.add('success');
+    cardButton.textContent = window.themeStrings?.added || 'Added';
+
+    window.setTimeout(() => {
+      const isOutOfStock = cardButton.classList.contains('out-of-stock');
+      cardButton.classList.remove('success');
+      cardButton.textContent = isOutOfStock
+        ? (window.themeStrings?.soldOut || 'Unavailable')
+        : (window.themeStrings?.addToCart || 'Add to Cart');
+      cardButton.dataset.collectionFeedbackRunning = 'false';
+    }, 1200);
+  }, 350);
+}, true);
+
 const sidebar = document.querySelector('.filter-sidebar');
 const closeBtn = document.querySelector('.filter-close-mob');
 const body = document.body;
