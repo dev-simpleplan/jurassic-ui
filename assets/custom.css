@@ -482,69 +482,6 @@
   font-family: "Inter";
   width: 100%;
   cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-}
-
-.fc_add_to_cart button .card-btn-spinner,
-.fc_add_to_cart button .card-btn-check {
-  display: none;
-}
-
-.fc_add_to_cart button.loading {
-  pointer-events: none;
-}
-
-.fc_add_to_cart button.loading .card-btn-label {
-  opacity: 0;
-}
-
-.fc_add_to_cart button.loading .card-btn-spinner {
-  display: inline-block;
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border: 2.5px solid #2c2c2c;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-.fc_add_to_cart button.success {
-  pointer-events: none;
-}
-
-.fc_add_to_cart button.success .card-btn-label {
-  opacity: 1;
-}
-
-.fc_add_to_cart button.success .card-btn-check {
-  display: inline-block;
-  position: absolute;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.fc_add_to_cart:has(> .add-to-cart-btn.loading),
-.fc_add_to_cart:has(> .add-to-cart-btn.success) {
-  background: linear-gradient(90deg, #ffc761 0%, #f7a816 138.78%);
-  border: none;
-  cursor: default;
-}
-
-.fc_add_to_cart:has(> .add-to-cart-btn.out-of-stock:disabled) {
-  background: none;
-  border: 1px solid #f7a816;
-  cursor: not-allowed;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .fc_add_to_cart span {

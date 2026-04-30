@@ -1289,27 +1289,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!btn || !form) return;
 
-  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
-
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     event.stopPropagation();
 
     if (btn.classList.contains('loading')) return;
 
-    const variantSelector = document.querySelector('variant-selector');
-    const label = btn.querySelector('.btn-label');
-    const separatorEl = btn.querySelector('.btn-separator');
-    const priceEl = btn.querySelector('.btn-price');
-    const submitStart = Date.now();
-
     btn.classList.remove('success');
     btn.classList.add('loading');
     btn.disabled = true;
 
     try {
-      await wait(250);
-
       const response = await fetch('/cart/add.js', {
         method: 'POST',
         body: new FormData(form),
@@ -1323,17 +1313,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       await response.json();
-      await wait(Math.max(0, 350 - (Date.now() - submitStart)));
+
       btn.classList.remove('loading');
       btn.classList.add('success');
-      if (label) label.textContent = window.themeStrings?.added || 'Added';
-      if (separatorEl) separatorEl.style.display = 'none';
-      if (priceEl) priceEl.textContent = '';
 
       document.dispatchEvent(new CustomEvent('cart:updated'));
       window.setTimeout(() => {
         document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
-      }, 350);
+      }, 100);
     } catch (error) {
       console.error('Product page add to cart failed', error);
       btn.classList.remove('loading');
@@ -1343,11 +1330,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.setTimeout(() => {
       btn.classList.remove('loading', 'success');
-      if (variantSelector && typeof variantSelector.updateAddToCartButton === 'function') {
-        variantSelector.updateAddToCartButton();
-      } else {
-        btn.disabled = false;
-      }
+      btn.disabled = false;
     }, 1200);
   });
 });
@@ -1558,7 +1541,6 @@ class VariantSelector extends HTMLElement {
     window.themeStrings = {
       ...(window.themeStrings || {}),
       addToCart: "{{ 'products.product.add_to_cart' | t }}",
-      added: "{{ 'products.product.added' | t }}",
       soldOut: "{{ 'products.product.sold_out' | t }}"
     };
     const btn = document.getElementById('add-to-cart');
