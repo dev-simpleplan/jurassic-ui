@@ -1308,6 +1308,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.disabled = true;
 
     try {
+      await wait(250);
+
       const response = await fetch('/cart/add.js', {
         method: 'POST',
         body: new FormData(form),
