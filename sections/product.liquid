@@ -1295,6 +1295,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btn.classList.contains('loading')) return;
 
+    const variantSelector = document.querySelector('variant-selector');
+    const label = btn.querySelector('.btn-label');
+    const separatorEl = btn.querySelector('.btn-separator');
+    const priceEl = btn.querySelector('.btn-price');
+
     btn.classList.remove('success');
     btn.classList.add('loading');
     btn.disabled = true;
@@ -1316,6 +1321,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       btn.classList.remove('loading');
       btn.classList.add('success');
+      if (label) label.textContent = window.themeStrings?.added || 'Added';
+      if (separatorEl) separatorEl.style.display = 'none';
+      if (priceEl) priceEl.textContent = '';
 
       document.dispatchEvent(new CustomEvent('cart:updated'));
       window.setTimeout(() => {
@@ -1330,7 +1338,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.setTimeout(() => {
       btn.classList.remove('loading', 'success');
-      btn.disabled = false;
+      if (variantSelector && typeof variantSelector.updateAddToCartButton === 'function') {
+        variantSelector.updateAddToCartButton();
+      } else {
+        btn.disabled = false;
+      }
     }, 1200);
   });
 });
@@ -1541,6 +1553,7 @@ class VariantSelector extends HTMLElement {
     window.themeStrings = {
       ...(window.themeStrings || {}),
       addToCart: "{{ 'products.product.add_to_cart' | t }}",
+      added: "{{ 'products.product.added' | t }}",
       soldOut: "{{ 'products.product.sold_out' | t }}"
     };
     const btn = document.getElementById('add-to-cart');
