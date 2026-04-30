@@ -488,19 +488,22 @@
 
 .fc_add_to_cart button.loading {
   color: transparent;
+  font-size: 0;
+  line-height: 0;
   pointer-events: none;
 }
 
 .fc_add_to_cart button.loading::after {
   content: "";
+  display: block;
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   width: 18px;
   height: 18px;
-  margin-left: -9px;
-  margin-top: -9px;
-  border: 2px solid #2c2c2c;
+  z-index: 2;
+  border: 2.5px solid #2c2c2c;
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -508,6 +511,19 @@
 
 .fc_add_to_cart button.success {
   pointer-events: none;
+}
+
+.fc_add_to_cart:has(> .add-to-cart-btn.loading),
+.fc_add_to_cart:has(> .add-to-cart-btn.success) {
+  background: linear-gradient(90deg, #ffc761 0%, #f7a816 138.78%);
+  border: none;
+  cursor: default;
+}
+
+.fc_add_to_cart:has(> .add-to-cart-btn.out-of-stock:disabled) {
+  background: none;
+  border: 1px solid #f7a816;
+  cursor: not-allowed;
 }
 
 @keyframes spin {
