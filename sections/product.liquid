@@ -1289,6 +1289,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!btn || !form) return;
 
+  const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -1299,6 +1301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const label = btn.querySelector('.btn-label');
     const separatorEl = btn.querySelector('.btn-separator');
     const priceEl = btn.querySelector('.btn-price');
+    const submitStart = Date.now();
 
     btn.classList.remove('success');
     btn.classList.add('loading');
@@ -1318,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       await response.json();
+      await wait(Math.max(0, 350 - (Date.now() - submitStart)));
 
       btn.classList.remove('loading');
       btn.classList.add('success');
@@ -1328,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.dispatchEvent(new CustomEvent('cart:updated'));
       window.setTimeout(() => {
         document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
-      }, 100);
+      }, 350);
     } catch (error) {
       console.error('Product page add to cart failed', error);
       btn.classList.remove('loading');

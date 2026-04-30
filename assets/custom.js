@@ -19,6 +19,10 @@ function isCornerCartActive() {
   );
 }
 
+function wait(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
 function getInventoryMessage(inventory, isAvailable = true) {
   const qty = parseInt(inventory, 10) || 0;
   const template = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
@@ -192,6 +196,7 @@ window.bindProductCardAddForms = function (scope = document) {
 
       if (form.dataset.submitting === 'true') return;
       form.dataset.submitting = 'true';
+      const submitStart = Date.now();
 
       const submitButton = form.querySelector('.add-to-cart-btn');
       const card = form.closest('.product-card-primary');
@@ -217,6 +222,7 @@ window.bindProductCardAddForms = function (scope = document) {
         }
 
         await response.json();
+        await wait(Math.max(0, 350 - (Date.now() - submitStart)));
 
         if (submitButton) {
           submitButton.classList.remove('loading');
@@ -227,7 +233,7 @@ window.bindProductCardAddForms = function (scope = document) {
         document.dispatchEvent(new CustomEvent('cart:updated'));
         window.setTimeout(() => {
           document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
-        }, 100);
+        }, 350);
       } catch (error) {
         console.error('Product card add to cart failed', error);
         if (submitButton) {
