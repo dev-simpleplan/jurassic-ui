@@ -23,6 +23,32 @@ function wait(ms) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
+function startButtonFeedback(button) {
+  if (!button || button.disabled) return;
+
+  button.dataset.feedbackPending = 'true';
+  button.dataset.feedbackStartedAt = String(Date.now());
+  button.classList.remove('success');
+  button.classList.add('loading');
+}
+
+function finishCardButtonFeedback(button) {
+  if (!button || button.dataset.feedbackPending !== 'true') return;
+
+  button.dataset.feedbackPending = 'false';
+  button.classList.remove('loading');
+  button.classList.add('success');
+  button.textContent = window.themeStrings?.added || 'Added';
+
+  window.setTimeout(() => {
+    const isOutOfStock = button.classList.contains('out-of-stock');
+    button.classList.remove('success');
+    button.textContent = isOutOfStock
+      ? (window.themeStrings?.soldOut || 'Unavailable')
+      : (window.themeStrings?.addToCart || 'Add to Cart');
+  }, 1200);
+}
+
 function getInventoryMessage(inventory, isAvailable = true) {
   const qty = parseInt(inventory, 10) || 0;
   const template = window.themeStrings?.inventoryStatus || 'Only __COUNT__ left';
@@ -46,6 +72,18 @@ function syncSelectedDropdownItem(parent) {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.wrapper-dropdown').forEach(syncSelectedDropdownItem);
+});
+
+document.addEventListener('click', (event) => {
+  const cardButton = event.target.closest('.product-card-add-form .add-to-cart-btn');
+  if (!cardButton) return;
+  startButtonFeedback(cardButton);
+}, true);
+
+document.addEventListener('cart:updated', () => {
+  document.querySelectorAll('.product-card-add-form .add-to-cart-btn[data-feedback-pending="true"]').forEach((button) => {
+    finishCardButtonFeedback(button);
+  });
 });
 
 document.addEventListener('mouseenter', (e) => {
@@ -228,8 +266,7 @@ window.bindProductCardAddForms = function (scope = document) {
 
         if (submitButton) {
           submitButton.classList.remove('loading');
-          submitButton.classList.add('success');
-          submitButton.textContent = window.themeStrings?.added || 'Added';
+          submitButton.dataset.feedbackPending = 'true';
         }
 
         document.dispatchEvent(new CustomEvent('cart:updated'));
@@ -241,6 +278,7 @@ window.bindProductCardAddForms = function (scope = document) {
         if (submitButton) {
           const isOutOfStock = submitButton.classList.contains('out-of-stock');
           submitButton.classList.remove('loading', 'success');
+          submitButton.dataset.feedbackPending = 'false';
           submitButton.disabled = isOutOfStock;
           submitButton.textContent = isOutOfStock
             ? (window.themeStrings?.soldOut || 'Unavailable')
@@ -256,6 +294,7 @@ window.bindProductCardAddForms = function (scope = document) {
         if (!submitButton) return;
 
         submitButton.classList.remove('loading', 'success');
+        submitButton.dataset.feedbackPending = 'false';
 
         const selectedItem = variantInput
           ? card?.querySelector(`.dropdown-item[data-id="${variantInput.value}"]`)
