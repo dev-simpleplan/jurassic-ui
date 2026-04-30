@@ -185,93 +185,102 @@ document.addEventListener('click', (e) => {
   }
 });
 
+async function handleProductCardAddForm(form) {
+  if (form.dataset.submitting === 'true') return;
+  form.dataset.submitting = 'true';
+  const submitStart = Date.now();
+
+  const submitButton = form.querySelector('.add-to-cart-btn');
+  const card = form.closest('.product-card-primary');
+  const variantInput = form.querySelector('input[name="id"]');
+
+  if (submitButton) {
+    submitButton.classList.remove('success');
+    submitButton.classList.add('loading');
+    submitButton.disabled = true;
+  }
+
+  try {
+    await wait(250);
+
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: {
+        Accept: 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Add to cart failed: ${response.status}`);
+    }
+
+    await response.json();
+    await wait(Math.max(0, 350 - (Date.now() - submitStart)));
+
+    if (submitButton) {
+      submitButton.classList.remove('loading');
+      submitButton.classList.add('success');
+      submitButton.textContent = window.themeStrings?.added || 'Added';
+    }
+
+    document.dispatchEvent(new CustomEvent('cart:updated'));
+    window.setTimeout(() => {
+      document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
+    }, 350);
+  } catch (error) {
+    console.error('Product card add to cart failed', error);
+    if (submitButton) {
+      const isOutOfStock = submitButton.classList.contains('out-of-stock');
+      submitButton.classList.remove('loading', 'success');
+      submitButton.disabled = isOutOfStock;
+      submitButton.textContent = isOutOfStock
+        ? (window.themeStrings?.soldOut || 'Unavailable')
+        : (window.themeStrings?.addToCart || 'Add to Cart');
+    }
+    form.dataset.submitting = 'false';
+    return;
+  }
+
+  window.setTimeout(() => {
+    form.dataset.submitting = 'false';
+
+    if (!submitButton) return;
+
+    submitButton.classList.remove('loading', 'success');
+
+    const selectedItem = variantInput
+      ? card?.querySelector(`.dropdown-item[data-id="${variantInput.value}"]`)
+      : null;
+    const inventoryQty = parseInt(selectedItem?.dataset.inventory || '0', 10) || 0;
+    const isAvailable = inventoryQty > 0;
+
+    submitButton.classList.toggle('out-of-stock', !isAvailable);
+    submitButton.disabled = !isAvailable;
+    submitButton.textContent = isAvailable
+      ? (window.themeStrings?.addToCart || 'Add to Cart')
+      : (window.themeStrings?.soldOut || 'Unavailable');
+  }, 1200);
+}
+
 window.bindProductCardAddForms = function (scope = document) {
   scope.querySelectorAll('.product-card-add-form').forEach((form) => {
-    if (form.dataset.ajaxBound === 'true') return;
     form.dataset.ajaxBound = 'true';
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (form.dataset.submitting === 'true') return;
-      form.dataset.submitting = 'true';
-      const submitStart = Date.now();
-
-      const submitButton = form.querySelector('.add-to-cart-btn');
-      const card = form.closest('.product-card-primary');
-      const variantInput = form.querySelector('input[name="id"]');
-
-      if (submitButton) {
-        submitButton.classList.remove('success');
-        submitButton.classList.add('loading');
-        submitButton.disabled = true;
-      }
-
-      try {
-        await wait(250);
-
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {
-            Accept: 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Add to cart failed: ${response.status}`);
-        }
-
-        await response.json();
-        await wait(Math.max(0, 350 - (Date.now() - submitStart)));
-
-        if (submitButton) {
-          submitButton.classList.remove('loading');
-          submitButton.classList.add('success');
-          submitButton.textContent = window.themeStrings?.added || 'Added';
-        }
-
-        document.dispatchEvent(new CustomEvent('cart:updated'));
-        window.setTimeout(() => {
-          document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
-        }, 350);
-      } catch (error) {
-        console.error('Product card add to cart failed', error);
-        if (submitButton) {
-          const isOutOfStock = submitButton.classList.contains('out-of-stock');
-          submitButton.classList.remove('loading', 'success');
-          submitButton.disabled = isOutOfStock;
-          submitButton.textContent = isOutOfStock
-            ? (window.themeStrings?.soldOut || 'Unavailable')
-            : (window.themeStrings?.addToCart || 'Add to Cart');
-        }
-        form.dataset.submitting = 'false';
-        return;
-      }
-
-      window.setTimeout(() => {
-        form.dataset.submitting = 'false';
-
-        if (!submitButton) return;
-
-        submitButton.classList.remove('loading', 'success');
-
-        const selectedItem = variantInput
-          ? card?.querySelector(`.dropdown-item[data-id="${variantInput.value}"]`)
-          : null;
-        const inventoryQty = parseInt(selectedItem?.dataset.inventory || '0', 10) || 0;
-        const isAvailable = inventoryQty > 0;
-
-        submitButton.classList.toggle('out-of-stock', !isAvailable);
-        submitButton.disabled = !isAvailable;
-        submitButton.textContent = isAvailable
-          ? (window.themeStrings?.addToCart || 'Add to Cart')
-          : (window.themeStrings?.soldOut || 'Unavailable');
-      }, 1200);
-    }, true);
   });
 };
+
+if (!window.productCardDelegatedSubmitBound) {
+  document.addEventListener('submit', (e) => {
+    const form = e.target.closest('.product-card-add-form');
+    if (!form) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    handleProductCardAddForm(form);
+  }, true);
+
+  window.productCardDelegatedSubmitBound = true;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   window.bindProductCardAddForms(document);

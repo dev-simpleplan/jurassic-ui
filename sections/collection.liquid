@@ -382,6 +382,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (newGrid) {
                     productGrid.innerHTML = newGrid.innerHTML;
+
+                    if (typeof window.bindProductCardAddForms === 'function') {
+                        window.bindProductCardAddForms(productGrid);
+                    }
+
+                    if (typeof syncSelectedDropdownItem === 'function') {
+                        productGrid.querySelectorAll('.wrapper-dropdown').forEach(syncSelectedDropdownItem);
+                    }
                 }
                 
                 if (newQuickFilters) {
