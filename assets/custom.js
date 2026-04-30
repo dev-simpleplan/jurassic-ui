@@ -157,9 +157,12 @@ document.addEventListener('click', (e) => {
     if (addBtn) {
       if (parseInt(inventory, 10) > 0) {
         addBtn.disabled = false;
+        addBtn.classList.remove('loading', 'success', 'out-of-stock');
         addBtn.innerText = window.themeStrings.addToCart;
       } else {
         addBtn.disabled = true;
+        addBtn.classList.remove('loading', 'success');
+        addBtn.classList.add('out-of-stock');
         addBtn.innerText = window.themeStrings.soldOut;
       }
     }
@@ -184,10 +187,6 @@ window.bindProductCardAddForms = function (scope = document) {
     form.dataset.ajaxBound = 'true';
 
     form.addEventListener('submit', async (e) => {
-      if (isCornerCartActive()) {
-        return;
-      }
-
       e.preventDefault();
       e.stopPropagation();
 
@@ -195,9 +194,12 @@ window.bindProductCardAddForms = function (scope = document) {
       form.dataset.submitting = 'true';
 
       const submitButton = form.querySelector('.add-to-cart-btn');
-      const originalLabel = submitButton ? submitButton.innerText : '';
+      const card = form.closest('.product-card-primary');
+      const variantInput = form.querySelector('input[name="id"]');
 
       if (submitButton) {
+        submitButton.classList.remove('success');
+        submitButton.classList.add('loading');
         submitButton.disabled = true;
       }
 
@@ -216,18 +218,49 @@ window.bindProductCardAddForms = function (scope = document) {
 
         await response.json();
 
+        if (submitButton) {
+          submitButton.classList.remove('loading');
+          submitButton.classList.add('success');
+          submitButton.textContent = window.themeStrings?.added || 'Added';
+        }
+
         document.dispatchEvent(new CustomEvent('cart:updated'));
-        document.querySelector('.cart-open')?.click();
+        window.setTimeout(() => {
+          document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
+        }, 100);
       } catch (error) {
         console.error('Product card add to cart failed', error);
-      } finally {
+        if (submitButton) {
+          const isOutOfStock = submitButton.classList.contains('out-of-stock');
+          submitButton.classList.remove('loading', 'success');
+          submitButton.disabled = isOutOfStock;
+          submitButton.textContent = isOutOfStock
+            ? (window.themeStrings?.soldOut || 'Unavailable')
+            : (window.themeStrings?.addToCart || 'Add to Cart');
+        }
+        form.dataset.submitting = 'false';
+        return;
+      }
+
+      window.setTimeout(() => {
         form.dataset.submitting = 'false';
 
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.innerText = originalLabel;
-        }
-      }
+        if (!submitButton) return;
+
+        submitButton.classList.remove('loading', 'success');
+
+        const selectedItem = variantInput
+          ? card?.querySelector(`.dropdown-item[data-id="${variantInput.value}"]`)
+          : null;
+        const inventoryQty = parseInt(selectedItem?.dataset.inventory || '0', 10) || 0;
+        const isAvailable = inventoryQty > 0;
+
+        submitButton.classList.toggle('out-of-stock', !isAvailable);
+        submitButton.disabled = !isAvailable;
+        submitButton.textContent = isAvailable
+          ? (window.themeStrings?.addToCart || 'Add to Cart')
+          : (window.themeStrings?.soldOut || 'Unavailable');
+      }, 1200);
     }, true);
   });
 };

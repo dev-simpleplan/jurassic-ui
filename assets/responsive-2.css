@@ -65,6 +65,24 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
     margin-top: 30px;
   }
+  /* .fc_top .fc_bestsell_tags {
+    top: auto;
+    bottom: 10px;
+  }
+  .star_review {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .fc_add_to_cart button {
+    font-size: 14px;
+    padding: 14px;
+  } */
+  .fc_price_weight {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
   .etd-heading h1 {
         font-size: 50px;
     }

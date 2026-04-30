@@ -420,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.themeStrings = {
     ...(window.themeStrings || {}),
     addToCart: "{{ 'products.product.add_to_cart' | t }}",
+    added: "{{ 'products.product.added' | t }}",
     soldOut: "{{ 'products.product.sold_out' | t }}"
   };
 </script>
@@ -437,10 +438,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!available) {
       btn.disabled = true;
       btn.classList.add('out-of-stock');
+      btn.classList.remove('loading', 'success');
       btn.textContent = window.themeStrings.soldOut;   // ✅ dynamic
     } else {
       btn.disabled = false;
       btn.classList.remove('out-of-stock');
+      btn.classList.remove('loading', 'success');
       btn.textContent = window.themeStrings.addToCart; // ✅ dynamic
     }
   }
