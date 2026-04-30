@@ -1291,31 +1291,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
-  const startMainButtonFeedback = () => {
-    if (btn.disabled) return;
-    btn.dataset.feedbackPending = 'true';
-    btn.classList.remove('success');
-    btn.classList.add('loading');
-  };
-
-  const finishMainButtonFeedback = () => {
-    if (btn.dataset.feedbackPending !== 'true') return;
-
-    const label = btn.querySelector('.btn-label');
-    const separatorEl = btn.querySelector('.btn-separator');
-    const priceEl = btn.querySelector('.btn-price');
-
-    btn.dataset.feedbackPending = 'false';
-    btn.classList.remove('loading');
-    btn.classList.add('success');
-    if (label) label.textContent = window.themeStrings?.added || 'Added';
-    if (separatorEl) separatorEl.style.display = 'none';
-    if (priceEl) priceEl.textContent = '';
-  };
-
-  btn.addEventListener('click', startMainButtonFeedback, true);
-  document.addEventListener('cart:updated', finishMainButtonFeedback);
-
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -1349,7 +1324,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       await response.json();
       await wait(Math.max(0, 350 - (Date.now() - submitStart)));
-      btn.dataset.feedbackPending = 'true';
+      btn.classList.remove('loading');
+      btn.classList.add('success');
+      if (label) label.textContent = window.themeStrings?.added || 'Added';
+      if (separatorEl) separatorEl.style.display = 'none';
+      if (priceEl) priceEl.textContent = '';
 
       document.dispatchEvent(new CustomEvent('cart:updated'));
       window.setTimeout(() => {
@@ -1358,7 +1337,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Product page add to cart failed', error);
       btn.classList.remove('loading');
-      btn.dataset.feedbackPending = 'false';
       btn.disabled = false;
       return;
     }

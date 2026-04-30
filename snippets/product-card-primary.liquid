@@ -439,13 +439,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = true;
       btn.classList.add('out-of-stock');
       btn.classList.remove('loading', 'success');
-      btn.dataset.feedbackPending = 'false';
       btn.textContent = window.themeStrings.soldOut;   // ✅ dynamic
     } else {
       btn.disabled = false;
       btn.classList.remove('out-of-stock');
       btn.classList.remove('loading', 'success');
-      btn.dataset.feedbackPending = 'false';
       btn.textContent = window.themeStrings.addToCart; // ✅ dynamic
     }
   }
