@@ -365,13 +365,12 @@
                       <a href="{{ block.settings.shipping_usp_page.url }}">{{ block.settings.shipping_usp_text }}</a>
                     </div> {% endcomment %}
                     <div class="sui-txt">
-                      <a
+                      <span
                         id="delivery-data"
-                        href="{{ shop.shipping_policy.url }}"
-                        class="shipping-policy-popup"
+                        class="shipping-policy-popup usp-modal-trigger"
                         data-modal-target="shipping-modal-box">
                         {{ block.settings.shipping_usp_text }}
-                      </a>
+                      </span>
                     </div>
 
                     <div id="shipping-modal-box" class="shipping-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="shipping-modal-title-box">
@@ -388,102 +387,7 @@
                       </div>
                     </div>
 
-                    <style>
-                      .shipping-modal-overlay {
-                        display: none;
-                        position: fixed;
-                        inset: 0;
-                        background: rgba(0, 0, 0, 0.5);
-                        z-index: 9999;
-                        align-items: center;
-                        justify-content: center;
-                        padding: 16px;
-                      }
 
-                      .shipping-modal-overlay.is-open {
-                        display: flex;
-                      }
-
-                      .shipping-modal-container {
-                        background: #fff;
-                        max-width: 680px;
-                        width: 100%;
-                        max-height: 70vh;
-                        display: flex;
-                        flex-direction: column;
-                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-                        animation: modalFadeIn 0.25s ease;
-                      }
-
-                      @keyframes modalFadeIn {
-                        from { opacity: 0; transform: translateY(12px); }
-                        to   { opacity: 1; transform: translateY(0); }
-                      }
-
-                      .shipping-modal-header {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 20px 24px;
-                        border-bottom: 1px solid #e5e5e5;
-                      }
-
-                      .shipping-modal-header h2 {
-                        margin: 0;
-                        font-size: 1.8rem;
-                        font-weight: 500;
-                      }
-
-                      .shipping-modal-close {
-                        background: none;
-                        border: none;
-                        font-size: 1.5rem;
-                        cursor: pointer;
-                        line-height: 1;
-                        color: #666;
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        transition: background 0.2s;
-                      }
-
-                      .shipping-modal-close:hover {
-                        background: #f0f0f0;
-                        color: #000;
-                      }
-
-                      .shipping-modal-body {
-                        overflow-y: auto;
-                        padding: 24px;
-                      }
-
-                      .shipping-modal-content h1,
-                      .shipping-modal-content h2,
-                      .shipping-modal-content h3 {
-                        margin-top: 1.2em;
-                      }
-
-                      .shipping-modal-content p {
-                        line-height: 1.6;
-                        color: #444;
-                      }
-
-                      .shipping-modal-content ul > li {
-                        margin-bottom: 20px;
-                        font-size: 14px;
-                      }
-
-                      .shipping-modal-content ul > li > strong {
-                        margin-bottom: 5px;
-                        display: inline-block;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        font-size: 12px;
-                      }
-
-                      .shipping-modal-content > p {
-                        margin-bottom: 20px;
-                      }
-                    </style>
 
                     <script>
                       (function () {
@@ -531,7 +435,13 @@
                         <img src="{{ block.settings.freshness_icon |  img_url: 'master' }}" alt="{{ 'sections.product.freshness_usp' | t | default: block.settings.freshness_text }}">
                       </div>
                       <div class="sui-txt">
-                        <p id="delivered-fresh">{{ 'sections.product.freshness_usp' | t | default: block.settings.freshness_text }}</p>
+                        <span
+                          class="usp-modal-trigger"
+                          role="button"
+                          tabindex="0"
+                          data-modal-target="freshness-modal-box-{{ section.id }}">
+                          {{ 'sections.product.freshness_usp' | t | default: block.settings.freshness_text }}
+                        </span>
                       </div>
                     </div>
                   {% endif %}
@@ -542,9 +452,88 @@
                       <img src="{{ block.settings.payment_usp_icon |  img_url: 'master' }}" alt="{{ 'sections.product.payment_usp' | t | default: block.settings.payment_usp_text }}">
                     </div>
                     <div class="sui-txt">
-                      <p id="delivered-fresh">{{ 'sections.product.payment_usp' | t | default: block.settings.payment_usp_text }}</p>
+                      <span
+                        class="usp-modal-trigger"
+                        role="button"
+                        tabindex="0"
+                        data-modal-target="payment-modal-box-{{ section.id }}">
+                        {{ 'sections.product.payment_usp' | t | default: block.settings.payment_usp_text }}
+                      </span>
                     </div>
                   </div>
+
+                  <div id="freshness-modal-box-{{ section.id }}" class="shipping-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="freshness-modal-title-box-{{ section.id }}">
+                    <div class="shipping-modal-container">
+                      <div class="shipping-modal-header">
+                        <h2 id="freshness-modal-title-box-{{ section.id }}">{{ 'sections.product.freshness_modal_title' | t }}</h2>
+                        <span class="shipping-modal-close" aria-label="Close modal" role="button" tabindex="0">&times;</span>
+                      </div>
+                      <div class="shipping-modal-body" data-lenis-prevent>
+                        <div class="shipping-modal-content">
+                          <p>{{ 'sections.product.freshness_modal_body' | t }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="payment-modal-box-{{ section.id }}" class="shipping-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title-box-{{ section.id }}">
+                    <div class="shipping-modal-container">
+                      <div class="shipping-modal-header">
+                        <h2 id="payment-modal-title-box-{{ section.id }}">{{ 'sections.product.payment_modal_title' | t }}</h2>
+                        <span class="shipping-modal-close" aria-label="Close modal" role="button" tabindex="0">&times;</span>
+                      </div>
+                      <div class="shipping-modal-body" data-lenis-prevent>
+                        <div class="shipping-modal-content">
+                          <p>{{ 'sections.product.payment_modal_body' | t }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <script>
+                    (function () {
+                      document.querySelectorAll('.usp-modal-trigger').forEach(function (trigger) {
+                        if (trigger.dataset.uspModalBound === 'true') return;
+
+                        const modal = document.getElementById(trigger.dataset.modalTarget);
+                        if (!modal) return;
+
+                        const closeBtn = modal.querySelector('.shipping-modal-close');
+                        if (!closeBtn) return;
+
+                        function openModal(e) {
+                          e.preventDefault();
+                          modal.classList.add('is-open');
+                          modal.setAttribute('aria-hidden', 'false');
+                          document.body.style.overflow = 'hidden';
+                          closeBtn.focus();
+                        }
+
+                        function closeModal() {
+                          modal.classList.remove('is-open');
+                          modal.setAttribute('aria-hidden', 'true');
+                          document.body.style.overflow = '';
+                          trigger.focus();
+                        }
+
+                        trigger.dataset.uspModalBound = 'true';
+                        trigger.addEventListener('click', openModal);
+                        trigger.addEventListener('keydown', function (e) {
+                          if (e.key === 'Enter' || e.key === ' ') openModal(e);
+                        });
+                        closeBtn.addEventListener('click', closeModal);
+                        closeBtn.addEventListener('keydown', function (e) {
+                          if (e.key === 'Enter' || e.key === ' ') closeModal();
+                        });
+                        modal.addEventListener('click', function (e) {
+                          if (e.target === modal) closeModal();
+                        });
+                        document.addEventListener('keydown', function (e) {
+                          if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+                        });
+                      });
+                    })();
+                  </script>
                 </div>
 
               {% when 'variant_selector' %}
@@ -557,8 +546,9 @@
                             <p>{{ 'sections.product.select_variant' | t }}</p>
                             <div class="perKg">
                               {% comment %} Kept for layout parity; button state below becomes the source of truth. {% endcomment %}
-                              {% if selected_variant.metafields.custom.pieces %}
-                                ( {{ selected_variant.metafields.custom.pieces }} )
+                              {% assign selected_variant_pieces = selected_variant.metafields.custom.pieces.value | default: selected_variant.metafields.custom.pieces %}
+                              {% if selected_variant_pieces != blank %}
+                                ( {{ selected_variant_pieces }} )
                               {% endif %}
                             </div>
                           </div>
@@ -588,8 +578,10 @@
                                     {% endcase %}
                                   {% endfor %}
 
+                                  {% assign matched_variant_pieces = matched_variant.metafields.custom.pieces.value | default: matched_variant.metafields.custom.pieces %}
+
                                   <li
-                                    class="variant-value {% if option.selected_value == value %}active{% endif %}{% unless matched_variant.available %} is-sold-out{% endunless %}"
+                                    class="variant-value {% if matched_variant.id == selected_variant.id %}active{% endif %}{% unless matched_variant.available %} is-sold-out{% endunless %}"
                                     data-value="{{ value | escape }}"
                                     data-available="{{ matched_variant.available }}"
                                     {% if matched_variant.metafields.custom.bestseller == true %}
@@ -609,8 +601,8 @@
                                         {% else %}
                                           {{ matched_variant.price | money }} / unit
                                         {% endif %} {% endcomment %}
-                                        {% if matched_variant.metafields.custom.pieces %}
-                                          ( {{ matched_variant.metafields.custom.pieces }} )
+                                        {% if matched_variant_pieces != blank %}
+                                          ( {{ matched_variant_pieces }} )
                                         {% endif %}
                                       </div>
                                     </div>
@@ -629,7 +621,19 @@
                           {% endfor %}
 
                           <script type="application/json">
-                            {{ product.variants | json }}
+                            [
+                              {% for variant in product.variants %}
+                                {
+                                  "id": {{ variant.id | json }},
+                                  "available": {{ variant.available | json }},
+                                  "price": {{ variant.price | json }},
+                                  "compare_at_price": {{ variant.compare_at_price | json }},
+                                  "unit_price": {{ variant.unit_price | json }},
+                                  "unit_price_reference_unit": {{ variant.unit_price_measurement.reference_unit | json }},
+                                  "options": {{ variant.options | json }}
+                                }{% unless forloop.last %},{% endunless %}
+                              {% endfor %}
+                            ]
                           </script>
                         </variant-selector>
                       {% endunless %}
@@ -655,7 +659,13 @@
                           id="add-to-cart"
                         >
                           <span class="btn-text">
-                            <span class="btn-label">Add to Cart</span>
+                            <span class="btn-label">
+                              {%- if selected_variant.available -%}
+                                {{ 'products.product.add_to_cart' | t }}
+                              {%- else -%}
+                                {{ 'products.product.sold_out' | t }}
+                              {%- endif -%}
+                            </span>
                             <span class="btn-separator"> - </span><span class="btn-price">—</span>
                           </span>
 
@@ -1189,6 +1199,7 @@
 
       const sellPriceEl = priceWrap.querySelector('.sell-price');
       const comparePriceEl = priceWrap.querySelector('.real-price');
+      const unitPriceEl = priceWrap.querySelector('.sell-price-variant-perkg');
       const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
       const price = this.currentVariant.price;
@@ -1198,6 +1209,7 @@
       if (sellPriceEl) {
         let cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
         sellPriceEl.textContent = cleanPrice + currencySuffix;
+        sellPriceEl.classList.toggle('withoutbg', !(compare && compare > price));
       }
 
       if (comparePriceEl) {
@@ -1220,6 +1232,16 @@
           percentBadge.style.display = 'none';
         }
       }
+
+      if (unitPriceEl) {
+        if (this.currentVariant.unit_price_reference_unit) {
+          const cleanUnitPrice = formatMoneySafe(this.currentVariant.unit_price).replace(/[^\d.,]/g, '').trim();
+          unitPriceEl.textContent = `${cleanUnitPrice}${currencySuffix} / ${this.currentVariant.unit_price_reference_unit}`;
+        } else {
+          const cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
+          unitPriceEl.textContent = `${cleanPrice}${currencySuffix} / unit`;
+        }
+      }
     }
 
     updateAddToCartButton() {
@@ -1240,6 +1262,7 @@
       if (!this.currentVariant.available) {
         btn.classList.remove('loading', 'success');
         btn.disabled = true;
+        btn.classList.add('out-of-stock');
 
         if (label) label.textContent = window.themeStrings.soldOut;
         if (priceEl) priceEl.textContent = '';
@@ -1248,6 +1271,7 @@
         return;
       }
 
+      btn.classList.remove('out-of-stock');
       btn.disabled = false;
 
       const qty = parseInt(qtyInput.value, 10) || 1;
@@ -1348,6 +1372,7 @@
       slidesToScroll: 1,
       arrows: false,
       fade: true,
+      infinite: false,
       asNavFor: '.prod-thumb-image',
     });
     $('.prod-thumb-image').slick({
@@ -1357,14 +1382,21 @@
       focusOnSelect: true,
       centerMode: false,
       vertical: true,
+      verticalSwiping: true,
+      draggable: true,
+      swipe: true,
+      touchMove: true,
+      swipeToSlide: true,
+      infinite: false,
       arrows: false,
       responsive: [
         {
           breakpoint: 768,
           settings: {
             vertical: false,
+            verticalSwiping: false,
             slidesToShow: 5,
-            focusOnSelect: false,
+            focusOnSelect: true,
             centerMode: false,
           }
         }

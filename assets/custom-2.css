@@ -1540,6 +1540,10 @@ span.cart-compare-price {
 .prod-thumb-image .slick-list {
   height: 100%!important;
   padding: 0!important;
+  cursor: grab;
+}
+.prod-thumb-image .slick-list:active {
+  cursor: grabbing;
 }
 .pro-img-wrap .pro-test {
   width: calc(100% - 129px);
@@ -2306,12 +2310,13 @@ li.variant-value.is-sold-out {
   width: 100%;
 }
 .pa-eat-store {
-  display: grid;
+    display: grid;
     grid-auto-columns: 30%;
     grid-auto-flow: column;
     overflow-x: scroll;
     gap: 30px;
     margin-bottom: 15px;
+    padding-bottom: 10px;
 }
 .paes-item p {
   font-size: 14px;
