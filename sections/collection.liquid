@@ -82,7 +82,9 @@
                 assign show_collection_tile = false
 
                 if is_generic_collection
-                  assign show_collection_tile = true
+                  if block.settings.hide_on_generic_collections != true
+                    assign show_collection_tile = true
+                  endif
                 else
                   for parent_collection in block.settings.parent_collections
                     if parent_collection.handle == collection.handle
@@ -752,6 +754,12 @@ document.addEventListener('DOMContentLoaded', function() {
             "id": "parent_collections",
             "label": "Show as sub-category on",
             "info": "Leave empty to show this tile only on the all/generic collection pages. Select parent collections to show it as a sub-category there."
+          }, {
+            "type": "checkbox",
+            "id": "hide_on_generic_collections",
+            "label": "Hide on all/generic collection pages",
+            "info": "Enable this for sub-category-only tiles.",
+            "default": false
           }, {
             "type": "text",
             "id": "col_name",
