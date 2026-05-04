@@ -345,6 +345,9 @@
   .header-in .h-left .hamburger {
     display: block;
   }
+  .header-in .h-left .brand-logo {
+    padding-top: 5px;
+  }
   .header-in .h-nav {
     height: calc(100vh - 70px);
     position: fixed;
@@ -357,7 +360,7 @@
     transition: 0.3s ease all;
   }
   header.active .header-in .h-nav {
-    top: 60px;
+    top: 67px;
   }
   .header-in .h-nav.active {
     clip-path: inset(0 0 0 0);
@@ -469,6 +472,28 @@
     top: 0;
     display: none;
   }
+  .mobile-flat-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 20px;
+    padding: 30px 0 20px;
+  }
+  .mobile-flat-link {
+    text-decoration: none;
+  }
+  .mobile-flat-link .link-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hnav-menu > ul {
+    display: none;
+  }
+  .mobile-nav-flat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
   .mega-menu .container {
     padding: 0;
   }
@@ -478,8 +503,7 @@
     transition-delay: none;
   }
   .mega-menu-split {
-    grid-template-columns: 1fr;
-    padding: 30px 0 20px 30px;
+    display: none;
   }
   .mega-menu-split .mms-left {
     gap: 30px;
@@ -1035,6 +1059,44 @@
   .filter-buttton {
     min-width: 90px;
   }
+  .mobile-nav-flat {
+    gap: 14px;
+    position: relative;
+  }
+  .mobile-nav-flat .link-flex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .top-bar {
+        padding: 10px 0;
+    }
+  .top-bar-in {
+    justify-content: center;
+  }
+  .top-bar-in .tb-lang-wrap {
+    display: none;
+  }
+  .langswitch-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px 30px 40px;
+    background-color: #f1ecec;
+  }
+  .locale-trigger span {
+    font-family: var(--scale);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    transition: 0.3s ease all;
+  }
+  .locale-panel {
+    margin: 90px auto 60px auto;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1046,7 +1108,7 @@
     padding: 30px 20px 40px 20px;
   }
   header {
-    top: 68px;
+    top: 35px;
     padding: 19px 0;
   }
   .container,
@@ -1065,7 +1127,7 @@
     gap: 6px;
   }
   .header-in .h-nav {
-    top: 128px;
+    top: 102px;
   }
   .bcb-reviews-wrap {
     flex-wrap: wrap;
@@ -1280,6 +1342,9 @@
   }
   .sustain-colm .numb_in {
     width: 45%;
+  }
+  .langswitch-btn {
+    padding: 30px 20px 30px 20px;
   }
   .sustain-colm .numb_in:first-child {
     width: 100%;
@@ -1621,7 +1686,10 @@
     margin-bottom: 8px;
   }
   .collection-banner {
-    padding: 140px 0 32px 0;
+    padding: 100px 0 32px 0;
+  }
+  .locale-panel {
+    margin: 100px auto 60px auto;
   }
   .cb-collection {
     /* flex-wrap: nowrap;

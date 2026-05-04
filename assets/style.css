@@ -420,7 +420,7 @@ a:hover {
 .locale-modal {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 99999999999;
   clip-path: inset(0 0 100% 0);
   transition: 1s ease all;
 }
@@ -466,7 +466,7 @@ a:hover {
 .fancybox__slide.is-selected {
     background-color: #fcf9f5;
 }
-.countries-select p.selecthead {
+.countries-select p.selecthead, .language-select p.selecthead {
     overflow-wrap: break-word;
     font-family: var(--scale);
     font-weight: 400;
@@ -618,6 +618,12 @@ li.nav-item.has-mega-menu {
     transition: 0.2s ease all;
     border-top: 1px solid #E1D8CC;
     /* min-height: 440px; */
+}
+.mobile-flat-links {
+    display: none;
+}
+.mobile-nav-flat {
+    display: none;
 }
 header.active .mega-menu {
     top: 71px;
@@ -3968,6 +3974,10 @@ section.imagescroll {
     font-size: 12px;
     letter-spacing: 0.32px;
     color: var(--grey-black);
+    transition: .2s ease all;
+}
+.bcrum-in ul li a:hover {
+    text-decoration: underline;
 }
 .bcrum-in ul li:last-child span {
     color: #6B6B6B;

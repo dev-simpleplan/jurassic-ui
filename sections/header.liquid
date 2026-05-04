@@ -75,6 +75,68 @@
 
                       <div class="mega-menu">
                         <div class="container">
+                          <div class="mobile-flat-links">
+                            {%- for link in nav_links -%}
+                              {%- if link.links and link.links.size > 0 -%}
+                                {%- for sublink in link.links -%}
+                                  <a href="{{ sublink.url }}" class="mobile-flat-link">
+                                    <div class="link-flex">
+                                      {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
+                                        {%- assign nav_image = blank -%}
+                                        {%- if sublink.type == 'collection_link' -%}
+                                          {%- assign nav_image = sublink.object.image -%}
+                                        {%- elsif sublink.type == 'product_link' -%}
+                                          {%- assign nav_image = sublink.object.featured_image -%}
+                                        {%- endif -%}
+
+                                        {%- if nav_image != blank -%}
+                                          <div class="lf-image">
+                                            <img
+                                              src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                              alt="{{ sublink.title | escape }}"
+                                              loading="lazy">
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endif -%}
+
+                                      <div class="lf-text">{{ sublink.title }}</div>
+                                    </div>
+                                  </a>
+                                {%- endfor -%}
+                              {%- else -%}
+                                {%- assign nav_link_title_downcase = link.title | downcase | strip -%}
+                                {%- assign nav_link_url = link.url -%}
+                                {%- if nav_link_title_downcase == 'wieder kaufen' or nav_link_title_downcase == 'buy again' -%}
+                                  {%- assign nav_link_url = routes.account_url -%}
+                                {%- endif -%}
+
+                                <a href="{{ nav_link_url }}" class="mobile-flat-link">
+                                  <div class="link-flex">
+                                    {%- if link.type == 'collection_link' or link.type == 'product_link' -%}
+                                      {%- assign nav_image = blank -%}
+                                      {%- if link.type == 'collection_link' -%}
+                                        {%- assign nav_image = link.object.image -%}
+                                      {%- elsif link.type == 'product_link' -%}
+                                        {%- assign nav_image = link.object.featured_image -%}
+                                      {%- endif -%}
+
+                                      {%- if nav_image != blank -%}
+                                        <div class="lf-image">
+                                          <img
+                                            src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                            alt="{{ link.title | escape }}"
+                                            loading="lazy">
+                                        </div>
+                                      {%- endif -%}
+                                    {%- endif -%}
+
+                                    <div class="lf-text">{{ link.title }}</div>
+                                  </div>
+                                </a>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          </div>
+
                           <div class="mega-menu-split">
                             {%- comment -%} LEFT: groups with children {%- endcomment -%}
                             {%- assign any_child_groups = false -%}
@@ -215,8 +277,101 @@
               {% endfor %}
             </ul>
 
+            <div class="mobile-nav-flat">
+              {% assign menu_right = section.blocks | where: 'type', 'nav_menu_right' %}
+              {% for block in menu_right %}
+                {%- assign selected_menu = menus[block.settings.nav_items_right] -%}
+                {%- if selected_menu == blank -%}
+                  {%- assign selected_menu = linklists[block.settings.nav_items_right] -%}
+                {%- endif -%}
+
+                {%- if selected_menu and selected_menu.links and selected_menu.links.size > 0 -%}
+                  {%- assign selected_menu_title_downcase = selected_menu.title | downcase | strip -%}
+
+                  {%- unless selected_menu_title_downcase == 'wieder kaufen' or selected_menu_title_downcase == 'buy again' or selected_menu_title_downcase == 'boxes' or selected_menu_title_downcase == 'boxen' -%}
+                    {%- for link in selected_menu.links -%}
+                      {%- if link.links and link.links.size > 0 -%}
+                        {%- for sublink in link.links -%}
+                          <a href="{{ sublink.url }}" class="mobile-nav-flat-link">
+                            <div class="link-flex">
+                              {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
+                                {%- assign nav_image = blank -%}
+                                {%- if sublink.type == 'collection_link' -%}
+                                  {%- assign nav_image = sublink.object.image -%}
+                                {%- elsif sublink.type == 'product_link' -%}
+                                  {%- assign nav_image = sublink.object.featured_image -%}
+                                {%- endif -%}
+
+                                {%- if nav_image != blank -%}
+                                  <div class="lf-image">
+                                    <img
+                                      src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                      alt="{{ sublink.title | escape }}"
+                                      loading="lazy">
+                                  </div>
+                                {%- endif -%}
+                              {%- endif -%}
+
+                              <div class="lf-text">{{ sublink.title }}</div>
+                            </div>
+                          </a>
+                        {%- endfor -%}
+                      {%- else -%}
+                        {%- assign nav_link_title_downcase = link.title | downcase | strip -%}
+                        {%- assign nav_link_url = link.url -%}
+                        {%- if nav_link_title_downcase == 'wieder kaufen' or nav_link_title_downcase == 'buy again' -%}
+                          {%- assign nav_link_url = routes.account_url -%}
+                        {%- endif -%}
+                        <a href="{{ nav_link_url }}" class="mobile-nav-flat-link">
+                          <div class="link-flex">
+                            {%- if link.type == 'collection_link' or link.type == 'product_link' -%}
+                              {%- assign nav_image = blank -%}
+                              {%- if link.type == 'collection_link' -%}
+                                {%- assign nav_image = link.object.image -%}
+                              {%- elsif link.type == 'product_link' -%}
+                                {%- assign nav_image = link.object.featured_image -%}
+                              {%- endif -%}
+
+                              {%- if nav_image != blank -%}
+                                <div class="lf-image">
+                                  <img
+                                    src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                    alt="{{ link.title | escape }}"
+                                    loading="lazy">
+                                </div>
+                              {%- endif -%}
+                            {%- endif -%}
+
+                            <div class="lf-text">{{ link.title }}</div>
+                          </div>
+                        </a>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {% endfor %}
+
+              
+
+            </div>
+
+            <div class="langswitch-btn">
+                <button class="locale-trigger mobile-nav-locale-trigger" type="button" data-locale-open>
+                  <img
+                    src="https://flagcdn.com/w20/{{ localization.country.iso_code | downcase }}.png"
+                    alt="{{ localization.country.name }}"
+                    width="20"
+                    height="14"
+                  >
+                  <span>
+                    {{ localization.country.name }} |
+                    {{ localization.language.iso_code | upcase }}
+                  </span>
+                </button>
+              </div>
 
           </div>
+
         </div>
 
         
