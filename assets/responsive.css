@@ -494,8 +494,8 @@
     flex-direction: column;
     height: 100%;
   }
-  .mobile-nav-flat {
-    display: block;
+  .langswitch-btn {
+    display: flex;
   }
   .mega-menu .container {
     padding: 0;
