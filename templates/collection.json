@@ -12,10 +12,21 @@
     "main": {
       "type": "collection",
       "blocks": {
+        "collection_JKYHMB": {
+          "type": "collection",
+          "settings": {
+            "col": "mangoes",
+            "parent_collections": [
+              "fruit"
+            ],
+            "col_name": ""
+          }
+        },
         "collection_fMayaE": {
           "type": "collection",
           "settings": {
             "col": "fruit",
+            "parent_collections": [],
             "col_name": "Fruits"
           }
         },
@@ -23,6 +34,7 @@
           "type": "collection",
           "settings": {
             "col": "fruit-boxes",
+            "parent_collections": [],
             "col_name": "Boxes"
           }
         },
@@ -30,6 +42,7 @@
           "type": "collection",
           "settings": {
             "col": "dates",
+            "parent_collections": [],
             "col_name": ""
           }
         },
@@ -37,6 +50,7 @@
           "type": "collection",
           "settings": {
             "col": "dried-fruit",
+            "parent_collections": [],
             "col_name": ""
           }
         },
@@ -44,6 +58,7 @@
           "type": "collection",
           "settings": {
             "col": "nuts",
+            "parent_collections": [],
             "col_name": "Nuts"
           }
         },
@@ -51,6 +66,7 @@
           "type": "collection",
           "settings": {
             "col": "honey",
+            "parent_collections": [],
             "col_name": ""
           }
         },
@@ -58,6 +74,7 @@
           "type": "collection",
           "settings": {
             "col": "fine-food",
+            "parent_collections": [],
             "col_name": ""
           }
         },
@@ -65,6 +82,7 @@
           "type": "collection",
           "settings": {
             "col": "new",
+            "parent_collections": [],
             "col_name": "New"
           }
         },
@@ -72,11 +90,13 @@
           "type": "collection",
           "settings": {
             "col": "all-products",
+            "parent_collections": [],
             "col_name": ""
           }
         }
       },
       "block_order": [
+        "collection_JKYHMB",
         "collection_fMayaE",
         "collection_rxVwVF",
         "collection_NUyX4d",
