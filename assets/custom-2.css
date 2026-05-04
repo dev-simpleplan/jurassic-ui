@@ -727,7 +727,7 @@ span.cart-compare-price {
   margin-top: 63px;
 }
 .collection-main .collection-wrapper {
-  margin-top: 30px;
+  margin-top: 24px;
 }
 .collection-wrapper nav.pagination {
   position: absolute;
@@ -764,7 +764,7 @@ span.cart-compare-price {
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .filter-sidebar form {
   display: flex;
@@ -1089,7 +1089,7 @@ span.cart-compare-price {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 140px 0 38px 0;
+  padding: 107px 0 38px 0;
 }
 .collection-banner h1 {
   font-size: clamp(32px, 4vw, 46px);

@@ -206,104 +206,168 @@ document.addEventListener('click', function (e) {
 </script> {% endcomment %}
 
 <script>
-document.addEventListener('click', function (e) {
-  const modal = document.querySelector('[data-locale-modal]');
-  if (!modal) return;
+(function () {
+  const preferenceKey = 'jurassicLocalePreference';
+  const dismissedKey = 'jurassicLocalePromptDismissed';
 
-  /* ----------------------------
-     OPEN MODAL
-  ----------------------------- */
-  if (e.target.closest('[data-locale-open]')) {
-    modal.classList.add('is-open');
+  function getLocaleModal() {
+    return document.querySelector('[data-locale-modal]');
+  }
 
-    const currentCountry = modal.dataset.currentCountry;
-    const currentLanguage = modal.dataset.currentLanguage;
+  function setLocaleSelection(modal, country, language) {
+    const selectedCountry = country || modal.dataset.currentCountry;
+    const selectedLanguage = language || modal.dataset.currentLanguage;
 
-    // Store defaults
-    modal.dataset.selectedCountry = currentCountry;
-    modal.dataset.selectedLanguage = currentLanguage;
+    modal.dataset.selectedCountry = selectedCountry;
+    modal.dataset.selectedLanguage = selectedLanguage;
 
-    // Highlight current country
+    const languageEl = modal.querySelector(`[data-language="${selectedLanguage}"]`);
+    if (languageEl) {
+      modal.dataset.selectedLanguageUrl = languageEl.dataset.languageUrl;
+    } else {
+      delete modal.dataset.selectedLanguageUrl;
+    }
+
     modal.querySelectorAll('[data-country]').forEach(el => {
-      el.classList.toggle(
-        'is-selected',
-        el.dataset.country === currentCountry
-      );
+      el.classList.toggle('is-selected', el.dataset.country === selectedCountry);
     });
 
-    // Highlight current language
     modal.querySelectorAll('[data-language]').forEach(el => {
-      el.classList.toggle(
-        'is-selected',
-        el.dataset.language === currentLanguage
-      );
+      el.classList.toggle('is-selected', el.dataset.language === selectedLanguage);
     });
-
-    return;
   }
 
-  /* ----------------------------
-     CLOSE MODAL
-  ----------------------------- */
-  if (e.target.closest('[data-locale-close]')) {
+  window.openLocaleModal = function (options = {}) {
+    const modal = getLocaleModal();
+    if (!modal) return;
+
+    setLocaleSelection(
+      modal,
+      options.country || modal.dataset.currentCountry,
+      options.language || modal.dataset.currentLanguage
+    );
+    modal.classList.add('is-open');
+  };
+
+  function closeLocaleModal(modal) {
     modal.classList.remove('is-open');
-    return;
   }
 
-  /* ----------------------------
-     SELECT COUNTRY
-  ----------------------------- */
-  const countryEl = e.target.closest('[data-country]');
-  if (countryEl) {
-    e.preventDefault();
-    modal.dataset.selectedCountry = countryEl.dataset.country;
+  document.addEventListener('click', function (e) {
+    const modal = getLocaleModal();
+    if (!modal) return;
 
-    modal.querySelectorAll('[data-country]').forEach(el =>
-      el.classList.remove('is-selected')
-    );
-    countryEl.classList.add('is-selected');
-    return;
-  }
+    /* ----------------------------
+       OPEN MODAL
+    ----------------------------- */
+    if (e.target.closest('[data-locale-open]')) {
+      window.openLocaleModal();
+      return;
+    }
 
-  /* ----------------------------
-     SELECT LANGUAGE
-  ----------------------------- */
-  const languageEl = e.target.closest('[data-language]');
-  if (languageEl) {
-    e.preventDefault();
-    modal.dataset.selectedLanguage = languageEl.dataset.language;
-    modal.dataset.selectedLanguageUrl = languageEl.dataset.languageUrl;
+    /* ----------------------------
+       CLOSE MODAL
+    ----------------------------- */
+    if (e.target.closest('[data-locale-close]')) {
+      if (modal.dataset.autoPrompt === 'true') {
+        try {
+          sessionStorage.setItem(dismissedKey, 'true');
+        } catch (error) {}
+        delete modal.dataset.autoPrompt;
+      }
+      closeLocaleModal(modal);
+      return;
+    }
 
-    modal.querySelectorAll('[data-language]').forEach(el =>
-      el.classList.remove('is-selected')
-    );
-    languageEl.classList.add('is-selected');
-    return;
-  }
+    /* ----------------------------
+       SELECT COUNTRY
+    ----------------------------- */
+    const countryEl = e.target.closest('[data-country]');
+    if (countryEl) {
+      e.preventDefault();
+      modal.dataset.selectedCountry = countryEl.dataset.country;
 
-  /* ----------------------------
-     APPLY
-  ----------------------------- */
-  if (e.target.closest('[data-locale-apply]')) {
-    const country = modal.dataset.selectedCountry;
-    const languageCode = modal.dataset.selectedLanguage;
-    const localeForm = document.getElementById('LocaleSwitchForm');
-    const countryInput = localeForm?.querySelector('[data-locale-country-input]');
-    const languageInput = localeForm?.querySelector('[data-locale-language-input]');
-    const returnInput = localeForm?.querySelector('[data-locale-return-input]');
+      modal.querySelectorAll('[data-country]').forEach(el =>
+        el.classList.remove('is-selected')
+      );
+      countryEl.classList.add('is-selected');
+      return;
+    }
 
-    if (!localeForm || !countryInput || !languageInput || !returnInput) return;
+    /* ----------------------------
+       SELECT LANGUAGE
+    ----------------------------- */
+    const languageEl = e.target.closest('[data-language]');
+    if (languageEl) {
+      e.preventDefault();
+      modal.dataset.selectedLanguage = languageEl.dataset.language;
+      modal.dataset.selectedLanguageUrl = languageEl.dataset.languageUrl;
 
-    countryInput.value = country || modal.dataset.currentCountry;
-    languageInput.value = languageCode || modal.dataset.currentLanguage;
+      modal.querySelectorAll('[data-language]').forEach(el =>
+        el.classList.remove('is-selected')
+      );
+      languageEl.classList.add('is-selected');
+      return;
+    }
 
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.delete('country');
-    returnInput.value = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+    /* ----------------------------
+       APPLY
+    ----------------------------- */
+    if (e.target.closest('[data-locale-apply]')) {
+      const country = modal.dataset.selectedCountry;
+      const languageCode = modal.dataset.selectedLanguage;
+      const localeForm = document.getElementById('LocaleSwitchForm');
+      const countryInput = localeForm?.querySelector('[data-locale-country-input]');
+      const languageInput = localeForm?.querySelector('[data-locale-language-input]');
+      const returnInput = localeForm?.querySelector('[data-locale-return-input]');
 
-    localeForm.submit();
-  }
-});
+      if (!localeForm || !countryInput || !languageInput || !returnInput) return;
+
+      countryInput.value = country || modal.dataset.currentCountry;
+      languageInput.value = languageCode || modal.dataset.currentLanguage;
+
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.delete('country');
+      returnInput.value = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+
+      try {
+        localStorage.setItem(preferenceKey, JSON.stringify({
+          country: countryInput.value,
+          language: languageInput.value,
+          savedAt: Date.now()
+        }));
+      } catch (error) {}
+
+      localeForm.submit();
+    }
+  });
+
+  window.addEventListener('load', function () {
+    const modal = getLocaleModal();
+    if (!modal) return;
+
+    const currentLanguage = (modal.dataset.currentLanguage || '').toLowerCase();
+    const browserLanguage = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().split('-')[0];
+    if (!browserLanguage || browserLanguage === currentLanguage) return;
+
+    const browserLanguageOption = modal.querySelector(`[data-language="${browserLanguage}"]`);
+    if (!browserLanguageOption) return;
+
+    try {
+      const savedPreference = JSON.parse(localStorage.getItem(preferenceKey) || 'null');
+      if (savedPreference?.language) return;
+      if (sessionStorage.getItem(dismissedKey) === 'true') return;
+    } catch (error) {}
+
+    window.setTimeout(function () {
+      modal.dataset.autoPrompt = 'true';
+      window.openLocaleModal({
+        country: modal.dataset.currentCountry,
+        language: browserLanguage
+      });
+    }, 800);
+  });
+})();
 </script>
 
 <script>

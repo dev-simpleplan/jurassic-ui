@@ -216,7 +216,86 @@
             // 1. Initialize Lenis
             window.lenis = new Lenis({
               duration: 1.2,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+              prevent: (node) => node.closest('[data-lenis-prevent]') !== null
+            });
+
+            const lenisPreventSelectors = [
+              '[role="dialog"]',
+              '[aria-modal="true"]',
+              '[role="list"]',
+              '[role="listbox"]',
+              '[role="menu"]',
+              '.tl-overlay',
+              '.tl-dropdown',
+              '.tl-select',
+              '.tl-switcher',
+              '.tl-options',
+              '.adt-itemsContainer',
+              '.adt-itemsList',
+              '.adt-item',
+              '[class*="country" i]',
+              '[class*="currency" i]',
+              '[class*="locale" i]',
+              '[class*="market" i]',
+              '[id*="country" i]',
+              '[id*="currency" i]',
+              '[id*="locale" i]',
+              '[id*="market" i]'
+            ].join(',');
+
+            function isScrollableNode(node) {
+              if (!(node instanceof HTMLElement)) return false;
+              const styles = window.getComputedStyle(node);
+              const canScrollY = /(auto|scroll)/.test(styles.overflowY) && node.scrollHeight > node.clientHeight;
+              const canScrollX = /(auto|scroll)/.test(styles.overflowX) && node.scrollWidth > node.clientWidth;
+              return canScrollY || canScrollX;
+            }
+
+            function addLenisPreventToAppDropdowns(root = document) {
+              const candidates = [];
+              if (root instanceof HTMLElement && root.matches(lenisPreventSelectors)) {
+                candidates.push(root);
+              }
+              if (root.querySelectorAll) {
+                candidates.push(...root.querySelectorAll(lenisPreventSelectors));
+              }
+
+              candidates.forEach((node) => {
+                if (
+                  node.matches('[role="dialog"], [aria-modal="true"], [role="list"], [role="listbox"], [role="menu"], .tl-overlay, .tl-dropdown, .tl-select, .tl-switcher, .tl-options, .adt-itemsContainer, .adt-itemsList, .adt-item') ||
+                  isScrollableNode(node)
+                ) {
+                  node.setAttribute('data-lenis-prevent', '');
+                }
+
+                node.querySelectorAll?.('*').forEach((child) => {
+                  if (isScrollableNode(child)) child.setAttribute('data-lenis-prevent', '');
+                });
+              });
+            }
+
+            addLenisPreventToAppDropdowns();
+
+            const lenisPreventObserver = new MutationObserver((mutations) => {
+              mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes') {
+                  addLenisPreventToAppDropdowns(mutation.target);
+                }
+
+                mutation.addedNodes.forEach((node) => {
+                  if (node.nodeType === Node.ELEMENT_NODE) {
+                    addLenisPreventToAppDropdowns(node);
+                  }
+                });
+              });
+            });
+
+            lenisPreventObserver.observe(document.body, {
+              childList: true,
+              subtree: true,
+              attributes: true,
+              attributeFilter: ['class', 'style', 'aria-expanded']
             });
 
             function raf(time) {
