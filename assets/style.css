@@ -622,9 +622,10 @@ li.nav-item.has-mega-menu {
 .mobile-flat-links {
     display: none;
 }
-.mobile-nav-flat {
+.mobile-nav-flat, .langswitch-btn {
     display: none;
 }
+
 header.active .mega-menu {
     top: 71px;
 }
