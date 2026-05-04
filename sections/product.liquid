@@ -21,12 +21,12 @@
           {%- liquid
             assign selected_col = nil
             # Define the handles you want to skip
-            assign generic_handles = "all,all-products,all-fruits,all-fruit,frontpage,best-seller" | split: ","
+            assign generic_handles = "all,all-products,all-fruits,all-fruit,all-collections,shop-all,alle-produkte,alle-fruchte,alle-fruechte,tous-les-produits,tous-les-fruits,frontpage,best-seller" | split: ","
             
             # 1. Check if we are currently in a valid collection
             if collection
               assign is_generic = false
-              if generic_handles contains collection.handle
+              if generic_handles contains collection.handle or collection.handle contains 'all-' or collection.handle contains 'alle-' or collection.handle contains 'tous-les-'
                 assign is_generic = true
               endif
 
@@ -38,7 +38,7 @@
             # 2. If no collection selected yet, loop through product collections
             if selected_col == nil
               for col in product.collections
-                if generic_handles contains col.handle
+                if generic_handles contains col.handle or col.handle contains 'all-' or col.handle contains 'alle-' or col.handle contains 'tous-les-'
                   continue
                 else
                   assign selected_col = col
@@ -55,6 +55,10 @@
               </a>
             </li>
           {%- endif -%}
+
+          <li>
+            <span>{{ product.title }}</span>
+          </li>
         </ul>
       </div>
   </div>
@@ -128,7 +132,7 @@
               <div class="prod-main-image">
                 {% if product.media.size > 0 %}
                   {% for media in product.media %}
-                    <div class="item">
+                    <div class="item" data-media-id="{{ media.id }}">
                       <div class="prod-main">
                         <a href="{{ media | img_url: 'master' }}" 
                           data-fancybox="gallery" 
@@ -163,7 +167,7 @@
             <div class="prod-thumb-image">
               {% if product.media.size > 0 %}
                 {% for media in product.media %}
-                  <div class="item">
+                  <div class="item" data-media-id="{{ media.id }}">
                     <div class="prod-thumb">
                       {% render 'product-media', media: media %}
                     </div>
@@ -611,6 +615,7 @@
                                   "compare_at_price": {{ variant.compare_at_price | json }},
                                   "unit_price": {{ variant.unit_price | json }},
                                   "unit_price_reference_unit": {{ variant.unit_price_measurement.reference_unit | json }},
+                                  "featured_media_id": {{ variant.featured_media.id | json }},
                                   "options": {{ variant.options | json }},
                                   "shipped_by": {{ variant.metafields.custom.shipped_by.value | default: variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | json }}
                                 }{% unless forloop.last %},{% endunless %}
@@ -1378,6 +1383,7 @@ class VariantSelector extends HTMLElement {
 
     this.updateFormID();
     this.updatePriceInstant();
+    this.updateMedia();
     this.updateShippingInfo();
     this.updateAddToCartButton();
 
@@ -1403,6 +1409,7 @@ class VariantSelector extends HTMLElement {
     this.updateURL();
     this.updateFormID();
     this.updatePriceInstant();
+    this.updateMedia();
     this.updateShippingInfo();
     this.updateAddToCartButton();
   }
@@ -1526,6 +1533,16 @@ class VariantSelector extends HTMLElement {
         ? `Shipped by ${shippingLabel}`
         : '';
     }
+  }
+
+  updateMedia() {
+    if (!this.currentVariant?.featured_media_id) return;
+
+    const mediaId = this.currentVariant.featured_media_id;
+    window.updateProductMediaById?.(mediaId);
+    document.dispatchEvent(new CustomEvent('variant:media-change', {
+      detail: { mediaId }
+    }));
   }
 
   
@@ -1662,6 +1679,34 @@ $(document).ready(function () {
 
   $('.custom-prev').click(() => $('.prod-main-image').slick('slickPrev'));
   $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
+
+  const goToVariantMedia = (mediaId) => {
+    if (!mediaId) return;
+
+    const mainSlider = document.querySelector('.prod-main-image');
+    if (!mainSlider) return;
+
+    const $mainSlider = $('.prod-main-image');
+    if (!$mainSlider.hasClass('slick-initialized')) return;
+
+    const targetSlide = mainSlider.querySelector(`.slick-slide[data-media-id="${mediaId}"]`);
+    if (!targetSlide) return;
+
+    const slideIndex = Number(targetSlide.getAttribute('data-slick-index'));
+    if (Number.isNaN(slideIndex) || slideIndex < 0) return;
+
+    $mainSlider.slick('slickGoTo', slideIndex);
+  };
+
+  window.updateProductMediaById = goToVariantMedia;
+  document.addEventListener('variant:media-change', (event) => {
+    goToVariantMedia(event.detail?.mediaId);
+  });
+
+  const initialVariantSelector = document.querySelector('variant-selector');
+  if (initialVariantSelector?.currentVariant?.featured_media_id) {
+    goToVariantMedia(initialVariantSelector.currentVariant.featured_media_id);
+  }
 });
 
 Fancybox.bind("[data-fancybox='gallery'], [data-fancybox='how-to-store-gallery'], [data-fancybox='origin-sourcing-gallery']", {

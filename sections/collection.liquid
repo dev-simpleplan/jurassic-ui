@@ -60,44 +60,70 @@
             <h1>{{ collection.title }}</h1>
           {% endif %}
         </div> 
-        {%- liquid 
-  # 1. Define where the section IS allowed to show
-  assign allowed_collections = "all-fruits,new,all-products" | split: ","
--%}
+        {%- liquid
+          assign generic_collection_handles = "all,all-products,all-fruits,all-fruit,all-collections,shop-all,alle-produkte,alle-fruchte,alle-fruechte,tous-les-produits,tous-les-fruits" | split: ","
+          assign is_generic_collection = false
 
-{%- if allowed_collections contains collection.handle -%}
-  <div class="cb-collection">
-    {% for block in section.blocks %}
-      {% assign collection_item = block.settings.col %}
-      
-      {%- comment -%} 
-        2. SKIP the block if it matches the current collection handle
-      {%- endcomment -%}
-      {% if collection_item.handle == collection.handle %}
-        {% continue %}
-      {% endif %}
+          if generic_collection_handles contains collection.handle or collection.handle contains 'all-' or collection.handle contains 'alle-' or collection.handle contains 'tous-les-'
+            assign is_generic_collection = true
+          endif
+        -%}
 
-      <a href="{{ collection_item.url }}" class="cbcIn">
-        <div class="cbcImg">
-          {% if collection_item.featured_image %}
-            <img src="{{ collection_item.featured_image | img_url: 'master' }}" alt="{{ collection_item.title }}">
-          {% elsif block.settings.col_img %}
-            <img src="{{ block.settings.col_img | img_url: 'master' }}" alt="{{ collection_item.title }}">
-          {% endif %}
-        </div>
+        {%- if section.blocks.size > 0 -%}
+          {%- capture collection_tiles -%}
+            {% for block in section.blocks %}
+              {% assign collection_item = block.settings.col %}
 
-        <div class="cbcTxt">
-          {% assign collection_title = block.settings.col_name %}
-          {% if collection_title == blank %}
-            <p>{{ collection_item.title | strip_html | strip }}</p>
-          {% else %}
-            <p>{{ block.settings.col_name }}</p>
-          {% endif %}
-        </div>
-      </a>
-    {% endfor %}
-  </div>
-{%- endif -%}
+              {% if collection_item == blank or collection_item.handle == collection.handle %}
+                {% continue %}
+              {% endif %}
+
+              {%- liquid
+                assign show_collection_tile = false
+
+                if is_generic_collection
+                  assign show_collection_tile = true
+                else
+                  for parent_collection in block.settings.parent_collections
+                    if parent_collection.handle == collection.handle
+                      assign show_collection_tile = true
+                      break
+                    endif
+                  endfor
+                endif
+              -%}
+
+              {% unless show_collection_tile %}
+                {% continue %}
+              {% endunless %}
+
+              <a href="{{ collection_item.url }}" class="cbcIn">
+                <div class="cbcImg">
+                  {% if collection_item.featured_image %}
+                    <img src="{{ collection_item.featured_image | img_url: 'master' }}" alt="{{ collection_item.title }}">
+                  {% elsif block.settings.col_img %}
+                    <img src="{{ block.settings.col_img | img_url: 'master' }}" alt="{{ collection_item.title }}">
+                  {% endif %}
+                </div>
+
+                <div class="cbcTxt">
+                  {% assign collection_title = block.settings.col_name %}
+                  {% if collection_title == blank %}
+                    <p>{{ collection_item.title | strip_html | strip }}</p>
+                  {% else %}
+                    <p>{{ block.settings.col_name }}</p>
+                  {% endif %}
+                </div>
+              </a>
+            {% endfor %}
+          {%- endcapture -%}
+
+          {%- if collection_tiles != blank -%}
+            <div class="cb-collection">
+              {{ collection_tiles }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
       </div>
       <div class="cm-wrapper">
         {% comment %} <div class="head">
@@ -721,6 +747,11 @@ document.addEventListener('DOMContentLoaded', function() {
             "type": "collection",
             "id": "col",
             "label": "Select Collection"
+          }, {
+            "type": "collection_list",
+            "id": "parent_collections",
+            "label": "Show as sub-category on",
+            "info": "Leave empty to show this tile only on the all/generic collection pages. Select parent collections to show it as a sub-category there."
           }, {
             "type": "text",
             "id": "col_name",

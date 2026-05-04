@@ -342,7 +342,7 @@ document.addEventListener('click', function (e) {
     }
   });
 
-  window.addEventListener('load', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const modal = getLocaleModal();
     if (!modal) return;
 
@@ -365,7 +365,7 @@ document.addEventListener('click', function (e) {
         country: modal.dataset.currentCountry,
         language: browserLanguage
       });
-    }, 800);
+    }, 1000);
   });
 })();
 </script>
