@@ -12,6 +12,28 @@
     "main": {
       "type": "collection",
       "blocks": {
+        "collection_zp8hR7": {
+          "type": "collection",
+          "settings": {
+            "col": "coconuts",
+            "parent_collections": [
+              "fruit"
+            ],
+            "hide_on_generic_collections": true,
+            "col_name": ""
+          }
+        },
+        "collection_Fnbewh": {
+          "type": "collection",
+          "settings": {
+            "col": "avocados",
+            "parent_collections": [
+              "fruit"
+            ],
+            "hide_on_generic_collections": true,
+            "col_name": ""
+          }
+        },
         "collection_JKYHMB": {
           "type": "collection",
           "settings": {
@@ -19,6 +41,7 @@
             "parent_collections": [
               "fruit"
             ],
+            "hide_on_generic_collections": true,
             "col_name": ""
           }
         },
@@ -27,6 +50,7 @@
           "settings": {
             "col": "fruit",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": "Fruits"
           }
         },
@@ -35,6 +59,7 @@
           "settings": {
             "col": "fruit-boxes",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": "Boxes"
           }
         },
@@ -43,6 +68,7 @@
           "settings": {
             "col": "dates",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": ""
           }
         },
@@ -51,6 +77,7 @@
           "settings": {
             "col": "dried-fruit",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": ""
           }
         },
@@ -59,6 +86,7 @@
           "settings": {
             "col": "nuts",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": "Nuts"
           }
         },
@@ -67,6 +95,7 @@
           "settings": {
             "col": "honey",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": ""
           }
         },
@@ -75,6 +104,7 @@
           "settings": {
             "col": "fine-food",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": ""
           }
         },
@@ -83,6 +113,7 @@
           "settings": {
             "col": "new",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": "New"
           }
         },
@@ -91,11 +122,14 @@
           "settings": {
             "col": "all-products",
             "parent_collections": [],
+            "hide_on_generic_collections": false,
             "col_name": ""
           }
         }
       },
       "block_order": [
+        "collection_zp8hR7",
+        "collection_Fnbewh",
         "collection_JKYHMB",
         "collection_fMayaE",
         "collection_rxVwVF",
