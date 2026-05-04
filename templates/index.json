@@ -120,8 +120,7 @@
         "ugc_videos_UXLNi4": {
           "type": "ugc-videos",
           "settings": {
-            "video_img": "shopify://shop_images/5LAB10.jpg",
-            "video_link": "shopify://files/videos/🍈✨ Jackfrucht – ein echtes NaturwunderHier siehst du, wie Sonja eine perfekt gereifte Jackfruch.mp4"
+            "video_img": "shopify://shop_images/5LAB10.jpg"
           }
         },
         "ugc_videos_kBLy7n": {
@@ -489,7 +488,7 @@
         "review_item_X6kWgB": {
           "type": "review_item",
           "settings": {
-            "user_image": "shopify://shop_images/5LAB10.jpg",
+            "user_image": "shopify://shop_images/FH.webp",
             "comment": "I drank coconut juice for the first time in my 39 years and thought it was pretty good! I also liked the delivery and the good customer service.",
             "review_star": 4,
             "user_name": "F H.",
