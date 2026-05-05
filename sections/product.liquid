@@ -1184,10 +1184,107 @@
                     </div>
                     {%- endif -%}
 
+                    {%- if product.metafields.custom.ingredients.value != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.ingredients' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.ingredients.value | newline_to_br }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- assign manufacturing_text = '' -%}
+                    {%- assign manufacturing_metafield = product.metafields.custom.manufacturing -%}
+                    {%- if manufacturing_metafield != blank and manufacturing_metafield.value != blank -%}
+                      {%- if manufacturing_metafield.type contains 'list.' -%}
+                        {%- assign manufacturing_text = manufacturing_metafield.value | join: ', ' -%}
+                      {%- else -%}
+                        {%- assign manufacturing_text = manufacturing_metafield.value -%}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if manufacturing_text != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.manufacturing' | t }}:</div>
+                        <div class="ti-data">{{ manufacturing_text }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- assign allergens_text = '' -%}
+                    {%- assign allergens_metafield = product.metafields.shopify.allergen_information -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.shopify.allergens -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.standard.allergen_information -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.standard.allergens -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield != blank and allergens_metafield.value != blank -%}
+                      {%- if allergens_metafield.type contains 'list.' -%}
+                        {%- assign allergens_text = allergens_metafield.value | join: ', ' -%}
+                      {%- else -%}
+                        {%- assign allergens_text = allergens_metafield.value -%}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if allergens_text != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.allergens' | t }}:</div>
+                        <div class="ti-data">{{ allergens_text }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.cross_contamination.value != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.cross_contamination' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.cross_contamination.value | newline_to_br }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.best_before_date.value != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.best_before_date' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.best_before_date.value | date: "%d.%m.%Y" }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.net_quantity.value != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.net_quantity' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.net_quantity.value }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.storage_conditions.value != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.storage_conditions' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.storage_conditions.value | newline_to_br }}</div>
+                    </div>
+                    {%- endif -%}
+
                     {%- if product.metafields.custom.quality_label != blank -%}
                     <div class="tech-item">
-                        <div class="ti-name">{{ 'sections.product.certification' | t }}:</div>
+                        <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
                         <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
+                    </div>
+                    {%- endif -%}
+
+                    {%- assign certificate_names = '' -%}
+                    {%- if product.metafields.custom.certificate.value != blank -%}
+                      {%- for item in product.metafields.custom.certificate.value -%}
+                        {%- if item.display_name != blank -%}
+                          {%- if certificate_names != blank -%}
+                            {%- assign certificate_names = certificate_names | append: ', ' -%}
+                          {%- endif -%}
+                          {%- assign certificate_names = certificate_names | append: item.display_name -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                    {%- if certificate_names != blank -%}
+                    <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.certificate' | t }}:</div>
+                        <div class="ti-data">{{ certificate_names }}</div>
                     </div>
                     {%- endif -%}
 

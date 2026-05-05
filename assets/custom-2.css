@@ -2256,6 +2256,7 @@ li.variant-value.is-sold-out {
   line-height: 150%;
   font-size: 15px;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 .tech-item .ti-data {
   font-weight: 400;
