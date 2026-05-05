@@ -743,7 +743,7 @@
 {% assign nutrition_content_data = product.metafields.custom.nutrition_benefits_content %}
 {% assign origin_sourcing_items = product.metafields.custom.origin_sourcing.value %}
 {% assign taste_profile_data = product.metafields.custom.taste_profile.value %}
-{% assign taste_profile_body = product.metafields.custom.taste_profile_body_text %}
+{% assign taste_profile_body = product.metafields.custom.taste_profile_body_text.value | default: product.metafields.custom.taste_profile_body_text %}
 {% assign country_season_data = product.metafields.custom.country_season.value %}
 {% assign season_meta = country_season_data.season.value %}
 {% assign product_shipped_by = product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
@@ -768,7 +768,11 @@
   {% assign show_origin = true %}
 {% endif %}
 {% assign show_taste_profile = false %}
-{% if taste_profile_data != blank or taste_profile_body != blank %}
+{% if taste_profile_body != blank
+  or taste_profile_data.texture != blank
+  or taste_profile_data.sweetness != blank
+  or taste_profile_data.sourness != blank
+  or taste_profile_data.juiciness != blank %}
   {% assign show_taste_profile = true %}
 {% endif %}
 {% assign show_seasonal = false %}

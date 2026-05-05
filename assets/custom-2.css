@@ -1639,7 +1639,7 @@ span.cart-compare-price {
   background: #ffffff;
   border: 1px solid #e5e3df;
   border-radius: 20px;
-  margin-top: 8px;
+  margin-top: 9px;
 }
 .product-info-block .pi-item {
   display: flex;
@@ -1669,7 +1669,7 @@ span.cart-compare-price {
   gap: 6px;
   overflow: hidden;
   overflow-x: auto;
-  margin-top: 12px;
+  margin-top: 9px;
   padding-bottom: 2px;
 }
 .product-usp::-webkit-scrollbar {
@@ -1952,7 +1952,7 @@ li.variant-value.is-sold-out {
   opacity: 0.5;
 }
 .priceCheckout {
-  margin-top: 28px;
+  margin-top: 12px;
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -2568,9 +2568,9 @@ p.product-description-metafield {
 .product-accordion {
   margin-top: 55px;
 }
-.app-block {
+/* .app-block {
   margin-top: 10px;
-}
+} */
 .freq-wrap {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   display: grid;
