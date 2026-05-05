@@ -5485,7 +5485,7 @@ section.imagescroll {
 }
 .item-details .item-title {
     font-size: 13px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: #151515;
     font-weight: 700;
 }

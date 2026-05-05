@@ -237,6 +237,53 @@ document.addEventListener('click', function (e) {
     });
   }
 
+  function getLanguageUrl(modal, languageCode) {
+    const languageEl = modal.querySelector(`[data-language="${languageCode}"]`);
+    return languageEl?.dataset.languageUrl || '';
+  }
+
+  function getRootPath(urlLike) {
+    if (!urlLike) return '';
+
+    try {
+      const parsedUrl = new URL(urlLike, window.location.origin);
+      const pathname = parsedUrl.pathname.replace(/\/+$/, '');
+      return pathname === '/' ? '' : pathname;
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function stripLocalePrefix(pathname, modal) {
+    const prefixes = Array.from(modal.querySelectorAll('[data-language-url]'))
+      .map(el => getRootPath(el.dataset.languageUrl))
+      .filter(Boolean)
+      .sort((a, b) => b.length - a.length);
+
+    for (const prefix of prefixes) {
+      if (pathname === prefix) {
+        return '/';
+      }
+
+      if (pathname.indexOf(`${prefix}/`) === 0) {
+        return pathname.slice(prefix.length) || '/';
+      }
+    }
+
+    return pathname || '/';
+  }
+
+  function buildLocalizedReturnPath(modal, languageCode) {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete('country');
+
+    const targetRoot = getRootPath(getLanguageUrl(modal, languageCode));
+    const basePath = stripLocalePrefix(currentUrl.pathname, modal);
+    const localizedPath = `${targetRoot}${basePath === '/' ? '' : basePath}` || '/';
+
+    return `${localizedPath}${currentUrl.search}${currentUrl.hash}`;
+  }
+
   window.openLocaleModal = function (options = {}) {
     const modal = getLocaleModal();
     if (!modal) return;
@@ -325,10 +372,7 @@ document.addEventListener('click', function (e) {
 
       countryInput.value = country || modal.dataset.currentCountry;
       languageInput.value = languageCode || modal.dataset.currentLanguage;
-
-      const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.delete('country');
-      returnInput.value = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+      returnInput.value = buildLocalizedReturnPath(modal, languageInput.value);
 
       try {
         localStorage.setItem(preferenceKey, JSON.stringify({
@@ -345,6 +389,39 @@ document.addEventListener('click', function (e) {
   document.addEventListener('DOMContentLoaded', function () {
     const modal = getLocaleModal();
     if (!modal) return;
+
+    const localeForm = document.getElementById('LocaleSwitchForm');
+    const countryInput = localeForm?.querySelector('[data-locale-country-input]');
+    const languageInput = localeForm?.querySelector('[data-locale-language-input]');
+    const returnInput = localeForm?.querySelector('[data-locale-return-input]');
+    const syncKey = 'jurassicLocalePreferenceSynced';
+
+    try {
+      const savedPreference = JSON.parse(localStorage.getItem(preferenceKey) || 'null');
+      const savedCountry = (savedPreference?.country || '').toLowerCase();
+      const savedLanguage = (savedPreference?.language || '').toLowerCase();
+      const currentCountry = (modal.dataset.currentCountry || '').toLowerCase();
+      const currentLanguage = (modal.dataset.currentLanguage || '').toLowerCase();
+      const savedSignature = `${savedCountry}:${savedLanguage}`;
+
+      if (
+        savedCountry &&
+        savedLanguage &&
+        localeForm &&
+        countryInput &&
+        languageInput &&
+        returnInput &&
+        savedSignature !== sessionStorage.getItem(syncKey) &&
+        (savedCountry !== currentCountry || savedLanguage !== currentLanguage)
+      ) {
+        countryInput.value = savedPreference.country;
+        languageInput.value = savedPreference.language;
+        returnInput.value = buildLocalizedReturnPath(modal, savedPreference.language);
+        sessionStorage.setItem(syncKey, savedSignature);
+        localeForm.submit();
+        return;
+      }
+    } catch (error) {}
 
     const currentLanguage = (modal.dataset.currentLanguage || '').toLowerCase();
     const browserLanguage = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().split('-')[0];
