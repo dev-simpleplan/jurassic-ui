@@ -11,18 +11,62 @@
   {% comment %} {% if request.page_type == 'search' %}
     <meta name="robots" content="noindex, follow">
   {% endif %} {% endcomment %}
-  {%- if settings.favicon_light != blank -%}
-    <link rel="icon" href="{{ settings.favicon_light | img_url: '32x32' }}" type="image/png" media="(prefers-color-scheme: light)">
-  {%- endif -%}
-  {%- if settings.favicon_dark != blank -%}
-    <link rel="icon" href="{{ settings.favicon_dark | img_url: '32x32' }}" type="image/png" media="(prefers-color-scheme: dark)">
-  {%- endif -%}
-  {%- if settings.favicon != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {%- elsif settings.favicon_light != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon_light | img_url: '32x32' }}" type="image/png">
-  {%- elsif settings.favicon_dark != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon_dark | img_url: '32x32' }}" type="image/png">
+  {%- liquid
+    assign favicon_default = ''
+    assign favicon_light = ''
+    assign favicon_dark = ''
+    if settings.favicon != blank
+      assign favicon_default = settings.favicon | img_url: '32x32'
+    endif
+    if settings.favicon_light != blank
+      assign favicon_light = settings.favicon_light | img_url: '32x32'
+    endif
+    if settings.favicon_dark != blank
+      assign favicon_dark = settings.favicon_dark | img_url: '32x32'
+    endif
+    assign favicon_initial = favicon_default
+    if favicon_light != blank
+      assign favicon_initial = favicon_light
+    elsif favicon_dark != blank
+      assign favicon_initial = favicon_dark
+    endif
+  -%}
+  {%- if favicon_initial != blank -%}
+    <link id="theme-favicon" rel="icon" href="{{ favicon_initial }}" type="image/png">
+    <link id="theme-favicon-shortcut" rel="shortcut icon" href="{{ favicon_initial }}" type="image/png">
+    <script>
+      (function() {
+        var faviconLight = {{ favicon_light | json }};
+        var faviconDark = {{ favicon_dark | json }};
+        var faviconDefault = {{ favicon_default | json }};
+        var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function getFaviconHref() {
+          if (mediaQuery.matches && faviconDark) return faviconDark;
+          if (!mediaQuery.matches && faviconLight) return faviconLight;
+          return faviconDefault || faviconLight || faviconDark || '';
+        }
+
+        function setFavicon() {
+          var href = getFaviconHref();
+          if (!href) return;
+
+          var iconLink = document.getElementById('theme-favicon');
+          var shortcutLink = document.getElementById('theme-favicon-shortcut');
+
+          if (iconLink) iconLink.href = href;
+          if (shortcutLink) shortcutLink.href = href;
+        }
+
+        setFavicon();
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', setFavicon);
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(setFavicon);
+        }
+      })();
+    </script>
   {%- endif -%}
 
   {%- comment -%} Always output a Canonical URL {%- endcomment -%}
