@@ -1513,7 +1513,8 @@
   }
   .freq-wrap,
   .fruits_cards_wrapper {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
   .side-cart {
     width: 100%;
@@ -1772,6 +1773,37 @@
   }
   .bdil-top .heading h2 {
     max-width: 16ch;
+  }
+  .collection-wrapper nav.pagination {
+    margin-top: 10px;
+  }
+  .wrapper-dropdown {
+    padding: 8px 10px;
+  }
+  .wrapper-dropdown .selected-display {
+    font-size: 13px;
+  }
+  .wrapper-dropdown .dropdown li {
+    padding: 8px 10px;
+  }
+  .item-details .item-title {
+    font-size: 12px;
+  }
+  .item-unit-price {
+    font-size: 11px;
+  }
+  .wrapper-dropdown::after {
+    border-width: 5px 5px 0px;
+    right: 11px;
+  }
+  .wrapper-dropdown.active::after {
+    border-width: 0px 5px 5px;
+  }
+  .fc_variant_item p span, .fc_price_weight .flex-row > span {
+    line-height: 11px;
+  }
+  .header-in .h-nav {
+    height: calc(100vh - 102px);
   }
 }
 @media (max-width: 425px) {

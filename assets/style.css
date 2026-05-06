@@ -3766,7 +3766,7 @@ section.imagescroll {
     color: var(--grey-black);
 }
 .faq-sec {
-    margin-bottom: 140px;
+    margin-bottom: 90px;
 }
 .faq-sec .faq-wrap {
     margin-top: 70px;
@@ -5410,7 +5410,11 @@ section.imagescroll {
     margin: 0;
     padding: 0;
     visibility: hidden;
-    
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
+.wrapper-dropdown .dropdown::-webkit-scrollbar {
+  display: none;
 }
 
 .wrapper-dropdown.active .dropdown {

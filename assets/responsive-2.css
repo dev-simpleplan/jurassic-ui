@@ -65,10 +65,11 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 30px;
     grid-column-gap: 8px;
-    grid-row-gap: 18px;
+    grid-row-gap: 8px;
   }
   .fc_bottom .fc_bottom_end {
-    padding: 14px 10px;
+    padding: 10px 10px;
+    gap: 10px;
   }
       .fc_bottom .fc_bottom_center {
         padding: 0 10px;
@@ -105,7 +106,8 @@
     top: 12px;
   }
     .fc_bottom .fc_bottom_top {
-      padding-bottom: 15px;
+      padding: 10px 10px;
+      gap: 5px;
   }
   .fc_product_title {
     font-size: 15px;

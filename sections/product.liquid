@@ -289,18 +289,20 @@
                 </div>
 
               {% when 'product_usp' %}
-                <div class="product-usp">
-                  {% for item in product.metafields.custom.product_usp.value %}
-                    <div class="pu-item">
-                      <div class="pui-icon">
-                        <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
+                {% if product.metafields.custom.product_usp.value != blank %}
+                  <div class="product-usp">
+                    {% for item in product.metafields.custom.product_usp.value %}
+                      <div class="pu-item">
+                        <div class="pui-icon">
+                          <img src="{{ item.usp_icon |  img_url: 'master' }}" alt="{{ item.usp_text }}">
+                        </div>
+                        <div class="pui-txt">
+                          <p>{{ item.usp_text }}</p>
+                        </div>
                       </div>
-                      <div class="pui-txt">
-                        <p>{{ item.usp_text }}</p>
-                      </div>
-                    </div>
-                  {% endfor %}
-                </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
               {% when 'product_info' %}
                 {%- if product.metafields.custom.additional_information.value != blank -%}

@@ -723,22 +723,24 @@ span.cart-compare-price {
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   position: relative;
-  padding-bottom: 80px;
+  /* padding-bottom: 80px; */
   margin-top: 63px;
 }
 .collection-main .collection-wrapper {
   margin-top: 24px;
 }
 .collection-wrapper nav.pagination {
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
   margin: 0 auto;
   left: 0;
-  right: 0;
+  right: 0; */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
+  grid-column: 1 / -1;
+  margin-top: 20px;
 }
 .collection-wrapper .no-products-found {
   display: flex;
