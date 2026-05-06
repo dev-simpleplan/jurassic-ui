@@ -31,7 +31,7 @@
     "spacer0": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "mission-vision": {
@@ -75,7 +75,7 @@
     "spacer1": {
       "type": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "jurassic-way": {
@@ -118,7 +118,7 @@
     "spacer2": {
       "type": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "sustainability": {
@@ -246,7 +246,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "image_scroll_dTgDqW": {
@@ -286,7 +286,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "headingsec_Qm6TzV": {
