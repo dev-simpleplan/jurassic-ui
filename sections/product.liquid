@@ -805,26 +805,27 @@
             <div class="pa-eat-store">
               {% for item in product.metafields.custom.how_to_store_eat.value %}
                 <div class="paes-item">
-                  <div class="paes-icon square">
-                    
-                    {% if item.video.value != blank %}
-                      {% comment %} 
-                        If a video is uploaded, render the video player. 
-                        The 'video_tag' filter handles the HTML5 video tag automatically.
-                      {% endcomment %}
-                      {{ item.video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
-                    
-                    {% elsif item.icon.value != blank %}
-                      {% comment %} Fallback to the image icon if no video exists {% endcomment %}
-                      <a
-                        href="{{ item.icon | img_url: 'master' }}"
-                        data-fancybox="how-to-store-gallery"
-                        class="zoom-wrapper">
-                        <img src="{{ item.icon | img_url: 'master' }}" alt="{{ item.field_title_optional }}">
-                      </a>
-                    {% endif %}
+                  {% if item.video.value != blank or item.icon.value != blank %}
+                    <div class="paes-icon square">
+                      {% if item.video.value != blank %}
+                        {% comment %}
+                          If a video is uploaded, render the video player.
+                          The 'video_tag' filter handles the HTML5 video tag automatically.
+                        {% endcomment %}
+                        {{ item.video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
 
-                  </div>
+                      {% elsif item.icon.value != blank %}
+                        {% comment %} Fallback to the image icon if no video exists {% endcomment %}
+                        <a
+                          href="{{ item.icon | img_url: 'master' }}"
+                          data-fancybox="how-to-store-gallery"
+                          class="zoom-wrapper">
+                          <img src="{{ item.icon | img_url: 'master' }}" alt="{{ item.field_title_optional }}">
+                        </a>
+                      {% endif %}
+
+                    </div>
+                  {% endif %}
 
                   <div class="paes-content">
                     {% if item.field_title_optional != blank %}
@@ -963,18 +964,20 @@
             <div class="pa-eat-store">
               {% for item in origin_sourcing_items %}
                 <div class="paes-item">
-                  <div class="paes-icon square">
-                      {% if item.origin_video.value != blank %}
-                        {{ item.origin_video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
-                      {% elsif item.origin_image != blank %}
-                        <a
-                          href="{{ item.origin_image | img_url: 'master' }}"
-                          data-fancybox="origin-sourcing-gallery"
-                          class="zoom-wrapper">
-                          <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
-                        </a>
-                      {% endif %}
-                  </div>
+                  {% if item.origin_video.value != blank or item.origin_image != blank %}
+                    <div class="paes-icon square">
+                        {% if item.origin_video.value != blank %}
+                          {{ item.origin_video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+                        {% elsif item.origin_image != blank %}
+                          <a
+                            href="{{ item.origin_image | img_url: 'master' }}"
+                            data-fancybox="origin-sourcing-gallery"
+                            class="zoom-wrapper">
+                            <img src="{{ item.origin_image | img_url: 'master' }}" alt="{{ item.origin_label }}">
+                          </a>
+                        {% endif %}
+                    </div>
+                  {% endif %}
                   <div class="paes-content">
                     {% if item.origin_label != blank %}
                       <h3>{{ item.origin_label }}</h3>
@@ -1822,23 +1825,20 @@ Fancybox.bind("[data-fancybox='gallery'], [data-fancybox='how-to-store-gallery']
 
 <script>
 /* ======================================================
-   ACCORDION (UNCHANGED)
+   ACCORDION
 ====================================================== */
-$(document).on('click', '.pa-ques-wrap', function () {
+$(document).on('click', '.product-accordion .pa-ques-wrap', function () {
   const $item = $(this).closest('.pa-item');
-  const $content = $item.find('.pa-div');
+  const $content = $item.children('.pa-div');
 
   if ($item.hasClass('active')) {
     $item.removeClass('active');
-    $content.slideUp(300);
+    $content.stop(true, true).slideUp(300);
     return;
   }
 
-  $('.pa-item').removeClass('active');
-  $('.pa-div').slideUp(300);
-
   $item.addClass('active');
-  $content.slideDown(300);
+  $content.stop(true, true).slideDown(300);
 });
 </script>
 

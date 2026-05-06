@@ -1462,24 +1462,18 @@
 
   <script>
     $(document).ready(function(){
-      $(document).on('click', '.pa-ques-wrap', function() {
-        const $clickedItem = $(this).closest('.pa-item');     // Find parent pa-item
-        const $clickedAnswer = $clickedItem.find('.pa-div');  // Find its sibling pa-div
+      $(document).on('click', '.product-accordion .pa-ques-wrap', function() {
+        const $clickedItem = $(this).closest('.pa-item');
+        const $clickedAnswer = $clickedItem.children('.pa-div');
 
-        // If already active, collapse it
         if ($clickedItem.hasClass('active')) {
           $clickedItem.removeClass('active');
-          $clickedAnswer.slideUp(300);
+          $clickedAnswer.stop(true, true).slideUp(300);
           return;
         }
 
-        // Otherwise, deactivate all others first
-        $('.pa-item').removeClass('active');
-        $('.pa-div').slideUp(300);
-
-        // Then activate the clicked one
         $clickedItem.addClass('active');
-        $clickedAnswer.slideDown(300);
+        $clickedAnswer.stop(true, true).slideDown(300);
       });
     });
 
