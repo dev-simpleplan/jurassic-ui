@@ -11,8 +11,18 @@
   {% comment %} {% if request.page_type == 'search' %}
     <meta name="robots" content="noindex, follow">
   {% endif %} {% endcomment %}
+  {%- if settings.favicon_light != blank -%}
+    <link rel="icon" href="{{ settings.favicon_light | img_url: '32x32' }}" type="image/png" media="(prefers-color-scheme: light)">
+  {%- endif -%}
+  {%- if settings.favicon_dark != blank -%}
+    <link rel="icon" href="{{ settings.favicon_dark | img_url: '32x32' }}" type="image/png" media="(prefers-color-scheme: dark)">
+  {%- endif -%}
   {%- if settings.favicon != blank -%}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- elsif settings.favicon_light != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon_light | img_url: '32x32' }}" type="image/png">
+  {%- elsif settings.favicon_dark != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon_dark | img_url: '32x32' }}" type="image/png">
   {%- endif -%}
 
   {%- comment -%} Always output a Canonical URL {%- endcomment -%}
