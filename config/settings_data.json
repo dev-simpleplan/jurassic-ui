@@ -9,7 +9,6 @@
  */
 {
   "current": {
-    "favicon": "shopify://shop_images/jf-favicon.png",
     "favicon_light": "shopify://shop_images/favicon-light.png",
     "favicon_dark": "shopify://shop_images/favicon-dark.png",
     "cart_shipping_threshold": 99,
