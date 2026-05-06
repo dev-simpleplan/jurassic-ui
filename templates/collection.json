@@ -189,7 +189,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "faq_pages_FmiYAa": {
@@ -250,13 +250,6 @@
         "cta_text": "",
         "fallback_image": "shopify://shop_images/image_8.png"
       }
-    },
-    "spacer_8WfcKj": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
-      }
     }
   },
   "order": [
@@ -266,7 +259,6 @@
     "spacer_E3UqMA",
     "17658703763bf5fc11",
     "spacer_tafrLK",
-    "faq_pages_FmiYAa",
-    "spacer_8WfcKj"
+    "faq_pages_FmiYAa"
   ]
 }
