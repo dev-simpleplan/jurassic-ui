@@ -487,7 +487,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "177139754036d00b41": {
@@ -510,7 +510,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "faq": {
@@ -563,7 +563,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     }
   },
