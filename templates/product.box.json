@@ -83,7 +83,7 @@
     "spacer0": {
       "type": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "box-fruits": {
@@ -97,7 +97,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "video_carousel_YJxU7F": {
@@ -324,7 +324,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "three-icon-sec": {
@@ -532,7 +532,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "faq": {
@@ -557,7 +557,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "1763732275cf946bf5": {
