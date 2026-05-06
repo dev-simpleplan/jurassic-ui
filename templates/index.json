@@ -58,7 +58,7 @@
     "spacer0": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "bestseller": {
@@ -86,7 +86,7 @@
     "spacer": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "discovery-box": {
@@ -105,7 +105,7 @@
     "spacer7": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "video-carousel": {
@@ -160,7 +160,7 @@
     "spacer8": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "all-categories": {
@@ -232,7 +232,7 @@
     "spacer1": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "scroll-section": {
@@ -300,7 +300,7 @@
     "spacer9": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "fresh": {
@@ -347,7 +347,7 @@
     "spacer2": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "durianShape": {
@@ -410,7 +410,7 @@
     "spacer3": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "reviews": {
@@ -514,7 +514,7 @@
     "spacer6": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "17640536864cbd5f05": {
@@ -547,7 +547,7 @@
     "spacer10": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "video": {
@@ -562,7 +562,7 @@
     "spacer4": {
       "type": "spacer",
       "settings": {
-        "spacer_height": 140
+        "spacer_height": 90
       }
     },
     "177141177583efc3d8": {
