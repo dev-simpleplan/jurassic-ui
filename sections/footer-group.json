@@ -73,7 +73,7 @@
         "facebook_url": "https://www.facebook.com/jurassicfruit/",
         "show_instagram": true,
         "instagram_url": "https://www.instagram.com/jurassicfruit/",
-        "show_x": true,
+        "show_x": false,
         "x_url": "https://x.com/JurassicFruit",
         "show_linkedin": false,
         "linkedin_url": "https://www.google.com/",
