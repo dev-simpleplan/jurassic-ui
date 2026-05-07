@@ -401,6 +401,7 @@
         "cards_7LY4Am",
         "cards_W4qKGH"
       ],
+      "disabled": true,
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
         "heading": "The Impact Behind Every Bite",
@@ -542,6 +543,7 @@
       "block_order": [
         "instafeed_app_block_ah3Dgf"
       ],
+      "disabled": true,
       "settings": {}
     },
     "spacer10": {
