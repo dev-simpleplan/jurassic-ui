@@ -67,7 +67,8 @@
         "jf-mark": "shopify://shop_images/Group_427321593.svg",
         "bottom_menu": "footer-nav-menu",
         "show_payment_icons": true,
-        "email_link": "hello@jurassicfruit",
+        "email_link": "support@jurassicfruit.com",
+        "mob_number": "",
         "show_facebook": true,
         "facebook_url": "https://www.facebook.com/jurassicfruit/",
         "show_instagram": true,
@@ -79,7 +80,9 @@
         "show_youtube": true,
         "youtube_url": "https://www.youtube.com/c/jurassicfruit",
         "show_whatsapp": false,
-        "whatsapp_url": ""
+        "whatsapp_url": "",
+        "show_telegram": false,
+        "telegram_url": ""
       }
     }
   },
