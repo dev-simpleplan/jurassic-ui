@@ -122,7 +122,7 @@ img.cover {
     width: 100%;
 }
 .container-fluid {
-    max-width: 1800px;
+    max-width: 1400px;
     width: 100%;
     padding: 0 40px;
     margin-left: auto;
@@ -5638,3 +5638,26 @@ section.imagescroll {
     display: inline-flex;
 }
 /* Product Page Modals CSS */
+.quick-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.qf-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+.qf-count {
+    flex-shrink: 0;
+    font-family: var(--scale);
+    font-size: 16px;
+    line-height: 1.2;
+    color: #151515;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
+}

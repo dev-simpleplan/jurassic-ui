@@ -1050,8 +1050,17 @@
   }
   .quick-filters {
     width: 100%;
+    gap: 12px;
+    overflow: visible;
+  }
+  .qf-wrapper {
+    flex-wrap: nowrap;
     overflow: hidden;
     overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .qf-count {
+    font-size: 14px;
   }
   #predictive-search {
     width: 100%;
@@ -1803,7 +1812,13 @@
     line-height: 11px;
   }
   .header-in .h-nav {
-    height: calc(100vh - 102px);
+    height: calc(100vh - 67px);
+  }
+  .qf-count {
+    display: none;
+  }
+  .quick-filters {
+    overflow: hidden;
   }
 }
 @media (max-width: 425px) {

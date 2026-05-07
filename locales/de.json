@@ -38,7 +38,9 @@
   "quick_filters": {
     "organic": "Bio",
     "bestseller": "Bestseller",
-    "clear_all": "Alle löschen"
+    "clear_all": "Alle löschen",
+    "products_count": "{{ count }} Produkte",
+    "products_count_filtered": "{{ count }} Produkte von {{ total }}"
   },
   "gift_card": {
     "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",

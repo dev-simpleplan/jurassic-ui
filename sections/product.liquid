@@ -540,33 +540,56 @@
                             </div> {% endcomment %}
                           </div>
                           {% for option in product.options_with_values %}
+                            {% assign option_index = forloop.index0 %}
+                            {% assign selected_option_value = selected_variant.options[option_index] %}
                             <div class="variant-option" data-option="{{ option.name }}">
                               <ul class="variant-values" data-index="{{ forloop.index0 }}">
                                 {% for value in option.values %}
                                   {% assign matched_variant = nil %}
+                                  {% assign available_matched_variant = nil %}
 
                                   {% for variant in product.variants %}
                                     {% case option.position %}
                                       {% when 1 %}
                                         {% if variant.option1 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
+                                          {% if matched_variant == nil %}
+                                            {% assign matched_variant = variant %}
+                                          {% endif %}
+                                          {% if variant.available %}
+                                            {% assign available_matched_variant = variant %}
+                                            {% break %}
+                                          {% endif %}
                                         {% endif %}
                                       {% when 2 %}
                                         {% if variant.option2 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
+                                          {% if matched_variant == nil %}
+                                            {% assign matched_variant = variant %}
+                                          {% endif %}
+                                          {% if variant.available %}
+                                            {% assign available_matched_variant = variant %}
+                                            {% break %}
+                                          {% endif %}
                                         {% endif %}
                                       {% when 3 %}
                                         {% if variant.option3 == value %}
-                                          {% assign matched_variant = variant %}
-                                          {% break %}
+                                          {% if matched_variant == nil %}
+                                            {% assign matched_variant = variant %}
+                                          {% endif %}
+                                          {% if variant.available %}
+                                            {% assign available_matched_variant = variant %}
+                                            {% break %}
+                                          {% endif %}
                                         {% endif %}
                                     {% endcase %}
                                   {% endfor %}
+                                  {% assign matched_variant = available_matched_variant | default: matched_variant %}
+
+                                  {% if matched_variant == nil or matched_variant.available != true %}
+                                    {% continue %}
+                                  {% endif %}
 
                                   <li
-                                    class="variant-value {% if option.selected_value == value %}active{% endif %}{% unless matched_variant.available %} is-sold-out{% endunless %}"
+                                    class="variant-value {% if selected_option_value == value %}active{% endif %}"
                                     data-value="{{ value | escape }}"
                                     data-available="{{ matched_variant.available }}"
                                     {% if matched_variant.metafields.custom.bestseller == true %}
@@ -1475,8 +1498,17 @@ class VariantSelector extends HTMLElement {
       Number(urlParams.get('variant')) || {{ selected_variant.id }};
 
     const variants = this.getVariantJSON();
-    this.currentVariant = variants.find(v => v.id === initialVariantId);
+    const requestedVariant = variants.find(v => v.id === initialVariantId);
+    this.currentVariant =
+      variants.find(v => v.id === initialVariantId && v.available) ||
+      variants.find(v => v.id === {{ selected_variant.id }}) ||
+      variants.find(v => v.available) ||
+      requestedVariant;
     if (!this.currentVariant) return;
+
+    if (!requestedVariant || requestedVariant.id !== this.currentVariant.id || !requestedVariant.available) {
+      this.updateURL();
+    }
 
     /* Sync active UI */
     this.currentVariant.options.forEach((value, index) => {

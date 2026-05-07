@@ -53,7 +53,9 @@
   "quick_filters": {
     "organic": "Biologique",
     "bestseller": "Meilleures ventes",
-    "clear_all": "Tout effacer"
+    "clear_all": "Tout effacer",
+    "products_count": "{{ count }} produits",
+    "products_count_filtered": "{{ count }} produits sur {{ total }}"
   },
   "gift_card": {
     "add_to_apple_wallet": "Ajouter à Cartes",

@@ -60,13 +60,41 @@
             <h1>{{ collection.title }}</h1>
           {% endif %}
         </div> 
+        {%- capture current_page_url -%}{{ content_for_header | split:'"pageurl":"' | last | split:'"' | first }}{%- endcapture -%}
         {%- liquid
           assign generic_collection_handles = "all,all-products,all-fruits,all-fruit,all-collections,shop-all,alle-produkte,alle-fruchte,alle-fruechte,tous-les-produits,tous-les-fruits" | split: ","
           assign is_generic_collection = false
+          assign unavailable_only_active = false
+          assign has_active_collection_filters = false
+          assign total_products_count = collection.all_products_count | default: collection.products_count
+          assign filtered_products_count = collection.products_count
 
           if generic_collection_handles contains collection.handle or collection.handle contains 'all-' or collection.handle contains 'alle-' or collection.handle contains 'tous-les-'
             assign is_generic_collection = true
           endif
+
+          if current_page_url contains 'jf_unavailable=1'
+            assign unavailable_only_active = true
+            assign has_active_collection_filters = true
+          endif
+
+          if current_tags != blank
+            assign has_active_collection_filters = true
+          endif
+
+          for filter in collection.filters
+            if filter.type == 'boolean'
+              if filter.true_value.active or filter.false_value.active
+                assign has_active_collection_filters = true
+              endif
+            elsif filter.type == 'price_range'
+              if filter.min_value.value != blank or filter.max_value.value != blank
+                assign has_active_collection_filters = true
+              endif
+            elsif filter.active_values.size > 0
+              assign has_active_collection_filters = true
+            endif
+          endfor
         -%}
 
         {%- if section.blocks.size > 0 -%}
@@ -298,11 +326,26 @@
       </button>
     {%- endif -%}
 
-    {%- comment -%} 3. Clear All Button {%- endcomment -%}
+    {%- comment -%} 3. Out of Stock (Fully sold out products only) {%- endcomment -%}
+    <button
+      type="button"
+      class="qf-pill {% if unavailable_only_active %}is-active{% endif %}"
+      data-name="jf_unavailable"
+      data-value="1">
+      {{ 'products.product.out_of_stock' | t }}
+    </button>
+
+    {%- comment -%} 4. Clear All Button {%- endcomment -%}
     <button type="button" class="qf-pill clear-all-pill" style="display: none;">
       {{ 'quick_filters.clear_all' | t }} ✕
     </button>
-    
+  </div>
+  <div class="qf-count">
+    {% if has_active_collection_filters and unavailable_only_active == false and filtered_products_count < total_products_count %}
+      {{ 'quick_filters.products_count_filtered' | t: count: filtered_products_count, total: total_products_count }}
+    {% else %}
+      {{ 'quick_filters.products_count' | t: count: total_products_count }}
+    {% endif %}
   </div>
 </div>
         </div>
@@ -310,12 +353,41 @@
           <div class="cart-loader">
             <div class="loader-spinner"></div>
           </div>
-          {% paginate collection.products by section.settings.number_of_product %}
+          {%- assign products_per_page = section.settings.number_of_product -%}
+          {%- if unavailable_only_active -%}
+            {%- assign products_per_page = 250 -%}
+          {%- endif -%}
+          {% paginate collection.products by products_per_page %}
             {% if collection.products_count > 0 %}
-              {% for product in collection.products %}
-                {% render 'product-card-primary' | product: product %}
-              {% endfor %}
-              {% render 'pagination' | pagination: paginate %}
+              {% if unavailable_only_active %}
+                {%- assign has_unavailable_products = false -%}
+                {% for product in collection.products %}
+                  {% unless product.available %}
+                    {%- assign has_unavailable_products = true -%}
+                    {% render 'product-card-primary', product: product %}
+                  {% endunless %}
+                {% endfor %}
+
+                {% unless has_unavailable_products %}
+                  <div class="no-products-found">
+                    <h3>No products found</h3>
+                    <p>No fully unavailable products were found in this collection.</p>
+                    <button type="button" class="reset-link custom-btn black" onclick="window.location.href=window.location.pathname">Clear all filters</button>
+                  </div>
+                {% endunless %}
+              {% else %}
+                {% for product in collection.products %}
+                  {% if product.available %}
+                    {% render 'product-card-primary', product: product %}
+                  {% endif %}
+                {% endfor %}
+                {% for product in collection.products %}
+                  {% unless product.available %}
+                    {% render 'product-card-primary', product: product %}
+                  {% endunless %}
+                {% endfor %}
+                {% render 'pagination' | pagination: paginate %}
+              {% endif %}
             {% else %}
               <div class="no-products-found">
                 <h3>No products found</h3>
@@ -471,6 +543,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const form = document.querySelector(".tc-filter-wrap form");
 
         function syncPillStates() {
+            const urlParams = new URLSearchParams(window.location.search);
+
             pills.forEach(pill => {
                 const name = pill.getAttribute('data-name');
                 const value = pill.getAttribute('data-value');
@@ -488,6 +562,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         pill.classList.remove('is-disabled');
                         pill.style.pointerEvents = 'all';
                     }
+                } else {
+                    const activeValues = urlParams.getAll(name);
+                    pill.classList.toggle('is-active', activeValues.includes(value));
+                    pill.classList.remove('is-disabled');
+                    pill.style.pointerEvents = 'all';
                 }
             });
         }
@@ -501,6 +580,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (input && !input.disabled) {
                     input.checked = !input.checked;
                     updateProductGrid();
+                } else {
+                    const isActive = this.classList.contains('is-active');
+                    const extraParams = {};
+
+                    if (isActive) {
+                        extraParams[name] = '';
+                    } else {
+                        extraParams[name] = value;
+                    }
+
+                    updateProductGrid(extraParams);
                 }
             };
         });
