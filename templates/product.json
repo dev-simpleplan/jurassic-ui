@@ -101,6 +101,12 @@
         "spacer_height": 70
       }
     },
+    "spacer_RzzBkd": {
+      "type": "Spacer",
+      "settings": {
+        "spacer_height": 70
+      }
+    },
     "frequently": {
       "type": "frequently-bought",
       "custom_css": [],
@@ -277,6 +283,55 @@
       "name": "Spacer",
       "settings": {
         "spacer_height": 140
+      }
+    },
+    "video_carousel_gw4c4i": {
+      "type": "video-carousel",
+      "blocks": {
+        "ugc_videos_3kK7QV": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/🍈✨ Jackfrucht – ein echtes NaturwunderHier siehst du, wie Sonja eine perfekt gereifte Jackfruch.mp4"
+          }
+        },
+        "ugc_videos_NxTXQE": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Papaya Golden 💛🥭 – klein, süß & voller NährstoffeDiese kleine Power-Frucht in Mango-Größe ist .mp4"
+          }
+        },
+        "ugc_videos_BQK3XQ": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/🥭👑 Mangosteen trifft Passionsfrucht – die Königin küsst die Power 💛✨Die zarte, cremige Mangos.mp4"
+          }
+        },
+        "ugc_videos_K49Tz3": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Die Mon Thong Durian – auch bekannt als „Golden Pillow“ 💛 – gilt als der König unter den Durian.mp4"
+          }
+        },
+        "ugc_videos_zg6MtT": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "ugc_videos_3kK7QV",
+        "ugc_videos_NxTXQE",
+        "ugc_videos_BQK3XQ",
+        "ugc_videos_K49Tz3",
+        "ugc_videos_zg6MtT"
+      ],
+      "name": "Video-Section",
+      "settings": {
+        "heading_top": "Bite into the",
+        "heading_bottom": "wild with us",
+        "heading_color": "#1a1a1a",
+        "background_color": "#dbd7c8"
       }
     },
     "1765873593de6c460a": {
@@ -497,55 +552,6 @@
         "spacer_height": 50
       }
     },
-    "video_carousel_gw4c4i": {
-      "type": "video-carousel",
-      "blocks": {
-        "ugc_videos_3kK7QV": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/🍈✨ Jackfrucht – ein echtes NaturwunderHier siehst du, wie Sonja eine perfekt gereifte Jackfruch.mp4"
-          }
-        },
-        "ugc_videos_NxTXQE": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/Papaya Golden 💛🥭 – klein, süß & voller NährstoffeDiese kleine Power-Frucht in Mango-Größe ist .mp4"
-          }
-        },
-        "ugc_videos_BQK3XQ": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/🥭👑 Mangosteen trifft Passionsfrucht – die Königin küsst die Power 💛✨Die zarte, cremige Mangos.mp4"
-          }
-        },
-        "ugc_videos_K49Tz3": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/Die Mon Thong Durian – auch bekannt als „Golden Pillow“ 💛 – gilt als der König unter den Durian.mp4"
-          }
-        },
-        "ugc_videos_zg6MtT": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/853754-hd_1280_720_50fps.mp4"
-          }
-        }
-      },
-      "block_order": [
-        "ugc_videos_3kK7QV",
-        "ugc_videos_NxTXQE",
-        "ugc_videos_BQK3XQ",
-        "ugc_videos_K49Tz3",
-        "ugc_videos_zg6MtT"
-      ],
-      "name": "Video-Section",
-      "settings": {
-        "heading_top": "Bite into the",
-        "heading_bottom": "wild with us",
-        "heading_color": "#1A1A1A",
-        "background_color": "#dbd7c8"
-      }
-    },
     "spacer_7pD8rp": {
       "type": "spacer",
       "name": "Spacer",
@@ -618,6 +624,8 @@
     "spacer_BmkhaA",
     "facts",
     "spacer_LKTbj6",
+    "spacer_RzzBkd",
+    "video_carousel_gw4c4i",
     "1765873593de6c460a",
     "three-icon-sec",
     "image_text_scroll_qVRxF4",
@@ -626,7 +634,6 @@
     "spacer_2",
     "177139754036d00b41",
     "spacer_FdUt3c",
-    "video_carousel_gw4c4i",
     "spacer_7pD8rp",
     "faq",
     "bestseller_carousel_QwPdDB",
