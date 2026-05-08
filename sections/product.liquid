@@ -155,6 +155,9 @@
                   </div>
                 {% endif %}
               </div>
+              <div class="product-gallery-counter" aria-live="polite">
+                <span data-gallery-current>1</span>/<span data-gallery-total>{% if product.media.size > 0 %}{{ product.media.size }}{% else %}1{% endif %}</span>
+              </div>
               <div class="btn-wrap">
                 <button class="custom-prev">
                   {%- render 'arrow-prev' -%}
@@ -1782,7 +1785,22 @@ document.addEventListener('DOMContentLoaded', () => {
    SLICK SLIDER (UNCHANGED)
 ====================================================== */
 $(document).ready(function () {
-  $('.prod-main-image').slick({
+  const $mainSlider = $('.prod-main-image');
+  const updateGalleryCounter = (event, slick, currentSlide) => {
+    const counter = document.querySelector('.product-gallery-counter');
+    if (!counter || !slick) return;
+
+    const currentEl = counter.querySelector('[data-gallery-current]');
+    const totalEl = counter.querySelector('[data-gallery-total]');
+    const currentIndex = typeof currentSlide === 'number' ? currentSlide : slick.currentSlide || 0;
+
+    if (currentEl) currentEl.textContent = currentIndex + 1;
+    if (totalEl) totalEl.textContent = slick.slideCount;
+  };
+
+  $mainSlider.on('init reInit afterChange', updateGalleryCounter);
+
+  $mainSlider.slick({
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -1828,7 +1846,6 @@ $(document).ready(function () {
     const mainSlider = document.querySelector('.prod-main-image');
     if (!mainSlider) return;
 
-    const $mainSlider = $('.prod-main-image');
     if (!$mainSlider.hasClass('slick-initialized')) return;
 
     const targetSlide = mainSlider.querySelector(`.slick-slide[data-media-id="${mediaId}"]`);

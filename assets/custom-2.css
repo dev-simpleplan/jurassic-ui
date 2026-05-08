@@ -1447,14 +1447,14 @@ span.cart-compare-price {
   z-index: 2;
 }
 .pro-right-side .btn-wrap {
-  position: absolute;
+  /* position: absolute;
   bottom: 20px;
   left: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  z-index: 2;
+  z-index: 2; */
 }
 .pro-right-side .btn-wrap .custom-prev,
 .pro-right-side .btn-wrap .custom-next {
@@ -1465,6 +1465,19 @@ span.cart-compare-price {
   width: 36px;
   height: 36px;
   transition: .3s ease all;
+  position: absolute;
+}
+.pro-right-side .btn-wrap .custom-prev {
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.pro-right-side .btn-wrap .custom-next {
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 .prod-main-image {
   width: 100%;

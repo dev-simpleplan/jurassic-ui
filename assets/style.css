@@ -1156,6 +1156,34 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     height: 19px;
     /* aligns with 16px font-size + line-height */
 }
+
+.pro-right-side {
+    position: relative;
+}
+
+.product-gallery-counter {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 60px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #151515;
+    font-family: var(--scale);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: none;
+}
 .score .stars-active {
     color: #f7a816;
     /* gold */
