@@ -540,8 +540,8 @@
       ],
       "name": "Video-Section",
       "settings": {
-        "heading_top": "",
-        "heading_bottom": "",
+        "heading_top": "Bite into the",
+        "heading_bottom": "wild with us",
         "heading_color": "#1A1A1A",
         "background_color": "#dbd7c8"
       }
