@@ -525,8 +525,8 @@
               {% when 'variant_selector' %}
                 <div class="variant">
                   <div class="variant-wrapper">
+                    {% unless product.has_only_default_variant %}
                     <div class="select_variant">
-                      {% unless product.has_only_default_variant %}
                         <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                           <div class="sv-perKg">
                             <p>{{ 'sections.product.select_variant' | t }}</p>
@@ -584,12 +584,16 @@
                                   {% endfor %}
                                   {% assign matched_variant = available_matched_variant | default: matched_variant %}
 
-                                  {% if matched_variant == nil or matched_variant.available != true %}
+                                  {% if matched_variant == nil %}
+                                    {% continue %}
+                                  {% endif %}
+
+                                  {% if product.available and matched_variant.available != true %}
                                     {% continue %}
                                   {% endif %}
 
                                   <li
-                                    class="variant-value {% if selected_option_value == value %}active{% endif %}"
+                                    class="variant-value {% if selected_option_value == value %}active{% endif %}{% unless matched_variant.available %} is-sold-out{% endunless %}"
                                     data-value="{{ value | escape }}"
                                     data-available="{{ matched_variant.available }}"
                                     {% if matched_variant.metafields.custom.bestseller == true %}
@@ -648,8 +652,8 @@
                             ]
                           </script>
                         </variant-selector>
-                      {% endunless %}
                     </div>
+                    {% endunless %}
                     <div class="priceCheckout">
                       
                       <div class="submit submit--with-qty">
