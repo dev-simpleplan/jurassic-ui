@@ -29,6 +29,7 @@
                 {% for block in section.blocks %}
                   {% assign collection = block.settings.collection %}
                   {% if collection %}
+                    {% assign collection_display_title = collection.metafields.custom.collection_short_name.value | default: collection.title %}
                     <div class="c-item">
                       <a href="{{ collection.url }}">
                         <div class="citem-in">
@@ -41,7 +42,7 @@
                             {% endif %}
                           </div>
                           <div class="citem-text">
-                            <h3>{{ collection.title }}</h3>
+                            <h3>{{ collection_display_title }}</h3>
                           </div>
                         </div>
                       </a>

@@ -1112,6 +1112,15 @@
   .pro-breadcrumbs {
     margin-top: 84px;
   }
+  .dt-in.two {
+    order: 4;
+  }
+  .dt-in.four {
+    order: 6;
+  }
+  .durian {
+    order: 5;
+  }
 }
 
 @media (max-width: 767px) {

@@ -552,13 +552,21 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     const searchBar = document.querySelector(".search-input-bar");
-    const icon = document.querySelector(".hiw-search .for-mobile"); 
+    const icon = document.querySelector(".hiw-search .for-mobile");
+    const input = searchBar ? searchBar.querySelector('input[type="search"]') : null;
+
+    if (!searchBar || !icon || !input) return;
 
     // When clicking the icon → activate input
     icon.addEventListener("click", (e) => {
       e.stopPropagation(); // prevent document click from firing
       searchBar.classList.add("active");
-      input.focus(); // optional
+      input.focus({ preventScroll: true });
+
+      requestAnimationFrame(() => {
+        input.focus({ preventScroll: true });
+        input.setSelectionRange(input.value.length, input.value.length);
+      });
     });
 
     // When clicking anywhere outside → remove active

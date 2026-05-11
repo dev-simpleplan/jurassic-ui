@@ -138,8 +138,9 @@
 
                 <div class="cbcTxt">
                   {% assign collection_title = block.settings.col_name %}
+                  {% assign collection_fallback_title = collection_item.metafields.custom.collection_short_name.value | default: collection_item.title | strip_html | strip %}
                   {% if collection_title == blank %}
-                    <p>{{ collection_item.title | strip_html | strip }}</p>
+                    <p>{{ collection_fallback_title }}</p>
                   {% else %}
                     <p>{{ block.settings.col_name }}</p>
                   {% endif %}
