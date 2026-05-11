@@ -87,6 +87,13 @@
 {% endif %}
 
 {% assign selected_variant = default_variant %}
+{% assign show_product_testimonial = false %}
+{% for testimonial_block in section.blocks %}
+  {% if testimonial_block.settings.show_testimonial and product.metafields.custom.title_testimonial != blank %}
+    {% assign show_product_testimonial = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 
 <div class="product-info">
   <div class="container">
@@ -190,20 +197,21 @@
               {% endif %}
             </div>
           </div>
-          <div class="pro-test fordesktop">
-            {% for block in section.blocks %}
-              {% if block.settings.show_testimonial 
-                and product.metafields.custom.title_testimonial != blank %}
-                {% comment %} <div class="tr-okendo">
-                  <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-                </div> {% endcomment %}
-                <div class="tr-testimonial">
-                  {% render 'testimonial-icon' %}
-                  {{ product.metafields.custom.title_testimonial | metafield_tag }}
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
+          {% if show_product_testimonial %}
+            <div class="pro-test fordesktop">
+              {% for block in section.blocks %}
+                {% if block.settings.show_testimonial and product.metafields.custom.title_testimonial != blank %}
+                  {% comment %} <div class="tr-okendo">
+                    <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
+                  </div> {% endcomment %}
+                  <div class="tr-testimonial">
+                    {% render 'testimonial-icon' %}
+                    {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
        </div>
       <div class="pro-desp">
         {% form 'product'
@@ -311,16 +319,18 @@
                 {%- if product.metafields.custom.additional_information.value != blank -%}
                 <div class="product-info-block">
                   {%- comment -%} Testimonials will still show here if they exist {%- endcomment -%}
-                  <div class="pro-test formobile">
-                    {% for block in section.blocks %}
-                      {% if block.settings.show_testimonial and product.metafields.custom.title_testimonial != blank %}
-                        <div class="tr-testimonial">
-                          {% render 'testimonial-icon' %}
-                          {{ product.metafields.custom.title_testimonial | metafield_tag }}
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
+                  {% if show_product_testimonial %}
+                    <div class="pro-test formobile">
+                      {% for block in section.blocks %}
+                        {% if block.settings.show_testimonial and product.metafields.custom.title_testimonial != blank %}
+                          <div class="tr-testimonial">
+                            {% render 'testimonial-icon' %}
+                            {{ product.metafields.custom.title_testimonial | metafield_tag }}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
                   {% for item in product.metafields.custom.additional_information.value %}
                     <div class="pi-item">

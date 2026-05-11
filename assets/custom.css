@@ -73,12 +73,14 @@
 }
 
 /* Hover Effect: Show second image, hide first */
-.fruits_card:hover .has-hover-img .hover-img {
-  opacity: 1;
-}
+@media (hover: hover) and (pointer: fine) {
+  .fruits_card:hover .has-hover-img .hover-img {
+    opacity: 1;
+  }
 
-.fruits_card:hover .has-hover-img .primary-img {
-  opacity: 0;
+  .fruits_card:hover .has-hover-img .primary-img {
+    opacity: 0;
+  }
 }
 .fc_top .fc_category_tags {
   position: absolute;
@@ -747,12 +749,6 @@
   left: 0;
   opacity: 0;
 }
-.fc_image:hover .hover-img {
-  opacity: 1;
-}
-.fc_image:hover .primary-img {
-  opacity: 0;
-}
 .fc_image {
   position: relative;
 }
@@ -765,11 +761,19 @@
   left: 0;
   opacity: 0;
 }
-.fc_image:hover .main_img {
-  opacity: 0;
-}
-.fc_image:hover .hover_img {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .fc_image:hover .hover-img {
+    opacity: 1;
+  }
+  .fc_image:hover .primary-img {
+    opacity: 0;
+  }
+  .fc_image:hover .main_img {
+    opacity: 0;
+  }
+  .fc_image:hover .hover_img {
+    opacity: 1;
+  }
 }
 /* FAQ Page */
 

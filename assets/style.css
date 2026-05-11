@@ -1387,6 +1387,11 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
             rgba(0, 0, 0, 0) 0%,
             rgba(0, 0, 0, 0.7) 78.49%);
     z-index: 1;
+    pointer-events: none;
+    transition: opacity .25s ease;
+}
+.vidimage-in.is-playing::before {
+    opacity: 0;
 }
 .video-control {
     position: absolute;
@@ -1407,9 +1412,10 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     z-index: 2;
     mix-blend-mode: luminosity;
 }
-.video-control:not(.playing) .video-control-pause,
-.video-control.playing .video-control-play {
-    display: none;
+.video-control.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 .video-control-symbol {
     width: 30px;

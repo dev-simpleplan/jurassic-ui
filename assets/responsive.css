@@ -360,7 +360,7 @@
     transition: 0.3s ease all;
   }
   header.active .header-in .h-nav {
-    top: 67px;
+    top: 75px;
   }
   .header-in .h-nav.active {
     clip-path: inset(0 0 0 0);
@@ -1121,6 +1121,9 @@
   .durian {
     order: 5;
   }
+  footer {
+    padding-top: 70px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1151,7 +1154,7 @@
     gap: 6px;
   }
   .header-in .h-nav {
-    top: 102px;
+    top: 110px;
   }
   .bcb-reviews-wrap {
     flex-wrap: wrap;
@@ -1368,7 +1371,7 @@
     width: 45%;
   }
   .langswitch-btn {
-    padding: 30px 20px 30px 20px;
+    padding: 30px 20px 60px 20px;
   }
   .sustain-colm .numb_in:first-child {
     width: 100%;
@@ -1763,7 +1766,8 @@
     display: none;
   }
   .brand-logo a {
-    padding: 0;
+    /* padding: 0; */
+    padding: 5px 0;
   }
   .collection-main {
     padding-top: 0px;
@@ -1821,13 +1825,43 @@
     line-height: 11px;
   }
   .header-in .h-nav {
-    height: calc(100vh - 67px);
+    height: calc(100vh - 75px);
   }
   .qf-count {
     display: none;
   }
   .quick-filters {
     overflow: hidden;
+  }
+  .scs-item .scs-in {
+    gap: 30px;
+  }
+  .scrollsec-slider .owl-carousel {
+    padding-bottom: 50px;
+  }
+  .faq-sec {
+    margin-bottom: 60px;
+  }
+  .fruits_card_section.full-width {
+    gap: 30px;
+  }
+  .banner-bottom img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    object-position: bottom;
+  }
+  .newsletter-bottom {
+    margin-top: 0;
+  }
+  .footer-top {
+    padding-top: 40px;
+  }
+  .banner-in .banner-content {
+    gap: 60px;
+  }
+  .fruits_card_section_in .head {
+    margin-bottom: 40px;
   }
 }
 @media (max-width: 425px) {

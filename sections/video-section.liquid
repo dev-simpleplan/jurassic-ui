@@ -16,23 +16,20 @@
 
                         {{ section.settings.video_link | video_tag: 
                             class: 'img ab',
-                            autoplay: false, 
-                            loop: true, 
-                            muted: false, 
-                            controls: false, 
-                            playsinline: true, 
-                            poster: poster_url 
+                            autoplay: false,
+                            loop: true,
+                            muted: false,
+                            controls: true,
+                            playsinline: true,
+                            poster: poster_url
                         }}
-                        <button class="video-control" aria-label="Video Play Button">
+                        <button type="button" class="video-control" aria-label="Play video">
                             <span class="video-control-play">
                                 <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt=""></span>
                             </span>
-                            <span class="video-control-pause">
-                                <span class="video-control-symbol" aria-hidden="true"><img src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt=""></span>
-                            </span>
                         </button>
                     {% endif %}
-                    {% if section.settings.video_img != blank %}
+                    {% if section.settings.video_img != blank and section.settings.video_link == blank %}
                         <img src="{{ section.settings.video_img |  img_url: 'master' }}" alt="{{ section.settings.video_img.title }}" class="img ab">
                     {% endif %}
                 </div>
@@ -50,28 +47,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = wrap.querySelector("button.video-control");
     if (!video || !btn) return;
 
-    const setState = (playing) => {
-      btn.classList.toggle("playing", playing);
-      btn.setAttribute("aria-pressed", playing ? "true" : "false");
+    const hideButton = () => {
+      wrap.classList.add("is-playing");
+      btn.classList.add("is-hidden");
+      btn.setAttribute("aria-hidden", "true");
     };
 
-    // Click to play/pause
+    const showButton = () => {
+      wrap.classList.remove("is-playing");
+      btn.classList.remove("is-hidden");
+      btn.setAttribute("aria-hidden", "false");
+    };
+
     btn.addEventListener("click", () => {
       if (video.paused || video.ended) {
-        // Pause all other videos (optional)
         document.querySelectorAll(".vidimage-in video").forEach((v) => {
           if (v !== video && !v.paused) v.pause();
         });
-        video.play().catch(() => {}); // avoid unhandled promise errors
-      } else {
-        video.pause();
+        video.play().then(hideButton).catch(() => {});
       }
     });
 
-    // Keep button state in sync with native controls/autoplay/etc
-    video.addEventListener("play", () => setState(true));
-    video.addEventListener("pause", () => setState(false));
-    video.addEventListener("ended", () => setState(false));
+    video.addEventListener("play", hideButton);
+    video.addEventListener("pause", () => {
+      wrap.classList.remove("is-playing");
+    });
+    video.addEventListener("ended", showButton);
   });
 });
 </script>

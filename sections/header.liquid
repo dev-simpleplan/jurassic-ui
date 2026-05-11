@@ -557,22 +557,52 @@
 
     if (!searchBar || !icon || !input) return;
 
-    // When clicking the icon → activate input
-    icon.addEventListener("click", (e) => {
-      e.stopPropagation(); // prevent document click from firing
+    const focusSearchInput = () => {
       searchBar.classList.add("active");
-      input.focus({ preventScroll: true });
+      searchBar.style.visibility = "visible";
+      searchBar.style.opacity = "1";
+      searchBar.offsetHeight;
 
-      requestAnimationFrame(() => {
+      try {
         input.focus({ preventScroll: true });
-        input.setSelectionRange(input.value.length, input.value.length);
+      } catch (error) {
+        input.focus();
+      }
+
+      input.click();
+      requestAnimationFrame(() => {
+        try {
+          input.focus({ preventScroll: true });
+        } catch (error) {
+          input.focus();
+        }
+
+        if (typeof input.setSelectionRange === "function") {
+          input.setSelectionRange(input.value.length, input.value.length);
+        }
       });
+    };
+
+    // Use pointerdown for mobile/touch so the focus happens as part of the first gesture.
+    icon.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      focusSearchInput();
+    });
+
+    // Keep click as a fallback for browsers that do not fire pointer events consistently.
+    icon.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      focusSearchInput();
     });
 
     // When clicking anywhere outside → remove active
     document.addEventListener("click", (e) => {
-      if (!searchBar.contains(e.target)) {
+      if (!searchBar.contains(e.target) && !icon.contains(e.target)) {
         searchBar.classList.remove("active");
+        searchBar.style.removeProperty("visibility");
+        searchBar.style.removeProperty("opacity");
       }
     });
   });
