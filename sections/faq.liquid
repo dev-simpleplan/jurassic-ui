@@ -33,7 +33,12 @@
                   {% endfor %}
               </div>
               <div class="faq-image">
-                  <img id="faq-dynamic-image" width="100%" height="100%" src="{{ section.settings.faq_image | img_url:'master' }}" alt="{{ section.settings.faq_image.alt }}">
+                  <img
+                    id="faq-dynamic-image"
+                    width="100%"
+                    height="100%"
+                    src="{{ section.settings.faq_image | img_url:'master' }}"
+                    alt="{{ section.settings.faq_image_alt | default: section.settings.faq_image.alt | escape }}">
               </div>
           </div>
 
@@ -111,6 +116,12 @@
         "type": "image_picker",
         "id": "faq_image",
         "label": "FAQ Section Image"
+      },
+      {
+        "type": "text",
+        "id": "faq_image_alt",
+        "label": "FAQ Section Image Alt Text",
+        "info": "Optional. Falls back to the uploaded image alt text when left empty."
       }
     ],
     "presets": [
