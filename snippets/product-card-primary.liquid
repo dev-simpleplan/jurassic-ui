@@ -31,18 +31,24 @@
             <img
               src="{{ images.first | img_url: 'master' }}"
               alt="{{ product.title | escape }}"
+              width="{{ images.first.width }}"
+              height="{{ images.first.height }}"
               class="img_sizing primary-img">
 
             {% if images.size > 1 %}
               <img
                 src="{{ images[1] | img_url: 'master' }}"
                 alt="{{ product.title | escape }}"
+                width="{{ images[1].width }}"
+                height="{{ images[1].height }}"
                 class="img_sizing hover-img">
             {% endif %}
           {% else %}
             <img
               src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/jf-placeholder.png?v=1769522647"
               alt="No Image Available"
+              width="800"
+              height="1000"
               class="img_sizing primary-img">
           {% endif %}
         </div>
@@ -240,11 +246,17 @@
                     type="submit"
                     class="add-to-cart-btn"
                     {% unless current_variant.available %}disabled{% endunless %}>
-                    {% if current_variant.available %}
-                      {{ 'products.product.add_to_cart' | t }}
-                    {% else %}
-                      {{ 'products.product.sold_out' | t }}
-                    {% endif %}
+                    <span class="btn-text">
+                      <span class="btn-label">
+                        {% if current_variant.available %}
+                          {{ 'products.product.add_to_cart' | t }}
+                        {% else %}
+                          {{ 'products.product.sold_out' | t }}
+                        {% endif %}
+                      </span>
+                    </span>
+                    <span class="btn-spinner" aria-hidden="true"></span>
+                    <span class="btn-check" aria-hidden="true">✓</span>
                   </button>
                   {% comment %} {% unless product.available %}
                     <button class="open-my-form BIS_trigger">
@@ -433,15 +445,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!wrap || !btn) return;
 
     const available = wrap.dataset.available === 'true';
+    const label = btn.querySelector('.btn-label');
+
+    btn.classList.remove('loading', 'success');
 
     if (!available) {
       btn.disabled = true;
       btn.classList.add('out-of-stock');
-      btn.textContent = window.themeStrings.soldOut;   // ✅ dynamic
+      if (label) label.textContent = window.themeStrings.soldOut;
     } else {
       btn.disabled = false;
       btn.classList.remove('out-of-stock');
-      btn.textContent = window.themeStrings.addToCart; // ✅ dynamic
+      if (label) label.textContent = window.themeStrings.addToCart;
     }
   }
 
