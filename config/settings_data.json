@@ -62,7 +62,7 @@
         "settings": {
           "rating_image": "shopify://shop_images/image_306.png",
           "rating_text": "(4.7/5) “excellent”",
-          "tbtext_prefix": "Free shipping on orders above",
+          "tbtext_prefix": "Free shipping above",
           "tbtext_amount": 120
         }
       }
