@@ -36,7 +36,7 @@
             "type": "market_threshold",
             "settings": {
               "market_code": "fr",
-              "amount": 680.6
+              "amount": 120
             }
           },
           "market_threshold_BBWJHb": {
