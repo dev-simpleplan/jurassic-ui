@@ -228,6 +228,9 @@ window.bindProductCardAddForms = function (scope = document) {
 
         if (submitButton) {
           submitButton.classList.remove('loading');
+          if (buttonLabel) {
+            buttonLabel.textContent = window.themeStrings.addedToCart || 'Added';
+          }
           submitButton.classList.add('success');
         }
 

@@ -73,6 +73,7 @@
     "product": {
       "from": "From",
       "add_to_cart": "Add to Cart",
+      "added_to_cart": "Added",
       "sold_out": "Unavailable",
       "in_stock": "In stock",
       "out_of_stock": "Unavailable",

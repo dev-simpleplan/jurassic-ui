@@ -72,6 +72,7 @@
     "product": {
       "from": "Aus",
       "add_to_cart": "in den Warenkorb legen",
+      "added_to_cart": "Hinzugefügt",
       "sold_out": "Nicht verfügbar",
       "inventory_status": "Nur noch {{ count }} verfügbar",
       "in_stock": "Auf Lager",
