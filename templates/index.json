@@ -310,9 +310,9 @@
           "type": "cards",
           "settings": {
             "image": "shopify://shop_images/f97498290f5b7fdc52c88b3df1a5a951a0974b92.jpg",
-            "day": "Thursday",
-            "head": "Order by Thursday, 8:00 PM",
-            "paragraph": "While you decide, your fruits are still ripening on the tree — untouched, sun-kissed, and growing flavor by the day."
+            "day": "1",
+            "head": "Order (ideally by Thursday, 20:00)",
+            "paragraph": "While you decide, your fruits are still ripening on the tree, gently receiving sun, and growing flavor."
           }
         },
         "item2": {
