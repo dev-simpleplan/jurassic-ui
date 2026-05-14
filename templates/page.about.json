@@ -158,7 +158,7 @@
         "heading": "Better Farming. Better Fruits.",
         "content": "Every fruit you enjoy has a real and visible impact, something we witness firsthand during our visits to the farms. Healthier soils, cleaner growing practices, and better conditions for the farmers and their families all begin with fruit that’s grown with greater care.",
         "mark_image": "shopify://shop_images/logo-mark--black.svg",
-        "section_image": "shopify://shop_images/d5d86c4bda27bca20005f80f7e602cb2f0af1b91.jpg"
+        "section_image": "shopify://shop_images/Indonesia-Farming-JurassicFruit.jpg"
       }
     },
     "spacer3": {
@@ -244,7 +244,6 @@
     },
     "spacer_hF47x4": {
       "type": "spacer",
-      "disabled": true,
       "name": "Spacer",
       "settings": {
         "spacer_height": 90
@@ -256,26 +255,26 @@
         "slide_dX3XYx": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/d5d86c4bda27bca20005f80f7e602cb2f0af1b91.jpg"
-          }
-        },
-        "slide_YtG3Xe": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg"
+            "image": "shopify://shop_images/PXL_20240913_091924687.MP.jpg"
           }
         },
         "slide_Jmw733": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/roar_1.jpg"
+            "image": "shopify://shop_images/4_f1beb876-d947-4068-927e-cd51e0c17cea.jpg"
+          }
+        },
+        "slide_YtG3Xe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/PXL_20240912_100956312.jpg"
           }
         }
       },
       "block_order": [
         "slide_dX3XYx",
-        "slide_YtG3Xe",
-        "slide_Jmw733"
+        "slide_Jmw733",
+        "slide_YtG3Xe"
       ],
       "name": "imagesscroll",
       "settings": {
