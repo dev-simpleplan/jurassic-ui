@@ -573,7 +573,7 @@
   display: none;
 }
 .fc_add_to_cart:not(.active) .add-to-cart-btn {
-  display: block;
+  display: flex;
 }
 
 .qty-controls span {
