@@ -124,20 +124,20 @@
     "sustainability": {
       "type": "sustainability",
       "blocks": {
-        "cards_qfWgHX": {
-          "type": "cards",
-          "settings": {
-            "number": 6,
-            "expression": "",
-            "content": "average days from harvest to delivery"
-          }
-        },
         "cards_RcaCY4": {
           "type": "cards",
           "settings": {
             "number": 200,
             "expression": "+",
             "content": "rare fruits sourced from around the world"
+          }
+        },
+        "cards_qfWgHX": {
+          "type": "cards",
+          "settings": {
+            "number": 75,
+            "expression": "+",
+            "content": "carefully selected partner growers across the tropics"
           }
         },
         "cards_qDA8cP": {
@@ -150,8 +150,8 @@
         }
       },
       "block_order": [
-        "cards_qfWgHX",
         "cards_RcaCY4",
+        "cards_qfWgHX",
         "cards_qDA8cP"
       ],
       "settings": {
@@ -258,23 +258,23 @@
             "image": "shopify://shop_images/PXL_20240913_091924687.MP.jpg"
           }
         },
+        "slide_YtG3Xe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Farm-Salak-Gula-Pasir-JavFre-Bali-Indonesia-6422-JurassicFruit-JurassicFruit.jpg"
+          }
+        },
         "slide_Jmw733": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/d679fbf00529ffdcf6ce236166080b2927d347ba.jpg"
           }
-        },
-        "slide_YtG3Xe": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/PXL_20240912_100956312.jpg"
-          }
         }
       },
       "block_order": [
         "slide_dX3XYx",
-        "slide_Jmw733",
-        "slide_YtG3Xe"
+        "slide_YtG3Xe",
+        "slide_Jmw733"
       ],
       "name": "imagesscroll",
       "settings": {
