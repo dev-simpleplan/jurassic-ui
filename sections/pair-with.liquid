@@ -52,8 +52,14 @@
                 if (dropdown) syncSelectedDropdownItem(dropdown);
               }
 
+              if (typeof window.bindProductCardAddForms === 'function') {
+                window.bindProductCardAddForms(card);
+              }
+
               initVariantLogic(card);
-              window.initializeCartFunction();
+              if (typeof window.initializeCartFunction === 'function') {
+                window.initializeCartFunction();
+              }
             }
           })
           .catch((err) => console.error("Error loading product card:", err));

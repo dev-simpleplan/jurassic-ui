@@ -587,7 +587,7 @@
        ✅ CRITICAL FIX: SIMPLIFIED ADD TO CART
     ======================= */
     function attachAddToCartListeners(scope = document) {
-      const forms = scope.querySelectorAll('form[action$="/cart/add"]');
+      const forms = scope.querySelectorAll('form[action$="/cart/add"]:not(.product-card-add-form)');
       
       forms.forEach((form) => {
         if (form.dataset.cartBound) return;

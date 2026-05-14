@@ -62,13 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // Handle form submission (Add to Cart button click)
-  document.querySelectorAll('form[action="/cart/add"]').forEach(form => {
+  document.querySelectorAll('form[action="/cart/add"]:not(.product-card-add-form)').forEach(form => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       
       const card = this.closest('.product-card-primary');
       const variantId = this.querySelector('input[name="id"]').value;
       const addButton = this.querySelector('.add-to-cart');
+
+      if (!addButton) return;
       
       // Only add if button shows "Add to Cart" text
       if (!addButton.classList.contains('has-quantity')) {

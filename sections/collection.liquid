@@ -499,6 +499,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Re-run UI syncs
                 if (typeof lenis !== 'undefined') lenis.resize();
+                if (typeof window.bindProductCardAddForms === 'function') {
+                    window.bindProductCardAddForms(productGrid);
+                }
 
                 window.history.pushState({}, "", url);
                 bindPaginationLinks();

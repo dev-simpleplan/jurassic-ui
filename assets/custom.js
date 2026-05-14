@@ -189,94 +189,107 @@ document.addEventListener('click', (e) => {
   }
 });
 
-window.bindProductCardAddForms = function (scope = document) {
-  scope.querySelectorAll('.product-card-add-form').forEach((form) => {
-    if (form.dataset.ajaxBound === 'true') return;
-    form.dataset.ajaxBound = 'true';
+window.handleProductCardAddFormSubmit = async function (form, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+  if (form.dataset.submitting === 'true') return;
+  form.dataset.submitting = 'true';
 
-      if (form.dataset.submitting === 'true') return;
-      form.dataset.submitting = 'true';
+  const submitButton = form.querySelector('.add-to-cart-btn');
+  const buttonLabel = submitButton?.querySelector('.btn-label');
+  const currentWrap = form.querySelector('.fc_add_to_cart');
 
-      const submitButton = form.querySelector('.add-to-cart-btn');
-      const buttonLabel = submitButton?.querySelector('.btn-label');
-      const currentWrap = form.querySelector('.fc_add_to_cart');
+  if (submitButton) {
+    submitButton.classList.remove('success');
+    submitButton.classList.add('loading');
+    submitButton.disabled = true;
+  }
 
-      if (submitButton) {
-        submitButton.classList.remove('success');
-        submitButton.classList.add('loading');
-        submitButton.disabled = true;
+  try {
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: {
+        Accept: 'application/json'
       }
+    });
 
-      try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {
-            Accept: 'application/json'
-          }
-        });
+    if (!response.ok) {
+      throw new Error(`Add to cart failed: ${response.status}`);
+    }
 
-        if (!response.ok) {
-          throw new Error(`Add to cart failed: ${response.status}`);
-        }
+    await response.json();
 
-        await response.json();
-
-        if (submitButton) {
-          submitButton.classList.remove('loading');
-          if (buttonLabel) {
-            buttonLabel.textContent = window.themeStrings.addedToCart || 'Added';
-          }
-          submitButton.classList.add('success');
-        }
-
-        document.dispatchEvent(new CustomEvent('cart:updated'));
-
-        window.setTimeout(() => {
-          document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
-        }, 100);
-      } catch (error) {
-        console.error('Product card add to cart failed', error);
-
-        if (submitButton) {
-          submitButton.classList.remove('loading', 'success');
-          submitButton.disabled = false;
-          if (buttonLabel) {
-            buttonLabel.textContent = currentWrap?.dataset.available === 'true'
-              ? window.themeStrings.addToCart
-              : window.themeStrings.soldOut;
-          }
-        }
-
-        form.dataset.submitting = 'false';
-        return;
+    if (submitButton) {
+      submitButton.classList.remove('loading');
+      if (buttonLabel) {
+        buttonLabel.textContent = window.themeStrings?.addedToCart || 'Added';
       }
+      submitButton.classList.add('success');
+    }
 
-      window.setTimeout(() => {
-        form.dataset.submitting = 'false';
+    document.dispatchEvent(new CustomEvent('cart:updated'));
 
-        if (submitButton) {
-          submitButton.classList.remove('loading', 'success');
-          submitButton.disabled = false;
+    window.setTimeout(() => {
+      document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
+    }, 100);
+  } catch (error) {
+    console.error('Product card add to cart failed', error);
 
-          if (buttonLabel) {
-            buttonLabel.textContent = currentWrap?.dataset.available === 'true'
-              ? window.themeStrings.addToCart
-              : window.themeStrings.soldOut;
-          }
-        }
-      }, 1200);
-    }, true);
-  });
+    if (submitButton) {
+      submitButton.classList.remove('loading', 'success');
+      submitButton.disabled = false;
+      if (buttonLabel) {
+        buttonLabel.textContent = currentWrap?.dataset.available === 'true'
+          ? window.themeStrings.addToCart
+          : window.themeStrings.soldOut;
+      }
+    }
+
+    form.dataset.submitting = 'false';
+    return;
+  }
+
+  window.setTimeout(() => {
+    form.dataset.submitting = 'false';
+
+    if (submitButton) {
+      submitButton.classList.remove('loading', 'success');
+      submitButton.disabled = false;
+      if (buttonLabel) {
+        buttonLabel.textContent = currentWrap?.dataset.available === 'true'
+          ? window.themeStrings.addToCart
+          : window.themeStrings.soldOut;
+      }
+    }
+  }, 1200);
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.bindProductCardAddForms(document);
-});
+window.bindProductCardAddForms = function () {
+  if (window.productCardAddFormsDelegated === true) return;
+  window.productCardAddFormsDelegated = true;
+
+  document.addEventListener('submit', (event) => {
+    const form = event.target?.closest?.('.product-card-add-form');
+    if (!form) return;
+
+    window.handleProductCardAddFormSubmit(form, event);
+  }, true);
+
+  document.addEventListener('click', (event) => {
+    const button = event.target?.closest?.('.product-card-add-form .add-to-cart-btn');
+    if (!button) return;
+
+    const form = button.closest('.product-card-add-form');
+    if (!form) return;
+
+    window.handleProductCardAddFormSubmit(form, event);
+  }, true);
+};
+
+window.bindProductCardAddForms();
 
 const sidebar = document.querySelector('.filter-sidebar');
 const closeBtn = document.querySelector('.filter-close-mob');

@@ -2082,6 +2082,17 @@ li.variant-value.is-sold-out {
   gap: 8px;
 }
 
+.fc_add_to_cart .add-to-cart-btn {
+  display: flex;
+}
+
+.fc_add_to_cart .add-to-cart-btn .btn-text,
+.fc_add_to_cart .add-to-cart-btn .btn-label,
+.fc_add_to_cart .add-to-cart-btn .btn-spinner,
+.fc_add_to_cart .add-to-cart-btn .btn-check {
+  width: auto;
+}
+
 #add-to-cart .btn-spinner,
 .add-to-cart-btn .btn-spinner {
   display: none;
@@ -2115,11 +2126,9 @@ li.variant-value.is-sold-out {
 }
 
 .add-to-cart-btn.success .btn-check {
-  display: none;
-}
-
-.add-to-cart-btn.success .btn-text {
-  opacity: 1;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 @keyframes spin {

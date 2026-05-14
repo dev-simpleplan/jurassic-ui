@@ -462,6 +462,7 @@
   transition: 0.4s ease all;
   cursor: pointer;
   position: relative;
+  border: 1px solid transparent;
   /* border: 1px solid #ffc761; */
 }
 

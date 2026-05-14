@@ -47,13 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = wrap.querySelector("button.video-control");
     if (!video || !btn) return;
 
-    const hideButton = () => {
+    const setPlayingState = () => {
       wrap.classList.add("is-playing");
       btn.classList.add("is-hidden");
       btn.setAttribute("aria-hidden", "true");
     };
 
-    const showButton = () => {
+    const clearPlayingState = () => {
       wrap.classList.remove("is-playing");
       btn.classList.remove("is-hidden");
       btn.setAttribute("aria-hidden", "false");
@@ -64,15 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".vidimage-in video").forEach((v) => {
           if (v !== video && !v.paused) v.pause();
         });
-        video.play().then(hideButton).catch(() => {});
+        video.play().then(setPlayingState).catch(() => {});
       }
     });
 
-    video.addEventListener("play", hideButton);
-    video.addEventListener("pause", () => {
-      wrap.classList.remove("is-playing");
-    });
-    video.addEventListener("ended", showButton);
+    video.addEventListener("play", setPlayingState);
+    video.addEventListener("playing", setPlayingState);
+    video.addEventListener("pause", clearPlayingState);
+    video.addEventListener("ended", clearPlayingState);
   });
 });
 </script>
