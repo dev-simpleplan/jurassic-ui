@@ -1,4 +1,37 @@
-<section class="video-carousel" style="background-color: {{ section.settings.background_color }};">
+{%- liquid
+  assign use_product_media = false
+  assign product_video_count = 0
+  assign product_video_metafield = blank
+
+  if product != blank and section.settings.use_product_videos and section.settings.product_videos_metafield != blank
+    assign product_video_metafield = product.metafields.custom[section.settings.product_videos_metafield]
+
+    if product_video_metafield != blank
+      for media_item in product_video_metafield.value
+        if media_item.media_type == 'video'
+          assign product_video_count = product_video_count | plus: 1
+        endif
+      endfor
+    endif
+
+    if product_video_count >= 3
+      assign use_product_media = true
+    endif
+  endif
+
+  assign show_section = true
+
+  if product != blank and section.settings.use_product_videos
+    assign show_section = false
+
+    if use_product_media
+      assign show_section = true
+    endif
+  endif
+-%}
+
+{% if show_section %}
+<section class="video-carousel{% if product != blank %} video-carousel--product{% endif %}" style="background-color: {{ section.settings.background_color }};">
   <div class="vc-heading">
     <div class="container">
       <div class="vcheading-in">
@@ -11,7 +44,58 @@
   </div>
   <div class="vc-carousel">
     <div class="owl-carousel owl-theme">
-      {% for block in section.blocks %}
+      {% if use_product_media %}
+        {% for media_item in product_video_metafield.value %}
+          {% if media_item.media_type == 'video' %}
+            <div class="item">
+              <div class="vci-item">
+                <div class="vcitem-video">
+                  {{ media_item | video_tag:
+                      autoplay: false,
+                      loop: true,
+                      muted: true,
+                      controls: false,
+                      playsinline: true,
+                      class: 'img ab',
+                      image_size: 'master'
+                  }}
+
+                  <div class="video-control-group">
+                    <button class="video-control" aria-label="Video Play Button">
+                      <span class="video-control-play">
+                        <span class="video-control-symbol" aria-hidden="true">
+                          <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/Polygon_1.svg?v=1759301174" alt="">
+                        </span>
+                      </span>
+                      <span class="video-control-pause">
+                        <span class="video-control-symbol" aria-hidden="true">
+                          <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0752/8015/4881/files/pause-svgrepo-com.svg?v=1759998102" alt="">
+                        </span>
+                      </span>
+                    </button>
+
+                    <button class="video-audio-control is-muted" aria-label="Unmute video" aria-pressed="false" type="button">
+                      <span class="video-audio-on" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M5 9V15H9L14 19V5L9 9H5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                          <path d="M18 9C19.3333 10.2 20 11.5333 20 13C20 14.4667 19.3333 15.8 18 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </span>
+                      <span class="video-audio-off" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M5 9V15H9L14 19V5L9 9H5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                          <path d="M17 9L21 13M21 9L17 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
         <div class="item">
           <div class="vci-item">
             <div class="vcitem-video">
@@ -66,10 +150,12 @@
             </div>
           </div>
         </div>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
+{% endif %}
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -203,6 +289,20 @@ document.addEventListener("DOMContentLoaded", () => {
         "id": "background_color",
         "label": "Background Color",
         "default": "#dbd7c8"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_product_videos",
+        "label": "Use product-specific videos",
+        "default": false,
+        "info": "When enabled on product templates, this section uses a product metafield instead of section blocks and hides unless at least 3 videos are added."
+      },
+      {
+        "type": "text",
+        "id": "product_videos_metafield",
+        "label": "Product videos metafield key",
+        "default": "product_videos",
+        "info": "Create a product metafield in the custom namespace with this key. Use a list of video files."
       }
     ],
     "blocks": [

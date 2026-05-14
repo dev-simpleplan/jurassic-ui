@@ -161,7 +161,9 @@
         "heading_top": "Bite into the",
         "heading_bottom": "Wild with us",
         "heading_color": "#dbd7c8",
-        "background_color": "#1a1a1a"
+        "background_color": "#1a1a1a",
+        "use_product_videos": true,
+        "product_videos_metafield": "product_videos"
       }
     },
     "spacer_BmkhaA": {
