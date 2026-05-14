@@ -227,7 +227,7 @@ a:hover {
 }
 .heading h2 {
     color: var(--pitch-black);
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 .heading p {
     color: var(--grey-black);
@@ -2136,7 +2136,7 @@ section.scroll-sec {
     right: 0;
     top: 0;
     height: 100%;
-    width: 24vw;
+    width: 28vw;
     background-color: #fcf9f5;
 }
 .slide3-wrap {
