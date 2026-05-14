@@ -1430,6 +1430,20 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     height: 100%;
     object-fit: contain;
 }
+.video-control .video-control-play,
+.video-control .video-control-pause {
+    align-items: center;
+    justify-content: center;
+}
+.video-control .video-control-pause {
+    display: none;
+}
+.video-control.playing .video-control-play {
+    display: none;
+}
+.video-control.playing .video-control-pause {
+    display: inline-flex;
+}
 .vcitem-video {
     position: relative;
 }
