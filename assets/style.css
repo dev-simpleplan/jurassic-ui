@@ -1811,6 +1811,9 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     padding: 80px 0;
     position: relative;
 }
+.video-carousel.video-carousel--product {
+    margin-bottom: 90px;
+}
 .video-carousel .vc-heading {
     position: absolute;
     top: 0;
