@@ -127,9 +127,17 @@
         "cards_qfWgHX": {
           "type": "cards",
           "settings": {
-            "number": 72,
+            "number": 6,
             "expression": "",
-            "content": "tons of fruit saved from waste"
+            "content": "average days from harvest to delivery"
+          }
+        },
+        "cards_RcaCY4": {
+          "type": "cards",
+          "settings": {
+            "number": 200,
+            "expression": "+",
+            "content": "rare fruits sourced from around the world"
           }
         },
         "cards_qDA8cP": {
@@ -139,20 +147,12 @@
             "expression": "%",
             "content": "of packaging is plastic-free"
           }
-        },
-        "cards_RcaCY4": {
-          "type": "cards",
-          "settings": {
-            "number": 21,
-            "expression": "",
-            "content": "rare heirloom varieties revived"
-          }
         }
       },
       "block_order": [
         "cards_qfWgHX",
-        "cards_qDA8cP",
-        "cards_RcaCY4"
+        "cards_RcaCY4",
+        "cards_qDA8cP"
       ],
       "settings": {
         "heading": "Better Farming. Better Fruits.",
