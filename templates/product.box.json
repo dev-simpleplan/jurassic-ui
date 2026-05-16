@@ -358,6 +358,7 @@
         "cards_47PU9w",
         "cards_kb9bFP"
       ],
+      "disabled": true,
       "name": "three-icon-sec",
       "settings": {
         "bg-image": "shopify://shop_images/counter-bg.jpg",
