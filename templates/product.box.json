@@ -197,35 +197,35 @@
     "three_image_box_menw3P": {
       "type": "three-image-box",
       "blocks": {
-        "cards_9mrgbe": {
-          "type": "cards",
-          "settings": {
-            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154602.594.svg",
-            "pointer_heading": "Smart, Minimal Packaging",
-            "pointer_description": "We use just enough to protect your fruit. Our materials are recyclable, compostable, or reusable whenever possible."
-          }
-        },
         "cards_qnVCYU": {
           "type": "cards",
           "settings": {
-            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154608.626.svg",
-            "pointer_heading": "Shipped Straight from the Source",
-            "pointer_description": "No middlemen. No warehouses. Your box is packed at the farm and delivered fresh — usually within 4–7 days of harvest."
+            "pointer_icon": "shopify://shop_images/Vector-4.svg",
+            "pointer_heading": "DIRECTLY SOURCED FROM SMALL GROWERS",
+            "pointer_description": "We work closely with small farms around the world that share our focus on careful growing practices and real flavor. By keeping supply chains short and moving quickly after harvest, we help preserve the freshness and character of each fruit."
           }
         },
         "cards_YbG9xH": {
           "type": "cards",
           "settings": {
-            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154616.145.svg",
-            "pointer_heading": "Designed to Do Good",
-            "pointer_description": "Our packaging and delivery choices are made with the planet in mind. From low-waste sourcing to smart logistics, we keep things light on impact and full of purpose."
+            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154608.626.svg",
+            "pointer_heading": "PACKED FRESH AT JURASSIC FRUIT",
+            "pointer_description": "Fresh arrivals from our growers are carefully selected and packed in our warehouse shortly before shipping. This allows us to build each box around what’s tasting best and deliver the fruits with maximum freshness."
+          }
+        },
+        "cards_9mrgbe": {
+          "type": "cards",
+          "settings": {
+            "pointer_icon": "shopify://shop_images/Vector_-_2025-11-24T154602.594.svg",
+            "pointer_heading": "Smart, Minimal Packaging",
+            "pointer_description": "We use just enough to protect perfectly your fruit. Our materials are recyclable, compostable, or reusable whenever possible."
           }
         }
       },
       "block_order": [
-        "cards_9mrgbe",
         "cards_qnVCYU",
-        "cards_YbG9xH"
+        "cards_YbG9xH",
+        "cards_9mrgbe"
       ],
       "name": "three-images-box",
       "settings": {
