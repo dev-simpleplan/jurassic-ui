@@ -155,7 +155,6 @@
         "ugc_videos_R3WRXz",
         "ugc_videos_QhrUaJ"
       ],
-      "disabled": true,
       "name": "Video-Section",
       "settings": {
         "heading_top": "Bite into the",
@@ -544,7 +543,8 @@
         "heading": "Frequently Asked Questions",
         "cta_url": "",
         "cta_text": "All FAQs",
-        "faq_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg"
+        "faq_image": "shopify://shop_images/e674c04ea0d7f3a319ab0027c0e08b9ce30c559b.jpg",
+        "faq_image_alt": ""
       }
     },
     "bestsellercarousel": {
