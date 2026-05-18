@@ -89,8 +89,8 @@
     "box-fruits": {
       "type": "box-fruits",
       "settings": {
-        "heading": "Meet The Wild Ones Of The Lala Box",
-        "subheading": "These aren't just fruits — they're invitations to explore. Here's what makes each one extraordinary."
+        "heading": "What You Might Discover Inside",
+        "subheading": "Each box brings together fruits we genuinely think people should experience at least once. Please note that the selection changes with the seasons and is not guaranteed, depending on what’s tasting best at the time."
       }
     },
     "spacer_Nh7Bj": {
@@ -537,6 +537,22 @@
         "spacer_height": 90
       }
     },
+    "17789334995fba728d": {
+      "type": "apps",
+      "blocks": {
+        "okendo_reviews_widget_E8PWzq": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_E8PWzq"
+      ],
+      "settings": {}
+    },
     "faq": {
       "type": "faq",
       "name": "faq",
@@ -598,22 +614,6 @@
       "settings": {
         "spacer_height": 140
       }
-    },
-    "17789334995fba728d": {
-      "type": "apps",
-      "blocks": {
-        "okendo_reviews_widget_E8PWzq": {
-          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": "{{product}}",
-            "widget_type": "reviews_widget"
-          }
-        }
-      },
-      "block_order": [
-        "okendo_reviews_widget_E8PWzq"
-      ],
-      "settings": {}
     }
   },
   "order": [
