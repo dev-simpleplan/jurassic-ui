@@ -86,20 +86,6 @@
         "spacer_height": 90
       }
     },
-    "box-fruits": {
-      "type": "box-fruits",
-      "settings": {
-        "heading": "What You Might Discover Inside",
-        "subheading": "Each box brings together fruits we genuinely think people should experience at least once. Please note that the selection changes with the seasons and is not guaranteed, depending on what’s tasting best at the time."
-      }
-    },
-    "spacer_Nh7Bj": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "video_carousel_YJxU7F": {
       "type": "video-carousel",
       "blocks": {
@@ -163,6 +149,20 @@
         "background_color": "#1a1a1a",
         "use_product_videos": true,
         "product_videos_metafield": "product_videos"
+      }
+    },
+    "box-fruits": {
+      "type": "box-fruits",
+      "settings": {
+        "heading": "What You Might Discover Inside",
+        "subheading": "Each box brings together fruits we genuinely think people should experience at least once. Please note that the selection changes with the seasons and is not guaranteed, depending on what’s tasting best at the time."
+      }
+    },
+    "spacer_Nh7Bj": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 90
       }
     },
     "spacer_BmkhaA": {
@@ -619,9 +619,9 @@
   "order": [
     "template",
     "spacer0",
+    "video_carousel_YJxU7F",
     "box-fruits",
     "spacer_Nh7Bj",
-    "video_carousel_YJxU7F",
     "spacer_BmkhaA",
     "order_sample_4EfCUL",
     "spacer_tVjKyf",
