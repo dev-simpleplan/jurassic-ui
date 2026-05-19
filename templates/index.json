@@ -531,12 +531,6 @@
             "product": ""
           }
         },
-        "okendo_media_carousel_tBfVHK": {
-          "type": "shopify://apps/okendo/blocks/media-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": ""
-          }
-        },
         "instafeed_app_block_ah3Dgf": {
           "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
           "disabled": true,
@@ -559,7 +553,6 @@
       },
       "block_order": [
         "okendo_reviews_carousel_Ciajpr",
-        "okendo_media_carousel_tBfVHK",
         "instafeed_app_block_ah3Dgf"
       ],
       "settings": {}
