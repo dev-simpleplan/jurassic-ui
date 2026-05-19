@@ -516,6 +516,7 @@
     },
     "spacer6": {
       "type": "spacer",
+      "disabled": true,
       "settings": {
         "spacer_height": 90
       }
@@ -555,6 +556,9 @@
       "block_order": [
         "okendo_reviews_carousel_Ciajpr",
         "instafeed_app_block_ah3Dgf"
+      ],
+      "custom_css": [
+        "h2 {font-family: \"scale-variable\", sans-serif; font-size: 52px}"
       ],
       "settings": {}
     },
