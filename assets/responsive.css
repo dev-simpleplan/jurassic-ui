@@ -1714,7 +1714,10 @@
     margin-bottom: 8px;
   }
   .collection-banner {
-    padding: 100px 0 32px 0;
+    padding: 110px 0 32px 0;
+  }
+  .pro-breadcrumbs {
+      margin-top: 92px;
   }
   .locale-panel {
     margin: 100px auto 60px auto;
