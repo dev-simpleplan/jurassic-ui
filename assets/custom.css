@@ -188,6 +188,27 @@
 .star_review .oke-sr-count span {
   display: flex;
 }
+.star-rating-fallback {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #747474;
+  font-size: 11px;
+  line-height: 15px;
+}
+.star-rating-fallback__star {
+  color: #ffc226;
+  font-size: 13px;
+  line-height: 1;
+}
+.okendo-listing-rating-fallback {
+  display: flex;
+  align-items: center;
+}
+.star_rating:has(> p .oke-sr:not(.oke-sr--hidden)) .star-rating-fallback,
+.star_rating:has(> p .oke-sr:not(.oke-sr--hidden)) .okendo-listing-rating-fallback {
+  display: none;
+}
 
 .rating_info {
   display: flex;
@@ -210,7 +231,11 @@
 }
 
 /* Show dot ONLY when reviews are visible */
-.star_rating:has(.oke-sr:not(.oke-sr--hidden)) + .rating_info .dynamic-review-dot {
+.star_rating:has(> p .oke-sr:not(.oke-sr--hidden)) + .rating_info .dynamic-review-dot {
+  display: inline-block!important;
+}
+.star_rating:has(.okendo-listing-rating-fallback) + .rating_info .dynamic-review-dot,
+.star_rating:has(.star-rating-fallback) + .rating_info .dynamic-review-dot {
   display: inline-block!important;
 }
 

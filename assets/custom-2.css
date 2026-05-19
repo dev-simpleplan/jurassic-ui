@@ -2044,6 +2044,9 @@ li.variant-value.is-sold-out {
     padding: 10px !important;
     text-align: center;
 }
+.priceCheckout #Quantity {
+  -moz-appearance: textfield;
+}
 .priceCheckout #Quantity:focus {
   outline: none;
 }

@@ -53,6 +53,16 @@
         "name": "rich_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "collection_short_name",
+      "namespace": "custom",
+      "name": "Collection Short Name",
+      "description": "Add a short name for the collection",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "company": [],
@@ -661,6 +671,16 @@
       "type": {
         "name": "multi_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "product_videos",
+      "namespace": "custom",
+      "name": "Product Videos",
+      "description": "Add videos related to this products for UGC section",
+      "type": {
+        "name": "list.file_reference",
+        "category": "REFERENCE"
       }
     }
   ],

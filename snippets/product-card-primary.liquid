@@ -122,10 +122,39 @@
 
         <div class="fc_bottom_top">
 
-          {% assign country = product.metafields.custom.country_of_origin.value.country_name %}
+{% assign country = product.metafields.custom.country_of_origin.value.country_name %}
+
+{% assign okendo_listing_snippet = product.metafields.okendo.ProductListingSnippet.value %}
+{% if okendo_listing_snippet == blank %}
+  {% assign okendo_listing_snippet = product.metafields.okendo.ProductListingSnippet %}
+{% endif %}
+
+{% assign okendo_review_count = product.metafields.okendo.RatingAndReviewCount.value %}
+{% if okendo_review_count == blank %}
+  {% assign okendo_review_count = product.metafields.okendo.RatingAndReviewCount %}
+{% endif %}
+{% assign okendo_review_count = okendo_review_count | default: 0 | plus: 0 %}
+
+{% assign okendo_rating_value = product.metafields.okendo.RatingAndReviewAverageValue.value %}
+{% if okendo_rating_value == blank %}
+  {% assign okendo_rating_value = product.metafields.okendo.RatingAndReviewAverageValue %}
+{% endif %}
+{% assign okendo_rating_value = okendo_rating_value | default: 0 | plus: 0 %}
+{% assign okendo_rating_display = okendo_rating_value | times: 10 | round | divided_by: 10.0 %}
 
 <div class="star_review">
   <div class="star_rating">
+    {% if okendo_listing_snippet != blank %}
+      <div class="okendo-listing-rating-fallback" data-okendo-listing-rating-fallback>
+        {{ okendo_listing_snippet }}
+      </div>
+    {% elsif okendo_review_count > 0 %}
+      <div class="star-rating-fallback" data-star-rating-fallback>
+        <span class="star-rating-fallback__star" aria-hidden="true">★</span>
+        <span class="star-rating-fallback__rating">{{ okendo_rating_display }}</span>
+        <span class="star-rating-fallback__count">({{ okendo_review_count }})</span>
+      </div>
+    {% endif %}
     <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
   </div>
 
