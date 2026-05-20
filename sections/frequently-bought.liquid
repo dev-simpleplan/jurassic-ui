@@ -51,43 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
               }
 
               initVariantLogic(card);
-              initOkendoReviewWidgets(card);
             }
           })
           .catch(err => console.error("Error loading product card:", err));
       });
     });
 });
-
-function initOkendoReviewWidgets(root) {
-  const scope = root || document;
-  const widgets = scope.querySelectorAll('[data-oke-star-rating], [data-oke-reviews-product-listing-rating]');
-  if (!widgets.length) return;
-
-  const refreshWidgets = (attempt = 0) => {
-    try {
-      if (window.okeWidgetApi?.initWidget) {
-        widgets.forEach((widget) => window.okeWidgetApi.initWidget(widget));
-      }
-
-      if (window.okeWidgetApi?.initAllWidgets) {
-        window.okeWidgetApi.initAllWidgets();
-      }
-
-      if (window.OkendoReviews?.init) {
-        window.OkendoReviews.init();
-      }
-    } catch (error) {
-      console.warn('Unable to initialize Okendo reviews for frequently bought cards:', error);
-    }
-
-    if (attempt < 10 && !scope.querySelector('.oke-sr:not(.oke-sr--hidden), .okeReviews')) {
-      setTimeout(() => refreshWidgets(attempt + 1), 500);
-    }
-  };
-
-  requestAnimationFrame(() => refreshWidgets());
-}
 
 function initVariantLogic(card) {
   const variantItems = card.querySelectorAll(".fc_variant_item");
