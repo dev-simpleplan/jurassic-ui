@@ -475,14 +475,6 @@
       "disabled": true,
       "settings": {}
     },
-    "spacer_Nh7Bjn": {
-      "type": "spacer",
-      "disabled": true,
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
-      }
-    },
     "left-image-with-items": {
       "type": "left-image-with-items",
       "blocks": {
@@ -534,7 +526,7 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 90
+        "spacer_height": 80
       }
     },
     "17789334995fba728d": {
@@ -552,6 +544,13 @@
         "okendo_reviews_widget_E8PWzq"
       ],
       "settings": {}
+    },
+    "spacer_Nh7Bjn": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 80
+      }
     },
     "faq": {
       "type": "faq",
@@ -633,10 +632,10 @@
     "image_text_scroll_zrKkRq",
     "spacer_1",
     "usp-ticker",
-    "spacer_Nh7Bjn",
     "left-image-with-items",
     "spacer_2",
     "17789334995fba728d",
+    "spacer_Nh7Bjn",
     "faq",
     "bestsellercarousel",
     "spacer_awrgBa",
