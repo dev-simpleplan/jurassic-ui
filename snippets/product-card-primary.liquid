@@ -20,6 +20,14 @@
   {% assign default_variant = product.variants.first %}
 {% endif %}
 
+{% assign has_available_variant = false %}
+{% for variant in product.variants %}
+  {% if variant.available %}
+    {% assign has_available_variant = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
 <div class="product-card-primary" data-product-available="{{ product.available }}">
   <div class="fruits_card">
       <div class="fc_top">
@@ -175,6 +183,11 @@
                   
                   <ul class="dropdown" data-lenis-prevent>
                     {% for variant in product.variants %}
+                      {% if has_available_variant %}
+                        {% unless variant.available %}
+                          {% continue %}
+                        {% endunless %}
+                      {% endif %}
                       <li 
                         class="dropdown-item{% if variant.id == default_variant.id %} is-selected{% endif %}"
                         data-id="{{ variant.id }}"
@@ -183,6 +196,7 @@
                         data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money_without_currency }} {{ cart.currency.symbol }}{% endif %}"
                         data-unit="{% if variant.unit_price_measurement %}{{ variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ variant.unit_price_measurement.reference_unit }}{% endif %}"
                         data-inventory="{{ variant.inventory_quantity }}"
+                        data-available="{{ variant.available }}"
                       >
                         <a href="javascript:void(0)">
                           {% if variant.metafields.custom.bestseller == true %}
