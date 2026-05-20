@@ -1,28 +1,33 @@
+{% if product.metafields.custom.box_products.value != blank %}
 <div class="lalabox-content">
     <div class="container-fluid">
         <div class="lalabox-content-in">
             <div class="sec-with-space">
                 <div class="heading">
-                    <h2 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.heading }}</h2>
-                    <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">{{ section.settings.subheading }}</p>
+                    <h2 data-aos="fade-up" data-aos-duration="1000">
+                        {{ product.metafields.custom.box_product_heading }}
+                    </h2>
+                    <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">
+                        {{ product.metafields.custom.box_product_subheading }}
+                    </p>
                 </div>
+
                 <div class="bcontent-grid">
                     {% for item in product.metafields.custom.box_products.value %}
                         <div class="bcg-item">
                             <div class="bcg-item-inner">
                                 <div class="bcgitem-front">
-                                    <div class="bcgfront-head">{{ item.product_name }}</div>
+                                    <div class="bcgfront-head">
+                                        {{ item.product_name }}
+                                    </div>
+
                                     <div class="bcgfront-image">
                                         <img src="{{ item.product_image | img_url: 'master' }}" alt="{{ item.product_name }}">
                                     </div>
                                 </div>
+
                                 <div class="bcgitem-back">
-                                    {% comment %} <div class="bcgback-top">
-                                        <p>Era</p>
-                                        <span>{{ item.era }}</span>
-                                    </div> {% endcomment %}
                                     <div class="bcgback-bottom">
-                                        {% comment %} <h6>{{ item.description_heading }}</h6> {% endcomment %}
                                         <div>{{ item.description_pointers | metafield_tag }}</div>
                                     </div>
                                 </div>
@@ -30,10 +35,12 @@
                         </div>
                     {% endfor %}
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+{% endif %}
 
 {% schema %}
   {

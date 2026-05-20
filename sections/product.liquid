@@ -256,7 +256,18 @@
                       </div>
                     </div>
                   </div>
-                  <h1>{{ product.title }}</h1>
+
+                <h1>
+                  {{ product.title }}
+
+                  {% for cert in product.metafields.custom.certificate.value %}
+                    {% if cert.system.handle == 'organic' %}
+                      {{ cert.key.value }}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                </h1>
+
                     <div class="price" id="price-{{ section.id }}">
                       <div class="price-detailsss"> 
 
@@ -854,7 +865,7 @@
                           If a video is uploaded, render the video player.
                           The 'video_tag' filter handles the HTML5 video tag automatically.
                         {% endcomment %}
-                        {{ item.video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+                        {{ item.video.value | video_tag: autoplay: false, loop: true, muted: true, controls: true, playsinline: true, class: 'pa-accordion-video' }}
 
                       {% elsif item.icon.value != blank %}
                         {% comment %} Fallback to the image icon if no video exists {% endcomment %}
@@ -1009,7 +1020,7 @@
                   {% if item.origin_video.value != blank or item.origin_image != blank %}
                     <div class="paes-icon square">
                         {% if item.origin_video.value != blank %}
-                          {{ item.origin_video.value | video_tag: autoplay: true, loop: true, muted: true, controls: true }}
+                          {{ item.origin_video.value | video_tag: autoplay: false, loop: true, muted: true, controls: true, playsinline: true, class: 'pa-accordion-video' }}
                         {% elsif item.origin_image != blank %}
                           <a
                             href="{{ item.origin_image | img_url: 'master' }}"
@@ -1892,18 +1903,40 @@ Fancybox.bind("[data-fancybox='gallery'], [data-fancybox='how-to-store-gallery']
 /* ======================================================
    ACCORDION
 ====================================================== */
+function pauseProductAccordionVideos($item) {
+  $item.find('.pa-accordion-video').each(function () {
+    this.pause();
+  });
+}
+
+function playProductAccordionVideos($item) {
+  $item.find('.pa-accordion-video').each(function () {
+    this.muted = true;
+    this.play().catch(() => {});
+  });
+}
+
+$(function () {
+  $('.product-accordion .pa-item:not(.active) .pa-accordion-video').each(function () {
+    this.pause();
+  });
+});
+
 $(document).on('click', '.product-accordion .pa-ques-wrap', function () {
   const $item = $(this).closest('.pa-item');
   const $content = $item.children('.pa-div');
 
   if ($item.hasClass('active')) {
     $item.removeClass('active');
+    pauseProductAccordionVideos($item);
     $content.stop(true, true).slideUp(300);
     return;
   }
 
   $item.addClass('active');
-  $content.stop(true, true).slideDown(300);
+  $content.stop(true, true).slideDown(300, function () {
+    playProductAccordionVideos($item);
+  });
 });
 </script>
 

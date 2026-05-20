@@ -3891,7 +3891,7 @@ section.imagescroll {
 .bcontent-grid .bcg-item {
     perspective: 1000px;
     width: 100%;
-    aspect-ratio: 5/6;
+    /* aspect-ratio: 5/6; */
 }
 .bcg-item-inner {
     position: relative;
@@ -3913,12 +3913,17 @@ section.imagescroll {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    top: 0;
 }
 .bcgitem-front {
     background-color: #fff;
     padding: 20px 30px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-end;
     gap: 20px;
+    flex-direction: column-reverse;
+    position: relative;
+    height: 100%;
 }
 .bcgitem-front .bcgfront-head {
     font-weight: 500;
@@ -5720,4 +5725,8 @@ section.imagescroll {
     position: absolute;
     top: 0;
     left: 0;
+}
+h2.oke-reviewCarousel-header-title {
+    font-size: clamp(28px, 2.543px + 4.623vw, 52px)!important;
+    line-height: 97%!important;
 }

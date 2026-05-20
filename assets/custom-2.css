@@ -2338,6 +2338,17 @@ li.variant-value.is-sold-out {
   color: #f7a816;
   text-decoration: underline;
 }
+.paes-item .metafield-rich_text_field ul {
+    list-style: inherit;
+    padding-left: 20px;
+}
+.paes-item .metafield-rich_text_field ul li {
+  font-size: 15px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0px;
+    color: #1a1a1a;
+}
 .pa-item:first-child {
   padding-top: 0;
 }
