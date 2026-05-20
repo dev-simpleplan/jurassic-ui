@@ -300,6 +300,9 @@
     },
     "spacer9": {
       "type": "spacer",
+      "custom_css": [
+        "@media(max-width:767px){}"
+      ],
       "settings": {
         "spacer_height": 90
       }
@@ -558,7 +561,7 @@
         "instafeed_app_block_ah3Dgf"
       ],
       "custom_css": [
-        "h2 {font-family: \"scale-variable\", sans-serif; font-size: 52px}"
+        "h2 {font-family: \"scale-variable\", sans-serif; font-size: 52px;}"
       ],
       "settings": {}
     },
