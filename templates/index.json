@@ -129,16 +129,16 @@
             "video_link": "shopify://files/videos/202108-UGC-Anna-Kollmann-DragonFruit-Dried-Mango-Cashew-Medjool-Date-DE.MOV"
           }
         },
-        "ugc_videos_3TBr6y": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014480167.mp4"
-          }
-        },
         "ugc_videos_qLLTfF": {
           "type": "ugc-videos",
           "settings": {
             "video_link": "shopify://files/videos/20210624-Emma-Silke-Fruit Discovery Box Facebook Ad-edited.mp4"
+          }
+        },
+        "ugc_videos_3TBr6y": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014480167.mp4"
           }
         },
         "ugc_videos_inDUwA": {
@@ -170,8 +170,8 @@
         "ugc_videos_Qdk8Yi",
         "ugc_videos_NrQzL4",
         "ugc_videos_kBLy7n",
-        "ugc_videos_3TBr6y",
         "ugc_videos_qLLTfF",
+        "ugc_videos_3TBr6y",
         "ugc_videos_inDUwA",
         "ugc_videos_Li7MhQ",
         "ugc_videos_QiwtLT",
@@ -255,7 +255,7 @@
         "collection_block_pYmrTj"
       ],
       "settings": {
-        "heading": "All Categories"
+        "heading": "Main Categories"
       }
     },
     "spacer1": {
