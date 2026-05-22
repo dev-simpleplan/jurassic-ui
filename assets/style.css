@@ -1163,21 +1163,23 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 
 .product-gallery-counter {
     position: absolute;
-    left: 50%;
+    /* left: 50%; */
+    left: 16px;
     bottom: 18px;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     z-index: 3;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 2px;
-    min-width: 60px;
-    padding: 8px 12px;
+    /* min-width: 60px; */
+    /* padding: 8px 12px; */
+    padding: 5px 12px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.88);
     color: #151515;
     font-family: var(--scale);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1;
     backdrop-filter: blur(8px);
@@ -3869,7 +3871,7 @@ section.imagescroll {
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.32px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: #202322;
 }
 .faq-answer {
@@ -3930,7 +3932,7 @@ section.imagescroll {
     font-size: 18px;
     font-family: var(--scale);
     line-height: 120%;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: #202322;
     text-align: center;
 }
@@ -3985,7 +3987,7 @@ section.imagescroll {
     font-weight: 400;
     font-size: 14px;
     letter-spacing: 0.32px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: var(--grey-black);
 }
 .bcgback-bottom ul {
@@ -4741,7 +4743,7 @@ section.imagescroll {
     font-weight: 300;
     font-size: 30px;
     letter-spacing: -0.32px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 .bsb-data p {
     font-weight: 400;
@@ -4802,7 +4804,7 @@ section.imagescroll {
 }
 .bpwt-heading h3 {
     font-size: 28px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     letter-spacing: 0;
     line-height: 110%;
     max-width: 16ch;
@@ -4875,7 +4877,7 @@ section.imagescroll {
     font-family: var(--scale);
     font-size: 28px;
     font-weight: 400;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: #202322;
 }
 .etd-desc p {
@@ -5548,7 +5550,7 @@ section.imagescroll {
 }
 .item-details .item-title {
     font-size: 13px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color: #151515;
     font-weight: 700;
 }

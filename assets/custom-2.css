@@ -1458,14 +1458,23 @@ span.cart-compare-price {
 }
 .pro-right-side .btn-wrap .custom-prev,
 .pro-right-side .btn-wrap .custom-next {
-  background-color: #FCF9F5;
-  display: flex;
-  align-items: center;
+    background-color: #FCF9F5;
+    display: flex;
+    align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  transition: .3s ease all;
-  position: absolute;
+    transition: .3s ease all;
+    position: absolute;
+}
+
+.pro-right-side .btn-wrap .custom-prev.disabled,
+.pro-right-side .btn-wrap .custom-next.disabled,
+.pro-right-side .btn-wrap .custom-prev:disabled,
+.pro-right-side .btn-wrap .custom-next:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 .pro-right-side .btn-wrap .custom-prev {
   left: 20px;
@@ -2300,13 +2309,13 @@ li.variant-value.is-sold-out {
   line-height: 150%;
   font-size: 15px;
   white-space: nowrap;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .tech-item .ti-data {
   font-weight: 400;
   line-height: 150%;
   font-size: 15px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .pa-item {
   /* padding: 20px 0; */
@@ -2476,7 +2485,7 @@ li.variant-value.is-sold-out {
   letter-spacing: 0.01em;
   color: #000;
 }
-.pas-country .pas-shipping {
+.pas-shipping {
   font-size: 14px;
   line-height: 100%;
   color: #1a1a1a;
@@ -2485,12 +2494,12 @@ li.variant-value.is-sold-out {
   gap: 4px;
   text-transform: lowercase;
 }
-.pas-country .pas-shipping svg {
+.pas-shipping svg {
   width: 20px;
   height: 20px;
 }
 .pas-shipping .pas-shipping-text {
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .pa-seasons {
   display: flex;

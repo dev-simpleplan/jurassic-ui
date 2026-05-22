@@ -95,8 +95,14 @@ function initVariantLogic(card) {
         }
       }
 
-      if (weightText && variant.dataset.unit) {
-        weightText.textContent = variant.dataset.unit;
+      if (weightText) {
+        if (variant.dataset.unit) {
+          weightText.textContent = variant.dataset.unit;
+          weightText.style.display = '';
+        } else {
+          weightText.textContent = '';
+          weightText.style.display = 'none';
+        }
       }
 
       if (inventoryText) {

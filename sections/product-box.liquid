@@ -267,12 +267,10 @@
                           {% endif %}
                         </div>
 
-                        <div class="pd-bottom">
+                        <div class="pd-bottom" {% unless selected_variant.unit_price_measurement %}style="display:none;"{% endunless %}>
                           <span class="sell-price-variant-perkg">
                             {% if selected_variant.unit_price_measurement %}
                               {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
-                            {% else %}
-                              {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
                             {% endif %}
                           </span>
                         </div>
@@ -650,14 +648,12 @@
                                         {% endif %}
                                       </div>
                                     </div>
+                                    {% if matched_variant.unit_price_measurement %}
                                     <div class="vv-peices">
                                       {% assign currency_suffix = cart.currency.symbol %}
-                                      {% if matched_variant.unit_price_measurement %}
-                                        {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
-                                      {% else %}
-                                        {{ matched_variant.price | money_without_currency }} {{ currency_suffix }} / unit
-                                      {% endif %}
+                                      {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
                                     </div>
+                                    {% endif %}
                                   </li>
                                 {% endfor %}
                               </ul>
@@ -1255,6 +1251,7 @@
       const sellPriceEl = priceWrap.querySelector('.sell-price');
       const comparePriceEl = priceWrap.querySelector('.real-price');
       const unitPriceEl = priceWrap.querySelector('.sell-price-variant-perkg');
+      const unitPriceWrap = unitPriceEl?.closest('.pd-bottom');
       const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
       const price = this.currentVariant.price;
@@ -1289,12 +1286,15 @@
       }
 
       if (unitPriceEl) {
-        if (this.currentVariant.unit_price_reference_unit) {
+        if (this.currentVariant.unit_price && this.currentVariant.unit_price_reference_unit) {
           const cleanUnitPrice = formatMoneySafe(this.currentVariant.unit_price).replace(/[^\d.,]/g, '').trim();
           unitPriceEl.textContent = `${cleanUnitPrice}${currencySuffix} / ${this.currentVariant.unit_price_reference_unit}`;
+          unitPriceEl.style.display = '';
+          if (unitPriceWrap) unitPriceWrap.style.display = '';
         } else {
-          const cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
-          unitPriceEl.textContent = `${cleanPrice}${currencySuffix} / unit`;
+          unitPriceEl.textContent = '';
+          unitPriceEl.style.display = 'none';
+          if (unitPriceWrap) unitPriceWrap.style.display = 'none';
         }
       }
     }
@@ -1433,6 +1433,9 @@
   <script>
       $(document).ready(function () {
     const $mainSlider = $('.prod-main-image');
+    const $galleryWrap = $('.pro-right-side');
+    const $prevArrow = $galleryWrap.find('.custom-prev');
+    const $nextArrow = $galleryWrap.find('.custom-next');
     const updateGalleryCounter = (event, slick, currentSlide) => {
       const counter = document.querySelector('.product-gallery-counter');
       if (!counter || !slick) return;
@@ -1445,7 +1448,29 @@
       if (totalEl) totalEl.textContent = slick.slideCount;
     };
 
-    $mainSlider.on('init reInit afterChange', updateGalleryCounter);
+    const updateGalleryArrowState = (event, slick, currentSlide) => {
+      if (!slick) return;
+
+      const currentIndex = typeof currentSlide === 'number' ? currentSlide : slick.currentSlide || 0;
+      const lastIndex = Math.max((slick.slideCount || 1) - 1, 0);
+      const atStart = currentIndex <= 0;
+      const atEnd = currentIndex >= lastIndex;
+
+      $prevArrow
+        .toggleClass('disabled', atStart)
+        .prop('disabled', atStart)
+        .attr('aria-disabled', atStart ? 'true' : 'false');
+
+      $nextArrow
+        .toggleClass('disabled', atEnd)
+        .prop('disabled', atEnd)
+        .attr('aria-disabled', atEnd ? 'true' : 'false');
+    };
+
+    $mainSlider.on('init reInit afterChange', (event, slick, currentSlide) => {
+      updateGalleryCounter(event, slick, currentSlide);
+      updateGalleryArrowState(event, slick, currentSlide);
+    });
 
     $mainSlider.slick({
       slidesToShow: 1,
@@ -1483,8 +1508,14 @@
       ]
     });
 
-    $('.custom-prev').click(() => $('.prod-main-image').slick('slickPrev'));
-    $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
+    $prevArrow.click(function () {
+      if ($(this).hasClass('disabled')) return;
+      $mainSlider.slick('slickPrev');
+    });
+    $nextArrow.click(function () {
+      if ($(this).hasClass('disabled')) return;
+      $mainSlider.slick('slickNext');
+    });
 
     const goToVariantMedia = (mediaId) => {
       if (!mediaId) return;

@@ -288,12 +288,10 @@
                           {% endif %}
                         </div>
 
-                        <div class="pd-bottom">
+                        <div class="pd-bottom" {% unless selected_variant.unit_price_measurement %}style="display:none;"{% endunless %}>
                           <span class="sell-price-variant-perkg">
                             {% if selected_variant.unit_price_measurement %}
                               {{ selected_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ selected_variant.unit_price_measurement.reference_unit }}
-                            {% else %}
-                              {{ selected_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
                             {% endif %}
                           </span>
                         </div>
@@ -642,16 +640,14 @@
                                           {% endif %}
                                       </div>
                                     </div>
+                                    {% if matched_variant.unit_price_measurement %}
                                     <div class="vv-peices">
                                         {% comment %} This gets the actual symbol ($, €, Rs.) directly from your store settings {% endcomment %}
                                         {% assign currency_suffix = cart.currency.symbol %}
 
-                                        {% if matched_variant.unit_price_measurement %}
-                                          {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
-                                        {% else %}
-                                          {{ matched_variant.price | money_without_currency }} {{ currency_suffix }} / unit
-                                        {% endif %}
+                                        {{ matched_variant.unit_price | money_without_currency }} {{ currency_suffix }} / {{ matched_variant.unit_price_measurement.reference_unit }}
                                       </div>
+                                    {% endif %}
                                   </li>
                                 {% endfor %}
                               </ul>
@@ -799,7 +795,8 @@
 {% assign taste_profile_body = product.metafields.custom.taste_profile_body_text.value | default: product.metafields.custom.taste_profile_body_text %}
 {% assign country_season_data = product.metafields.custom.country_season.value %}
 {% assign season_meta = country_season_data.season.value %}
-{% assign product_shipped_by = product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
+{% assign seasonal_high_months = season_meta.high_season_month.value | default: '' | strip %}
+{% assign seasonal_low_months = season_meta.low_season_month.value | default: '' | strip %}
 {% assign show_technical_details = false %}
 {% if technical_details_data != blank %}
   {% assign show_technical_details = true %}
@@ -829,7 +826,7 @@
   {% assign show_taste_profile = true %}
 {% endif %}
 {% assign show_seasonal = false %}
-{% if season_meta != blank or product_shipped_by != blank %}
+{% if seasonal_high_months != blank or seasonal_low_months != blank %}
   {% assign show_seasonal = true %}
 {% endif %}
 {% assign show_product_accordion = false %}
@@ -1094,7 +1091,7 @@
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
-            {{ 'sections.product.seasonal_calendar_sourcing' | t }}
+            {{ section.settings.seasonal_heading }}
           </div>
           <div class="pa-icon">
             {%- render 'product-accordian-icon' -%}
@@ -1173,35 +1170,6 @@
             </div>
             <div class="pas-country">
               <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-              {% assign shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
-              {% assign shipped_by_key = shipped_by %}
-              {% if shipped_by == 'luft' or shipped_by == 'air' %}
-                {% assign shipped_by_key = 'air' %}
-              {% elsif shipped_by == 'see' or shipped_by == 'sea' %}
-                {% assign shipped_by_key = 'sea' %}
-              {% elsif shipped_by == 'straße' or shipped_by == 'strasse' or shipped_by == 'road' %}
-                {% assign shipped_by_key = 'road' %}
-              {% endif %}
-              <div
-                class="pas-shipping"
-                data-product-shipping
-                data-shipping-value="{{ shipped_by_key }}"
-                data-shipping-label="{{ shipped_by }}">
-                <span class="pas-shipping-icon" data-shipping-icon>
-                  {% if shipped_by_key == 'air' %}
-                    {% render 'air' %}
-                  {% elsif shipped_by_key == 'sea' %}
-                    {% render 'sea' %}
-                  {% elsif shipped_by_key == 'road' %}
-                    {% render 'road' %}
-                  {% endif %}
-                </span>
-                <span class="pas-shipping-text" data-shipping-text>
-                  {% if shipped_by != blank %}
-                    Shipped by {{ shipped_by }}
-                  {% endif %}
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -1222,6 +1190,15 @@
           <div class="pa-div">
               <div class="product-desc">
                 {% comment %} {{ product.metafields.custom.technical_details | metafield_tag }} {% endcomment %}
+                 {% assign shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
+                 {% assign shipped_by_key = shipped_by %}
+                 {% if shipped_by == 'luft' or shipped_by == 'air' %}
+                   {% assign shipped_by_key = 'air' %}
+                 {% elsif shipped_by == 'see' or shipped_by == 'sea' %}
+                   {% assign shipped_by_key = 'sea' %}
+                 {% elsif shipped_by == 'straße' or shipped_by == 'strasse' or shipped_by == 'road' %}
+                   {% assign shipped_by_key = 'road' %}
+                 {% endif %}
                  <div class="tech-list">
                     {%- if product.metafields.custom.alternative_name != blank -%}
                       <div class="tech-item">
@@ -1234,6 +1211,30 @@
                       <div class="tech-item">
                         <div class="ti-name">{{ 'sections.product.origin' | t }}:</div>
                         <div class="ti-data">{{ product.metafields.custom.country_of_origin.value.country_name }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if shipped_by != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">Shipping:</div>
+                        <div class="ti-data">
+                          <div
+                            class="pas-shipping"
+                            data-product-shipping
+                            data-shipping-value="{{ shipped_by_key }}"
+                            data-shipping-label="{{ shipped_by }}">
+                            <span class="pas-shipping-icon" data-shipping-icon>
+                              {% if shipped_by_key == 'air' %}
+                                {% render 'air' %}
+                              {% elsif shipped_by_key == 'sea' %}
+                                {% render 'sea' %}
+                              {% elsif shipped_by_key == 'road' %}
+                                {% render 'road' %}
+                              {% endif %}
+                            </span>
+                            <span class="pas-shipping-text" data-shipping-text>Shipped by {{ shipped_by }}</span>
+                          </div>
+                        </div>
                       </div>
                     {%- endif -%}
                     
@@ -1626,6 +1627,7 @@ class VariantSelector extends HTMLElement {
     const sellPriceEl = priceWrap.querySelector('.sell-price');
     const comparePriceEl = priceWrap.querySelector('.real-price');
     const unitPriceEl = priceWrap.querySelector('.sell-price-variant-perkg');
+    const unitPriceWrap = unitPriceEl?.closest('.pd-bottom');
     // Target the correct class name for your badge
     const percentBadge = priceWrap.querySelector('[data-price-off-percent]');
 
@@ -1666,12 +1668,15 @@ class VariantSelector extends HTMLElement {
 
     /* 4. Update Unit Price / Per Unit Line */
     if (unitPriceEl) {
-      if (this.currentVariant.unit_price_reference_unit) {
+      if (this.currentVariant.unit_price && this.currentVariant.unit_price_reference_unit) {
         const cleanUnitPrice = formatMoneySafe(this.currentVariant.unit_price).replace(/[^\d.,]/g, '').trim();
         unitPriceEl.textContent = `${cleanUnitPrice}${currencySuffix} / ${this.currentVariant.unit_price_reference_unit}`;
+        unitPriceEl.style.display = '';
+        if (unitPriceWrap) unitPriceWrap.style.display = '';
       } else {
-        const cleanPrice = formatMoneySafe(price).replace(/[^\d.,]/g, '').trim();
-        unitPriceEl.textContent = `${cleanPrice}${currencySuffix} / unit`;
+        unitPriceEl.textContent = '';
+        unitPriceEl.style.display = 'none';
+        if (unitPriceWrap) unitPriceWrap.style.display = 'none';
       }
     }
   }
@@ -1807,6 +1812,9 @@ document.addEventListener('DOMContentLoaded', () => {
 ====================================================== */
 $(document).ready(function () {
   const $mainSlider = $('.prod-main-image');
+  const $galleryWrap = $('.pro-right-side');
+  const $prevArrow = $galleryWrap.find('.custom-prev');
+  const $nextArrow = $galleryWrap.find('.custom-next');
   const updateGalleryCounter = (event, slick, currentSlide) => {
     const counter = document.querySelector('.product-gallery-counter');
     if (!counter || !slick) return;
@@ -1819,7 +1827,29 @@ $(document).ready(function () {
     if (totalEl) totalEl.textContent = slick.slideCount;
   };
 
-  $mainSlider.on('init reInit afterChange', updateGalleryCounter);
+  const updateGalleryArrowState = (event, slick, currentSlide) => {
+    if (!slick) return;
+
+    const currentIndex = typeof currentSlide === 'number' ? currentSlide : slick.currentSlide || 0;
+    const lastIndex = Math.max((slick.slideCount || 1) - 1, 0);
+    const atStart = currentIndex <= 0;
+    const atEnd = currentIndex >= lastIndex;
+
+    $prevArrow
+      .toggleClass('disabled', atStart)
+      .prop('disabled', atStart)
+      .attr('aria-disabled', atStart ? 'true' : 'false');
+
+    $nextArrow
+      .toggleClass('disabled', atEnd)
+      .prop('disabled', atEnd)
+      .attr('aria-disabled', atEnd ? 'true' : 'false');
+  };
+
+  $mainSlider.on('init reInit afterChange', (event, slick, currentSlide) => {
+    updateGalleryCounter(event, slick, currentSlide);
+    updateGalleryArrowState(event, slick, currentSlide);
+  });
 
   $mainSlider.slick({
     slidesToShow: 1,
@@ -1858,8 +1888,14 @@ $(document).ready(function () {
     ]
   });
 
-  $('.custom-prev').click(() => $('.prod-main-image').slick('slickPrev'));
-  $('.custom-next').click(() => $('.prod-main-image').slick('slickNext'));
+  $prevArrow.click(function () {
+    if ($(this).hasClass('disabled')) return;
+    $mainSlider.slick('slickPrev');
+  });
+  $nextArrow.click(function () {
+    if ($(this).hasClass('disabled')) return;
+    $mainSlider.slick('slickNext');
+  });
 
   const goToVariantMedia = (mediaId) => {
     if (!mediaId) return;
@@ -2116,7 +2152,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "type": "text",
         "id": "seasonal_heading",
         "label": "Seasonal Information Label",
-        "default": "seasonal calendar and sourcing"
+        "default": "Seasonal Calendar"
       }, 
       {
         "type": "text",

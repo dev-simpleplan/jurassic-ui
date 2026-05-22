@@ -257,11 +257,9 @@
                 </span>
               </div>
 
-              <p class="fc_weight">
+              <p class="fc_weight" {% unless current_variant.unit_price_measurement %}style="display:none;"{% endunless %}>
                 {% if current_variant.unit_price_measurement %}
                   {{ current_variant.unit_price | money_without_currency }} {{ cart.currency.symbol }} / {{ current_variant.unit_price_measurement.reference_unit }}
-                {% else %}
-                  {{ current_variant.price | money_without_currency }} {{ cart.currency.symbol }} / unit
                 {% endif %}
               </p>
 

@@ -37,8 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
       }
       
-      // Update unit price
-      card.querySelector('.fc_weight').textContent = unitPrice;
+      // Update unit price only when Shopify provides real unit measurement data.
+      const unitPriceEl = card.querySelector('.fc_weight');
+      if (unitPriceEl) {
+        if (unitPrice) {
+          unitPriceEl.textContent = unitPrice;
+          unitPriceEl.style.display = '';
+        } else {
+          unitPriceEl.textContent = '';
+          unitPriceEl.style.display = 'none';
+        }
+      }
       
       // Update inventory text
       const inventoryQty = parseInt(inventory, 10) || 0;

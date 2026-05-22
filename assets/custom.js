@@ -78,7 +78,11 @@ document.addEventListener('click', (e) => {
     const selectedTitle = (item.dataset.selectedTitle || item.querySelector('.item-title')?.childNodes[0]?.textContent || item.querySelector('.item-title')?.textContent || '').trim();
     display.innerHTML = `<b>${selectedTitle}</b>`;
 
-    const { id, price, compare, unit, inventory } = item.dataset;
+    const { id, price, compare, unit, inventory, available } = item.dataset;
+    const inventoryQty = parseInt(inventory, 10) || 0;
+    const isVariantAvailable = typeof available === 'undefined'
+      ? inventoryQty > 0
+      : available === 'true';
 
     if (hiddenInput) hiddenInput.value = id;
     syncSelectedDropdownItem(parent);
@@ -102,6 +106,7 @@ document.addEventListener('click', (e) => {
           unitEl.innerText = unit;
           unitEl.style.display = 'inline-block';
         } else {
+          unitEl.innerText = '';
           unitEl.style.display = 'none';
         }
       }
@@ -142,9 +147,8 @@ document.addEventListener('click', (e) => {
 
     const trustText = card.querySelector('.fc_trust_text p:first-child');
     if (trustText) {
-      const inventoryQty = parseInt(inventory, 10) || 0;
-      trustText.innerText = getInventoryMessage(inventoryQty, inventoryQty > 0);
-      inventoryQty > 0 && inventoryQty < 100
+      trustText.innerText = getInventoryMessage(inventoryQty, isVariantAvailable);
+      isVariantAvailable && inventoryQty > 0 && inventoryQty < 100
         ? trustText.classList.add('low-stock')
         : trustText.classList.remove('low-stock');
     }
@@ -156,7 +160,7 @@ document.addEventListener('click', (e) => {
     if (addFormInput) addFormInput.value = id;
     if (addWrap) {
       addWrap.dataset.variantId = id;
-      addWrap.dataset.available = parseInt(inventory, 10) > 0 ? 'true' : 'false';
+      addWrap.dataset.available = isVariantAvailable ? 'true' : 'false';
       addWrap.dataset.inventory = inventory;
     }
 
@@ -164,7 +168,7 @@ document.addEventListener('click', (e) => {
       const label = addBtn.querySelector('.btn-label');
       addBtn.classList.remove('loading', 'success');
 
-      if (parseInt(inventory, 10) > 0) {
+      if (isVariantAvailable) {
         addBtn.disabled = false;
         addBtn.classList.remove('out-of-stock');
         if (label) label.textContent = window.themeStrings.addToCart;

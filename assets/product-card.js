@@ -140,7 +140,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (image && mainImg) mainImg.src = image;
 
-        if (perKgfinal && perKg) perKg.textContent = perKgfinal;
+        if (perKg) {
+          if (perKgfinal) {
+            perKg.textContent = perKgfinal;
+            perKg.style.display = "";
+          } else {
+            perKg.textContent = "";
+            perKg.style.display = "none";
+          }
+        }
       });
     });
   });
