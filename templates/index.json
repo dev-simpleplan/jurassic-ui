@@ -111,71 +111,43 @@
     "video-carousel": {
       "type": "video-carousel",
       "blocks": {
-        "ugc_videos_Qdk8Yi": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014475612.mp4"
-          }
-        },
         "ugc_videos_NrQzL4": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/Discovery box UGC DE Tik Tok-edited-20260521.MP4"
-          }
-        },
-        "ugc_videos_kBLy7n": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/202108-UGC-Anna-Kollmann-DragonFruit-Dried-Mango-Cashew-Medjool-Date-DE.MOV"
-          }
-        },
-        "ugc_videos_qLLTfF": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20210624-Emma-Silke-Fruit Discovery Box Facebook Ad-edited.mp4"
-          }
-        },
-        "ugc_videos_3TBr6y": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014480167.mp4"
-          }
-        },
-        "ugc_videos_inDUwA": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20221025-UGC-Testimonial DE Julia Neumeister-edited.mp4"
-          }
-        },
-        "ugc_videos_Li7MhQ": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/Discoverybox Mareike Backes DE-edited-20260521.MP4"
-          }
-        },
-        "ugc_videos_QiwtLT": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/video_1p94fh (1).mp4"
+            "video_link": "shopify://files/videos/🥭👑 Mangosteen trifft Passionsfrucht – die Königin küsst die Power 💛✨Die zarte, cremige Mangos.mp4"
           }
         },
         "ugc_videos_UXLNi4": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
+            "video_link": "shopify://files/videos/🍈✨ Jackfrucht – ein echtes NaturwunderHier siehst du, wie Sonja eine perfekt gereifte Jackfruch.mp4"
+          }
+        },
+        "ugc_videos_kBLy7n": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Papaya Golden 💛🥭 – klein, süß & voller NährstoffeDiese kleine Power-Frucht in Mango-Größe ist .mp4"
+          }
+        },
+        "ugc_videos_3TBr6y": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Die Mon Thong Durian – auch bekannt als „Golden Pillow“ 💛 – gilt als der König unter den Durian.mp4"
+          }
+        },
+        "ugc_videos_inDUwA": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Goldgelb, blumig, unvergesslich. 💛🥭Die legendäre Nam Dok Mai aus Thailand – natürlich süß mit  (1).mp4"
           }
         }
       },
       "block_order": [
-        "ugc_videos_Qdk8Yi",
         "ugc_videos_NrQzL4",
+        "ugc_videos_UXLNi4",
         "ugc_videos_kBLy7n",
-        "ugc_videos_qLLTfF",
         "ugc_videos_3TBr6y",
-        "ugc_videos_inDUwA",
-        "ugc_videos_Li7MhQ",
-        "ugc_videos_QiwtLT",
-        "ugc_videos_UXLNi4"
+        "ugc_videos_inDUwA"
       ],
       "settings": {
         "heading_top": "Bite into the",
@@ -255,7 +227,7 @@
         "collection_block_pYmrTj"
       ],
       "settings": {
-        "heading": "Main Categories"
+        "heading": "All Categories"
       }
     },
     "spacer1": {
@@ -390,12 +362,12 @@
         "img1": "shopify://shop_images/raw_1.jpg",
         "head1": "Raw.",
         "para1": "Naturally grown and harvested when truly ripe. No artificial ripening, no unnecessary processing, just real fruits full of flavor.",
-        "img2": "shopify://shop_images/Leon-DragonFruit.jpg",
+        "img2": "shopify://shop_images/Leon-Child-Dragonfruit-Forest-09730-07072018-JurassicFruit-JurassicFruit.jpg",
         "head2": "Real.",
         "para2": "Directly sourced from small farms and delivered 2 to 3 times faster than normal supply chains, for fruits that taste fresher and more alive.",
-        "img3": "shopify://shop_images/d679fbf00529ffdcf6ce236166080b2927d347ba.jpg",
+        "img3": "shopify://shop_images/Discovery-Box-Geo-Sonja-Mobile_bbaf045b-8fb4-46ae-963f-40a18fe6fc28.jpg",
         "head3": "Roar!",
-        "para3": "Grown to be shared, discovered, and remembered. Because few things feel as alive as eating a truly great fruit.",
+        "para3": "Grown to be shared, discovered, and remembered. Every fruit is a celebration of nature, human passion, and the joy of life itself.",
         "cta_link": "about",
         "cta_txt": "discover our story"
       }
