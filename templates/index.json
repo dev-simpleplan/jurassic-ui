@@ -117,28 +117,22 @@
             "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014475612.mp4"
           }
         },
-        "ugc_videos_qLLTfF": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20210624-Emma-Silke-Fruit Discovery Box Facebook Ad-edited.mp4"
-          }
-        },
         "ugc_videos_NrQzL4": {
           "type": "ugc-videos",
           "settings": {
             "video_link": "shopify://files/videos/Discovery box UGC DE Tik Tok-edited.mp4"
           }
         },
-        "ugc_videos_UXLNi4": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
-          }
-        },
         "ugc_videos_kBLy7n": {
           "type": "ugc-videos",
           "settings": {
-            "video_link": "shopify://files/videos/20221007-UGC-Anna-Kollmann-Mango-mysoul_hassomethingtosay_1664897795756.mp4"
+            "video_link": "shopify://files/videos/202108-UGC-Anna-Kollmann-DragonFruit-Dried-Mango-Cashew-Medjool-Date-DE.MOV"
+          }
+        },
+        "ugc_videos_qLLTfF": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/20210624-Emma-Silke-Fruit Discovery Box Facebook Ad-edited.mp4"
           }
         },
         "ugc_videos_3TBr6y": {
@@ -153,22 +147,35 @@
             "video_link": "shopify://files/videos/20221025-UGC-Testimonial DE Julia Neumeister-edited.mp4"
           }
         },
+        "ugc_videos_Li7MhQ": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Discoverybox Mareike Backes DE-edited-20260521.MP4"
+          }
+        },
         "ugc_videos_QiwtLT": {
           "type": "ugc-videos",
           "settings": {
             "video_link": "shopify://files/videos/video_1p94fh (1).mp4"
           }
+        },
+        "ugc_videos_UXLNi4": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
+          }
         }
       },
       "block_order": [
         "ugc_videos_Qdk8Yi",
-        "ugc_videos_qLLTfF",
         "ugc_videos_NrQzL4",
-        "ugc_videos_UXLNi4",
         "ugc_videos_kBLy7n",
+        "ugc_videos_qLLTfF",
         "ugc_videos_3TBr6y",
         "ugc_videos_inDUwA",
-        "ugc_videos_QiwtLT"
+        "ugc_videos_Li7MhQ",
+        "ugc_videos_QiwtLT",
+        "ugc_videos_UXLNi4"
       ],
       "settings": {
         "heading_top": "Bite into the",
