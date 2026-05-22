@@ -524,6 +524,14 @@
         "section_heading": "​​The Hands That Harvest Paradise"
       }
     },
+    "headingsec_eKCbzF": {
+      "type": "headingsec",
+      "name": "headingsec",
+      "settings": {
+        "heading": "Customer reviews",
+        "para": ""
+      }
+    },
     "177139754036d00b41": {
       "type": "apps",
       "blocks": {
@@ -607,26 +615,6 @@
       "settings": {
         "spacer_height": 90
       }
-    },
-    "custom_section_rXWFnY": {
-      "type": "custom-section",
-      "blocks": {
-        "text_XNhbhj": {
-          "type": "text",
-          "name": "t:general.text",
-          "settings": {
-            "text": "Customer reviews",
-            "text_style": "text--title",
-            "alignment": "left"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_XNhbhj"
-      ],
-      "name": "t:general.custom_section",
-      "settings": {}
     }
   },
   "order": [
@@ -647,7 +635,7 @@
     "image_text_scroll_qVRxF4",
     "left-image-with-items",
     "jurassic_way_ftQp3x",
-    "custom_section_rXWFnY",
+    "headingsec_eKCbzF",
     "177139754036d00b41",
     "spacer_FdUt3c",
     "spacer_7pD8rp",
