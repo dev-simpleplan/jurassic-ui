@@ -14,6 +14,22 @@
     "header": {
       "type": "header",
       "blocks": {
+        "nav_menu_right_wHwG97": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "start-here",
+            "product_list_heading": "",
+            "product_list": []
+          }
+        },
+        "nav_menu_right_CfQzEw": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "boxes-direct-link",
+            "product_list_heading": "",
+            "product_list": []
+          }
+        },
         "nav_menu_right_g6gmcL": {
           "type": "nav_menu_right",
           "settings": {
@@ -25,19 +41,9 @@
             ]
           }
         },
-        "nav_menu_right_krGBVm": {
-          "type": "nav_menu_right",
-          "settings": {
-            "nav_items_right": "boxes",
-            "product_list_heading": "",
-            "product_list": [
-              "lala-box",
-              "exotic-fruit-discovery-box"
-            ]
-          }
-        },
         "nav_menu_right_EMiXFk": {
           "type": "nav_menu_right",
+          "disabled": true,
           "settings": {
             "nav_items_right": "buy-again",
             "product_list_heading": "",
@@ -55,8 +61,9 @@
         }
       },
       "block_order": [
+        "nav_menu_right_wHwG97",
+        "nav_menu_right_CfQzEw",
         "nav_menu_right_g6gmcL",
-        "nav_menu_right_krGBVm",
         "nav_menu_right_EMiXFk",
         "nav_menu_right_tATRCL"
       ],
