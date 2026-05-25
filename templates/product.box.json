@@ -494,6 +494,14 @@
         "spacer_height": 80
       }
     },
+    "headingsec_xm9gbY": {
+      "type": "headingsec",
+      "name": "headingsec",
+      "settings": {
+        "heading": "Customer reviews",
+        "para": ""
+      }
+    },
     "17789334995fba728d": {
       "type": "apps",
       "blocks": {
@@ -596,6 +604,7 @@
     "usp-ticker",
     "left-image-with-items",
     "spacer_2",
+    "headingsec_xm9gbY",
     "17789334995fba728d",
     "spacer_Nh7Bjn",
     "faq",
