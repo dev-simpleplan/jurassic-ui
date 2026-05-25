@@ -1232,7 +1232,7 @@
                                 {% render 'road' %}
                               {% endif %}
                             </span>
-                            <span class="pas-shipping-text" data-shipping-text>Shipped by {{ shipped_by }}</span>
+                            <span class="pas-shipping-text" data-shipping-text>by {{ shipped_by }}</span>
                           </div>
                         </div>
                       </div>
@@ -1701,7 +1701,7 @@ class VariantSelector extends HTMLElement {
 
     if (textEl) {
       textEl.textContent = shippingLabel
-        ? `Shipped by ${shippingLabel}`
+        ? `by ${shippingLabel}`
         : '';
     }
   }
