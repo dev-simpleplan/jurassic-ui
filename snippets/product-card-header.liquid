@@ -1,4 +1,15 @@
 <div class="recommended-item">
+      {% assign product_title_suffix = '' %}
+      {% for cert in product.metafields.custom.certificate.value %}
+        {% if cert.system.handle == 'organic' %}
+          {% assign product_title_suffix = cert.key.value %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% assign product_display_title = product.title %}
+      {% if product_title_suffix != blank %}
+        {% assign product_display_title = product.title | append: ' ' | append: product_title_suffix %}
+      {% endif %}
       <div class="ri-img">
         <a href="{{ product.url }}" class="card-link"></a>
         {% assign images = product.images %}
@@ -48,7 +59,7 @@
             <div class="ri-image-items-bottom">
               <div class="ri-txt">
                 <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
-                <p class="rit-title">{{ product.title | truncate: 50 }}</p>
+                <p class="rit-title">{{ product_display_title | truncate: 50 }}</p>
               </div>
             </div>
           </div>

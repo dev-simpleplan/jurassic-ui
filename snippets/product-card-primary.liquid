@@ -20,6 +20,18 @@
   {% assign default_variant = product.variants.first %}
 {% endif %}
 
+{% assign product_title_suffix = '' %}
+{% for cert in product.metafields.custom.certificate.value %}
+  {% if cert.system.handle == 'organic' %}
+    {% assign product_title_suffix = cert.key.value %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% assign product_display_title = product.title %}
+{% if product_title_suffix != blank %}
+  {% assign product_display_title = product.title | append: ' ' | append: product_title_suffix %}
+{% endif %}
+
 {% assign has_available_variant = false %}
 {% for variant in product.variants %}
   {% if variant.available %}
@@ -164,9 +176,9 @@
       <p>{{ country }}</p>
     {% endif %}
   </div>
-</div>
+          </div>
           <p class="fc_product_title">
-            <a href="{{ product.url }}">{{ product.title | truncate: 50 }}</a>
+            <a href="{{ product.url }}">{{ product_display_title | truncate: 50 }}</a>
           </p>
         </div>
 
