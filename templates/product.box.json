@@ -235,6 +235,13 @@
         "third_image": "shopify://shop_images/UGC-naominoller-Winner-Giveaway-Rohvolution_3.jpg"
       }
     },
+    "pair_with_VRzrTA": {
+      "type": "pair-with",
+      "name": "Pair With",
+      "settings": {
+        "head": "You might also like"
+      }
+    },
     "spacer_D4C9kF": {
       "type": "spacer",
       "disabled": true,
@@ -321,13 +328,6 @@
         "heading": "What Explorers Are Saying"
       }
     },
-    "spacer_LKTbj6": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "three-icon-sec": {
       "type": "three-icon-sec",
       "blocks": {
@@ -364,34 +364,6 @@
         "bg-image": "shopify://shop_images/counter-bg.jpg",
         "heading": "The Honest Price Tag",
         "para": "Our prices are as clear as our produce—no hidden costs, just the best value."
-      }
-    },
-    "image_text_scroll_zrKkRq": {
-      "type": "image-text-scroll",
-      "disabled": true,
-      "name": "Durian Shape",
-      "settings": {
-        "heading": "Our story started with a durian",
-        "para": "And 3 simple principles",
-        "img1": "shopify://shop_images/raw_1.jpg",
-        "head1": "Raw.",
-        "para1": "As untouched as it gets — grown naturally, picked ripe. Nothing added, nothing rushed — just nature in its purest form.",
-        "img2": "shopify://shop_images/real.jpg",
-        "head2": "Real.",
-        "para2": "Flavors you can feel — straight from the source. Grown with care, never compromised, and always full of soul.",
-        "img3": "shopify://shop_images/roar.jpg",
-        "head3": "Roar!",
-        "para3": "The joy is wild — and made to be shared. Every bite connects you to something honest, rare, and alive.",
-        "cta_link": "",
-        "cta_txt": "discover our story"
-      }
-    },
-    "spacer_1": {
-      "type": "spacer",
-      "disabled": true,
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 140
       }
     },
     "usp-ticker": {
@@ -625,12 +597,10 @@
     "order_sample_4EfCUL",
     "spacer_tVjKyf",
     "three_image_box_menw3P",
+    "pair_with_VRzrTA",
     "spacer_D4C9kF",
     "reviews_dwN4k7",
-    "spacer_LKTbj6",
     "three-icon-sec",
-    "image_text_scroll_zrKkRq",
-    "spacer_1",
     "usp-ticker",
     "left-image-with-items",
     "spacer_2",
