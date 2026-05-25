@@ -2516,7 +2516,7 @@ footer::before {
 .footer-base {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 40px;
     width: 100%;
 }
