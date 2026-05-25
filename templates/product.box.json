@@ -235,13 +235,6 @@
         "third_image": "shopify://shop_images/UGC-naominoller-Winner-Giveaway-Rohvolution_3.jpg"
       }
     },
-    "pair_with_VRzrTA": {
-      "type": "pair-with",
-      "name": "Pair With",
-      "settings": {
-        "head": "You might also like"
-      }
-    },
     "spacer_D4C9kF": {
       "type": "spacer",
       "disabled": true,
@@ -597,7 +590,6 @@
     "order_sample_4EfCUL",
     "spacer_tVjKyf",
     "three_image_box_menw3P",
-    "pair_with_VRzrTA",
     "spacer_D4C9kF",
     "reviews_dwN4k7",
     "three-icon-sec",
