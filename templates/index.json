@@ -162,6 +162,12 @@
         "heading": "Main categories"
       }
     },
+    "spacer8": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 90
+      }
+    },
     "video-carousel": {
       "type": "video-carousel",
       "blocks": {
@@ -219,12 +225,6 @@
         "product_videos_metafield": "product_videos"
       }
     },
-    "spacer8": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "spacer6": {
       "type": "spacer",
       "settings": {
@@ -237,7 +237,7 @@
       "settings": {
         "collection": "dried-fruit",
         "heading": "Our bestsellers dried products",
-        "subheading": "As rare, wild and ripe as our fresh fruits. Those ones are perfect for snacking.",
+        "subheading": "As rare, wild and ripe as our fresh fruits. But those ones are perfect for snacking.",
         "cta_url": "shopify://collections/dried-fruit",
         "cta_text": "Explore Fresh Picks, Just In"
       }
