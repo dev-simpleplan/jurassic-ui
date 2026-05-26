@@ -49,8 +49,8 @@
       ],
       "settings": {
         "banner-bg": "shopify://shop_images/Farm-Durian-Kane-Mon-Thong-JavFre-Bali-Indonesia-6116-JurassicFruit-JurassicFruit.jpg",
-        "head": "Your Most Delicious Adventure on Earth",
-        "para": "From jungle farms to volcanic islands, Jurassic Fruit sources rare, wild-grown, nutrient-rich produce and delivers them straight to your door — for those hungry to taste the untamed.",
+        "head": "Your most delicious adventure on earth",
+        "para": "Discover how good life can feel when you eat fruit straight from the jungle.",
         "button_text": "start your journey",
         "button_link": "shopify://collections/fruit-boxes"
       }
@@ -321,6 +321,30 @@
         "spacer_height": 90
       }
     },
+    "durianShape": {
+      "type": "image-text-scroll",
+      "settings": {
+        "heading": "Why Jurassic Fruit?",
+        "para": "Some of the world’s best fruits have stayed unknown for far too long. And yes, some even look like they belong in the age of dinosaurs... Jurassic Fruit was built to bring them back to you, guided by three simple principles:",
+        "img1": "shopify://shop_images/raw_1.jpg",
+        "head1": "Raw.",
+        "para1": "Naturally grown and harvested when truly ripe. No artificial ripening, no unnecessary processing, just real fruits full of flavor.",
+        "img2": "shopify://shop_images/Leon-Child-Dragonfruit-Forest-09730-07072018-JurassicFruit-JurassicFruit.jpg",
+        "head2": "Real.",
+        "para2": "Directly sourced from small farms and delivered 2 to 3 times faster than normal supply chains, for fruits that taste fresher and more alive.",
+        "img3": "shopify://shop_images/Discovery-Box-Geo-Sonja-Mobile_bbaf045b-8fb4-46ae-963f-40a18fe6fc28.jpg",
+        "head3": "Roar!",
+        "para3": "Grown to be shared, discovered, and remembered. Because few things feel as alive as eating a truly great fruit.",
+        "cta_link": "about",
+        "cta_txt": "discover our story"
+      }
+    },
+    "spacer2": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 90
+      }
+    },
     "fresh": {
       "type": "fresh-every-week",
       "blocks": {
@@ -360,30 +384,6 @@
       "settings": {
         "heading": "Delivered fresh every week",
         "para": "Picked at peak ripeness and shipped without delay. So it reaches you fresh, ready to ripen naturally at home."
-      }
-    },
-    "spacer2": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
-    "durianShape": {
-      "type": "image-text-scroll",
-      "settings": {
-        "heading": "Why Jurassic Fruit?",
-        "para": "Some of the world’s best fruits have stayed unknown for far too long. And yes, some even look like they belong in the age of dinosaurs... Jurassic Fruit was built to bring them back to you, guided by three simple principles:",
-        "img1": "shopify://shop_images/raw_1.jpg",
-        "head1": "Raw.",
-        "para1": "Naturally grown and harvested when truly ripe. No artificial ripening, no unnecessary processing, just real fruits full of flavor.",
-        "img2": "shopify://shop_images/Leon-Child-Dragonfruit-Forest-09730-07072018-JurassicFruit-JurassicFruit.jpg",
-        "head2": "Real.",
-        "para2": "Directly sourced from small farms and delivered 2 to 3 times faster than normal supply chains, for fruits that taste fresher and more alive.",
-        "img3": "shopify://shop_images/Discovery-Box-Geo-Sonja-Mobile_bbaf045b-8fb4-46ae-963f-40a18fe6fc28.jpg",
-        "head3": "Roar!",
-        "para3": "Grown to be shared, discovered, and remembered. Because few things feel as alive as eating a truly great fruit.",
-        "cta_link": "about",
-        "cta_txt": "discover our story"
       }
     },
     "counter": {
