@@ -71,18 +71,6 @@
         "cta_text": "Explore Fresh Picks, Just In"
       }
     },
-    "bestseller_MEec7q": {
-      "type": "bestseller",
-      "disabled": true,
-      "name": "Bestseller",
-      "settings": {
-        "collection": "new",
-        "heading": "What's New",
-        "subheading": "Seasonal favorites",
-        "cta_url": "shopify://collections",
-        "cta_text": "Explore Fresh Picks, Just In"
-      }
-    },
     "spacer": {
       "type": "spacer",
       "settings": {
@@ -166,6 +154,23 @@
       }
     },
     "spacer8": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 90
+      }
+    },
+    "bestseller_MEec7q": {
+      "type": "bestseller",
+      "name": "Bestseller",
+      "settings": {
+        "collection": "new",
+        "heading": "Our customers' most loved dried products",
+        "subheading": "Seasonal favorites",
+        "cta_url": "shopify://collections/dates",
+        "cta_text": "Explore Fresh Picks, Just In"
+      }
+    },
+    "spacer6": {
       "type": "spacer",
       "settings": {
         "spacer_height": 90
@@ -524,13 +529,6 @@
         "heading": "What fruit explorers are saying"
       }
     },
-    "spacer6": {
-      "type": "spacer",
-      "disabled": true,
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "17640536864cbd5f05": {
       "type": "apps",
       "blocks": {
@@ -613,12 +611,13 @@
     "banner",
     "spacer0",
     "bestseller",
-    "bestseller_MEec7q",
     "spacer",
     "discovery-box",
     "spacer7",
     "video-carousel",
     "spacer8",
+    "bestseller_MEec7q",
+    "spacer6",
     "all-categories",
     "spacer1",
     "scroll-section",
@@ -629,7 +628,6 @@
     "counter",
     "spacer3",
     "reviews",
-    "spacer6",
     "17640536864cbd5f05",
     "spacer10",
     "video",
