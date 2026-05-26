@@ -159,23 +159,6 @@
         "spacer_height": 90
       }
     },
-    "bestseller_MEec7q": {
-      "type": "bestseller",
-      "name": "Bestseller",
-      "settings": {
-        "collection": "dried-fruit",
-        "heading": "Our bestsellers dried products",
-        "subheading": "As rare, wild and ripe as our fresh fruits. Those ones are perfect for snacking.",
-        "cta_url": "shopify://collections/dried-fruit",
-        "cta_text": "Explore Fresh Picks, Just In"
-      }
-    },
-    "spacer6": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "all-categories": {
       "type": "category-grid-sec",
       "blocks": {
@@ -240,6 +223,23 @@
       ],
       "settings": {
         "heading": "All Categories"
+      }
+    },
+    "bestseller_MEec7q": {
+      "type": "bestseller",
+      "name": "Bestseller",
+      "settings": {
+        "collection": "dried-fruit",
+        "heading": "Our bestsellers dried products",
+        "subheading": "As rare, wild and ripe as our fresh fruits. Those ones are perfect for snacking.",
+        "cta_url": "shopify://collections/dried-fruit",
+        "cta_text": "Explore Fresh Picks, Just In"
+      }
+    },
+    "spacer6": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 90
       }
     },
     "spacer1": {
@@ -616,9 +616,9 @@
     "spacer7",
     "video-carousel",
     "spacer8",
-    "bestseller_MEec7q",
-    "spacer6",
     "all-categories",
+    "spacer6",
+    "bestseller_MEec7q",
     "spacer1",
     "scroll-section",
     "spacer9",
