@@ -96,69 +96,6 @@
         "spacer_height": 90
       }
     },
-    "video-carousel": {
-      "type": "video-carousel",
-      "blocks": {
-        "ugc_videos_NrQzL4": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/202108-UGC-Anna-Kollmann-DragonFruit-Dried-Mango-Cashew-Medjool-Date-DE.MOV"
-          }
-        },
-        "ugc_videos_UXLNi4": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014475612.mp4"
-          }
-        },
-        "ugc_videos_kBLy7n": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/Discovery box UGC DE Tik Tok-edited-20260521.MP4"
-          }
-        },
-        "ugc_videos_3TBr6y": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
-          }
-        },
-        "ugc_videos_JG9Xta": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/UGC-Dani-In-The-Raw-edited-20260523.MP4"
-          }
-        },
-        "ugc_videos_inDUwA": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_link": "shopify://files/videos/20221025-UGC-Testimonial DE Julia Neumeister-edited.mp4"
-          }
-        }
-      },
-      "block_order": [
-        "ugc_videos_NrQzL4",
-        "ugc_videos_UXLNi4",
-        "ugc_videos_kBLy7n",
-        "ugc_videos_3TBr6y",
-        "ugc_videos_JG9Xta",
-        "ugc_videos_inDUwA"
-      ],
-      "settings": {
-        "heading_top": "Bite into the",
-        "heading_bottom": "wild with us",
-        "heading_color": "#1a1a1a",
-        "background_color": "#dbd7c8",
-        "use_product_videos": false,
-        "product_videos_metafield": "product_videos"
-      }
-    },
-    "spacer8": {
-      "type": "spacer",
-      "settings": {
-        "spacer_height": 90
-      }
-    },
     "all-categories": {
       "type": "category-grid-sec",
       "blocks": {
@@ -223,6 +160,69 @@
       ],
       "settings": {
         "heading": "Main categories"
+      }
+    },
+    "video-carousel": {
+      "type": "video-carousel",
+      "blocks": {
+        "ugc_videos_NrQzL4": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/202108-UGC-Anna-Kollmann-DragonFruit-Dried-Mango-Cashew-Medjool-Date-DE.MOV"
+          }
+        },
+        "ugc_videos_UXLNi4": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/StorySaver.net-partof.ju-Video-1779014475612.mp4"
+          }
+        },
+        "ugc_videos_kBLy7n": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/Discovery box UGC DE Tik Tok-edited-20260521.MP4"
+          }
+        },
+        "ugc_videos_3TBr6y": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
+          }
+        },
+        "ugc_videos_JG9Xta": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/UGC-Dani-In-The-Raw-edited-20260523.MP4"
+          }
+        },
+        "ugc_videos_inDUwA": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/20221025-UGC-Testimonial DE Julia Neumeister-edited.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "ugc_videos_NrQzL4",
+        "ugc_videos_UXLNi4",
+        "ugc_videos_kBLy7n",
+        "ugc_videos_3TBr6y",
+        "ugc_videos_JG9Xta",
+        "ugc_videos_inDUwA"
+      ],
+      "settings": {
+        "heading_top": "Bite into the",
+        "heading_bottom": "wild with us",
+        "heading_color": "#1a1a1a",
+        "background_color": "#dbd7c8",
+        "use_product_videos": false,
+        "product_videos_metafield": "product_videos"
+      }
+    },
+    "spacer8": {
+      "type": "spacer",
+      "settings": {
+        "spacer_height": 90
       }
     },
     "spacer6": {
@@ -614,9 +614,9 @@
     "spacer",
     "discovery-box",
     "spacer7",
-    "video-carousel",
-    "spacer8",
     "all-categories",
+    "spacer8",
+    "video-carousel",
     "spacer6",
     "bestseller_MEec7q",
     "spacer1",
