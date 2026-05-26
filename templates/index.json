@@ -305,6 +305,7 @@
         "slide3_UzHckJ",
         "slide4_hq3aeX"
       ],
+      "disabled": true,
       "settings": {
         "section_heading": "This Is What Wild Tastes Like",
         "section_subheading": "Taste the difference in every bite, harvested at the peak of ripeness, delivered at the peak of freshness."
@@ -312,6 +313,7 @@
     },
     "spacer9": {
       "type": "spacer",
+      "disabled": true,
       "custom_css": [
         "@media (max-width: 767px) {}"
       ],
@@ -622,9 +624,9 @@
     "spacer1",
     "scroll-section",
     "spacer9",
-    "fresh",
-    "spacer2",
     "durianShape",
+    "spacer2",
+    "fresh",
     "counter",
     "spacer3",
     "reviews",
