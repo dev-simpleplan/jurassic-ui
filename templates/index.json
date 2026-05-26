@@ -163,10 +163,10 @@
       "type": "bestseller",
       "name": "Bestseller",
       "settings": {
-        "collection": "new",
-        "heading": "Our customers' most loved dried products",
-        "subheading": "Seasonal favorites",
-        "cta_url": "shopify://collections/dates",
+        "collection": "dried-fruit",
+        "heading": "Our bestsellers dried products",
+        "subheading": "As rare, wild and ripe as our fresh fruits. Those ones are perfect for snacking.",
+        "cta_url": "shopify://collections/dried-fruit",
         "cta_text": "Explore Fresh Picks, Just In"
       }
     },
