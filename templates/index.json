@@ -65,7 +65,7 @@
       "type": "bestseller",
       "settings": {
         "collection": "best-seller",
-        "heading": "What’s Best This Week",
+        "heading": "What’s best this week",
         "subheading": "These are the four fruits we’re most excited about this week. You’ll understand why after the first bite.",
         "cta_url": "shopify://collections/fruit",
         "cta_text": "All fruits in season"
@@ -236,10 +236,10 @@
       "name": "Bestseller",
       "settings": {
         "collection": "dried-fruit",
-        "heading": "Our bestsellers dried products",
-        "subheading": "As rare, wild and ripe as our fresh fruits. But those ones are perfect for snacking.",
+        "heading": "Our most loved dried fruits",
+        "subheading": "Just as wild and flavorful as our fresh fruits, but made for snacking.",
         "cta_url": "shopify://collections/dried-fruit",
-        "cta_text": "Explore Fresh Picks, Just In"
+        "cta_text": "Jungle Snacks"
       }
     },
     "spacer1": {
