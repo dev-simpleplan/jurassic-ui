@@ -135,6 +135,12 @@
             "video_link": "shopify://files/videos/20220523-UGC-Young-Coconut-Rohvolution-DE.mp4"
           }
         },
+        "ugc_videos_JG9Xta": {
+          "type": "ugc-videos",
+          "settings": {
+            "video_link": "shopify://files/videos/UGC-Dani-In-The-Raw-edited-20260523.MP4"
+          }
+        },
         "ugc_videos_inDUwA": {
           "type": "ugc-videos",
           "settings": {
@@ -147,6 +153,7 @@
         "ugc_videos_UXLNi4",
         "ugc_videos_kBLy7n",
         "ugc_videos_3TBr6y",
+        "ugc_videos_JG9Xta",
         "ugc_videos_inDUwA"
       ],
       "settings": {
