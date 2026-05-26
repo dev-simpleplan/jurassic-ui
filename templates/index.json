@@ -66,9 +66,9 @@
       "settings": {
         "collection": "best-seller",
         "heading": "What’s Best This Week",
-        "subheading": "Discover fruits that are fresh, and entirely worth the adventure – every week, our team curates the four most flavourful, in-season picks.",
+        "subheading": "These are the four fruits we’re most excited about this week. You’ll understand why after the first bite.",
         "cta_url": "shopify://collections/fruit",
-        "cta_text": "Explore Fresh Picks, Just In"
+        "cta_text": "All fruits in season"
       }
     },
     "spacer": {
