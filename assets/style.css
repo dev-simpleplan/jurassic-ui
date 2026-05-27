@@ -149,13 +149,19 @@ a:hover {
     transition: 0.3s ease all;
     cursor: pointer;
 }
-.custom-btn.filled {
-    background-image: linear-gradient(90deg, #ffc761 0%, #f7a816 138.78%);
+.custom-btn.filled, #corner-sticky-atc-cta-button, #corner-cowi-cart-summary-card-cta-button {
+    background: linear-gradient(90deg, #ffc761 0%, #f7a816 138.78%);
     color: var(--btn-color);
-    background-size: 200% auto;
+    font-weight: 600;
+    font-family: "Inter";
+    /* background-size: 200% auto; */
 }
-.custom-btn.filled:hover {
-    background-position: right center;
+#corner-cowi-cart-summary-card-cta-button > span {
+    font-family: "Inter";
+}
+.custom-btn.filled:hover, #corner-sticky-atc-cta-button:hover, #corner-cowi-cart-summary-card-cta-button:hover {
+    /* background-position: right center; */
+    background: linear-gradient(180deg, #f7a816 0%, #ffc761 138.78%);
 }
 .custom-btn.black {
     background-color: #1a1a1a;
@@ -1287,7 +1293,7 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     background-color: var(--grey-black);
 }
 .few-in .sec-with-space {
-    gap: 140px;
+    gap: 60px;
 }
 .few-grid {
     position: relative;
@@ -1342,12 +1348,13 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     gap: 16px;
 }
 .fgi-right .fgir-day {
-    padding: 6px 14px;
+    padding: 4px 14px;
     border: 2px solid #e0ebb7;
     border-radius: 6px;
     display: inline-block;
-    font-weight: 500;
-    font-size: 10px;
+    font-weight: 700;
+    font-size: 12px;
+    background-color: #e0ebb7;
 }
 .fgir-head h3 {
     font-weight: 300;

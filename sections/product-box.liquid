@@ -1436,6 +1436,7 @@
     const $galleryWrap = $('.pro-right-side');
     const $prevArrow = $galleryWrap.find('.custom-prev');
     const $nextArrow = $galleryWrap.find('.custom-next');
+    const galleryTransitionSpeed = 180;
     const updateGalleryCounter = (event, slick, currentSlide) => {
       const counter = document.querySelector('.product-gallery-counter');
       if (!counter || !slick) return;
@@ -1477,6 +1478,12 @@
       slidesToScroll: 1,
       arrows: false,
       fade: true,
+      speed: galleryTransitionSpeed,
+      cssEase: 'ease-out',
+      draggable: true,
+      swipe: true,
+      touchMove: true,
+      touchThreshold: 8,
       infinite: false,
       asNavFor: '.prod-thumb-image',
     });
