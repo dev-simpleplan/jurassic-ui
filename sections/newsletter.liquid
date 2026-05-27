@@ -20,6 +20,7 @@
                 </div>
                 <div class="nl-form">
                     {% form 'customer' %}
+                    <input type="hidden" name="return_to" value="{{ routes.root_url }}pages/thank-you">
                     <div class="form-in">
                         <div class="email_input">
                         <input

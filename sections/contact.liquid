@@ -102,6 +102,7 @@
                     <div class="cgw-right">
                         <div class="cgwr-form">
                             {% form 'contact', id: 'contactID' %}
+                            <input type="hidden" name="return_to" value="{{ routes.root_url }}pages/thank-you">
                             {% if form.posted_successfully? %}
                                 <script>
                                     window.location = window.Shopify.routes.root + "pages/thank-you";
