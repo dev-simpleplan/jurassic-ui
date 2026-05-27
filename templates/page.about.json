@@ -301,18 +301,12 @@
       "type": "spacer",
       "name": "Spacer",
       "settings": {
-        "spacer_height": 50
+        "spacer_height": 20
       }
     },
     "17798973227d711637": {
       "type": "apps",
       "blocks": {
-        "okendo_media_carousel_BfVKwX": {
-          "type": "shopify://apps/okendo/blocks/media-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": ""
-          }
-        },
         "okendo_reviews_carousel_MMJD68": {
           "type": "shopify://apps/okendo/blocks/reviews-carousel/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
           "settings": {
@@ -324,7 +318,6 @@
         }
       },
       "block_order": [
-        "okendo_media_carousel_BfVKwX",
         "okendo_reviews_carousel_MMJD68"
       ],
       "settings": {}
