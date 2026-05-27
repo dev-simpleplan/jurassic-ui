@@ -328,6 +328,13 @@
         "okendo_reviews_carousel_MMJD68"
       ],
       "settings": {}
+    },
+    "spacer_cHUeXh": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 90
+      }
     }
   },
   "order": [
@@ -346,6 +353,7 @@
     "spacer_gKLbBq",
     "headingsec_Qm6TzV",
     "spacer_mrapm9",
-    "17798973227d711637"
+    "17798973227d711637",
+    "spacer_cHUeXh"
   ]
 }
