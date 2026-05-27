@@ -39,6 +39,12 @@
   "quick_filters": {
     "organic": "Organic",
     "bestseller": "Bestseller",
+    "bestsellers": "Bestsellers",
+    "asia": "Asia",
+    "europe": "Europe",
+    "america": "America",
+    "africa": "Africa",
+    "untreated": "Untreated",
     "clear_all": "Clear All",
     "products_count": "{{ count }} products",
     "products_count_filtered": "{{ count }} products out of {{ total }}"

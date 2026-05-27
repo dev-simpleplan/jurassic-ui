@@ -38,6 +38,12 @@
   "quick_filters": {
     "organic": "Bio",
     "bestseller": "Bestseller",
+    "bestsellers": "Bestseller",
+    "asia": "Asien",
+    "europe": "Europa",
+    "america": "Amerika",
+    "africa": "Afrika",
+    "untreated": "Unbehandelt",
     "clear_all": "Alle löschen",
     "products_count": "{{ count }} Produkte",
     "products_count_filtered": "{{ count }} Produkte von {{ total }}"

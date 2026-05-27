@@ -63,8 +63,12 @@
         {%- capture current_page_url -%}{{ content_for_header | split:'"pageurl":"' | last | split:'"' | first }}{%- endcapture -%}
         {%- liquid
           assign generic_collection_handles = "all,all-products,all-fruits,all-fruit,all-collections,shop-all,alle-produkte,alle-fruchte,alle-fruechte,tous-les-produits,tous-les-fruits" | split: ","
+          assign all_fruits_collection_handles = "all,all-products,all-fruits,all-fruit,alle-produkte,alle-fruchte,alle-fruechte,tous-les-produits,tous-les-fruits" | split: ","
           assign is_generic_collection = false
+          assign is_all_fruits_collection = false
           assign unavailable_only_active = false
+          assign untreated_only_active = false
+          assign region_filter_value = ''
           assign has_active_collection_filters = false
           assign total_products_count = collection.all_products_count | default: collection.products_count
           assign filtered_products_count = collection.products_count
@@ -73,8 +77,31 @@
             assign is_generic_collection = true
           endif
 
+          if all_fruits_collection_handles contains collection.handle
+            assign is_all_fruits_collection = true
+          endif
+
           if current_page_url contains 'jf_unavailable=1'
             assign unavailable_only_active = true
+            assign has_active_collection_filters = true
+          endif
+
+          if current_page_url contains 'jf_quality_label=untreated'
+            assign untreated_only_active = true
+            assign has_active_collection_filters = true
+          endif
+
+          if current_page_url contains 'jf_region=asia'
+            assign region_filter_value = 'asia'
+            assign has_active_collection_filters = true
+          elsif current_page_url contains 'jf_region=europe'
+            assign region_filter_value = 'europe'
+            assign has_active_collection_filters = true
+          elsif current_page_url contains 'jf_region=america'
+            assign region_filter_value = 'america'
+            assign has_active_collection_filters = true
+          elsif current_page_url contains 'jf_region=africa'
+            assign region_filter_value = 'africa'
             assign has_active_collection_filters = true
           endif
 
@@ -300,9 +327,26 @@
         {%- assign bestseller_active = true -%}
       {%- endif -%}
     {%- endfor -%}
-    
-    {%- comment -%} 1. Organic (From Certificate Metafield) {%- endcomment -%}
+
     {%- assign certificate_filter = collection.filters | where: "param_name", "filter.p.m.custom.certificate" | first -%}
+    {%- comment -%} 1. Bestseller {%- endcomment -%}
+    {%- if collection.all_tags contains 'Best Seller' or bestseller_active -%}
+      <button type="button" 
+              class="qf-pill {% if bestseller_active %}is-active{% endif %}" 
+              data-name="constraint" 
+              data-value="best-seller">
+        {% if is_all_fruits_collection %}{{ 'quick_filters.bestsellers' | t }}{% else %}{{ 'quick_filters.bestseller' | t }}{% endif %}
+      </button>
+    {%- endif -%}
+
+    {%- if is_all_fruits_collection -%}
+      <button type="button" class="qf-pill {% if region_filter_value == 'asia' %}is-active{% endif %}" data-name="jf_region" data-value="asia">{{ 'quick_filters.asia' | t }}</button>
+      <button type="button" class="qf-pill {% if region_filter_value == 'europe' %}is-active{% endif %}" data-name="jf_region" data-value="europe">{{ 'quick_filters.europe' | t }}</button>
+      <button type="button" class="qf-pill {% if region_filter_value == 'america' %}is-active{% endif %}" data-name="jf_region" data-value="america">{{ 'quick_filters.america' | t }}</button>
+      <button type="button" class="qf-pill {% if region_filter_value == 'africa' %}is-active{% endif %}" data-name="jf_region" data-value="africa">{{ 'quick_filters.africa' | t }}</button>
+    {%- endif -%}
+
+    {%- comment -%} 2. Organic {%- endcomment -%}
     {%- if certificate_filter -%}
       {%- for value in certificate_filter.values -%}
         {%- assign organic_handle = value.label | handleize -%}
@@ -317,24 +361,25 @@
       {%- endfor -%}
     {%- endif -%}
 
-    {%- comment -%} 2. Bestseller (From your 'Best Seller' Tag Filter) {%- endcomment -%}
-    {%- if collection.all_tags contains 'Best Seller' or bestseller_active -%}
-      <button type="button" 
-              class="qf-pill {% if bestseller_active %}is-active{% endif %}" 
-              data-name="constraint" 
-              data-value="best-seller">
-        {{ 'quick_filters.bestseller' | t }}
+    {%- if is_all_fruits_collection -%}
+      <button type="button"
+              class="qf-pill {% if untreated_only_active %}is-active{% endif %}"
+              data-name="jf_quality_label"
+              data-value="untreated">
+        {{ 'quick_filters.untreated' | t }}
       </button>
     {%- endif -%}
 
-    {%- comment -%} 3. Out of Stock (Fully sold out products only) {%- endcomment -%}
-    <button
-      type="button"
-      class="qf-pill {% if unavailable_only_active %}is-active{% endif %}"
-      data-name="jf_unavailable"
-      data-value="1">
-      {{ 'products.product.out_of_stock' | t }}
-    </button>
+    {%- unless is_all_fruits_collection -%}
+      {%- comment -%} 3. Out of Stock (Fully sold out products only) {%- endcomment -%}
+      <button
+        type="button"
+        class="qf-pill {% if unavailable_only_active %}is-active{% endif %}"
+        data-name="jf_unavailable"
+        data-value="1">
+        {{ 'products.product.out_of_stock' | t }}
+      </button>
+    {%- endunless -%}
 
     {%- comment -%} 4. Clear All Button {%- endcomment -%}
     <button type="button" class="qf-pill clear-all-pill" style="display: none;">
@@ -359,7 +404,7 @@
             <div class="loader-spinner"></div>
           </div>
           {%- assign products_per_page = section.settings.number_of_product -%}
-          {%- if unavailable_only_active -%}
+          {%- if unavailable_only_active or untreated_only_active or region_filter_value != blank -%}
             {%- assign products_per_page = 250 -%}
           {%- endif -%}
           {% paginate collection.products by products_per_page %}
@@ -377,6 +422,94 @@
                   <div class="no-products-found">
                     <h3>No products found</h3>
                     <p>No fully unavailable products were found in this collection.</p>
+                    <button type="button" class="reset-link custom-btn black" onclick="window.location.href=window.location.pathname">Clear all filters</button>
+                  </div>
+                {% endunless %}
+              {% elsif untreated_only_active or region_filter_value != blank %}
+                {%- assign has_custom_filtered_products = false -%}
+                {% for product in collection.products %}
+                  {%- assign product_quality_label = product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label | handleize -%}
+                  {%- assign matches_custom_filters = true -%}
+
+                  {% if untreated_only_active and product_quality_label != 'untreated' %}
+                    {%- assign matches_custom_filters = false -%}
+                  {% endif %}
+
+                  {% if region_filter_value != blank %}
+                    {%- assign matches_region_filter = false -%}
+                    {%- assign product_collection_handles = product.collections | map: 'handle' | join: ',' -%}
+                    {% if region_filter_value == 'asia' %}
+                      {% if product_collection_handles contains 'fruit-asia' or product_collection_handles contains 'fruit-from-asia' or product_collection_handles contains 'fruits-from-asia' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'europe' %}
+                      {% if product_collection_handles contains 'fruit-europe' or product_collection_handles contains 'fruit-from-europe' or product_collection_handles contains 'fruits-from-europe' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'america' %}
+                      {% if product_collection_handles contains 'fruit-america' or product_collection_handles contains 'fruit-from-america' or product_collection_handles contains 'fruits-from-america' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'africa' %}
+                      {% if product_collection_handles contains 'fruit-africa' or product_collection_handles contains 'fruit-from-africa' or product_collection_handles contains 'fruits-from-africa' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% endif %}
+
+                    {% unless matches_region_filter %}
+                      {%- assign matches_custom_filters = false -%}
+                    {% endunless %}
+                  {% endif %}
+
+                  {% if matches_custom_filters and product.available %}
+                    {%- assign has_custom_filtered_products = true -%}
+                    {% render 'product-card-primary', product: product %}
+                  {% endif %}
+                {% endfor %}
+                {% for product in collection.products %}
+                  {%- assign product_quality_label = product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label | handleize -%}
+                  {%- assign matches_custom_filters = true -%}
+
+                  {% if untreated_only_active and product_quality_label != 'untreated' %}
+                    {%- assign matches_custom_filters = false -%}
+                  {% endif %}
+
+                  {% if region_filter_value != blank %}
+                    {%- assign matches_region_filter = false -%}
+                    {%- assign product_collection_handles = product.collections | map: 'handle' | join: ',' -%}
+                    {% if region_filter_value == 'asia' %}
+                      {% if product_collection_handles contains 'fruit-asia' or product_collection_handles contains 'fruit-from-asia' or product_collection_handles contains 'fruits-from-asia' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'europe' %}
+                      {% if product_collection_handles contains 'fruit-europe' or product_collection_handles contains 'fruit-from-europe' or product_collection_handles contains 'fruits-from-europe' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'america' %}
+                      {% if product_collection_handles contains 'fruit-america' or product_collection_handles contains 'fruit-from-america' or product_collection_handles contains 'fruits-from-america' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% elsif region_filter_value == 'africa' %}
+                      {% if product_collection_handles contains 'fruit-africa' or product_collection_handles contains 'fruit-from-africa' or product_collection_handles contains 'fruits-from-africa' %}
+                        {%- assign matches_region_filter = true -%}
+                      {% endif %}
+                    {% endif %}
+
+                    {% unless matches_region_filter %}
+                      {%- assign matches_custom_filters = false -%}
+                    {% endunless %}
+                  {% endif %}
+
+                  {% if matches_custom_filters and product.available != true %}
+                    {%- assign has_custom_filtered_products = true -%}
+                    {% render 'product-card-primary', product: product %}
+                  {% endif %}
+                {% endfor %}
+
+                {% unless has_custom_filtered_products %}
+                  <div class="no-products-found">
+                    <h3>No products found</h3>
+                    <p>No products were found for the selected quick filters.</p>
                     <button type="button" class="reset-link custom-btn black" onclick="window.location.href=window.location.pathname">Clear all filters</button>
                   </div>
                 {% endunless %}
@@ -443,9 +576,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData(filterForm);
         const searchParams = new URLSearchParams(formData);
+        const currentUrlParams = new URLSearchParams(window.location.search);
+
+        ['jf_unavailable', 'jf_quality_label', 'jf_region'].forEach((key) => {
+            const currentValue = currentUrlParams.get(key);
+            if (currentValue) {
+                searchParams.set(key, currentValue);
+            }
+        });
 
         Object.keys(extraParams).forEach((key) => {
-            searchParams.set(key, extraParams[key]);
+            if (extraParams[key]) {
+                searchParams.set(key, extraParams[key]);
+            } else {
+                searchParams.delete(key);
+            }
         });
 
         const constraints = searchParams.getAll('constraint').filter(Boolean);
@@ -539,7 +684,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 3. Check the URL for filter parameters (as a fallback)
         const hasUrlFilters = window.location.search.includes('filter.')
-            || window.location.search.includes('jf_unavailable=1');
+            || window.location.search.includes('jf_unavailable=1')
+            || window.location.search.includes('jf_quality_label=untreated')
+            || window.location.search.includes('jf_region=');
 
         if (hasActiveInputs || hasActivePills || hasUrlFilters) {
             clearAllBtn.style.display = 'inline-block';
@@ -554,15 +701,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const urlParams = new URLSearchParams(window.location.search);
         const unavailableActive = urlParams.get('jf_unavailable') === '1';
+        const untreatedActive = urlParams.get('jf_quality_label') === 'untreated';
+        const regionActive = urlParams.get('jf_region');
 
-        if (!unavailableActive) return;
+        if (!unavailableActive && !untreatedActive && !regionActive) return;
 
         const totalCount = countEl.dataset.totalCount || '0';
         const filteredTemplate = countEl.dataset.filteredTemplate || '__COUNT__ products out of __TOTAL__';
-        const visibleUnavailableCount = document.querySelectorAll('#ProductGrid .product-card-primary').length;
+        const visibleFilteredCount = document.querySelectorAll('#ProductGrid .product-card-primary').length;
 
         countEl.textContent = filteredTemplate
-            .replace('__COUNT__', visibleUnavailableCount)
+            .replace('__COUNT__', visibleFilteredCount)
             .replace('__TOTAL__', totalCount);
     }
 
