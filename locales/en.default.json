@@ -52,6 +52,13 @@
   "collections": {
     "title": "Collections"
   },
+  "thank_you_page": {
+    "heading": "Thank you",
+    "subheading": "Your form was successfully submitted.",
+    "body_intro": "Welcome in.",
+    "body_text": "You’ll now hear about rare finds, fresh arrivals, and what’s truly worth trying. We’ll only reach out when it matters.",
+    "cta": "Go Back To Homepage"
+  },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
     "card": "Gift card",

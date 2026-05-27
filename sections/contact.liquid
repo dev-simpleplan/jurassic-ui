@@ -104,7 +104,7 @@
                             {% form 'contact', id: 'contactID' %}
                             {% if form.posted_successfully? %}
                                 <script>
-                                    window.location = "/pages/thank-you";
+                                    window.location = window.Shopify.routes.root + "pages/thank-you";
                                 </script>
                             {% else %}
                                 {{ form.errors | default_errors }}

@@ -91,9 +91,9 @@
                                                     </div>
                                                 </div>
                                                 {% if form.posted_successfully? %}
-                                                    <script>
-                                                    window.location.href = '/pages/thank-you';
-                                                    </script>
+                                                <script>
+                                                    window.location.href = window.Shopify.routes.root + 'pages/thank-you';
+                                                </script>
                                                 {% elsif form.errors %}
                                                     <div class="form-error">
                                                     <p>There was an error submitting the form. Please check your email address and try again.</p>

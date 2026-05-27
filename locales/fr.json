@@ -70,6 +70,13 @@
     "expires_on": "Expire le {{ expires_on }}",
     "use_at_checkout": "Utilisez cette carte-cadeau lors du paiement"
   },
+  "thank_you_page": {
+    "heading": "Merci",
+    "subheading": "Votre formulaire a été envoyé avec succès.",
+    "body_intro": "Bienvenue chez nous.",
+    "body_text": "Vous recevrez désormais nos découvertes rares, nos arrivages frais et ce qui vaut vraiment la peine d’être goûté. Nous vous écrirons seulement lorsque cela en vaut la peine.",
+    "cta": "Retour à l’accueil"
+  },
   "general": {
     "shipping_policy": "Politique d’expédition"
   },

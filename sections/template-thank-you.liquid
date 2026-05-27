@@ -5,11 +5,14 @@
   <div class="container">
     <div class="et-data">
         <div class="etd-heading">
-            <h1>{{ section.settings.head }}</h1>
-            <p>{{ section.settings.subhead }}</p>
+            <h1>{{ 'thank_you_page.heading' | t }}</h1>
+            <p>{{ 'thank_you_page.subheading' | t }}</p>
         </div>
         <div class="etd-desc">
-            {{ section.settings.text }}
+            <p>
+              <strong>{{ 'thank_you_page.body_intro' | t }}</strong>
+              {{ 'thank_you_page.body_text' | t }}
+            </p>
         </div>
         <div class="etd-button">
             {% if section.settings.cta-url.url != blank and section.settings.cta-txt != blank %}
@@ -17,8 +20,8 @@
                 {{ section.settings.cta-txt }}
             </a>
             {% else %}
-            <a href="{{ shop.url }}" class="line-btn dark">
-                go back to homepage
+            <a href="{{ routes.root_url }}" class="line-btn dark">
+                {{ 'thank_you_page.cta' | t }}
             </a>
             {% endif %}
         </div>
