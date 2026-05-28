@@ -502,6 +502,13 @@
         "para": "All reviews are written by real customers after receiving their order. We believe honest feedback matters, so we don’t hide negative reviews unless they’re abusive, fraudulent or unrelated to the product."
       }
     },
+    "spacer_6b6rdm": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 20
+      }
+    },
     "17789334995fba728d": {
       "type": "apps",
       "blocks": {
@@ -605,6 +612,7 @@
     "left-image-with-items",
     "spacer_2",
     "headingsec_xm9gbY",
+    "spacer_6b6rdm",
     "17789334995fba728d",
     "spacer_Nh7Bjn",
     "faq",
