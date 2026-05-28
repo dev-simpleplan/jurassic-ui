@@ -38,7 +38,7 @@
           "settings": {
             "shipping_usp_icon": "shopify://shop_images/truck.svg",
             "shipping_usp_page": "",
-            "shipping_usp_text": "Free shipping from 99 €",
+            "shipping_usp_text": "Free shipping from 99 €!",
             "freshness_icon": "shopify://shop_images/box.svg",
             "freshness_text": "Arrives fresh or refunded",
             "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
@@ -86,13 +86,13 @@
         "delivery_info_WFVGrD"
       ],
       "settings": {
-        "technical_heading": "Technical Details",
-        "nutrition_heading": "Nutrition & Benefits",
-        "seasonal_heading": "seasonal calendar",
+        "technical_heading": "Technical details",
+        "nutrition_heading": "Nutrition & benefits",
+        "seasonal_heading": "Seasonal calendar",
         "description_heading": "Description",
-        "howtostore_heading": "How To Eat & Store",
-        "origin_heading": "Origin & Sourcing",
-        "taste_heading": "Taste Profile"
+        "howtostore_heading": "How to eat & store",
+        "origin_heading": "Origin & sourcing",
+        "taste_heading": "Taste profile"
       }
     },
     "spacer0": {
