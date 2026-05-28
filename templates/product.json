@@ -532,6 +532,13 @@
         "para": "Every review on this page is written by a real customer. We believe honest feedback matters, so we don’t hide negative reviews unless they’re abusive, fraudulent or unrelated to the product."
       }
     },
+    "spacer_FdUt3c": {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": {
+        "spacer_height": 20
+      }
+    },
     "177139754036d00b41": {
       "type": "apps",
       "blocks": {
@@ -547,13 +554,6 @@
         "okendo_reviews_widget_4WUGBX"
       ],
       "settings": {}
-    },
-    "spacer_FdUt3c": {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": {
-        "spacer_height": 50
-      }
     },
     "spacer_7pD8rp": {
       "type": "spacer",
@@ -636,8 +636,8 @@
     "left-image-with-items",
     "jurassic_way_ftQp3x",
     "headingsec_eKCbzF",
-    "177139754036d00b41",
     "spacer_FdUt3c",
+    "177139754036d00b41",
     "spacer_7pD8rp",
     "faq",
     "bestseller_carousel_QwPdDB",
