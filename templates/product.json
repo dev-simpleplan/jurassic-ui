@@ -38,7 +38,7 @@
           "settings": {
             "shipping_usp_icon": "shopify://shop_images/truck.svg",
             "shipping_usp_page": "",
-            "shipping_usp_text": "Free shipping from 99 €!",
+            "shipping_usp_text": "Free shipping from 99 €",
             "freshness_icon": "shopify://shop_images/box.svg",
             "freshness_text": "Arrives fresh or refunded",
             "payment_usp_icon": "shopify://shop_images/refresh-ccw.svg",
