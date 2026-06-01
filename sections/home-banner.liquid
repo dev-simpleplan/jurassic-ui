@@ -1,6 +1,11 @@
 <section class="home-banner">
   <div class="banner-bg">
-    <img src="{{ section.settings['banner-bg'] | img_url: 'master' }}" alt="Banner Image" class="img">
+    <picture>
+      {% if section.settings.banner_bg_mobile != blank %}
+        <source media="(max-width: 767px)" srcset="{{ section.settings.banner_bg_mobile | img_url: 'master' }}">
+      {% endif %}
+      <img src="{{ section.settings['banner-bg'] | img_url: 'master' }}" alt="Banner Image" class="img">
+    </picture>
   </div>
 
   <div class="banner-in">
@@ -43,7 +48,12 @@
     {
       "type": "image_picker",
       "id": "banner-bg",
-      "label": "Banner Image"
+      "label": "Banner Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_bg_mobile",
+      "label": "Banner Image (Mobile)"
     },
     {
       "type": "text",

@@ -1078,6 +1078,12 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     width: 100%;
     height: 100%;
 }
+.home-banner .banner-bg picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* object-position: 100% 40%; */
+}
 .banner-bg img {
     width: 100%;
     height: 100%;
@@ -1894,6 +1900,13 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 .vc-carousel .owl-dot:hover span {
     background-color: #fff;
 }
+.vc-carousel .owl-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+}
 /* Scrolling Section */
 section.scroll-sec {
     display: flex;
@@ -2619,6 +2632,11 @@ footer::before {
     height: 60vh;
     min-height: 400px;
     overflow: hidden;
+}
+.about-banner .banner-image picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .about-banner .banner-image img {
     object-position: 100% 20%;
@@ -5471,7 +5489,7 @@ section.imagescroll {
     border-bottom: none;
     border-radius: 8px 8px 0 0;
     list-style: none;
-    transition: all 0.3s ease-out;
+    transition: all 0.1s ease-out;
     max-height: 0;
     overflow: hidden;
     z-index: 99;
@@ -5570,12 +5588,13 @@ section.imagescroll {
 }
 
 .item-unit-price {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 12px;
     line-height: 116%;
     letter-spacing: 0.02em;
     text-align: left;
-    color: #151515;
+    /* color: #151515; */
+    color: #6b6b6b;
     margin-top: 2px;
 }
 

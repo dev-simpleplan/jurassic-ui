@@ -799,214 +799,238 @@
     </script>
   </div>
 
-  {% comment %} <div class="product-accordion">
-    <div class="container">
-      <div class="pa-wrapper">
-        {% comment %} How to Store {% endcomment %}
-        <div class="pa-item">
-          <div class="pa-ques-wrap">
-            <div class="pa-ques">
-              {{ section.settings.acc_1 }}
-            </div>
-            <div class="pa-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none">
-                <path
-                  d="M12 8V16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-horizontal"
-                  stroke-linejoin="round" />
-                <path
-                  d="M8 12H16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-vertical"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-          <div class="pa-div">
-            <div class="pa-eat-store">
-              {% for item in product.metafields.custom.how_to_store_eat.value %}
-                <div class="paes-item">
-                  <div class="paes-icon">
-                    <img src="{{ item.icon |  img_url: 'master' }}" alt="{{ item.field_title_optional }}">
-                  </div>
-                  <p>{{ item.body }}</p>
+  {% assign description_data = product.metafields.custom.new_description %}
+  {% assign technical_details_data = product.metafields.custom.technical_details %}
+  {% assign selected_variant_shipped_by = selected_variant.metafields.custom.shipped_by.value | default: selected_variant.metafields.custom.shipped_by | default: product.metafields.custom.shipped_by.value | default: product.metafields.custom.shipped_by | downcase | strip %}
+
+  {% assign show_description = false %}
+  {% if description_data != blank %}
+    {% assign show_description = true %}
+  {% endif %}
+
+  {% assign show_technical_details = false %}
+  {% if technical_details_data != blank
+    or product.metafields.custom.alternative_name != blank
+    or product.metafields.custom.country_of_origin.value != blank
+    or selected_variant_shipped_by != blank
+    or product.metafields.custom.weight_per_piece != blank
+    or product.metafields.custom.ingredients.value != blank
+    or product.metafields.custom.manufacturing.value != blank
+    or product.metafields.shopify.allergen_information.value != blank
+    or product.metafields.shopify.allergens.value != blank
+    or product.metafields.standard.allergen_information.value != blank
+    or product.metafields.standard.allergens.value != blank
+    or product.metafields.custom.cross_contamination.value != blank
+    or product.metafields.custom.best_before_date.value != blank
+    or product.metafields.custom.net_quantity.value != blank
+    or product.metafields.custom.storage_conditions.value != blank
+    or product.metafields.custom.quality_label != blank
+    or product.metafields.custom.certificate.value != blank %}
+    {% assign show_technical_details = true %}
+  {% endif %}
+
+  {% if show_description or show_technical_details %}
+    <div class="product-accordion">
+      <div class="container">
+        <div class="pa-wrapper">
+          {% if show_description %}
+            <div class="pa-item">
+              <div class="pa-ques-wrap">
+                <div class="pa-ques">
+                  {{ 'sections.product.description' | t }}
                 </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        {% comment %} Seasonal Information {% endcomment %}
-        <div class="pa-item">
-          <div class="pa-ques-wrap">
-            <div class="pa-ques">
-              {{ section.settings.acc_2 }}
-            </div>
-            <div class="pa-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none">
-                <path
-                  d="M12 8V16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-horizontal"
-                  stroke-linejoin="round" />
-                <path
-                  d="M8 12H16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-vertical"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-          <div class="pa-div">
-            <div class="pa-seasons">
-              <div class="pas-month">
-                {%- assign month_names = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
-                {%- assign used_months = product.metafields.custom.country_season.value.season.value.high_season_month | split: ',' -%}
-                {%- assign not_months = product.metafields.custom.country_season.value.season.value.low_season_month | split: ',' -%}
-                {%- for month in month_names -%}
-                  {%- assign trimmed_month = month | strip -%}
-                  <div class="month-in{% if used_months contains trimmed_month %} high-season{% elsif not_months contains trimmed_month %} low-season{% endif %}">
-                    <p>{{ trimmed_month | strip_html | truncate: 3, "" }}</p>
-                    <div class="month-pill"></div>
-                  </div>
-                {%- endfor -%}
+                <div class="pa-icon">
+                  {%- render 'product-accordian-icon' -%}
+                </div>
               </div>
-              <div class="pas-country">
-                <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
-                <div class="pas-shipping">
-                  {% if product.metafields.custom.shipped_by == 'air' %}
-                    {% render 'air' %}
-                    Shipped by {{ product.metafields.custom.shipped_by }}
-                  {% elsif product.metafields.custom.shipped_by == 'sea' %}
-                    {% render 'sea' %}
-                    Shipped by {{ product.metafields.custom.shipped_by }}
-                  {% elsif product.metafields.custom.shipped_by == 'road' %}
-                    {% render 'road' %}
-                    Shipped by {{ product.metafields.custom.shipped_by }}
+              <div class="pa-div">
+                <div class="product-desc">
+                  {{ description_data | metafield_tag }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if show_technical_details %}
+            <div class="pa-item">
+              <div class="pa-ques-wrap">
+                <div class="pa-ques">
+                  {{ 'sections.product.technical_details' | t }}
+                </div>
+                <div class="pa-icon">
+                  {%- render 'product-accordian-icon' -%}
+                </div>
+              </div>
+              <div class="pa-div">
+                <div class="product-desc">
+                  {% assign shipped_by = selected_variant_shipped_by %}
+                  {% assign shipped_by_key = shipped_by %}
+                  {% if shipped_by == 'luft' or shipped_by == 'air' %}
+                    {% assign shipped_by_key = 'air' %}
+                  {% elsif shipped_by == 'see' or shipped_by == 'sea' %}
+                    {% assign shipped_by_key = 'sea' %}
+                  {% elsif shipped_by == 'straße' or shipped_by == 'strasse' or shipped_by == 'road' %}
+                    {% assign shipped_by_key = 'road' %}
                   {% endif %}
+
+                  <div class="tech-list">
+                    {%- if product.metafields.custom.alternative_name != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.scientific_name' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.alternative_name }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.country_of_origin.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.origin' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.country_of_origin.value.country_name }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if shipped_by != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">Shipping:</div>
+                        <div class="ti-data">
+                          <div
+                            class="pas-shipping"
+                            data-product-shipping
+                            data-shipping-value="{{ shipped_by_key }}"
+                            data-shipping-label="{{ shipped_by }}">
+                            <span class="pas-shipping-icon" data-shipping-icon>
+                              {% if shipped_by_key == 'air' %}
+                                {% render 'air' %}
+                              {% elsif shipped_by_key == 'sea' %}
+                                {% render 'sea' %}
+                              {% elsif shipped_by_key == 'road' %}
+                                {% render 'road' %}
+                              {% endif %}
+                            </span>
+                            <span class="pas-shipping-text" data-shipping-text>by {{ shipped_by }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.weight_per_piece != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.weight_per_piece' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.weight_per_piece }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.ingredients.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.ingredients' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.ingredients.value | newline_to_br }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- assign manufacturing_text = '' -%}
+                    {%- assign manufacturing_metafield = product.metafields.custom.manufacturing -%}
+                    {%- if manufacturing_metafield != blank and manufacturing_metafield.value != blank -%}
+                      {%- if manufacturing_metafield.type contains 'list.' -%}
+                        {%- assign manufacturing_text = manufacturing_metafield.value | join: ', ' -%}
+                      {%- else -%}
+                        {%- assign manufacturing_text = manufacturing_metafield.value -%}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if manufacturing_text != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.manufacturing' | t }}:</div>
+                        <div class="ti-data">{{ manufacturing_text }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- assign allergens_text = '' -%}
+                    {%- assign allergens_metafield = product.metafields.shopify.allergen_information -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.shopify.allergens -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.standard.allergen_information -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield == blank -%}
+                      {%- assign allergens_metafield = product.metafields.standard.allergens -%}
+                    {%- endif -%}
+                    {%- if allergens_metafield != blank and allergens_metafield.value != blank -%}
+                      {%- if allergens_metafield.type contains 'list.' -%}
+                        {%- assign allergens_text = allergens_metafield.value | join: ', ' -%}
+                      {%- else -%}
+                        {%- assign allergens_text = allergens_metafield.value -%}
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if allergens_text != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.allergens' | t }}:</div>
+                        <div class="ti-data">{{ allergens_text }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.cross_contamination.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.cross_contamination' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.cross_contamination.value | newline_to_br }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.best_before_date.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.best_before_date' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.best_before_date.value | date: "%d.%m.%Y" }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.net_quantity.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.net_quantity' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.net_quantity.value }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.storage_conditions.value != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.storage_conditions' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.storage_conditions.value | newline_to_br }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if product.metafields.custom.quality_label != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
+                        <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
+                      </div>
+                    {%- endif -%}
+
+                    {%- assign certificate_names = '' -%}
+                    {%- if product.metafields.custom.certificate.value != blank -%}
+                      {%- for item in product.metafields.custom.certificate.value -%}
+                        {%- if item.display_name != blank -%}
+                          {%- if certificate_names != blank -%}
+                            {%- assign certificate_names = certificate_names | append: ', ' -%}
+                          {%- endif -%}
+                          {%- assign certificate_names = certificate_names | append: item.display_name -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                    {%- if certificate_names != blank -%}
+                      <div class="tech-item">
+                        <div class="ti-name">{{ 'sections.product.certificate' | t }}:</div>
+                        <div class="ti-data">{{ certificate_names }}</div>
+                      </div>
+                    {%- endif -%}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        {% comment %} Taste Profile {% endcomment %}
-        <div class="pa-item">
-          <div class="pa-ques-wrap">
-            <div class="pa-ques">
-              {{ section.settings.acc_3 }}
-            </div>
-            <div class="pa-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none">
-                <path
-                  d="M12 8V16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-horizontal"
-                  stroke-linejoin="round" />
-                <path
-                  d="M8 12H16"
-                  stroke="#202322"
-                  stroke-width="2"
-                  class="plus-vertical"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-          <div class="pa-div">
-            <div class="pad-taste-profile">
-              {% comment %} Texture {% endcomment %}
-              <div class="profile-in">
-                <p class="tp-head texture">
-                  Texture
-                </p>
-                <div class="tp-wrap">
-                  {% assign texture_limit = product.metafields.custom.taste_profile.value.texture %}
-                  <p class="tp-profile">
-                    Silky
-                  </p>
-                  <div class="tp-pill-in texture">
-                    {% for i in (1..5) %}
-                      <div class="taste-pill {% if i <= texture_limit %}active{% endif %}"></div>
-                    {% endfor %}
-                  </div>
-                  <p class="tp-profile">
-                    Crunchy
-                  </p>
-                </div>
-              </div>
-              {% comment %} Sweetness {% endcomment %}
-              <div class="profile-in">
-                <p class="tp-head sweetness">
-                  Sweetness
-                </p>
-                <div class="tp-wrap">
-                  {% assign sweetness_limit = product.metafields.custom.taste_profile.value.sweetness %}
-                  <p class="tp-profile">Delicate</p>
-                  <div class="tp-pill-in sweetness">
-                    {% for i in (1..5) %}
-                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
-                    {% endfor %}
-                  </div>
-                  <p class="tp-profile">Syrupy</p>
-                </div>
-              </div>
-              {% comment %} Sourness {% endcomment %}
-              <div class="profile-in">
-                <p class="tp-head sourness">
-                  Sourness
-                </p>
-                <div class="tp-wrap">
-                  {% assign sourness_limit = product.metafields.custom.taste_profile.value.sourness %}
-                  <p class="tp-profile">Smooth</p>
-                  <div class="tp-pill-in sourness">
-                    {% for i in (1..5) %}
-                      <div class="taste-pill {% if i <= sweetness_limit %}active{% endif %}"></div>
-                    {% endfor %}
-                  </div>
-                  <p class="tp-profile">Zesty</p>
-                </div>
-              </div>
-              {% comment %} Juiciness {% endcomment %}
-              <div class="profile-in">
-                <p class="tp-head juiciness">
-                  Juiciness
-                </p>
-                <div class="tp-wrap">
-                  {% assign juiciness_limit = product.metafields.custom.taste_profile.value.juiciness %}
-                  <p class="tp-profile">Firm</p>
-                  <div class="tp-pill-in juiciness">
-                    {% for i in (1..5) %}
-                      <div class="taste-pill {% if i <= juiciness_limit %}active{% endif %}"></div>
-                    {% endfor %}
-                  </div>
-                  <p class="tp-profile">Bursty</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% endif %}
         </div>
       </div>
     </div>
-  </div> {% endcomment %}
+  {% endif %}
 
   {% assign deliveryBlock = section.blocks | where: 'type', 'delivery-info' | first %}
   <div class="product_delivery_modal_container modal fade">

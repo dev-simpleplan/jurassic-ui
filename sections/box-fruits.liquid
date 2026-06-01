@@ -1,16 +1,24 @@
 {% if product.metafields.custom.box_products.value != blank %}
+{% assign box_product_heading = product.metafields.custom.box_product_heading %}
+{% assign box_product_subheading = product.metafields.custom.box_product_subheading %}
 <div class="lalabox-content">
     <div class="container-fluid">
         <div class="lalabox-content-in">
             <div class="sec-with-space">
-                <div class="heading">
-                    <h2 data-aos="fade-up" data-aos-duration="1000">
-                        {{ product.metafields.custom.box_product_heading }}
-                    </h2>
-                    <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">
-                        {{ product.metafields.custom.box_product_subheading }}
-                    </p>
-                </div>
+                {% if box_product_heading != blank or box_product_subheading != blank %}
+                    <div class="heading">
+                        {% if box_product_heading != blank %}
+                            <h2 data-aos="fade-up" data-aos-duration="1000">
+                                {{ box_product_heading }}
+                            </h2>
+                        {% endif %}
+                        {% if box_product_subheading != blank %}
+                            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">
+                                {{ box_product_subheading }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
                 <div class="bcontent-grid">
                     {% for item in product.metafields.custom.box_products.value %}

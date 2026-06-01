@@ -768,11 +768,11 @@
     background: #1a1a1a;
     background: linear-gradient(
       0deg,
-      rgba(26, 26, 26, 1) 23%,
+      rgba(26, 26, 26, 1) 24%,
       rgba(26, 26, 26, 0.67) 34%,
       rgba(26, 26, 26, 0.11) 50%,
-      rgba(26, 26, 26, 0.52) 68%,
-      rgba(26, 26, 26, 1) 83%
+      rgba(26, 26, 26, 0.52) 80%,
+      rgba(26, 26, 26, 1) 85%
     );
   }
   .jw-carousel .slick-dots {
