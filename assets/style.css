@@ -1361,6 +1361,9 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     font-weight: 700;
     font-size: 12px;
     background-color: #e0ebb7;
+            position: absolute;
+        top: 8px;
+        left: 8px;
 }
 .fgir-head h3 {
     font-weight: 300;
