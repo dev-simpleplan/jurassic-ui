@@ -1841,7 +1841,7 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     display: flex;
     align-items: stretch;
     justify-content: center;
-    padding: 80px 0;
+    padding: 80px 0 60px 0;
 }
 .vc-heading .vcheading-in {
     height: 100%;
