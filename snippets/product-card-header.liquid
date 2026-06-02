@@ -80,7 +80,11 @@
               class="add-to-cart"
               {% unless product.available %}disabled{% endunless %}
             >
-              {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+              {% if product.available %}
+                {{ 'products.product.add_to_cart' | t }}
+              {% else %}
+                {{ 'products.product.sold_out' | t }}
+              {% endif %}
             </button>
           </div>
         </form>
