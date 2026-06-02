@@ -1367,13 +1367,13 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
 }
 .fgir-head h3 {
     font-weight: 300;
-    font-size: 17px;
+    font-size: 20px;
     color: var(--grey-black);
     letter-spacing: -0.32px;
 }
 .fgir-para p {
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 150%;
     letter-spacing: 0%;
     color: var(--grey-black);

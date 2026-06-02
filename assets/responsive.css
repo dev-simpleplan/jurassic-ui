@@ -1883,17 +1883,6 @@
   h2.oke-reviewCarousel-header-title {
     padding: 0 60px;
   }
-  .fgi-right .fgir-day {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-  }
-  .fgir-head h3 {
-    font-size: 20px;
-  }
-  .fgir-para p {
-    font-size: 14px;
-  }
 }
 @media (max-width: 425px) {
   footer::before {
