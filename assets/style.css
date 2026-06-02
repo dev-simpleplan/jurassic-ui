@@ -5246,11 +5246,17 @@ section.imagescroll {
     text-underline-offset: 4px;
 }
 .fc_add_to_cart:has(> .add-to-cart-btn:disabled) {
-  background: none;
+    background: none;
     border: 1px solid #f7a816;
     cursor: not-allowed;
 }
 .add-to-cart-btn:disabled {
+    cursor: not-allowed;
+}
+.fc_add_to_cart:has(> .add-to-cart-btn.loading:disabled),
+.fc_add_to_cart:has(> .add-to-cart-btn.success:disabled) {
+    background: linear-gradient(90deg,#ffc761,#f7a816 138.78%);
+    border: 1px solid transparent;
     cursor: not-allowed;
 }
 .product_delivery_modal_container.show {
