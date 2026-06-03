@@ -2261,7 +2261,7 @@ li.variant-value.is-sold-out {
   
 }
 .paes-icon.square {
-  aspect-ratio: 8/7;
+  aspect-ratio: 1/1;
   overflow: hidden;
 }
 .paes-icon img {
@@ -2274,7 +2274,7 @@ li.variant-value.is-sold-out {
   object-position: center;
 }
 .paes-icon.square > a, .paes-icon.square > a {
-  aspect-ratio: 8 / 7;
+  aspect-ratio: 1/1;
     overflow: hidden;
 }
 
