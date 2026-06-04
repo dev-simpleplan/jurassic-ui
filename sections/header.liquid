@@ -278,78 +278,121 @@
             </ul>
 
             <div class="mobile-nav-flat">
-              {% assign menu_right = section.blocks | where: 'type', 'nav_menu_right' %}
-              {% for block in menu_right %}
-                {%- assign selected_menu = menus[block.settings.nav_items_right] -%}
-                {%- if selected_menu == blank -%}
-                  {%- assign selected_menu = linklists[block.settings.nav_items_right] -%}
-                {%- endif -%}
+              <div class="mobile-nav-section">
+                <p class="mobile-nav-flat-heading">Categories</p>
+                {% assign menu_right = section.blocks | where: 'type', 'nav_menu_right' %}
+                {% for block in menu_right %}
+                  {%- assign selected_menu = menus[block.settings.nav_items_right] -%}
+                  {%- if selected_menu == blank -%}
+                    {%- assign selected_menu = linklists[block.settings.nav_items_right] -%}
+                  {%- endif -%}
 
-                {%- if selected_menu and selected_menu.links and selected_menu.links.size > 0 -%}
-                  {%- assign selected_menu_title_downcase = selected_menu.title | downcase | strip -%}
+                  {%- if selected_menu and selected_menu.links and selected_menu.links.size > 0 -%}
+                    {%- assign selected_menu_title_downcase = selected_menu.title | downcase | strip -%}
 
-                  {%- unless selected_menu_title_downcase == 'wieder kaufen' or selected_menu_title_downcase == 'buy again' or selected_menu_title_downcase == 'boxes' or selected_menu_title_downcase == 'boxen' -%}
-                    {%- for link in selected_menu.links -%}
-                      {%- if link.links and link.links.size > 0 -%}
-                        {%- for sublink in link.links -%}
-                          <a href="{{ sublink.url }}" class="mobile-nav-flat-link">
+                    {%- unless selected_menu_title_downcase == 'wieder kaufen' or selected_menu_title_downcase == 'buy again' or selected_menu_title_downcase == 'boxes' or selected_menu_title_downcase == 'boxen' or selected_menu_title_downcase == 'start here' -%}
+                      {%- for link in selected_menu.links -%}
+                        {%- if link.links and link.links.size > 0 -%}
+                          {%- for sublink in link.links -%}
+                            <a href="{{ sublink.url }}" class="mobile-nav-flat-link">
+                              <div class="link-flex">
+                                {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
+                                  {%- assign nav_image = blank -%}
+                                  {%- if sublink.type == 'collection_link' -%}
+                                    {%- assign nav_image = sublink.object.image -%}
+                                  {%- elsif sublink.type == 'product_link' -%}
+                                    {%- assign nav_image = sublink.object.featured_image -%}
+                                  {%- endif -%}
+
+                                  {%- if nav_image != blank -%}
+                                    <div class="lf-image">
+                                      <img
+                                        src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
+                                        alt="{{ sublink.title | escape }}"
+                                        loading="lazy">
+                                    </div>
+                                  {%- endif -%}
+                                {%- endif -%}
+
+                                <div class="lf-text">{{ sublink.title }}</div>
+                              </div>
+                            </a>
+                          {%- endfor -%}
+                        {%- else -%}
+                          {%- assign nav_link_title_downcase = link.title | downcase | strip -%}
+                          {%- assign nav_link_url = link.url -%}
+                          {%- if nav_link_title_downcase == 'wieder kaufen' or nav_link_title_downcase == 'buy again' -%}
+                            {%- assign nav_link_url = routes.account_url -%}
+                          {%- endif -%}
+                          <a href="{{ nav_link_url }}" class="mobile-nav-flat-link">
                             <div class="link-flex">
-                              {%- if sublink.type == 'collection_link' or sublink.type == 'product_link' -%}
+                              {%- if link.type == 'collection_link' or link.type == 'product_link' -%}
                                 {%- assign nav_image = blank -%}
-                                {%- if sublink.type == 'collection_link' -%}
-                                  {%- assign nav_image = sublink.object.image -%}
-                                {%- elsif sublink.type == 'product_link' -%}
-                                  {%- assign nav_image = sublink.object.featured_image -%}
+                                {%- if link.type == 'collection_link' -%}
+                                  {%- assign nav_image = link.object.image -%}
+                                {%- elsif link.type == 'product_link' -%}
+                                  {%- assign nav_image = link.object.featured_image -%}
                                 {%- endif -%}
 
                                 {%- if nav_image != blank -%}
                                   <div class="lf-image">
                                     <img
                                       src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
-                                      alt="{{ sublink.title | escape }}"
+                                      alt="{{ link.title | escape }}"
                                       loading="lazy">
                                   </div>
                                 {%- endif -%}
                               {%- endif -%}
 
-                              <div class="lf-text">{{ sublink.title }}</div>
+                              <div class="lf-text">{{ link.title }}</div>
+                            </div>
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endunless -%}
+                  {%- endif -%}
+                {% endfor %}
+              </div>
+
+              {%- assign information_menu_handles = 'footer,footer-learn-menu' | split: ',' -%}
+              {%- assign has_information_links = false -%}
+
+              {%- capture information_links_markup -%}
+                {%- for information_menu_handle in information_menu_handles -%}
+                  {%- assign information_menu = menus[information_menu_handle] -%}
+                  {%- if information_menu == blank -%}
+                    {%- assign information_menu = linklists[information_menu_handle] -%}
+                  {%- endif -%}
+
+                  {%- if information_menu and information_menu.links and information_menu.links.size > 0 -%}
+                    {%- assign has_information_links = true -%}
+                    {%- for info_link in information_menu.links -%}
+                      {%- if info_link.links and info_link.links.size > 0 -%}
+                        {%- for info_sublink in info_link.links -%}
+                          <a href="{{ info_sublink.url }}" class="mobile-nav-flat-link mobile-nav-flat-link-information">
+                            <div class="link-flex">
+                              <div class="lf-text">{{ info_sublink.title }}</div>
                             </div>
                           </a>
                         {%- endfor -%}
                       {%- else -%}
-                        {%- assign nav_link_title_downcase = link.title | downcase | strip -%}
-                        {%- assign nav_link_url = link.url -%}
-                        {%- if nav_link_title_downcase == 'wieder kaufen' or nav_link_title_downcase == 'buy again' -%}
-                          {%- assign nav_link_url = routes.account_url -%}
-                        {%- endif -%}
-                        <a href="{{ nav_link_url }}" class="mobile-nav-flat-link">
+                        <a href="{{ info_link.url }}" class="mobile-nav-flat-link mobile-nav-flat-link-information">
                           <div class="link-flex">
-                            {%- if link.type == 'collection_link' or link.type == 'product_link' -%}
-                              {%- assign nav_image = blank -%}
-                              {%- if link.type == 'collection_link' -%}
-                                {%- assign nav_image = link.object.image -%}
-                              {%- elsif link.type == 'product_link' -%}
-                                {%- assign nav_image = link.object.featured_image -%}
-                              {%- endif -%}
-
-                              {%- if nav_image != blank -%}
-                                <div class="lf-image">
-                                  <img
-                                    src="{{ nav_image | image_url: width: 150, height: 150, crop: 'center' }}"
-                                    alt="{{ link.title | escape }}"
-                                    loading="lazy">
-                                </div>
-                              {%- endif -%}
-                            {%- endif -%}
-
-                            <div class="lf-text">{{ link.title }}</div>
+                            <div class="lf-text">{{ info_link.title }}</div>
                           </div>
                         </a>
                       {%- endif -%}
                     {%- endfor -%}
-                  {%- endunless -%}
-                {%- endif -%}
-              {% endfor %}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endcapture -%}
+
+              {%- if has_information_links -%}
+                <div class="mobile-nav-section mobile-nav-section-information">
+                  <p class="mobile-nav-flat-heading">Information</p>
+                  {{ information_links_markup }}
+                </div>
+              {%- endif -%}
 
               
 

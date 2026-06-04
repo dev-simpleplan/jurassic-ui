@@ -13,6 +13,10 @@
       <div class="banner-content">
         <div class="bc-top">
           <div class="bct-heading">
+            <div class="heading-star">
+                {% render 'rating-stars-fa', rating: section.settings.review_star_star %}
+                <div class="rating-text" aria-hidden="true">{{ section.settings.review_star_rating }}</div>
+            </div>
             <h1 data-aos="fade-up" data-aos-duration="1000">{{ section.settings.head }}</h1>
             <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="50">{{ section.settings.para }}</p>
             <div class="bcth-button" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
@@ -54,6 +58,21 @@
       "type": "image_picker",
       "id": "banner_bg_mobile",
       "label": "Banner Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "review_star_rating",
+      "label": "Review Text",
+      "default": "150,000 satisfied customers"
+    },
+    {
+      "type": "range",
+      "id": "review_star_star",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "label": "Star Ratings",
+      "default": 5
     },
     {
       "type": "text",

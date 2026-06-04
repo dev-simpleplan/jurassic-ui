@@ -377,6 +377,9 @@
     padding: 50px 40px;
   }
   .hnav-menu {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
   }
   .cd-nav-trigger {
     display: block;
@@ -493,6 +496,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
   }
   .langswitch-btn {
     display: flex;
@@ -1075,6 +1080,28 @@
     gap: 14px;
     position: relative;
   }
+  .mobile-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mobile-nav-section + .mobile-nav-section {
+    padding-top: 15px;
+    border-top: 1px solid #e1d8cc;
+  }
+  .mobile-nav-flat-heading {
+    margin: 0 0 10px;
+    font-family: var(--scale);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 1.12px;
+    font-family: var(--scale);
+    text-transform: uppercase;
+    color: #6f6258;
+  }
+  .mobile-nav-flat-link-information .lf-text {
+    font-size: 14px;
+  }
   .mobile-nav-flat .link-flex {
     display: flex;
     align-items: center;
@@ -1090,12 +1117,12 @@
     display: none;
   }
   .langswitch-btn {
-    position: absolute;
+    /* position: absolute;
     bottom: 0;
-    left: 0;
+    left: 0; */
     width: 100%;
-    padding: 30px 20px 30px 40px;
-    background-color: #f1ecec;
+    /* padding: 30px 20px 30px 40px;
+    background-color: #f1ecec; */
   }
   .locale-trigger span {
     font-family: var(--scale);
@@ -1132,7 +1159,7 @@
   }
   .hnav-menu {
     width: 85%;
-    padding: 30px 20px 40px 20px;
+    padding: 30px 20px 60px 20px;
   }
   header {
     top: 35px;
@@ -1378,7 +1405,7 @@
     width: 45%;
   }
   .langswitch-btn {
-    padding: 30px 20px 60px 20px;
+    /* padding: 30px 20px 60px 20px; */
   }
   .sustain-colm .numb_in:first-child {
     width: 100%;
@@ -1873,6 +1900,10 @@
   }
   .banner-in .banner-content {
     gap: 60px;
+    height: 100vh;
+  }
+  .bc-top .bct-heading {
+    gap: 18px;
   }
   .fruits_card_section_in .head {
     margin-bottom: 40px;
