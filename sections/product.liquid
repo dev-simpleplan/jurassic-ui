@@ -1091,7 +1091,14 @@
       <div class="pa-item">
         <div class="pa-ques-wrap">
           <div class="pa-ques">
-            {{ section.settings.seasonal_heading }}
+            {%- case request.locale.iso_code -%}
+              {%- when 'de' -%}
+                Saisonkalender
+              {%- when 'fr' -%}
+                Calendrier saisonnier
+              {%- else -%}
+                {{ section.settings.seasonal_heading }}
+            {%- endcase -%}
           </div>
           <div class="pa-icon">
             {%- render 'product-accordian-icon' -%}
@@ -1102,6 +1109,17 @@
             {%- assign months_en = "January,February,March,April,May,June,July,August,September,October,November,December" | split: ',' -%}
             {%- assign months_de = "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember" | split: ',' -%}
             {%- assign months_fr = "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre" | split: ',' -%}
+            {%- case request.locale.iso_code -%}
+              {%- when 'de' -%}
+                {%- assign high_season_label = 'Hochsaison' -%}
+                {%- assign low_season_label = 'Nebensaison' -%}
+              {%- when 'fr' -%}
+                {%- assign high_season_label = 'Haute saison' -%}
+                {%- assign low_season_label = 'Basse saison' -%}
+              {%- else -%}
+                {%- assign high_season_label = 'High season' -%}
+                {%- assign low_season_label = 'Low season' -%}
+            {%- endcase -%}
 
             {%- assign high_raw = season_meta.high_season_month.value | default: '' | split: ',' -%}
             {%- assign low_raw = season_meta.low_season_month.value | default: '' | split: ',' -%}
@@ -1170,6 +1188,16 @@
             </div>
             <div class="pas-country">
               <p>{{ product.metafields.custom.country_of_origin.value.country_name }}</p>
+            </div>
+          </div>
+          <div class="pa-seasons-legend" aria-label="Seasonality legend">
+            <div class="pa-seasons-legend-item">
+              <span class="pa-seasons-legend-pill high-season" aria-hidden="true"></span>
+              <span class="pa-seasons-legend-label">{{ high_season_label }}</span>
+            </div>
+            <div class="pa-seasons-legend-item">
+              <span class="pa-seasons-legend-pill low-season" aria-hidden="true"></span>
+              <span class="pa-seasons-legend-label">{{ low_season_label }}</span>
             </div>
           </div>
         </div>

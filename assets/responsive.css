@@ -1616,6 +1616,12 @@
     align-items: flex-start;
     gap: 30px;
   }
+  .pa-seasons-legend {
+    gap: 14px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+  }
   .pa-seasons .pas-month {
     flex-wrap: wrap;
     gap: 10px 4px;
