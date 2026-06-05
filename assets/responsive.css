@@ -1218,6 +1218,14 @@
     gap: 12px;
     margin-top: 24px;
   }
+  .video-carousel--product .vc-carousel-controls {
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .video-carousel--product .vc-carousel-arrow {
+    width: 42px;
+    height: 42px;
+  }
   .category-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px 9px;

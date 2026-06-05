@@ -1923,6 +1923,39 @@ li.nav-item.has-mega-menu:hover .nav_arrow_down {
     gap: 12px;
     margin-top: 24px;
 }
+.video-carousel .vc-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 24px;
+    position: relative;
+    z-index: 99;
+}
+.video-carousel .vc-carousel-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 0;
+    background-color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease all;
+    cursor: pointer;
+}
+.video-carousel .vc-carousel-arrow:hover,
+.video-carousel .vc-carousel-arrow:focus-visible {
+    background-color: #000;
+}
+.video-carousel .vc-carousel-arrow svg {
+    width: 16px;
+    height: 16px;
+}
+.video-carousel .vc-carousel-arrow svg path {
+    fill: #fcf9f5;
+    stroke: #fcf9f5;
+}
 /* Scrolling Section */
 section.scroll-sec {
     display: flex;
@@ -5779,4 +5812,7 @@ section.imagescroll {
 h2.oke-reviewCarousel-header-title {
     font-size: clamp(28px, 2.543px + 4.623vw, 52px)!important;
     line-height: 97%!important;
+}
+.vc-carousel .owl-nav {
+  display: none !important;
 }
