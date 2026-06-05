@@ -1160,6 +1160,9 @@
   .banner-bg img {
     object-position: center;
   }
+  .about-banner .banner-image img {
+    object-position: center;
+  }
   .hnav-menu {
     width: 85%;
     padding: 30px 20px 100px 20px;
