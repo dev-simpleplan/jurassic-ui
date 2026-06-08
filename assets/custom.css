@@ -673,6 +673,8 @@
 .fruits_card_section_in .head {
   margin-bottom: 60px;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .fruits_card_section_in .head .left {
