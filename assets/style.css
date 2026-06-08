@@ -2322,6 +2322,9 @@ section.scroll-sec {
     gap: 40px;
     position: relative;
 }
+.its-in .heading.small-width p {
+    max-width: 70ch;
+}
 .durian {
     max-width: 430px;
     width: 25%;
