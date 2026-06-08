@@ -167,11 +167,38 @@
 {% endif %}
 
 <script>
+
+
 document.addEventListener("DOMContentLoaded", () => {
   if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
     window.jQuery('.video-carousel').each(function () {
       const $section = window.jQuery(this);
       const $carousel = $section.find('.vc-carousel .owl-carousel');
+
+      function updateActiveVideo($carousel) {
+        const activeVideos = $carousel.find('.owl-item.active video');
+
+        // Pause all videos first
+        document.querySelectorAll('.vcitem-video video').forEach(video => {
+          video.pause();
+          video.currentTime = 0;
+        });
+
+        // Play center video on desktop
+        let targetVideo = null;
+
+        const centerItem = $carousel.find('.owl-item.center video');
+
+        if (centerItem.length) {
+          targetVideo = centerItem[0];
+        } else if (activeVideos.length) {
+          targetVideo = activeVideos[0];
+        }
+
+        if (targetVideo) {
+          targetVideo.play().catch(() => {});
+        }
+      }
 
       if (!$carousel.length || $carousel.hasClass('owl-loaded')) return;
 
@@ -197,6 +224,15 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       });
+
+      updateActiveVideo($carousel);
+
+      $carousel.on(
+        'initialized.owl.carousel translated.owl.carousel changed.owl.carousel',
+        function () {
+          updateActiveVideo($carousel);
+        }
+      );
 
       $section.find('.vc-carousel-arrow--prev').off('click').on('click', function () {
         $carousel.trigger('prev.owl.carousel');
