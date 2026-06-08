@@ -827,7 +827,9 @@
 {% endif %}
 {% assign show_seasonal = false %}
 {% if seasonal_high_months != blank or seasonal_low_months != blank %}
-  {% assign show_seasonal = true %}
+  {% unless season_meta.seasonal.value == false %}
+    {% assign show_seasonal = true %}
+  {% endunless %}
 {% endif %}
 {% assign show_product_accordion = false %}
 {% if show_technical_details or show_description or show_how_to_store or show_nutrition or show_origin or show_taste_profile or show_seasonal %}
