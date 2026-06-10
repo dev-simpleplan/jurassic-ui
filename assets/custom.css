@@ -713,6 +713,16 @@
   width: 35px;
   padding: 10px;
 }
+.custom-prev svg,
+.custom-next svg {
+  width: 16px;
+  height: 16px;
+}
+.custom-prev svg path,
+.custom-next svg path {
+      fill: #fcf9f5;
+    stroke: #fcf9f5;
+}
 .fruits_cards_slider .owl-nav {
   display: flex;
   gap: 10px;
