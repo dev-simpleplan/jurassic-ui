@@ -702,6 +702,9 @@
 .fruits_card_section_in .head .right a:hover {
   color: #747474;
 }
+.category-slider .owl-theme .owl-nav [class*=owl-]:hover {
+  background: transparent;
+}
 .custom-prev,
 .custom-next {
   background: #1a1a1a;
