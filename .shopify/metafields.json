@@ -682,6 +682,26 @@
         "name": "list.file_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "box_product_heading",
+      "namespace": "custom",
+      "name": "Box Product Heading",
+      "description": "Enter heading for Box products",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "box_product_subheading",
+      "namespace": "custom",
+      "name": "Box Product Subheading",
+      "description": "Enter box product subheading",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [
