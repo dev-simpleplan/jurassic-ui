@@ -41,6 +41,17 @@
             ]
           }
         },
+        "nav_menu_right_HJeRQQ": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "fruits",
+            "product_list_heading": "",
+            "product_list": [
+              "mangosteen",
+              "mango-osteen"
+            ]
+          }
+        },
         "nav_menu_right_EMiXFk": {
           "type": "nav_menu_right",
           "disabled": true,
@@ -64,6 +75,7 @@
         "nav_menu_right_wHwG97",
         "nav_menu_right_CfQzEw",
         "nav_menu_right_g6gmcL",
+        "nav_menu_right_HJeRQQ",
         "nav_menu_right_EMiXFk",
         "nav_menu_right_tATRCL"
       ],
