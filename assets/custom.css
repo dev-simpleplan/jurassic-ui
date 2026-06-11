@@ -727,7 +727,9 @@
   height: 12px;
 }
 .category-slider .custom-prev svg path,
-.category-slider .custom-next svg path {
+.category-slider .custom-next svg path,
+.fruits_cards_slider .custom-prev svg path,
+.fruits_cards_slider .custom-next svg path {
       fill: #fcf9f5;
     stroke: #fcf9f5;
 }
