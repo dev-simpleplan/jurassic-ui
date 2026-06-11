@@ -721,8 +721,8 @@
   width: 16px;
   height: 16px;
 }
-.custom-prev svg path,
-.custom-next svg path {
+.category-slider .custom-prev svg path,
+.category-slider .custom-next svg path {
       fill: #fcf9f5;
     stroke: #fcf9f5;
 }
