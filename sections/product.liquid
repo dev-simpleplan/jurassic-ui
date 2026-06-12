@@ -797,8 +797,12 @@
 {% assign season_meta = country_season_data.season.value %}
 {% assign seasonal_high_months = season_meta.high_season_month.value | default: '' | strip %}
 {% assign seasonal_low_months = season_meta.low_season_month.value | default: '' | strip %}
+{% capture technical_content %}
+  {{ product.metafields.custom.technical_details | metafield_tag }}
+{% endcapture %}
+
 {% assign show_technical_details = false %}
-{% if technical_details_data != blank %}
+{% if technical_content | strip_html | strip != blank %}
   {% assign show_technical_details = true %}
 {% endif %}
 {% assign show_description = false %}
