@@ -548,7 +548,7 @@
       "name": "BestsellerCarousel",
       "settings": {
         "collection": "fruit",
-        "heading": "This Week’s Bestsellers"
+        "heading": "This week’s bestsellers"
       }
     },
     "spacer_awrgBa": {
