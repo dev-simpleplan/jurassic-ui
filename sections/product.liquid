@@ -785,7 +785,7 @@
   </script>
 </div>
 
-{% assign technical_details_data = product.metafields.custom.technical_details %}
+{% comment %} {% assign technical_details_data = product.metafields.custom.technical_details %} {% endcomment %}
 {% assign description_data = product.metafields.custom.new_description %}
 {% assign how_to_store_items = product.metafields.custom.how_to_store_eat.value %}
 {% assign nutrition_details_data = product.metafields.custom.nutrition_details %}
@@ -797,30 +797,49 @@
 {% assign season_meta = country_season_data.season.value %}
 {% assign seasonal_high_months = season_meta.high_season_month.value | default: '' | strip %}
 {% assign seasonal_low_months = season_meta.low_season_month.value | default: '' | strip %}
-{% capture technical_content %}
-  {{ product.metafields.custom.technical_details | metafield_tag }}
-{% endcapture %}
+{% comment %} {% assign show_technical_details = false %}
+{% if technical_details_data != blank %}
+  {% assign show_technical_details = true %}
+{% endif %} {% endcomment %}
 
+{% comment %} Conditions to show and hide fields {% endcomment %}
 {% assign show_technical_details = false %}
-{% if technical_content | strip_html | strip != blank %}
+  {% if product.metafields.custom.alternative_name != blank
+    or product.metafields.custom.country_of_origin.value != blank
+    or shipped_by != blank
+    or product.metafields.custom.weight_per_piece != blank
+    or product.metafields.custom.ingredients.value != blank
+    or product.metafields.custom.manufacturing.value != blank
+    or product.metafields.custom.cross_contamination.value != blank
+    or product.metafields.custom.best_before_date.value != blank
+    or product.metafields.custom.net_quantity.value != blank
+    or product.metafields.custom.storage_conditions.value != blank
+    or product.metafields.custom.quality_label != blank
+    or product.metafields.custom.certificate.value != blank
+  %}
   {% assign show_technical_details = true %}
 {% endif %}
+
 {% assign show_description = false %}
 {% if description_data != blank %}
   {% assign show_description = true %}
 {% endif %}
+
 {% assign show_how_to_store = false %}
 {% if how_to_store_items != blank %}
   {% assign show_how_to_store = true %}
 {% endif %}
+
 {% assign show_nutrition = false %}
 {% if nutrition_details_data != blank or nutrition_content_data != blank %}
   {% assign show_nutrition = true %}
 {% endif %}
+
 {% assign show_origin = false %}
 {% if origin_sourcing_items != blank %}
   {% assign show_origin = true %}
 {% endif %}
+
 {% assign show_taste_profile = false %}
 {% if taste_profile_body != blank
   or taste_profile_data.texture != blank
@@ -829,17 +848,20 @@
   or taste_profile_data.juiciness != blank %}
   {% assign show_taste_profile = true %}
 {% endif %}
+
 {% assign show_seasonal = false %}
 {% if seasonal_high_months != blank or seasonal_low_months != blank %}
   {% unless season_meta.seasonal.value == false %}
     {% assign show_seasonal = true %}
   {% endunless %}
 {% endif %}
+
 {% assign show_product_accordion = false %}
 {% if show_technical_details or show_description or show_how_to_store or show_nutrition or show_origin or show_taste_profile or show_seasonal %}
   {% assign show_product_accordion = true %}
 {% endif %}
-
+{% comment %} Conditions to show and hide fields {% endcomment %}
+ 
 {% if show_product_accordion %}
 <div class="product-accordion">
   <div class="container">
