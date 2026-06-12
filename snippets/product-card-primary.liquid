@@ -155,7 +155,7 @@
           {% assign review_rating_display = review_rating_value | times: 10 | round | divided_by: 10.0 %}
 
 <div class="star_review">
-  <div class="star_rating">
+  {% comment %} <div class="star_rating">
     {% if okendo_listing_snippet != blank %}
       <div class="okendo-listing-rating-fallback" data-okendo-listing-rating-fallback>
         {{ okendo_listing_snippet }}
@@ -168,6 +168,16 @@
       </div>
     {% endif %}
     <p data-oke-star-rating data-oke-reviews-product-id="shopify-{{ product.id }}"></p>
+  </div> {% endcomment %}
+
+  <div class="star_rating">
+    {% if review_count > 0 %}
+      <div class="star-rating-fallback">
+        <span class="star-rating-fallback__star">★</span>
+        <span class="star-rating-fallback__rating">{{ review_rating_display }}</span>
+        <span class="star-rating-fallback__count">({{ review_count }})</span>
+      </div>
+    {% endif %}
   </div>
 
   <div class="rating_info">

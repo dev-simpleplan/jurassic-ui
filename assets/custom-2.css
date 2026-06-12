@@ -710,7 +710,7 @@ span.cart-compare-price {
 .collection-main h1,
 .collection-main h2 {
   font-size: clamp(32px, 4vw, 46px);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .collection-main .head {
   display: flex;
