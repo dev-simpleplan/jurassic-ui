@@ -5,6 +5,11 @@ collections.
 https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
+<script>
+  const locale = '{{ request.locale.iso_code }}';
+  window.location.replace(`/${locale}/collections/all`);
+</script>
+
 <h1>{{ 'collections.title' | t }}</h1>
 
 <div class="collections {{ section.settings.grid_item_width }}" style="--grid-gap: {{ section.settings.grid_gap }}px">
