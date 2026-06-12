@@ -53,6 +53,14 @@
             ]
           }
         },
+        "nav_menu_right_BVgXx8": {
+          "type": "nav_menu_right",
+          "settings": {
+            "nav_items_right": "new",
+            "product_list_heading": "",
+            "product_list": []
+          }
+        },
         "nav_menu_right_g6gmcL": {
           "type": "nav_menu_right",
           "disabled": true,
@@ -89,6 +97,7 @@
         "nav_menu_right_CfQzEw",
         "nav_menu_right_HJeRQQ",
         "nav_menu_right_RkrnrY",
+        "nav_menu_right_BVgXx8",
         "nav_menu_right_g6gmcL",
         "nav_menu_right_EMiXFk",
         "nav_menu_right_tATRCL"
