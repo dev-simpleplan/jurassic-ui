@@ -237,7 +237,7 @@ window.handleProductCardAddFormSubmit = async function (form, event) {
     document.dispatchEvent(new CustomEvent('cart:updated'));
 
     window.setTimeout(() => {
-      document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
+      // document.querySelector('.cart-open, #corner-cowi-open-primary-card')?.click();
     }, 100);
   } catch (error) {
     console.error('Product card add to cart failed', error);
