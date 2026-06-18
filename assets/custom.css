@@ -198,7 +198,7 @@
 }
 .star-rating-fallback__star {
   color: #ffc226;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1px;
 }
 @-moz-document url-prefix() {
@@ -208,7 +208,7 @@
     line-height: 1px;
     display: flex;
     width: 13px;
-    height: 8px;
+    height: 6px;
   }
 }
 .star_rating:has(.oke-sr:not(.oke-sr--hidden)) .star-rating-fallback {
