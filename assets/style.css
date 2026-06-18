@@ -5806,8 +5806,8 @@ section.imagescroll {
     position: absolute;
     right: 0;
 }
-.oke-stars-foreground {
-    /* overflow: inherit!important; */
+.oke-w-panel .oke-stars-foreground {
+    overflow: inherit!important;
     position: absolute;
     top: 0;
     left: 0;
