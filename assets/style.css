@@ -4756,6 +4756,11 @@ section.imagescroll {
     line-height: 140%;
     color: #1A1A1A;
 }
+.bcw-content ul,
+.bcw-content ol {
+    list-style: inherit;
+    padding-left: 20px;
+}
 span.easy-footnote-margin-adjust {
     color: #f7a816;
 }
