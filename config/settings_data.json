@@ -183,6 +183,11 @@
           "custom_switcher_background_color": "#ffffff",
           "custom_switcher_border_color": "#000000"
         }
+      },
+      "16160652613208317715": {
+        "type": "shopify://apps/boo-eu-withdrawal-button/blocks/theme/019c83fd-5304-7bcb-bc27-c2e42bcee2aa",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
