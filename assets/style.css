@@ -4759,6 +4759,9 @@ section.imagescroll {
 span.easy-footnote-margin-adjust {
     color: #f7a816;
 }
+li.easy-footnote-single {
+  word-break: break-all;
+}
 .bcw-share {
     margin-top: 20px;
 }
