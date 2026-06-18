@@ -2758,7 +2758,7 @@ p.product-description-metafield {
 .pair-with .heading h3 {
   font-weight: 500;
   font-size: 22px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .pair-with .freq-wrap {
   margin-top: 16px;
