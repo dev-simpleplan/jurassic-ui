@@ -4756,7 +4756,10 @@ section.imagescroll {
     line-height: 140%;
     color: #1A1A1A;
 }
-.bcw-content ul,
+.bcw-content ul {
+    list-style: inherit;
+    padding-left: 20px;
+}
 .bcw-content ol {
     list-style: auto;
     padding-left: 20px;
