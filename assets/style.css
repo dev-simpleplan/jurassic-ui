@@ -5819,3 +5819,10 @@ h2.oke-reviewCarousel-header-title {
 .vc-carousel .owl-nav {
   display: none !important;
 }
+.js-oke-widgetSize.oke-is-large .oke-w-ratingAverageModule-rating {
+    display: flex;
+    align-items: center;
+}
+.js-oke-widgetSize.oke-is-large .oke-w-ratingAverageModule-rating .oke-stars {
+    width: 100px;
+}
