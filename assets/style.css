@@ -4741,7 +4741,7 @@ section.imagescroll {
 }
 .bcw-content p {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 140%;
     color: #1A1A1A;
 }
@@ -4752,7 +4752,7 @@ section.imagescroll {
 .bcw-content ul li,
 .bcw-content ol li {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 140%;
     color: #1A1A1A;
 }
