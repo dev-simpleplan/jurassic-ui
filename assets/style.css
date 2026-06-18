@@ -4749,13 +4749,6 @@ section.imagescroll {
     width: 100%;
     height: auto;
 }
-.bcw-content ul li,
-.bcw-content ol li {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 140%;
-    color: #1A1A1A;
-}
 .bcw-content ul {
     list-style: inherit;
     padding-left: 20px;
@@ -4763,6 +4756,13 @@ section.imagescroll {
 .bcw-content ol {
     list-style: auto;
     padding-left: 20px;
+}
+.bcw-content ul li,
+.bcw-content ol li {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #1A1A1A;
 }
 span.easy-footnote-margin-adjust {
     color: #f7a816;
