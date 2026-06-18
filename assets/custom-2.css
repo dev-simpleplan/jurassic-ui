@@ -2849,3 +2849,6 @@ margin-bottom: 20px;
   font-size: 14px;
   padding-bottom: 5px;
 }
+li.easy-footnote-single {
+  word-break: break-all;
+}

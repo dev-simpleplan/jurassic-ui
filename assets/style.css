@@ -70,7 +70,7 @@ h6 {
 }
 h1,
 .heading-big {
-    font-size: clamp(38px, 2.543px + 4.623vw, 100px);
+    font-size: clamp(38px, 2.543px + 4vw, 100px);
     line-height: 97%;
     letter-spacing: -0.32px;
 }
@@ -4748,6 +4748,16 @@ section.imagescroll {
 .bcw-content p span img {
     width: 100%;
     height: auto;
+}
+.bcw-content ul li,
+.bcw-content ol li {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #1A1A1A;
+}
+span.easy-footnote-margin-adjust {
+    color: #f7a816;
 }
 .bcw-share {
     margin-top: 20px;
