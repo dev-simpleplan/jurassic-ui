@@ -5806,11 +5806,8 @@ section.imagescroll {
     position: absolute;
     right: 0;
 }
-.oke-w-panel .oke-stars-foreground {
-    overflow: inherit!important;
-    position: absolute;
-    top: 0;
-    left: 0;
+.oke-w-panel .oke-stars {
+    min-width: 100px;
 }
 h2.oke-reviewCarousel-header-title {
     font-size: clamp(28px, 2.543px + 4.623vw, 52px)!important;
