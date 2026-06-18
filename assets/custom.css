@@ -198,11 +198,8 @@
 }
 .star-rating-fallback__star {
   color: #ffc226;
-  font-size: 20px;
-  line-height: 1px;
-  display: flex;
-  width: 13px;
-  height: 8px;
+  font-size: 13px;
+  line-height: 1;
 }
 .star_rating:has(.oke-sr:not(.oke-sr--hidden)) .star-rating-fallback {
   display: none;
