@@ -219,6 +219,30 @@
     
   </head>
 
+  <script>
+try {
+
+  if (window.location.pathname === '/cart') {
+
+    const pref = JSON.parse(
+      localStorage.getItem('jurassicLocalePreference') || '{}'
+    );
+
+    const lang = pref.language;
+
+    if (lang === 'en') {
+      location.replace('/en/cart');
+    }
+
+    if (lang === 'fr') {
+      location.replace('/fr/cart');
+    }
+
+  }
+
+} catch(e) {}
+</script>
+
   <body{% if template.name == 'index' %} class="template-index"{% endif %}>
     {% if template.name == 'index' %}
       <div class="homepage-loader" id="homepage-loader" aria-hidden="true">
