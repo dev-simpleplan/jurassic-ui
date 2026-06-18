@@ -4758,7 +4758,7 @@ section.imagescroll {
 }
 .bcw-content ul,
 .bcw-content ol {
-    list-style: inherit;
+    list-style: auto;
     padding-left: 20px;
 }
 span.easy-footnote-margin-adjust {
