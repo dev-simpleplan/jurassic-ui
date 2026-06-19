@@ -5827,7 +5827,8 @@ li.easy-footnote-single {
     position: absolute;
     right: 0;
 }
-.oke-w-panel .oke-stars {
+.oke-w-panel .oke-stars,
+.oke-mediaGallery-review .oke-stars {
     min-width: 100px;
 }
 h2.oke-reviewCarousel-header-title {
