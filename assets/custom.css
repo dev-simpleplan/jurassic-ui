@@ -100,7 +100,7 @@
   letter-spacing: -0.03em;
   border-radius: 10px;
   display: inline-block;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .fc_top .fc_bestsell_tags {
   position: absolute;

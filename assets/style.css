@@ -35,8 +35,7 @@ html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
 img,
 picture,
 video,
-canvas,
-svg {
+canvas {
     display: block;
     max-width: 100%;
     height: auto;
@@ -5827,10 +5826,10 @@ li.easy-footnote-single {
     position: absolute;
     right: 0;
 }
-.oke-w-panel .oke-stars,
+/* .oke-w-panel .oke-stars,
 .oke-mediaGallery-review .oke-stars {
     min-width: 100px;
-}
+} */
 h2.oke-reviewCarousel-header-title {
     font-size: clamp(28px, 2.543px + 4.623vw, 52px)!important;
     line-height: 97%!important;
