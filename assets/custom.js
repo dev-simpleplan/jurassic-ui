@@ -226,6 +226,14 @@ window.handleProductCardAddFormSubmit = async function (form, event) {
 
     await response.json();
 
+    /* Update cart count */
+    const cart = await fetch('/cart.js').then(r => r.json());
+
+    document.querySelectorAll('[data-ajax-cart-bind="item_count"]').forEach(el => {
+      el.textContent = cart.item_count;
+      el.classList.toggle('is-hidden', cart.item_count === 0);
+    });
+
     if (submitButton) {
       submitButton.classList.remove('loading');
       if (buttonLabel) {
