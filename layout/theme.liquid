@@ -220,9 +220,9 @@
   </head>
 
   <script>
-try {
+(function() {
 
-  if (window.location.pathname === '/cart') {
+  try {
 
     const pref = JSON.parse(
       localStorage.getItem('jurassicLocalePreference') || '{}'
@@ -230,17 +230,40 @@ try {
 
     const lang = pref.language;
 
-    if (lang === 'en') {
-      location.replace('/en/cart');
+    if (!lang || lang === 'de') return;
+
+    const currentPath = window.location.pathname;
+
+    const localePrefixes = ['/en', '/fr'];
+
+    // Already localized
+    if (
+      localePrefixes.some(prefix =>
+        currentPath === prefix || currentPath.startsWith(prefix + '/')
+      )
+    ) {
+      return;
     }
 
-    if (lang === 'fr') {
-      location.replace('/fr/cart');
+    const prefixMap = {
+      en: '/en',
+      fr: '/fr'
+    };
+
+    const prefix = prefixMap[lang];
+
+    if (prefix) {
+      location.replace(
+        prefix +
+        currentPath +
+        window.location.search +
+        window.location.hash
+      );
     }
 
-  }
+  } catch(e) {}
 
-} catch(e) {}
+})();
 </script>
 
   <body{% if template.name == 'index' %} class="template-index"{% endif %}>
