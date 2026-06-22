@@ -680,6 +680,27 @@ span.cart-compare-price {
   text-transform: capitalize;
   letter-spacing: -0.48px;
 }
+.recommended-item .fc_add_to_cart .add-to-cart {
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-transform: capitalize;
+  outline: none;
+  color: #2c2c2c;
+  font-size: 14px;
+  line-height: 100%;
+  /* letter-spacing: 2px; */
+  padding: 16px 20px;
+  font-weight: 600;
+  font-family: "Inter";
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: capitalize;
+  letter-spacing: -0.48px;
+  text-align: center;
+}
 .recommended-item .fc_add_to_cart .remove_product,
 .recommended-item .fc_add_to_cart .add_product {
   display: none;

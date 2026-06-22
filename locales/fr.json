@@ -94,6 +94,7 @@
     "product": {
       "from": "De",
       "add_to_cart": "Ajouter au panier",
+      "select_product": "Sélectionner",
       "added_to_cart": "Ajouté",
       "sold_out": "Indisponible",
       "in_stock": "En stock",

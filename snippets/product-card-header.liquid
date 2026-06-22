@@ -65,7 +65,7 @@
           </div>
       </div>
       
-      <div class="ri-form">
+      {% comment %} <div class="ri-form">
         <form action="/cart/add" method="post" enctype="multipart/form-data">
           <input
             type="hidden"
@@ -85,6 +85,18 @@
           </div>
         </form>
 
+      </div>  {% endcomment %}
+
+      <div class="ri-form">
+        <div class="fc_add_to_cart">
+            <a href="{{ product.url }}" class="add-to-cart"{% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                {{ 'products.product.select_product' | t }}
+              {% else %}
+                {{ 'products.product.sold_out' | t }}
+              {% endif %}
+            </a>
+          </div>
       </div>
 </div>
 
