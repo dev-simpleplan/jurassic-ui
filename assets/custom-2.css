@@ -691,20 +691,29 @@ span.cart-compare-price {
   /* padding-top: 70px; */
   width: 100%;
 }
-.collection-main .breadcrumbs {
+.collection-main .breadcrumbs,
+.bdp-in .breadcrumbs {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
 }
 .collection-main .breadcrumbs p,
-.collection-main .breadcrumbs a {
+.bdp-in .breadcrumbs p,
+.collection-main .breadcrumbs a,
+.bdp-in .breadcrumbs a {
   font-size: 12px;
   line-height: 136%;
   letter-spacing: 0.02em;
   text-align: center;
   color: #6b6b6b;
+  text-align: left;
 }
-.collection-main .breadcrumbs a {
+.collection-main .breadcrumbs p,
+.bdp-in .breadcrumbs p {
+  word-break: break-all;
+}
+.collection-main .breadcrumbs a,
+.bdp-in .breadcrumbs a {
   color: #1a1a1a;
 }
 .collection-main h1,

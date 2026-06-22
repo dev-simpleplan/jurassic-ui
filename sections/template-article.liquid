@@ -2,6 +2,15 @@
 <section class="blog-details-page top-wrap">
     <div class="container">
         <div class="bdp-in">
+            <div class="breadcrumbs">
+              <a href="{{ blog.url }}">{{ 'blogs.general.title' | t }}</a>
+              <p>
+                >
+              </p>
+              <p>
+                {{  article.title }}
+              </p>
+            </div>
             {% for block in section.blocks %}
                 <div class="bdp-head">
                     {% case block.type %}

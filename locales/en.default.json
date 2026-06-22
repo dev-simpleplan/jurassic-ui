@@ -22,6 +22,11 @@
     "comment_form_submit": "Post",
     "comment_form_title": "Add a comment"
   },
+  "blogs": {
+    "general": {
+      "title": "Blogs"
+    }
+  },
   "cart": {
     "checkout": "Checkout",
     "title": "Cart",

@@ -75,11 +75,7 @@
           <input type="hidden" name="quantity" value="1">
 
           <div class="fc_add_to_cart">
-            <button
-              type="submit"
-              class="add-to-cart"
-              {% unless product.available %}disabled{% endunless %}
-            >
+            <button type="submit" class="add-to-cart"{% unless product.available %}disabled{% endunless %}>
               {% if product.available %}
                 {{ 'products.product.add_to_cart' | t }}
               {% else %}

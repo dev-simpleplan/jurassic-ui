@@ -36,6 +36,11 @@
     "comment_form_title": "Ajouter un commentaire",
     "article_metadata_html": "{{ date }} par {{ author }}"
   },
+  "blogs": {
+    "general": {
+      "title": "Blogs"
+    }
+  },
   "cart": {
     "checkout": "Paiement",
     "title": "Panier",
