@@ -188,6 +188,13 @@
         "type": "shopify://apps/boo-eu-withdrawal-button/blocks/theme/019c83fd-5304-7bcb-bc27-c2e42bcee2aa",
         "disabled": false,
         "settings": {}
+      },
+      "7418020854241314888": {
+        "type": "shopify://apps/staging-delivery-date-app/blocks/products-filter/f5eebd54-3726-4096-a681-6d536d3a08d8",
+        "disabled": false,
+        "settings": {
+          "default_collection_handle": "fruit"
+        }
       }
     }
   }
