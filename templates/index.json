@@ -174,12 +174,6 @@
     "video-carousel": {
       "type": "video-carousel",
       "blocks": {
-        "ugc_videos_iFJz3D": {
-          "type": "ugc-videos",
-          "settings": {
-            "video_img": "shopify://shop_images/Kumquat-drink.jpg"
-          }
-        },
         "ugc_videos_NrQzL4": {
           "type": "ugc-videos",
           "settings": {
@@ -218,7 +212,6 @@
         }
       },
       "block_order": [
-        "ugc_videos_iFJz3D",
         "ugc_videos_NrQzL4",
         "ugc_videos_UXLNi4",
         "ugc_videos_kBLy7n",
