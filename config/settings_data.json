@@ -195,6 +195,17 @@
         "settings": {
           "default_collection_handle": "fruit"
         }
+      },
+      "3078960447679029438": {
+        "type": "shopify://apps/staging-delivery-date-app/blocks/cart-products.delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
+        "disabled": false,
+        "settings": {
+          "remove_button_background_color": "#111111",
+          "remove_button_text_color": "#ffffff",
+          "close_button_text_color": "#111111",
+          "similar_products_collection": "",
+          "similar_products_limit": 3
+        }
       }
     }
   }
