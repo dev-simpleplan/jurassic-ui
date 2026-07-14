@@ -202,7 +202,7 @@
       },
       "7418020854241314888": {
         "type": "shopify://apps/staging-delivery-date-app/blocks/products-filter/f5eebd54-3726-4096-a681-6d536d3a08d8",
-        "disabled": true,
+        "disabled": false,
         "settings": {
           "default_collection_handle": "fruit"
         }
