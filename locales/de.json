@@ -51,7 +51,8 @@
     "untreated": "Unbehandelt",
     "clear_all": "Alle löschen",
     "products_count": "{{ count }} Produkte",
-    "products_count_filtered": "{{ count }} Produkte von {{ total }}"
+    "products_count_filtered": "{{ count }} Produkte von {{ total }}",
+    "by_week": "Nach Woche"
   },
   "gift_card": {
     "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",

@@ -52,7 +52,8 @@
     "untreated": "Untreated",
     "clear_all": "Clear All",
     "products_count": "{{ count }} products",
-    "products_count_filtered": "{{ count }} products out of {{ total }}"
+    "products_count_filtered": "{{ count }} products out of {{ total }}",
+    "by_week": "By Week"
   },
   "collections": {
     "title": "Collections"
