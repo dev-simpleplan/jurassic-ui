@@ -24,6 +24,7 @@
         },
         "nav_menu_right_CfQzEw": {
           "type": "nav_menu_right",
+          "disabled": true,
           "settings": {
             "nav_items_right": "boxes-direct-link",
             "product_list_heading": "",
