@@ -44,7 +44,7 @@
         "nav_menu_right_RkrnrY": {
           "type": "nav_menu_right",
           "settings": {
-            "nav_items_right": "dried",
+            "nav_items_right": "shop-all",
             "product_list_heading": "",
             "product_list": [
               "fig-white-dried",
