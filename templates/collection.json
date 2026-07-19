@@ -12,6 +12,17 @@
     "main": {
       "type": "collection",
       "blocks": {
+        "collection_zLmCdm": {
+          "type": "collection",
+          "settings": {
+            "col": "boxes",
+            "parent_collections": [
+              "fruit-boxes"
+            ],
+            "hide_on_generic_collections": false,
+            "col_name": ""
+          }
+        },
         "collection_XbDU8A": {
           "type": "collection",
           "settings": {
@@ -142,6 +153,7 @@
         }
       },
       "block_order": [
+        "collection_zLmCdm",
         "collection_XbDU8A",
         "collection_zp8hR7",
         "collection_Fnbewh",
