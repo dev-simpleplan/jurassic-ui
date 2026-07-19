@@ -58,7 +58,10 @@
           "type": "collection",
           "settings": {
             "col": "fruit-boxes",
-            "parent_collections": [],
+            "parent_collections": [
+              "farmer-box",
+              "fruit-boxes"
+            ],
             "hide_on_generic_collections": false,
             "col_name": "Boxes"
           }
