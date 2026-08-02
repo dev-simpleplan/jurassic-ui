@@ -9,7 +9,8 @@
  */
 {
   "current": {
-    "favicon_light": "shopify://shop_images/favicon-512-white.png",
+    "favicon": "shopify://shop_images/favicon-512-white.png",
+    "favicon_light": "shopify://shop_images/favicon-512-black-mark-transparent.png",
     "favicon_dark": "shopify://shop_images/favicon-512-white-mark-transparent.png",
     "cart_shipping_threshold": 99,
     "cart_gift_threshold": 119,
