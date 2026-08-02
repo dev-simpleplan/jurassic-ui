@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "favicon_light": "shopify://shop_images/favicon-light.png",
-    "favicon_dark": "shopify://shop_images/favicon-dark.png",
+    "favicon_light": "shopify://shop_images/favicon-512-white.png",
+    "favicon_dark": "shopify://shop_images/favicon-512-white-mark-transparent.png",
     "cart_shipping_threshold": 99,
     "cart_gift_threshold": 119,
     "free_gift_product": "100-gift-card",
