@@ -381,11 +381,12 @@
       </button>
     {%- endunless -%}
 
-    <div class="date_pick delivery_app_filter_ex_button">
+    {% comment %} Add when needed button for filter by wee extension from Delivery app {% endcomment %}
+    {% comment %} <div class="date_pick delivery_app_filter_ex_button">
       <div>
-        {{ 'quick_filters.by_week' | t }}
+        By Week
       </div>
-    </div>
+    </div> {% endcomment %}
 
     {%- comment -%} 4. Clear All Button {%- endcomment -%}
     <button type="button" class="qf-pill clear-all-pill" style="display: none;">
