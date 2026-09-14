@@ -767,8 +767,18 @@
 
 {% render 'shipping-global-script' %}
 
-    {%- render "ecom_footer" - %}
+    {%- render "ecom_footer" %}
     
   </body>
 
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- render "ecom_footer" - %}'
+  to: '{%- render "ecom_footer" %}'
+  position: 27087..27114
+{% endcomment %}
