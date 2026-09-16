@@ -199,7 +199,7 @@
       },
       "12066914465797231066": {
         "type": "shopify://apps/staging-delivery-date-app/blocks/cart-products-delivery-info/f5eebd54-3726-4096-a681-6d536d3a08d8",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "remove_button_background_color": "#e13434",
           "remove_button_text_color": "#ffffff",
