@@ -116,12 +116,12 @@
                       {% if product.metafields.custom.quality_label_v2.value != blank %}
                         <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px;">
                           {% for ingredient in product.metafields.custom.quality_label_v2.value %}
-                            <span>№№{{ ingredient.value }}</span>
+                            <span>{{ ingredient.value }}</span>
                           {% endfor %}
                         </div>
                       {% elsif product.metafields.custom.quality_label != blank %}
                         <span>
-                          !!{{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}
+                          {{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}
                         </span>
                       {% endif %}
 
@@ -1033,12 +1033,25 @@
                       </div>
                     {%- endif -%}
 
-                    {%- if product.metafields.custom.quality_label != blank -%}
+                    {% comment %} {%- if product.metafields.custom.quality_label != blank -%}
                       <div class="tech-item">
                         <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
                         <div class="ti-data">{{ product.metafields.custom.quality_label }}</div>
                       </div>
-                    {%- endif -%}
+                    {%- endif -%} {% endcomment %}
+                     {%- if product.metafields.custom.quality_label_v2.value != blank -%}
+                        {% for ingredient in product.metafields.custom.quality_label_v2.value %}
+                          <div class="tech-item">
+                            <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
+                            <div class="ti-data">{{ ingredient.value }}</div>
+                          </div>
+                        {% endfor %}
+                      {%- elsif product.metafields.custom.quality_label != blank -%}
+                        <div class="tech-item">
+                          <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
+                          <div class="ti-data">{{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}</div>
+                        </div>
+                      {%- endif -%}
 
                     {%- assign certificate_names = '' -%}
                     {%- if product.metafields.custom.certificate.value != blank -%}
