@@ -113,8 +113,16 @@
                         {% endfor %}
                       {% endif %}
 
-                      {% if product.metafields.custom.quality_label != blank %}
-                        <span>@@{{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}</span>
+                      {% if product.metafields.custom.quality_label_v2.value != blank %}
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                          {% for ingredient in product.metafields.custom.quality_label_v2.value %}
+                            <span>{{ ingredient.value }}</span>
+                          {% endfor %}
+                        </div>
+                      {% elsif product.metafields.custom.quality_label != blank %}
+                        <span>
+                          {{ product.metafields.custom.quality_label.value | default: product.metafields.custom.quality_label }}
+                        </span>
                       {% endif %}
 
                       {% comment %}
