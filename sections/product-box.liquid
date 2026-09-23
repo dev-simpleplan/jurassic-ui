@@ -1041,12 +1041,14 @@
                       </div>
                     {%- endif -%} {% endcomment %}
                      {%- if product.metafields.custom.quality_label_v2.value != blank -%}
-                        {% for ingredient in product.metafields.custom.quality_label_v2.value %}
-                          <div class="tech-item">
-                            <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
-                            <div class="ti-data">{{ ingredient.value }}</div>
+                        <div class="tech-item">
+                          <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
+                          <div class="ti-data">
+                            {% for ingredient in product.metafields.custom.quality_label_v2.value %}
+                              {{ ingredient.value }}{% unless forloop.last %}, {% endunless %}
+                            {% endfor %}
                           </div>
-                        {% endfor %}
+                        </div>
                       {%- elsif product.metafields.custom.quality_label != blank -%}
                         <div class="tech-item">
                           <div class="ti-name">{{ 'sections.product.quality_label' | t }}:</div>
